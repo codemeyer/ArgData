@@ -42,6 +42,17 @@ namespace ArgData.IntegrationTests
                 colors.Should().Contain(88);
                 colors.Should().Contain(32);
             }
+
+            [Fact]
+            public void TeamWithIndex12HasIncreasingNumbers()
+            {
+                byte[] colors = _reader.ReadCarColors(12);
+
+                colors[1].Should().Be(0);
+                colors[2].Should().Be(1);
+                colors[3].Should().Be(2);
+                colors[15].Should().Be(12);
+            }
         }
     }
 }

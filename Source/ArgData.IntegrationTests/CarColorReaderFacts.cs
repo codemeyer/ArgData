@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using NSubstitute;
 using Xunit;
 
@@ -13,8 +14,16 @@ namespace ArgData.IntegrationTests
             public ReadingCarColors()
             {
                 var positions = Substitute.For<DataPositions>();
-                positions.CarColors.Returns(107);
+                positions.CarColors.Returns(106);
                 _reader = new CarColorReader(GetExampleDataPath("fake.gpexe"), positions);
+            }
+
+            [Fact]
+            public void EachCarStartsWith33()
+            {
+                byte[] colors = _reader.ReadCarColors(0);
+
+                colors.First().Should().Be(33);
             }
 
             [Fact]

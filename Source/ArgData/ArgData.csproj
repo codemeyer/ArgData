@@ -45,11 +45,13 @@
     <Compile Include="DataPositions.cs" />
     <Compile Include="Driver.cs" />
     <Compile Include="FileReader.cs" />
+    <Compile Include="FileWriter.cs" />
     <Compile Include="GripLevelReader.cs" />
     <Compile Include="NamesFile.cs" />
     <Compile Include="NamesFileParser.cs" />
     <Compile Include="Palette.cs" />
     <Compile Include="PlayerHorsepowerReader.cs" />
+    <Compile Include="PlayerHorsepowerWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QualifyingGripLevelReader.cs" />
     <Compile Include="RaceGripLevelReader.cs" />

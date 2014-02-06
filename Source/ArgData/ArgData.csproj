@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Car.cs" />
     <Compile Include="CarColorReader.cs" />
     <Compile Include="DataPositions.cs" />
     <Compile Include="Driver.cs" />

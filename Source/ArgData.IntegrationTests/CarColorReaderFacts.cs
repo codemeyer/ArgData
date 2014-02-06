@@ -54,5 +54,47 @@ namespace ArgData.IntegrationTests
                 colors[15].Should().Be(12);
             }
         }
+        
+
+        public class ReadingCarColorsAsCars : IntegrationTestBase
+        {
+            private readonly CarColorReader _reader;
+
+            public ReadingCarColorsAsCars()
+            {
+                var positions = Substitute.For<DataPositions>();
+                positions.CarColors.Returns(106);
+                _reader = new CarColorReader(GetExampleDataPath("fake.gpexe"), positions);
+            }
+
+            [Fact]
+            public void ReadCarColorsAsCarsReturnsAllCars()
+            {
+                var cars = _reader.ReadCarColorsAsCars();
+
+                cars.Count.Should().Be(18);
+            }
+
+            [Fact]
+            public void ReadCarReturnsExpectedColors()
+            {
+                var cars = _reader.ReadCarColorsAsCars();
+                var car = cars[12];
+
+                car.EngineCover.Should().Be(0);
+                car.CockpitFront.Should().Be(1);
+                car.FrontWingEndplate.Should().Be(2);
+                car.RearWingSide.Should().Be(3);
+                car.NoseSide.Should().Be(4);
+                car.Sidepod.Should().Be(5);
+                car.FrontAndRearWing.Should().Be(6);
+                car.NoseTop.Should().Be(7);
+                car.NoseAngle.Should().Be(8);
+                car.CockpitSide.Should().Be(9);
+                car.EngineCoverSide.Should().Be(10);
+                car.EngineCoverRear.Should().Be(11);
+                car.SidepodTop.Should().Be(12);
+            }
+        }
     }
 }

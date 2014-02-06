@@ -1,4 +1,6 @@
-﻿namespace ArgData
+﻿using System.Collections.Generic;
+
+namespace ArgData
 {
     public class CarColorReader : FileReader
     {
@@ -19,6 +21,19 @@
             byte[] colors = ReadBytes(position, ColorsPerTeam);
 
             return colors;
+        }
+
+        public List<Car> ReadCarColorsAsCars()
+        {
+            var cars = new List<Car>();
+
+            for (int i = 0; i <= 17; i++)
+            {
+                byte[] carBytes = ReadCarColors(i);
+                cars.Add(new Car(carBytes));
+            }
+
+            return cars;
         }
     }
 }

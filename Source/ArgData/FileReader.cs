@@ -52,7 +52,7 @@ namespace ArgData
             var br = new BinaryReader(stream);
 
             br.BaseStream.Position = position;
-            byte[] bytes = br.ReadBytes(16);
+            byte[] bytes = br.ReadBytes(count);
 
             br.Close();
             br.Dispose();

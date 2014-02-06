@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ArgData
 {
@@ -27,13 +28,20 @@ namespace ArgData
         {
             var cars = new List<Car>();
 
+            byte[] allCarBytes = ReadAllCarColors();
+            
             for (int i = 0; i <= 17; i++)
             {
-                byte[] carBytes = ReadCarColors(i);
+                byte[] carBytes = allCarBytes.Skip(i * ColorsPerTeam).Take(ColorsPerTeam).ToArray();
                 cars.Add(new Car(carBytes));
             }
 
             return cars;
+        }
+
+        private byte[] ReadAllCarColors()
+        {
+            return ReadBytes(_dataPositions.CarColors, ColorsPerTeam * 18);
         }
     }
 }

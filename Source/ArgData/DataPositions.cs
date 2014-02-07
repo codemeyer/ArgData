@@ -7,5 +7,6 @@
         public virtual int CarColors { get { return 158500; } }
         public virtual int RaceGripLevels { get { return 158460; } }
         public virtual int QualifyingGripLevels { get { return 158420; } }
+        public virtual int DriverNumbers { get { return 154936; } }
     }
 }

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarColorReaderFacts.cs" />
+    <Compile Include="DriverNumberReaderFacts.cs" />
     <Compile Include="PlayerHorsepowerReaderFacts.cs" />
     <Compile Include="PlayerHorsepowerWriterFacts.cs" />
     <Compile Include="QualifyingGripLevelReaderFacts.cs" />

@@ -44,6 +44,7 @@
     <Compile Include="CarColorReader.cs" />
     <Compile Include="DataPositions.cs" />
     <Compile Include="Driver.cs" />
+    <Compile Include="DriverNumberReader.cs" />
     <Compile Include="FileReader.cs" />
     <Compile Include="FileWriter.cs" />
     <Compile Include="GripLevelReader.cs" />

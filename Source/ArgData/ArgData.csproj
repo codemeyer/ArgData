@@ -45,6 +45,7 @@
     <Compile Include="DataPositions.cs" />
     <Compile Include="Driver.cs" />
     <Compile Include="DriverNumberReader.cs" />
+    <Compile Include="DriverNumberWriter.cs" />
     <Compile Include="FileReader.cs" />
     <Compile Include="FileWriter.cs" />
     <Compile Include="GripLevelReader.cs" />

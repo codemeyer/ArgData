@@ -21,5 +21,16 @@ namespace ArgData
             writer.Close();
             writer.Dispose();
         }
+
+        protected void WriteByte(byte value, int position)
+        {
+            var writer = new BinaryWriter(new FileStream(_exePath, FileMode.OpenOrCreate));
+            writer.BaseStream.Position = position;
+
+            writer.Write(value);
+
+            writer.Close();
+            writer.Dispose();
+        }
     }
 }

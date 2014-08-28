@@ -16,7 +16,7 @@ namespace ArgData.IntegrationTests
         {
             string path = Path.GetTempFileName();
             var writer = new BinaryWriter(new FileStream(path, FileMode.OpenOrCreate));
-            byte[] bytes = new byte[20];
+            byte[] bytes = new byte[40];
             writer.Write(bytes);
             writer.Close();
             writer.Dispose();
@@ -32,6 +32,23 @@ namespace ArgData.IntegrationTests
 
             br.BaseStream.Position = position;
             ushort value = br.ReadUInt16();
+
+            br.Close();
+            br.Dispose();
+            stream.Close();
+            stream.Dispose();
+
+            return value;
+        }
+        
+        protected byte ReadByte(string path, int position)
+        {
+            var stream = new FileStream(path, FileMode.Open);
+
+            var br = new BinaryReader(stream);
+
+            br.BaseStream.Position = position;
+            byte value = br.ReadByte();
 
             br.Close();
             br.Dispose();

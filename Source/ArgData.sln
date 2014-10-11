@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30110.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArgData", "ArgData\ArgData.csproj", "{84965AD5-70AC-4DDF-ACD1-040671510C1A}"
 EndProject
@@ -10,6 +10,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArgData.IntegrationTests", "ArgData.IntegrationTests\ArgData.IntegrationTests.csproj", "{816FA328-6398-44BD-B0D6-0BB30B866635}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArgData.UnitTests", "ArgData.UnitTests\ArgData.UnitTests.csproj", "{5F21905D-D7FF-4C78-B78D-06009F47DA47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1DCE0BDC-2788-4CCE-BD8E-61D9CECA7E92}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -14,9 +14,9 @@ namespace ArgData
         {
             int position = _dataPositions.DriverNumbers;
 
-            byte[] colors = ReadBytes(position, 36);
+            byte[] driverNumbers = ReadBytes(position, 36);
 
-            return colors;
+            return driverNumbers;
         }
     }
 }

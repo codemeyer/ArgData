@@ -10,7 +10,7 @@ namespace ArgData
         }
 
         public string Name { get; set; }
-        
+
         public List<int> Results { get; set; }
     }
 }

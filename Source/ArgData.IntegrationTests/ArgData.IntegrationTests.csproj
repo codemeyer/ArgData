@@ -48,14 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CarColorReaderFacts.cs" />
-    <Compile Include="DriverNumberReaderFacts.cs" />
-    <Compile Include="DriverNumberWriterFacts.cs" />
-    <Compile Include="PlayerHorsepowerReaderFacts.cs" />
-    <Compile Include="PlayerHorsepowerWriterFacts.cs" />
-    <Compile Include="QualifyingGripLevelReaderFacts.cs" />
-    <Compile Include="RaceGripLevelReaderFacts.cs" />
-    <Compile Include="TeamHorsepowerReaderFacts.cs" />
+    <Compile Include="CarColorEditorFacts.cs" />
     <Compile Include="NamesFileParserFacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SavedGameParserFacts.cs" />

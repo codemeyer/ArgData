@@ -8,9 +8,10 @@ namespace ArgData.IntegrationTests
         public class ReadingHorsepowerValuesFromOriginalExeFile : IntegrationTestBase
         {
             [Fact]
-            public void TeamsHaveCorrectHorsepowerLevels()
+            public void ReturnsCorrectHorsepowerLevelsForEachTeam()
             {
-                var expectedValues = new[] { 716, 676, 716, 650, 620, 625, 620, 665, 610, 680, 655, 665, 640, 700, 630, 610, 680, 615 };
+                var expectedValues = new[] { 716, 676, 716, 650, 620, 625, 620, 665, 610, 680,
+                    655, 665, 640, 700, 630, 610, 680, 615 };
 
                 string exampleDataPath = GetExampleDataPath("gp-orig.exe");
                 var exeEditor = new GpExeEditor(exampleDataPath);

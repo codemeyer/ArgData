@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="CarColorEditorFacts.cs" />
     <Compile Include="NamesFileParserFacts.cs" />
+    <Compile Include="PlayerHorsepowerEditorFacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SavedGameParserFacts.cs" />
     <Compile Include="IntegrationTestBase.cs" />

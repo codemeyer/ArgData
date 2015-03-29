@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 
 namespace ArgData.IntegrationTests
@@ -7,9 +8,17 @@ namespace ArgData.IntegrationTests
     {
         protected string GetExampleDataPath(string fileName)
         {
-            string assemblyLocation = Assembly.GetExecutingAssembly().Location;
-            string assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
-            return Path.Combine(assemblyDirectory,  string.Format(@"ExampleData\{0}", fileName));
+            string exampleDataEnvironment = Environment.GetEnvironmentVariable("BUILD_ARGDATA_EXAMPLEDATA");
+            if (!string.IsNullOrEmpty(exampleDataEnvironment))
+            {
+                return Path.Combine(exampleDataEnvironment, fileName);
+            }
+            else
+            {
+                string assemblyLocation = Assembly.GetExecutingAssembly().Location;
+                string assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
+                return Path.Combine(assemblyDirectory, string.Format(@"ExampleData\{0}", fileName));
+            }
         }
 
         protected string GetTempFile()
@@ -40,7 +49,7 @@ namespace ArgData.IntegrationTests
 
             return value;
         }
-        
+
         protected byte ReadByte(string path, int position)
         {
             var stream = new FileStream(path, FileMode.Open);

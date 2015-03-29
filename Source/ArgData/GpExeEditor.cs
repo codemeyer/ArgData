@@ -75,7 +75,7 @@ namespace ArgData
 
         internal int GetQualifyingGripLevelPositions(int driverIndex)
         {
-            return new DataPositions().RaceGripLevels + driverIndex;
+            return new DataPositions().QualifyingGripLevels + driverIndex;
         }
     }
 }

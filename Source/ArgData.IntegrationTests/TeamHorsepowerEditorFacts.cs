@@ -13,7 +13,7 @@ namespace ArgData.IntegrationTests
                 var expectedValues = new[] { 716, 676, 716, 650, 620, 625, 620, 665, 610, 680,
                     655, 665, 640, 700, 630, 610, 680, 615 };
 
-                string exampleDataPath = GetExampleDataPath("gp-orig.exe");
+                string exampleDataPath = GetCopyOfExampleData("gp-orig.exe");
                 var exeEditor = new GpExeEditor(exampleDataPath);
                 var horsepowerEditor = new TeamHorsepowerEditor(exeEditor);
 
@@ -24,6 +24,8 @@ namespace ArgData.IntegrationTests
 
                     fileHP.Should().Be(expectedHP);
                 }
+
+                DeleteFile(exampleDataPath);
             }
         }
 

@@ -57,9 +57,9 @@
     <Compile Include="NamesFileParserFacts.cs" />
     <Compile Include="PlayerHorsepowerEditorFacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SavedGameParserFacts.cs" />
+    <Compile Include="SavedGameFileParserFacts.cs" />
     <Compile Include="IntegrationTestBase.cs" />
-    <Compile Include="TeamHorsepowerFacts.cs" />
+    <Compile Include="TeamHorsepowerEditorFacts.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExampleData\season_after_r3.gam">

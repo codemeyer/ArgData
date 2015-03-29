@@ -21,6 +21,15 @@ namespace ArgData.IntegrationTests
             }
         }
 
+        protected string GetCopyOfExampleData(string fileName)
+        {
+            string originalLocation = GetExampleDataPath(fileName);
+            string tempFile = Path.GetTempFileName() + Path.GetExtension(fileName);
+            File.Copy(originalLocation, tempFile);
+
+            return tempFile;
+        }
+
         protected string GetTempFile()
         {
             string path = Path.GetTempFileName();

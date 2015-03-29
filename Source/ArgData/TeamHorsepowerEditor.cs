@@ -17,5 +17,12 @@
 
             return horsepower;
         }
+
+        public void WriteTeamHorsepower(int teamIndex, int horsepower)
+        {
+            int position = _exeEditor.GetTeamHorsepowerPosition(teamIndex);
+
+            new FileWriter(_exeEditor.ExePath).WriteUInt16(horsepower, position);
+        }
     }
 }

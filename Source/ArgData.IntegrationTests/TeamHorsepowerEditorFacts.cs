@@ -26,5 +26,34 @@ namespace ArgData.IntegrationTests
                 }
             }
         }
+
+        public class WritingHorsepowerValues : IntegrationTestBase
+        {
+            [Fact]
+            public void Setup()
+            {
+                string exampleDataFile = GetCopyOfExampleData("gp-orig.exe");
+
+                var exeEditor = new GpExeEditor(exampleDataFile);
+                var horsepowerEditor = new TeamHorsepowerEditor(exeEditor);
+
+                int startValue = 700;
+
+                for (int i = 0; i < 18; i++)
+                {
+                    horsepowerEditor.WriteTeamHorsepower(i, startValue);
+                    startValue++;
+                }
+
+                for (int i = 0; i < 18; i++)
+                {
+                    var value = horsepowerEditor.ReadTeamHorsepower(i);
+
+                    value.Should().Be(700 + i);
+                }
+
+                DeleteFile(exampleDataFile);
+            }
+        }
     }
 }

@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="CarColorEditorFacts.cs" />
     <Compile Include="DefaultData\DefaultCarColors.cs" />
+    <Compile Include="FileInspectorFacts.cs" />
+    <Compile Include="GpExeEditorFacts.cs" />
     <Compile Include="GripLevelEditorFacts.cs" />
     <Compile Include="NamesFileParserFacts.cs" />
     <Compile Include="PlayerHorsepowerEditorFacts.cs" />

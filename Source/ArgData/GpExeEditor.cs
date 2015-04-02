@@ -1,3 +1,5 @@
+using System;
+
 namespace ArgData
 {
     /// <summary>
@@ -14,7 +16,19 @@ namespace ArgData
         public GpExeEditor(string exePath)
         {
             _exePath = exePath;
-            // should be a valid gp.exe!
+
+            CheckFileIsGpExe(exePath);
+        }
+
+        private void CheckFileIsGpExe(string exePath)
+        {
+            var exeInfo = new FileInspector().IsGpExe(exePath);
+
+            if (exeInfo != GpExeInfo.European105)
+            {
+                string msg = "";
+                throw new Exception();
+            }
         }
 
         public string ExePath

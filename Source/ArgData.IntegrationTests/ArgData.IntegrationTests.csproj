@@ -62,7 +62,7 @@
     <Compile Include="PlayerHorsepowerEditorFacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SavedGameFileParserFacts.cs" />
-    <Compile Include="IntegrationTestBase.cs" />
+    <Compile Include="ExampleDataHelper.cs" />
     <Compile Include="TeamHorsepowerEditorFacts.cs" />
   </ItemGroup>
   <ItemGroup>

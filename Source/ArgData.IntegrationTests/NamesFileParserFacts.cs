@@ -8,13 +8,13 @@ namespace ArgData.IntegrationTests
 {
     namespace NamesFileParserFacts
     {
-        public class ParsingNameFile : IntegrationTestBase
+        public class ParsingNameFile
         {
             private readonly NamesFile _data;
 
             public ParsingNameFile()
             {
-                string exampleDataPath = GetExampleDataPath("names1991.nam");
+                string exampleDataPath = ExampleDataHelper.GetExampleDataPath("names1991.nam");
                 byte[] bytes = File.ReadAllBytes(exampleDataPath);
 
                 var parser = new NamesFileParser();

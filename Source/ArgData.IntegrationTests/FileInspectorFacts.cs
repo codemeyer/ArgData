@@ -3,12 +3,12 @@ using Xunit;
 
 namespace ArgData.IntegrationTests
 {
-    public class FileInspectorFacts : IntegrationTestBase
+    public class FileInspectorFacts
     {
         [Fact]
         public void EuropeanGpExeReturnsExpectedResult()
         {
-            string path = GetExampleDataPath("GP-ORIG.EXE");
+            string path = ExampleDataHelper.GpExePath();
             var fileInspector = new FileInspector();
 
             var exeInfo = fileInspector.IsGpExe(path);
@@ -19,7 +19,7 @@ namespace ArgData.IntegrationTests
         [Fact]
         public void SomeOtherFileReturnsUnknown()
         {
-            string path = GetExampleDataPath("fake.gpexe");
+            string path = ExampleDataHelper.GetExampleDataPath("fake.gpexe");
             var fileInspector = new FileInspector();
 
             var exeInfo = fileInspector.IsGpExe(path);

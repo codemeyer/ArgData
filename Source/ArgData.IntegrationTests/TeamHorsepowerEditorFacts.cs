@@ -5,7 +5,7 @@ namespace ArgData.IntegrationTests
 {
     namespace TeamHorsepowerFacts
     {
-        public class ReadingHorsepowerValuesFromOriginalExeFile : IntegrationTestBase
+        public class ReadingHorsepowerValuesFromOriginalExeFile
         {
             [Fact]
             public void ReturnsCorrectHorsepowerLevelsForEachTeam()
@@ -13,7 +13,7 @@ namespace ArgData.IntegrationTests
                 var expectedValues = new[] { 716, 676, 716, 650, 620, 625, 620, 665, 610, 680,
                     655, 665, 640, 700, 630, 610, 680, 615 };
 
-                string exampleDataPath = GetCopyOfExampleData("gp-orig.exe");
+                string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
                 var exeEditor = new GpExeEditor(exampleDataPath);
                 var horsepowerEditor = new TeamHorsepowerEditor(exeEditor);
 
@@ -25,16 +25,16 @@ namespace ArgData.IntegrationTests
                     fileHP.Should().Be(expectedHP);
                 }
 
-                DeleteFile(exampleDataPath);
+                ExampleDataHelper.DeleteFile(exampleDataPath);
             }
         }
 
-        public class WritingHorsepowerValues : IntegrationTestBase
+        public class WritingHorsepowerValues
         {
             [Fact]
             public void Setup()
             {
-                string exampleDataFile = GetCopyOfExampleData("gp-orig.exe");
+                string exampleDataFile = ExampleDataHelper.GetCopyOfExampleData("gp-orig.exe");
 
                 var exeEditor = new GpExeEditor(exampleDataFile);
                 var horsepowerEditor = new TeamHorsepowerEditor(exeEditor);
@@ -54,7 +54,7 @@ namespace ArgData.IntegrationTests
                     value.Should().Be(700 + i);
                 }
 
-                DeleteFile(exampleDataFile);
+                ExampleDataHelper.DeleteFile(exampleDataFile);
             }
         }
     }

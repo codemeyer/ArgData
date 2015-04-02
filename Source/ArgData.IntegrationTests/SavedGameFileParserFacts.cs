@@ -7,13 +7,13 @@ namespace ArgData.IntegrationTests
 {
     namespace SavedGameFileParserFacts
     {
-        public class ParsingSavedGameFile : IntegrationTestBase
+        public class ParsingSavedGameFile
         {
             private readonly SavedGame _data;
 
             public ParsingSavedGameFile()
             {
-                string exampleDataPath = GetExampleDataPath("season_after_r3.gam");
+                string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_after_r3.gam");
                 byte[] bytes = File.ReadAllBytes(exampleDataPath);
 
                 var parser = new SavedGameFileParser();

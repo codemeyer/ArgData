@@ -4,12 +4,12 @@ using Xunit;
 
 namespace ArgData.IntegrationTests
 {
-    public class GpExeEditorFacts : IntegrationTestBase
+    public class GpExeEditorFacts
     {
         [Fact]
         public void NotGpExeThrows()
         {
-            string dataPath = GetExampleDataPath("fake.gpexe");
+            string dataPath = ExampleDataHelper.GetExampleDataPath("fake.gpexe");
 
             Action act = () => new GpExeEditor(dataPath);
 
@@ -19,7 +19,7 @@ namespace ArgData.IntegrationTests
         [Fact]
         public void IsGpExeShouldJustWork()
         {
-            string dataPath = GetExampleDataPath("GP-ORIG.EXE");
+            string dataPath = ExampleDataHelper.GpExePath();
 
             var exeEditor = new GpExeEditor(dataPath);
 

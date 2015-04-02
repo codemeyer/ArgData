@@ -5,12 +5,12 @@ namespace ArgData.IntegrationTests
 {
     namespace PlayerHorsepowerEditorFacts
     {
-        public class ReadingPlayerHorsepowerValuesFromOriginalExeFile : IntegrationTestBase
+        public class ReadingPlayerHorsepowerValuesFromOriginalExeFile
         {
             [Fact]
             public void ReturnsCorrectDefaultData()
             {
-                string exampleDataPath = GetExampleDataPath("gp-orig.exe");
+                string exampleDataPath = ExampleDataHelper.GpExePath();
                 var exeEditor = new GpExeEditor(exampleDataPath);
                 var horsepowerEditor = new PlayerHorsepowerEditor(exeEditor);
 

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace ArgData
+namespace ArgData.IO
 {
     internal class FileWriter
     {

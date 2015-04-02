@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using ArgData.Entities;
+using FluentAssertions;
 using Xunit;
 
 namespace ArgData.UnitTests

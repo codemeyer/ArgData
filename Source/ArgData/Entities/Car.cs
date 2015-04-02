@@ -1,4 +1,4 @@
-﻿namespace ArgData
+﻿namespace ArgData.Entities
 {
     public class Car
     {
@@ -13,33 +13,33 @@
             SetColors(carBytes);
         }
 
-        public byte FrontAndRearWing { get; set; }
+        public byte FrontAndRearWing { get; private set; }
 
-        public byte FrontWingEndplate { get; set; }
+        public byte FrontWingEndplate { get; private set; }
 
-        public byte RearWingSide { get; set; }
+        public byte RearWingSide { get; private set; }
 
-        public byte Sidepod { get; set; }
+        public byte Sidepod { get; private set; }
 
-        public byte SidepodTop { get; set; }
+        public byte SidepodTop { get; private set; }
 
-        public byte EngineCover { get; set; }
+        public byte EngineCover { get; private set; }
 
-        public byte EngineCoverSide { get; set; }
+        public byte EngineCoverSide { get; private set; }
 
-        public byte EngineCoverRear { get; set; }
+        public byte EngineCoverRear { get; private set; }
 
-        public byte CockpitFront { get; set; }
+        public byte CockpitFront { get; private set; }
 
-        public byte CockpitSide { get; set; }
+        public byte CockpitSide { get; private set; }
 
-        public byte NoseTop { get; set; }
+        public byte NoseTop { get; private set; }
 
-        public byte NoseAngle { get; set; }
+        public byte NoseAngle { get; private set; }
 
-        public byte NoseSide { get; set; }
+        public byte NoseSide { get; private set; }
 
-        public void SetColors(byte[] carBytes)
+        internal void SetColors(byte[] carBytes)
         {
             // 0, 9 and 10 are not used
             EngineCover = carBytes[1];

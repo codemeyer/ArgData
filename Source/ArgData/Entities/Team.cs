@@ -1,4 +1,4 @@
-namespace ArgData
+namespace ArgData.Entities
 {
     public class Team
     {

@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Linq;
+using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
 

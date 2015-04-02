@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
 

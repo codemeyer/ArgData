@@ -2,11 +2,11 @@
 {
     public class DataPositions
     {
-        public virtual int TeamHorsepower { get { return 158380; } }
-        public virtual int PlayerHorsepower { get { return 19848; } }
-        public virtual int CarColors { get { return 158500; } }
-        public virtual int RaceGripLevels { get { return 158460; } }
-        public virtual int QualifyingGripLevels { get { return 158420; } }
-        public virtual int DriverNumbers { get { return 154936; } }
+        public int TeamHorsepower { get { return 158380; } }
+        public int PlayerHorsepower { get { return 19848; } }
+        public int CarColors { get { return 158500; } }
+        public int RaceGripLevels { get { return 158460; } }
+        public int QualifyingGripLevels { get { return 158420; } }
+        public int DriverNumbers { get { return 154936; } }
     }
 }

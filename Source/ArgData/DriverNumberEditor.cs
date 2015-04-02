@@ -1,4 +1,6 @@
-﻿namespace ArgData
+﻿using ArgData.IO;
+
+namespace ArgData
 {
     public class DriverNumberEditor
     {

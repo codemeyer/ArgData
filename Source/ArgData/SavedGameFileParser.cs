@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ArgData.Entities;
 
 namespace ArgData
 {
@@ -41,9 +42,9 @@ namespace ArgData
                 }
 
                 var driver = new Driver
-                                    {
-                                        Name = name
-                                    };
+                {
+                    Name = name
+                };
 
                 driver.Results = GetDriverResults(bytes, driverIndex, racesCompleted);
 

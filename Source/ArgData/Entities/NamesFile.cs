@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ArgData
+namespace ArgData.Entities
 {
     public class NamesFile
     {

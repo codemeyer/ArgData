@@ -6,6 +6,6 @@ namespace ArgData.Entities
     {
         public int NumberOfRacesCompleted { get; set; }
 
-        public List<Driver> Drivers { get; set; }
+        public List<SavedGameDriver> Drivers { get; set; }
     }
 }

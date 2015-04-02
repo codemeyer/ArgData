@@ -27,9 +27,9 @@ namespace ArgData
             return races;
         }
 
-        private List<Driver> ParseDrivers(byte[] bytes, int racesCompleted)
+        private List<SavedGameDriver> ParseDrivers(byte[] bytes, int racesCompleted)
         {
-            var drivers = new List<Driver>();
+            var drivers = new List<SavedGameDriver>();
 
             for (int driverIndex = 0; driverIndex <= 34; driverIndex++)
             {
@@ -41,12 +41,11 @@ namespace ArgData
                     continue;
                 }
 
-                var driver = new Driver
+                var driver = new SavedGameDriver
                 {
-                    Name = name
+                    Name = name,
+                    Results = GetDriverResults(bytes, driverIndex, racesCompleted)
                 };
-
-                driver.Results = GetDriverResults(bytes, driverIndex, racesCompleted);
 
                 drivers.Add(driver);
             }

@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
+using ArgData.Entities;
 
 namespace ArgData
 {
@@ -22,18 +21,16 @@ namespace ArgData
             return new Car(colors);
         }
 
-
-        public CarColorList ReadCarColors()
+        public CarList ReadCarColors()
         {
-            int colorsPerTeam = GpExeEditor.ColorsPerTeam;
-
             byte[] allCarBytes = ReadAllCarColors();
 
-            var list = new CarColorList();
+            var list = new CarList();
 
-            for (int i = 0; i <= 17; i++)
+            for (int i = 0; i < GpExeEditor.NumberOfTeams; i++)
             {
-                byte[] carBytes = allCarBytes.Skip(i * colorsPerTeam).Take(colorsPerTeam).ToArray();
+                byte[] carBytes = allCarBytes.Skip(i * GpExeEditor.ColorsPerTeam)
+                    .Take(GpExeEditor.ColorsPerTeam).ToArray();
                 list[i].SetColors(carBytes);
             }
 
@@ -44,7 +41,7 @@ namespace ArgData
         {
             return new FileReader(_exeEditor.ExePath).ReadBytes(
                 _exeEditor.GetCarColorsPosition(),
-                GpExeEditor.ColorsPerTeam * 18);
+                GpExeEditor.ColorsPerTeam * GpExeEditor.NumberOfTeams);
         }
 
         public void WriteCarColors(Car car, int teamIndex)
@@ -55,16 +52,11 @@ namespace ArgData
             new FileWriter(_exeEditor.ExePath).WriteBytes(carBytes, position);
         }
 
-        public void WriteCarColors(CarColorList carColorList)
+        public void WriteCarColors(CarList carList)
         {
-            //byte[] allCarBytes = new byte[];
-
             int teamIndex = 0;
 
-            // TODO: hur få CarCOlorList så att man kan skriva "var Car" utan att få object?
-            // TODO: skriv allt på en gång, ist för bil-för-bil
-
-            foreach (Car car in carColorList)
+            foreach (Car car in carList)
             {
                 byte[] carBytes = car.GetColors();
                 int position = _exeEditor.GetCarColorsPosition(teamIndex);
@@ -73,37 +65,6 @@ namespace ArgData
 
                 teamIndex++;
             }
-        }
-
-    }
-
-    public class CarColorList : IEnumerable
-    {
-        private readonly List<Car> _list;
-
-        public Car this[int index]
-        {
-            get { return _list[index]; }
-        }
-
-        public CarColorList()
-        {
-            _list = new List<Car>();
-            for (int i = 0; i <= 17; i++)
-            {
-                _list.Add(new Car());
-            }
-            // TODO: 1991 colors
-        }
-
-        //IEnumerator<Car> IEnumerable<Car>.GetEnumerator()
-        //{
-        //    return _list.GetEnumerator();
-        //}
-
-        public IEnumerator GetEnumerator()
-        {
-            return _list.GetEnumerator();
         }
     }
 }

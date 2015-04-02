@@ -1,44 +1,25 @@
-﻿using Xunit;
+﻿using ArgData.IntegrationTests.DefaultData;
+using FluentAssertions;
+using Xunit;
 
 namespace ArgData.IntegrationTests
 {
     public class CarColorEditorFacts : IntegrationTestBase
     {
         [Fact]
-        public void ReadAndWrite()
+        public void ReadingOriginalCarColorsReturnsExpectedValues()
         {
-            var carColorList = new CarColorList();
-            for (byte i = 0; i <= 17; i++)
+            var expectedCarColors = new DefaultCarColors();
+            string exampleDataPath = GetExampleDataPath("gp-orig.exe");
+            var exeEditor = new GpExeEditor(exampleDataPath);
+            var carColorEditor = new CarColorEditor(exeEditor);
+
+            var carColors = carColorEditor.ReadCarColors();
+
+            for(int i = 0; i < 1; i++)
             {
-                var car = carColorList[i];
-
-                car.CockpitFront =
-                   car.CockpitSide =
-                   car.EngineCover =
-                   car.EngineCoverRear =
-                   car.EngineCoverSide =
-                   car.FrontAndRearWing =
-                   car.FrontWingEndplate =
-                   car.NoseAngle =
-                   car.NoseSide =
-                   car.NoseTop =
-                   car.RearWingSide =
-                   car.Sidepod =
-                   car.SidepodTop = i;
+                carColors[i].ShouldBeEquivalentTo(expectedCarColors[i]);
             }
-
-            var testableGpExe = new TestableGpExe(GetExampleDataPath("fake.gpexe"));
-            var editor = new CarColorEditor(testableGpExe);
-
         }
-    }
-
-    public class TestableGpExe : GpExeEditor
-    {
-        public TestableGpExe(string exePath) : base(exePath)
-        {
-        }
-
-        
     }
 }

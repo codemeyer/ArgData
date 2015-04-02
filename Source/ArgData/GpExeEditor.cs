@@ -34,6 +34,8 @@ namespace ArgData
 
 
 
+        public const int NumberOfTeams = 18;
+
 
 
         internal int GetPlayerHorsepowerPosition()

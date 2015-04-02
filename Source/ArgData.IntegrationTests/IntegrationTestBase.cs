@@ -42,7 +42,7 @@ namespace ArgData.IntegrationTests
             return path;
         }
 
-        protected ushort ReadUShort(string path, int position)
+        protected ushort ReadUInt16(string path, int position)
         {
             var stream = new FileStream(path, FileMode.Open);
 

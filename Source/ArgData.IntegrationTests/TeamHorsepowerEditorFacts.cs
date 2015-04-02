@@ -41,13 +41,13 @@ namespace ArgData.IntegrationTests
 
                 int startValue = 700;
 
-                for (int i = 0; i < 18; i++)
+                for (int i = 0; i < GpExeEditor.NumberOfTeams; i++)
                 {
                     horsepowerEditor.WriteTeamHorsepower(i, startValue);
                     startValue++;
                 }
 
-                for (int i = 0; i < 18; i++)
+                for (int i = 0; i < GpExeEditor.NumberOfTeams; i++)
                 {
                     var value = horsepowerEditor.ReadTeamHorsepower(i);
 

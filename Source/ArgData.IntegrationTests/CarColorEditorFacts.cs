@@ -74,6 +74,8 @@ namespace ArgData.IntegrationTests
 
                 expectedColor++;
             }
+
+            ExampleDataHelper.DeleteFile(exampleDataPath);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Reflection;
 
 namespace ArgData.IntegrationTests
 {
@@ -19,16 +18,8 @@ namespace ArgData.IntegrationTests
         internal static string GetExampleDataPath(string fileName)
         {
             string exampleDataEnvironment = Environment.GetEnvironmentVariable("BUILD_ARGDATA_EXAMPLEDATA");
-            if (!string.IsNullOrEmpty(exampleDataEnvironment))
-            {
-                return Path.Combine(exampleDataEnvironment, fileName);
-            }
-            else
-            {
-                string assemblyLocation = Assembly.GetExecutingAssembly().Location;
-                string assemblyDirectory = Path.GetDirectoryName(assemblyLocation);
-                return Path.Combine(assemblyDirectory, string.Format(@"ExampleData\{0}", fileName));
-            }
+
+            return Path.Combine(exampleDataEnvironment ?? string.Empty, fileName);
         }
 
         internal static string GetCopyOfExampleData(string fileName)

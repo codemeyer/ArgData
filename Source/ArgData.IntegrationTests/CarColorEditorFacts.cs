@@ -77,5 +77,53 @@ namespace ArgData.IntegrationTests
 
             ExampleDataHelper.DeleteFile(exampleDataPath);
         }
+
+        [Fact]
+        public void WriteAndReadCar()
+        {
+            var carList = new CarList();
+            string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
+            var exeEditor = new GpExeEditor(exampleDataPath);
+            var car = new Car
+            {
+                CockpitFront = 1,
+                CockpitSide = 2,
+                EngineCover = 3,
+                EngineCoverRear = 4,
+                EngineCoverSide = 5,
+                FrontAndRearWing = 6,
+                FrontWingEndplate = 7,
+                NoseAngle = 8,
+                NoseSide = 9,
+                NoseTop = 10,
+                RearWingSide = 11,
+                Sidepod = 12,
+                SidepodTop = 13
+            };
+            carList[0] = car;
+
+            var carColorEditor = new CarColorEditor(exeEditor);
+
+            carColorEditor.WriteCarColors(carList);
+
+            var carColors = new CarColorEditor(exeEditor).ReadCarColors();
+            var actualCar = carColors[0];
+
+            actualCar.CockpitFront.Should().Be(1);
+            actualCar.CockpitSide.Should().Be(2);
+            actualCar.EngineCover.Should().Be(3);
+            actualCar.EngineCoverRear.Should().Be(4);
+            actualCar.EngineCoverSide.Should().Be(5);
+            actualCar.FrontAndRearWing.Should().Be(6);
+            actualCar.FrontWingEndplate.Should().Be(7);
+            actualCar.NoseAngle.Should().Be(8);
+            actualCar.NoseSide.Should().Be(9);
+            actualCar.NoseTop.Should().Be(10);
+            actualCar.RearWingSide.Should().Be(11);
+            actualCar.Sidepod.Should().Be(12);
+            actualCar.SidepodTop.Should().Be(13);
+
+            ExampleDataHelper.DeleteFile(exampleDataPath);
+        }
     }
 }

@@ -31,25 +31,34 @@ namespace ArgData
             }
         }
 
+        /// <summary>
+        /// Gets the path to the GP.EXE file.
+        /// </summary>
         public string ExePath
         {
             get { return _exePath; }
         }
 
+        /// <summary>
+        /// Reads the horsepower value for the player.
+        /// </summary>
+        /// <returns>Player horsepower value.</returns>
         public int ReadPlayerHorsepower()
         {
             return new PlayerHorsepowerEditor(this).ReadPlayerHorsepower();
         }
 
+        /// <summary>
+        /// Writes the horsepower value for the player. The default value is 716.
+        /// </summary>
+        /// <param name="horsepower">Player horsepower value.</param>
         public void WritePlayerHorsepower(int horsepower)
         {
             new PlayerHorsepowerEditor(this).WritePlayerHorsepower(horsepower);
         }
 
 
-
         public const int NumberOfTeams = 18;
-
 
 
         internal int GetPlayerHorsepowerPosition()

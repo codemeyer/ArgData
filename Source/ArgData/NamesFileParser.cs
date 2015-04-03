@@ -5,11 +5,19 @@ using ArgData.Entities;
 
 namespace ArgData
 {
+    /// <summary>
+    /// Parses a names file.
+    /// </summary>
     public class NamesFileParser
     {
         private const int DriverNameLength = 24;
         private const int TeamNameLength = 13;
 
+        /// <summary>
+        /// Parse a names file.
+        /// </summary>
+        /// <param name="nameData"></param>
+        /// <returns></returns>
         public NamesFile Parse(byte[] nameData)
         {
             var data = new NamesFile();

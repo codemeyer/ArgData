@@ -5,12 +5,20 @@ using ArgData.Entities;
 
 namespace ArgData
 {
+    /// <summary>
+    /// Parses saved game files.
+    /// </summary>
     public class SavedGameFileParser
     {
         private const int DriverNameLength = 24;
         private const int ResultsStartPoint = 828;
         private const int RacesPerSeason = 16;
 
+        /// <summary>
+        /// Parses a saved game file.
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns>SavedGame.</returns>
         public SavedGame Parse(byte[] bytes)
         {
             var savedGame = new SavedGame();
@@ -72,7 +80,7 @@ namespace ArgData
 
                 results.Add(result);
             }
-            
+
             return results;
         }
     }

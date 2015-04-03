@@ -2,12 +2,22 @@
 
 namespace ArgData.Entities
 {
+    /// <summary>
+    /// A Car represents a car with its various colors.
+    /// </summary>
     public class Car
     {
+        /// <summary>
+        /// Initializes a new instance of a Car with all colors set to 0 (black).
+        /// </summary>
         public Car() : this(new byte[16])
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of a Car with the specified colors.
+        /// </summary>
+        /// <param name="carColorBytes">The colors to set. Must be exactly 16.</param>
         public Car(byte[] carColorBytes)
         {
             if (carColorBytes.Length != GpExeEditor.ColorsPerTeam)
@@ -18,30 +28,69 @@ namespace ArgData.Entities
             SetColors(carColorBytes);
         }
 
+        /// <summary>
+        /// Gets or sets the color of the front and rear wing elements.
+        /// </summary>
         public byte FrontAndRearWing { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the endplate of the front wing.
+        /// </summary>
         public byte FrontWingEndplate { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the side of the rear wing.
+        /// </summary>
         public byte RearWingSide { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the vertical part of the sidepod.
+        /// </summary>
         public byte Sidepod { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the top part of the sidepod.
+        /// </summary>
         public byte SidepodTop { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the main upper part of the engine cover.
+        /// </summary>
         public byte EngineCover { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the lower part of the engine cover.
+        /// </summary>
         public byte EngineCoverSide { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the rear, lower part of the engine cover.
+        /// </summary>
         public byte EngineCoverRear { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the part just in front of the cockpit opening.
+        /// </summary>
         public byte CockpitFront { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the side of the cockpit.
+        /// </summary>
         public byte CockpitSide { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the top part of the nose-cone.
+        /// </summary>
         public byte NoseTop { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the angled part between the top and side of the nose-cone.
+        /// </summary>
         public byte NoseAngle { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the color of the side of the nose-cone.
+        /// </summary>
         public byte NoseSide { get; private set; }
 
         internal void SetColors(byte[] carBytes)

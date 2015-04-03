@@ -4,11 +4,19 @@ using System.Linq;
 
 namespace ArgData
 {
+    /// <summary>
+    /// Color palette for F1GP.
+    /// </summary>
     public static class Palette
     {
         private static Dictionary<int, Color> _palette;
         private static List<List<int>> _ranges;
 
+        /// <summary>
+        /// Get the color at the specified index in the palette.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public static Color GetColor(int index)
         {
             return _palette[index];
@@ -351,7 +359,7 @@ namespace ArgData
 
             return range;
         }
-        
+
         private static List<int> CreateReverseRange(int from, int to)
         {
             var range = new List<int>();
@@ -364,6 +372,11 @@ namespace ArgData
             return range;
         }
 
+        /// <summary>
+        /// Gets the next brightest color in the color range of the specified color.
+        /// </summary>
+        /// <param name="index">Index of color to get brighter color for.</param>
+        /// <returns>The next brightest color in the color range. If there is no brighter color, the specified color is returned.</returns>
         public static int GetBrighterColor(int index)
         {
             List<int> range = GetRangeForColor(index);
@@ -377,6 +390,11 @@ namespace ArgData
             return index;
         }
 
+        /// <summary>
+        /// Gets the next darkest color in the color range of the specified color.
+        /// </summary>
+        /// <param name="index">Index of color to get darker color for.</param>
+        /// <returns>The next darkest color in the color range. If there is no darkest color, the specified color is returned.</returns>
         public static int GetDarkerColor(int index)
         {
             List<int> range = GetRangeForColor(index);
@@ -386,10 +404,15 @@ namespace ArgData
             {
                 return range[indexInRange - 1];
             }
-        
+
             return index;
         }
 
+        /// <summary>
+        /// Gets the range of colors for the specified color.
+        /// </summary>
+        /// <param name="index">Index of color to get range for.</param>
+        /// <returns>The color range as a list of indexes.</returns>
         public static List<int> GetRangeForColor(int index)
         {
             return _ranges.FirstOrDefault(r => r.Contains(index));

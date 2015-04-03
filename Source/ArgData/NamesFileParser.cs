@@ -20,10 +20,10 @@ namespace ArgData
         /// <returns></returns>
         public NamesFile Parse(byte[] nameData)
         {
-            var data = new NamesFile();
+            var drivers = ParseDrivers(nameData);
+            var teams = ParseTeams(nameData);
 
-            data.Drivers = ParseDrivers(nameData);
-            data.Teams = ParseTeams(nameData);
+            var data = new NamesFile(drivers, teams);
 
             return data;
         }

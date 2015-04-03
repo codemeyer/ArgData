@@ -17,13 +17,22 @@ namespace ArgData.Entities
         }
 
         /// <summary>
+        /// Initializes a new instance of a NamesFile.
+        /// </summary>
+        public NamesFile(List<Driver> drivers, List<Team> teams)
+        {
+            Drivers = drivers;
+            Teams = teams;
+        }
+
+        /// <summary>
         /// List of drivers.
         /// </summary>
-        public List<Driver> Drivers { get; set; }
+        public List<Driver> Drivers { get; private set; }
 
         /// <summary>
         /// List of teams.
         /// </summary>
-        public List<Team> Teams { get; set; }
+        public List<Team> Teams { get; private set; }
     }
 }

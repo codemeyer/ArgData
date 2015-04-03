@@ -21,10 +21,10 @@ namespace ArgData
         /// <returns>SavedGame.</returns>
         public SavedGame Parse(byte[] bytes)
         {
-            var savedGame = new SavedGame();
+            int numberOfRacesCompleted = GetNumberOfRacesCompleted(bytes);
+            List<SavedGameDriver> drivers = ParseDrivers(bytes, numberOfRacesCompleted);
 
-            savedGame.NumberOfRacesCompleted = GetNumberOfRacesCompleted(bytes);
-            savedGame.Drivers = ParseDrivers(bytes, savedGame.NumberOfRacesCompleted);
+            var savedGame = new SavedGame(drivers, numberOfRacesCompleted);
 
             return savedGame;
         }

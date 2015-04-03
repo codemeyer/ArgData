@@ -59,16 +59,16 @@ namespace ArgData.IntegrationTests
                 carList[i] = new Car(new [] { b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b });
             }
 
-            string exampleDataPath = ExampleDataHelper.GetCopyOfExampleData("gp-orig.exe");
+            string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
             var exeEditor = new GpExeEditor(exampleDataPath);
             var carColorEditor = new CarColorEditor(exeEditor);
 
             carColorEditor.WriteCarColors(carList);
 
-            var readBack = new CarColorEditor(exeEditor).ReadCarColors();
+            var carColors = new CarColorEditor(exeEditor).ReadCarColors();
 
             byte expectedColor = 1;
-            foreach (Car car in readBack)
+            foreach (Car car in carColors)
             {
                 car.NoseTop.Should().Be(expectedColor);
 

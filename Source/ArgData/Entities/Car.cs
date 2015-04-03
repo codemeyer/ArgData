@@ -1,4 +1,6 @@
-﻿namespace ArgData.Entities
+﻿using System;
+
+namespace ArgData.Entities
 {
     public class Car
     {
@@ -6,11 +8,14 @@
         {
         }
 
-        public Car(byte[] carBytes)
+        public Car(byte[] carColorBytes)
         {
-            // TODO: verify that the byte[] contains the correct number of items
+            if (carColorBytes.Length != GpExeEditor.ColorsPerTeam)
+            {
+                throw new Exception(string.Format("Car must be created with {0} colors", GpExeEditor.ColorsPerTeam));
+            }
 
-            SetColors(carBytes);
+            SetColors(carColorBytes);
         }
 
         public byte FrontAndRearWing { get; private set; }
@@ -57,11 +62,15 @@
             SidepodTop = carBytes[15];
         }
 
-        internal byte[] GetColors()
+        private const byte FixedValueForIndex0 = 33;   // 0 in F1Ed;
+        private const byte FixedValueForIndex9 = 54;   // varies in GP.EXE
+        private const byte FixedValueForIndex10 = 36;  // 24 in F1Ed
+
+        internal byte[] GetColorsToWriteToFile()
         {
             var carBytes = new byte[]
             {
-                0, //?
+                FixedValueForIndex0,
                 EngineCover,
                 CockpitFront,
                 FrontWingEndplate,
@@ -70,8 +79,8 @@
                 Sidepod,
                 FrontAndRearWing,
                 NoseTop,
-                54, // ?
-                24, // ?
+                FixedValueForIndex9,
+                FixedValueForIndex10,
                 NoseAngle,
                 CockpitSide,
                 EngineCoverSide,

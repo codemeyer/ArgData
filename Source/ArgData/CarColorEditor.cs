@@ -47,7 +47,7 @@ namespace ArgData
 
         public void WriteCarColors(Car car, int teamIndex)
         {
-            byte[] carBytes = car.GetColors();
+            byte[] carBytes = car.GetColorsToWriteToFile();
             int position = _exeEditor.GetCarColorsPosition(teamIndex);
 
             new FileWriter(_exeEditor.ExePath).WriteBytes(carBytes, position);
@@ -59,7 +59,7 @@ namespace ArgData
 
             foreach (Car car in carList)
             {
-                byte[] carBytes = car.GetColors();
+                byte[] carBytes = car.GetColorsToWriteToFile();
                 int position = _exeEditor.GetCarColorsPosition(teamIndex);
 
                 new FileWriter(_exeEditor.ExePath).WriteBytes(carBytes, position);

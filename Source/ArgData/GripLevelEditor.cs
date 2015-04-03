@@ -43,5 +43,27 @@ namespace ArgData
 
             return value;
         }
+
+        /// <summary>
+        /// Writes the race grip level for the driver at the specified index. Lower value indicates higher grip.
+        /// </summary>
+        /// <param name="driverIndex">Index of driver to write race grip level for.</param>
+        /// <param name="gripLevel">Grip level.</param>
+        public void WriteRaceGripLevel(int driverIndex, byte gripLevel)
+        {
+            int position = _exeEditor.GetRaceGripLevelPositions(driverIndex);
+            new FileWriter(_exeEditor.ExePath).WriteByte(gripLevel, position);
+        }
+
+        /// <summary>
+        /// Writes the qualifying grip level for the driver at the specified index. Lower value indicates higher grip.
+        /// </summary>
+        /// <param name="driverIndex">Index of driver to write qualifying grip level for.</param>
+        /// <param name="gripLevel">Grip level.</param>
+        public void WriteQualifyingGripLevel(int driverIndex, byte gripLevel)
+        {
+            int position = _exeEditor.GetQualifyingGripLevelPositions(driverIndex);
+            new FileWriter(_exeEditor.ExePath).WriteByte(gripLevel, position);
+        }
     }
 }

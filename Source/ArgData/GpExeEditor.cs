@@ -17,18 +17,28 @@ namespace ArgData
         {
             _exePath = exePath;
 
-            CheckFileIsGpExe(exePath);
+            CheckFileIsSupported(exePath);
         }
 
-        private void CheckFileIsGpExe(string exePath)
+        private void CheckFileIsSupported(string exePath)
         {
-            var exeInfo = new FileInspector().IsGpExe(exePath);
+            var exeInfo = GetGpExeInfo(exePath);
 
             if (exeInfo != GpExeInfo.European105)
             {
-                string msg = "";
-                throw new Exception();
+                string msg = string.Format("The specified file is of type {0}. ArgData currently only supports European105.", exeInfo);
+                throw new Exception(msg);
             }
+        }
+
+        /// <summary>
+        /// Gets info about the specified F1GP executable.
+        /// </summary>
+        /// <param name="exePath">Path of the file to get info about.</param>
+        /// <returns>GpExeInfo enum describing the file.</returns>
+        public static GpExeInfo GetGpExeInfo(string exePath)
+        {
+            return new FileInspector().GetGpExeInfo(exePath);
         }
 
         /// <summary>
@@ -57,7 +67,9 @@ namespace ArgData
             new PlayerHorsepowerEditor(this).WritePlayerHorsepower(horsepower);
         }
 
-
+        /// <summary>
+        /// Gets the number of teams supported by ArgData.
+        /// </summary>
         public const int NumberOfTeams = 18;
 
 

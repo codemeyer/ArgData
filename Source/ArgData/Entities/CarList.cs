@@ -33,6 +33,12 @@ namespace ArgData.Entities
             }
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through a CarList collection.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Collections.IEnumerator"/> object that can be used to iterate through the collection.
+        /// </returns>
         public IEnumerator GetEnumerator()
         {
             return _list.GetEnumerator();

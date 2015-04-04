@@ -46,6 +46,7 @@
     <Compile Include="Entities\Driver.cs" />
     <Compile Include="Entities\SavedGameDriver.cs" />
     <Compile Include="FileInspector.cs" />
+    <Compile Include="GpExeInfo.cs" />
     <Compile Include="GripLevelEditor.cs" />
     <Compile Include="IO\FileReader.cs" />
     <Compile Include="IO\FileWriter.cs" />

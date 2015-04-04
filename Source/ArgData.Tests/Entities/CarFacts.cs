@@ -3,7 +3,7 @@ using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
 
-namespace ArgData.Tests
+namespace ArgData.Tests.Entities
 {
     public class CarFacts
     {

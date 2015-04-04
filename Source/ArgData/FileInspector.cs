@@ -2,9 +2,9 @@
 
 namespace ArgData
 {
-    public class FileInspector
+    internal class FileInspector
     {
-        public GpExeInfo IsGpExe(string exePath)
+        internal GpExeInfo GetGpExeInfo(string exePath)
         {
             var fileInfo = new FileInfo(exePath);
 
@@ -23,13 +23,5 @@ namespace ArgData
                     return GpExeInfo.Unknown;
             }
         }
-    }
-
-    public enum GpExeInfo
-    {
-        Unknown,
-        European105,
-        Italian105,
-        Us105
     }
 }

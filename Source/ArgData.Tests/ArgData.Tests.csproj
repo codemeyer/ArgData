@@ -57,7 +57,6 @@
     <Compile Include="CarColorEditorFacts.cs" />
     <Compile Include="Entities\CarFacts.cs" />
     <Compile Include="DefaultData\DefaultCarColors.cs" />
-    <Compile Include="FileInspectorFacts.cs" />
     <Compile Include="GpExeEditorFacts.cs" />
     <Compile Include="GripLevelEditorFacts.cs" />
     <Compile Include="Meta\EnvironmentSetupFacts.cs" />
@@ -70,6 +69,9 @@
     <Compile Include="TeamHorsepowerEditorFacts.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ExampleData\not.gpexe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="ExampleData\season_after_r3.gam">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -86,11 +88,6 @@
       <Project>{84965ad5-70ac-4ddf-acd1-040671510c1a}</Project>
       <Name>ArgData</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ExampleData\fake.gpexe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

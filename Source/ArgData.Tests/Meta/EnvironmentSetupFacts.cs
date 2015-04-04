@@ -9,9 +9,9 @@ namespace ArgData.Tests.Meta
         [Fact]
         public void MustHaveEnvironmentVariableSet()
         {
-            string exampleDataEnvironment = Environment.GetEnvironmentVariable("BUILD_ARGDATA_EXAMPLEDATA");
+            string exampleDataPath = Environment.GetEnvironmentVariable("BUILD_ARGDATA_EXAMPLEDATA");
 
-            exampleDataEnvironment.Should()
+            exampleDataPath.Should()
                 .NotBeNullOrEmpty("the environment variable BUILD_ARGDATA_EXAMPLEDATA must be set for the integration tests to work");
         }
     }

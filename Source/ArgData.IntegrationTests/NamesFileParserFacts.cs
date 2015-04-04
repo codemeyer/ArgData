@@ -6,7 +6,7 @@ using Xunit;
 
 namespace ArgData.IntegrationTests
 {
-    namespace NamesFileParserFacts
+    public class NamesFileParserFacts
     {
         public class ParsingNameFile
         {

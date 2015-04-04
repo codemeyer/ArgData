@@ -25,10 +25,10 @@ namespace ArgData.IntegrationTests
         }
 
         [Fact]
-        public void ReadOne()
+        public void ReadingSingleOriginalCarColorReturnsExpectedValues()
         {
             var expectedCar = new DefaultCarColors()[0];
-            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("gp-orig.exe");
+            string exampleDataPath = ExampleDataHelper.GpExePath();
             var exeEditor = new GpExeEditor(exampleDataPath);
             var carColorEditor = new CarColorEditor(exeEditor);
 

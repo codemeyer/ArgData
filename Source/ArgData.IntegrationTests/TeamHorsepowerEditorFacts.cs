@@ -3,7 +3,7 @@ using Xunit;
 
 namespace ArgData.IntegrationTests
 {
-    namespace TeamHorsepowerFacts
+    public class TeamHorsepowerFacts
     {
         public class ReadingHorsepowerValuesFromOriginalExeFile
         {

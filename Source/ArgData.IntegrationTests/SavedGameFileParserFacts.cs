@@ -5,7 +5,7 @@ using Xunit;
 
 namespace ArgData.IntegrationTests
 {
-    namespace SavedGameFileParserFacts
+    public class SavedGameFileParserFacts
     {
         public class ParsingSavedGameFile
         {

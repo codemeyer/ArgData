@@ -1,5 +1,4 @@
-﻿using System.IO;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Xunit;
 
 namespace ArgData.IntegrationTests
@@ -41,7 +40,7 @@ namespace ArgData.IntegrationTests
         }
 
         [Fact]
-        public void StoresCorrectLevelsForRaceGrip()
+        public void WritingRaceGripLevelStoresCorrectValues()
         {
             var gripLevelEditor = GetGripLevelEditorForCopy();
 
@@ -59,7 +58,7 @@ namespace ArgData.IntegrationTests
         }
 
         [Fact]
-        public void StoresCorrectLevelsForQualifyingGrip()
+        public void WritingQualifyingGripLevelStoresCorrectValues()
         {
             var gripLevelEditor = GetGripLevelEditorForCopy();
 
@@ -79,16 +78,16 @@ namespace ArgData.IntegrationTests
         private static GripLevelEditor GetGripLevelEditor()
         {
             string exampleDataPath = ExampleDataHelper.GpExePath();
-            return GripLevelEditor(exampleDataPath);
+            return CreateGripLevelEditor(exampleDataPath);
         }
 
         private static GripLevelEditor GetGripLevelEditorForCopy()
         {
             string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
-            return GripLevelEditor(exampleDataPath);
+            return CreateGripLevelEditor(exampleDataPath);
         }
 
-        private static GripLevelEditor GripLevelEditor(string exampleDataPath)
+        private static GripLevelEditor CreateGripLevelEditor(string exampleDataPath)
         {
             var exeEditor = new GpExeEditor(exampleDataPath);
             var gripLevelEditor = new GripLevelEditor(exeEditor);

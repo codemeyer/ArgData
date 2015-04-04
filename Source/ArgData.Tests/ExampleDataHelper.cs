@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ArgData.IntegrationTests
+namespace ArgData.Tests
 {
     internal static class ExampleDataHelper
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 using ArgData.Entities;
-using ArgData.IntegrationTests.DefaultData;
+using ArgData.Tests.DefaultData;
 using FluentAssertions;
 using Xunit;
 
-namespace ArgData.IntegrationTests
+namespace ArgData.Tests
 {
     public class CarColorEditorFacts
     {

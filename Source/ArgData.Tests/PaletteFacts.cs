@@ -3,7 +3,7 @@ using System.Drawing;
 using FluentAssertions;
 using Xunit;
 
-namespace ArgData.UnitTests
+namespace ArgData.Tests
 {
     namespace PaletteFacts
     {

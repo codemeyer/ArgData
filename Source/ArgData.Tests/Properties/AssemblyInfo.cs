@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("ArgData.IntegrationTests")]
+[assembly: AssemblyTitle("ArgData.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Manicomio Software")]
 [assembly: AssemblyProduct("ArgData")]
-[assembly: AssemblyCopyright("Copyright © 2014 Fredrik Meyer")]
+[assembly: AssemblyCopyright("Copyright © 2014-2015 Fredrik Meyer")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

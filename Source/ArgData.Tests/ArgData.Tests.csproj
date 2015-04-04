@@ -8,8 +8,8 @@
     <ProjectGuid>{816FA328-6398-44BD-B0D6-0BB30B866635}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArgData.IntegrationTests</RootNamespace>
-    <AssemblyName>ArgData.IntegrationTests</AssemblyName>
+    <RootNamespace>ArgData.Tests</RootNamespace>
+    <AssemblyName>ArgData.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
@@ -54,12 +55,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarColorEditorFacts.cs" />
+    <Compile Include="Entities\CarFacts.cs" />
     <Compile Include="DefaultData\DefaultCarColors.cs" />
     <Compile Include="FileInspectorFacts.cs" />
     <Compile Include="GpExeEditorFacts.cs" />
     <Compile Include="GripLevelEditorFacts.cs" />
     <Compile Include="Meta\EnvironmentSetupFacts.cs" />
     <Compile Include="NamesFileParserFacts.cs" />
+    <Compile Include="PaletteFacts.cs" />
     <Compile Include="PlayerHorsepowerEditorFacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SavedGameFileParserFacts.cs" />

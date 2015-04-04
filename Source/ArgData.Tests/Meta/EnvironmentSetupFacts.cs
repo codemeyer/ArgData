@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace ArgData.IntegrationTests.Meta
+namespace ArgData.Tests.Meta
 {
     public class EnvironmentSetupFacts
     {

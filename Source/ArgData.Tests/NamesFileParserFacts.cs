@@ -4,7 +4,7 @@ using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
 
-namespace ArgData.IntegrationTests
+namespace ArgData.Tests
 {
     public class NamesFileParserFacts
     {

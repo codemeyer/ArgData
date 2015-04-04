@@ -1,6 +1,6 @@
 using ArgData.Entities;
 
-namespace ArgData.IntegrationTests.DefaultData
+namespace ArgData.Tests.DefaultData
 {
     public class DefaultCarColors
     {

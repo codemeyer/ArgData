@@ -22,9 +22,9 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void Writing()
+        public void WritingNumbersStoresExpectedValues()
         {
-            byte[] driverNumbers = CreateIncrementingDriverNumberArray();
+            byte[] driverNumbers = CreateIncrementingDriverNumberArray(40);
             var driverNumberEditor = ExampleDataHelper.DriverNumberEditorForCopy();
 
             driverNumberEditor.WriteDriverNumbers(driverNumbers);
@@ -36,15 +36,70 @@ namespace ArgData.Tests
             ExampleDataHelper.DeleteLatestTempFile();
         }
 
-        private byte[] CreateIncrementingDriverNumberArray()
+        private byte[] CreateIncrementingDriverNumberArray(byte count)
         {
-            byte[] driverNumbers = new byte[40];
-            for (byte b = 0; b < 40; b++)
+            byte[] driverNumbers = new byte[count];
+            for (byte b = 0; b < count; b++)
             {
                 driverNumbers[b] = Convert.ToByte(b + 1);
             }
 
             return driverNumbers;
+        }
+
+        [Fact]
+        public void FewerThan_39_DriversThenThrowException()
+        {
+            byte[] tooFewDriverNumbers = CreateIncrementingDriverNumberArray(39);
+            var driverNumberEditor = ExampleDataHelper.DriverNumberEditorForCopy();
+
+            Action act = () => driverNumberEditor.WriteDriverNumbers(tooFewDriverNumbers);
+
+            act.ShouldThrow<Exception>();
+
+            ExampleDataHelper.DeleteLatestTempFile();
+        }
+
+        [Fact]
+        public void MoreThan_40_DriverNumbersThrowsException()
+        {
+            byte[] tooManyDriverNumbers = CreateIncrementingDriverNumberArray(41);
+            var driverNumberEditor = ExampleDataHelper.DriverNumberEditorForCopy();
+
+            Action act = () => driverNumberEditor.WriteDriverNumbers(tooManyDriverNumbers);
+
+            act.ShouldThrow<Exception>();
+
+            ExampleDataHelper.DeleteLatestTempFile();
+        }
+
+        [Fact]
+        public void IfLessThan_26_ActiveDriversThenThrowException()
+        {
+            byte[] first20 = CreateIncrementingDriverNumberArray(20);
+            byte[] full = new byte[40];
+            first20.CopyTo(full, 0);
+            var driverNumberEditor = ExampleDataHelper.DriverNumberEditorForCopy();
+
+            Action act = () => driverNumberEditor.WriteDriverNumbers(full);
+
+            act.ShouldThrow<Exception>();
+
+            ExampleDataHelper.DeleteLatestTempFile();
+        }
+
+        [Fact]
+        public void DriverNumberHigherThan40ThrowsException()
+        {
+            byte[] driverNumbers = CreateIncrementingDriverNumberArray(40);
+            var driverNumberEditor = ExampleDataHelper.DriverNumberEditorForCopy();
+
+            driverNumbers[10] = 41;
+            Action act = () => driverNumberEditor.WriteDriverNumbers(driverNumbers);
+
+            act.ShouldThrow<Exception>();
+
+            ExampleDataHelper.DeleteLatestTempFile();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using ArgData.IO;
+﻿using System;
+using System.Linq;
+using ArgData.IO;
 
 namespace ArgData
 {
@@ -37,9 +39,7 @@ namespace ArgData
         /// <param name="driverNumbers">Byte array of driver numbers.</param>
         public void WriteDriverNumbers(byte[] driverNumbers)
         {
-            // TODO: byte[] must be correct length
-            // TODO: byte[] must contain 26 active drivers
-            // TODO: byte[] a driver number cannot be higher than 39(?)
+            CheckDriverNumbers(driverNumbers);
 
             var fileWriter = new FileWriter(_exeEditor.ExePath);
 
@@ -47,6 +47,26 @@ namespace ArgData
             {
                 int position = _exeEditor.GetDriverNumbersPosition(i);
                 fileWriter.WriteByte(driverNumbers[i], position);
+            }
+        }
+
+        private void CheckDriverNumbers(byte[] driverNumbers)
+        {
+            if (driverNumbers.Length != 40)
+            {
+                throw new Exception("Incorrect number of driver numbers provided. Must be exactly 40.");
+            }
+
+            int activeCount = driverNumbers.Count(driverNumber => driverNumber > 0);
+
+            if (activeCount < 26)
+            {
+                throw new Exception("Too few active drivers. Must be at least 26.");
+            }
+
+            if (driverNumbers.Any(driverNumber => driverNumber > 40))
+            {
+                throw new Exception("Too high driver number specified. A driver number cannot be higher than 40.");
             }
         }
     }

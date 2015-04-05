@@ -5,6 +5,26 @@ namespace ArgData.Tests
 {
     internal static class ExampleDataHelper
     {
+        private static string _latestTempFile;
+
+        internal static DriverNumberEditor DriverNumberEditorForDefault()
+        {
+            string exampleDataPath = ExampleDataHelper.GpExePath();
+            return new DriverNumberEditor(new GpExeEditor(exampleDataPath));
+        }
+
+        internal static GripLevelEditor GripLevelEditorForDefault()
+        {
+            string exampleDataPath = ExampleDataHelper.GpExePath();
+            return new GripLevelEditor(new GpExeEditor(exampleDataPath));
+        }
+
+        internal static GripLevelEditor GetGripLevelEditorForCopy()
+        {
+            string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
+            return new GripLevelEditor(new GpExeEditor(exampleDataPath));
+        }
+
         internal static string GpExePath()
         {
             return GetExampleDataPath("GP-ORIG.EXE");
@@ -28,7 +48,14 @@ namespace ArgData.Tests
             string tempFile = Path.GetTempFileName() + Path.GetExtension(fileName);
             File.Copy(originalLocation, tempFile);
 
+            _latestTempFile = tempFile;
+
             return tempFile;
+        }
+
+        internal static void DeleteLatestTempFile()
+        {
+            DeleteFile(_latestTempFile);
         }
 
         internal static void DeleteFile(string path)

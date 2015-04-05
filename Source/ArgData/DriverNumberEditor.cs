@@ -37,6 +37,10 @@ namespace ArgData
         /// <param name="driverNumbers">Byte array of driver numbers.</param>
         public void WriteDriverNumbers(byte[] driverNumbers)
         {
+            // TODO: byte[] must be correct length
+            // TODO: byte[] must contain 26 active drivers
+            // TODO: byte[] a driver number cannot be higher than 39(?)
+
             var fileWriter = new FileWriter(_exeEditor.ExePath);
 
             for (int i = 0; i < driverNumbers.Length; i++)

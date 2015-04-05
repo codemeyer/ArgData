@@ -26,7 +26,7 @@ namespace ArgData
         {
             int position = _exeEditor.GetDriverNumbersPosition();
 
-            byte[] driverNumbers = new FileReader(_exeEditor.ExePath).ReadBytes(position, 36);
+            byte[] driverNumbers = new FileReader(_exeEditor.ExePath).ReadBytes(position, 40);
 
             return driverNumbers;
         }

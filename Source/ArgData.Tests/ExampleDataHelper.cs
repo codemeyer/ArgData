@@ -13,6 +13,12 @@ namespace ArgData.Tests
             return new DriverNumberEditor(new GpExeEditor(exampleDataPath));
         }
 
+        internal static DriverNumberEditor DriverNumberEditorForCopy()
+        {
+            string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
+            return new DriverNumberEditor(new GpExeEditor(exampleDataPath));
+        }
+
         internal static GripLevelEditor GripLevelEditorForDefault()
         {
             string exampleDataPath = ExampleDataHelper.GpExePath();

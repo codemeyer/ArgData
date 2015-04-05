@@ -5,19 +5,27 @@ namespace ArgData.Tests
 {
     public class PlayerHorsepowerEditorFacts
     {
-        public class ReadingPlayerHorsepowerValuesFromOriginalExeFile
+        [Fact]
+        public void ReadingPlayerHorsepowerValuesReturnsCorrectDefaultData()
         {
-            [Fact]
-            public void ReturnsCorrectDefaultData()
-            {
-                string exampleDataPath = ExampleDataHelper.GpExePath();
-                var exeEditor = new GpExeEditor(exampleDataPath);
-                var horsepowerEditor = new PlayerHorsepowerEditor(exeEditor);
+            var horsepowerEditor = ExampleDataHelper.PlayerHorsepowerEditorForDefault();
 
-                var playerHP = horsepowerEditor.ReadPlayerHorsepower();
+            var playerHorsepower = horsepowerEditor.ReadPlayerHorsepower();
 
-                playerHP.Should().Be(716);
-            }
+            playerHorsepower.Should().Be(716);
+        }
+
+        [Fact]
+        public void WritingPlayerHorsepowerValuesStoresExpectedData()
+        {
+            var horsepowerEditor = ExampleDataHelper.PlayerHorsepowerEditorForCopy();
+
+            horsepowerEditor.WritePlayerHorsepower(640);
+
+            var readHorsepower = horsepowerEditor.ReadPlayerHorsepower();
+            readHorsepower.Should().Be(640);
+
+            ExampleDataHelper.DeleteLatestTempFile();
         }
     }
 }

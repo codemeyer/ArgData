@@ -10,16 +10,7 @@ namespace ArgData.Entities
         /// <summary>
         /// Initializes a new instance of a NamesFile.
         /// </summary>
-        public NamesFile()
-        {
-            Drivers = new List<Driver>();
-            Teams = new List<Team>();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of a NamesFile.
-        /// </summary>
-        public NamesFile(List<Driver> drivers, List<Team> teams)
+        internal NamesFile(List<Driver> drivers, List<Team> teams)
         {
             Drivers = drivers;
             Teams = teams;

@@ -7,6 +7,16 @@ namespace ArgData.Tests
     {
         private static string _latestTempFile;
 
+        internal static PlayerHorsepowerEditor PlayerHorsepowerEditorForDefault()
+        {
+            return new PlayerHorsepowerEditor(new GpExeEditor(GpExePath()));
+        }
+
+        public static PlayerHorsepowerEditor PlayerHorsepowerEditorForCopy()
+        {
+            return new PlayerHorsepowerEditor(new GpExeEditor(CopyOfGpExePath()));
+        }
+
         internal static DriverNumberEditor DriverNumberEditorForDefault()
         {
             string exampleDataPath = ExampleDataHelper.GpExePath();

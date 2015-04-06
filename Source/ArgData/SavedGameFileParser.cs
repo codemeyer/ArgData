@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using ArgData.Entities;
@@ -17,10 +18,12 @@ namespace ArgData
         /// <summary>
         /// Parses a saved game file.
         /// </summary>
-        /// <param name="bytes"></param>
-        /// <returns>SavedGame.</returns>
-        public SavedGame Parse(byte[] bytes)
+        /// <param name="path">Path to saved game.</param>
+        /// <returns>SavedGame with drivers and results.</returns>
+        public SavedGame Parse(string path)
         {
+            byte[] bytes = File.ReadAllBytes(path);
+
             int numberOfRacesCompleted = GetNumberOfRacesCompleted(bytes);
             List<SavedGameDriver> drivers = ParseDrivers(bytes, numberOfRacesCompleted);
 

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using ArgData.Entities;
+﻿using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
 
@@ -14,10 +13,9 @@ namespace ArgData.Tests
             public ParsingSavedGameFile()
             {
                 string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_after_r3.gam");
-                byte[] bytes = File.ReadAllBytes(exampleDataPath);
 
                 var parser = new SavedGameFileParser();
-                _data = parser.Parse(bytes);
+                _data = parser.Parse(exampleDataPath);
             }
 
             [Fact]

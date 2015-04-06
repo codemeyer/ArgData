@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using ArgData.Entities;
@@ -16,16 +17,17 @@ namespace ArgData
         /// <summary>
         /// Parse a names file.
         /// </summary>
-        /// <param name="nameData"></param>
-        /// <returns></returns>
-        public NamesFile Parse(byte[] nameData)
+        /// <param name="path">Path to file.</param>
+        /// <returns>NamesFile with teams, engines and driver names.</returns>
+        public NamesFile Parse(string path)
         {
+            // TODO: check that this is a names file
+            byte[] nameData = File.ReadAllBytes(path);
+
             var drivers = ParseDrivers(nameData);
             var teams = ParseTeams(nameData);
 
-            var data = new NamesFile(drivers, teams);
-
-            return data;
+            return new NamesFile(drivers, teams);
         }
 
         private List<Driver> ParseDrivers(byte[] nameData)

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
@@ -15,10 +14,9 @@ namespace ArgData.Tests
             public ParsingNameFile()
             {
                 string exampleDataPath = ExampleDataHelper.GetExampleDataPath("names1991.nam");
-                byte[] bytes = File.ReadAllBytes(exampleDataPath);
 
                 var parser = new NamesFileParser();
-                _data = parser.Parse(bytes);
+                _data = parser.Parse(exampleDataPath);
             }
 
             [Fact]

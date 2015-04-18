@@ -21,9 +21,9 @@ namespace ArgData.Entities
         /// <param name="carColorBytes">The colors to set. Must be exactly 16.</param>
         public Car(byte[] carColorBytes)
         {
-            if (carColorBytes.Length != GpExeEditor.ColorsPerTeam)
+            if (carColorBytes.Length != GpExeFile.ColorsPerTeam)
             {
-                throw new Exception(string.Format("Car must be created with {0} colors", GpExeEditor.ColorsPerTeam));
+                throw new Exception(string.Format("Car must be created with {0} colors", GpExeFile.ColorsPerTeam));
             }
 
             SetColors(carColorBytes);

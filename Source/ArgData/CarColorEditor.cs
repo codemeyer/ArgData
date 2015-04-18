@@ -9,15 +9,15 @@ namespace ArgData
     /// </summary>
     public class CarColorEditor
     {
-        private readonly GpExeEditor _exeEditor;
+        private readonly GpExeFile _exeFile;
 
         /// <summary>
         /// Initializes a new instance of a CarColorEditor.
         /// </summary>
-        /// <param name="exeEditor">GpExeEditor for the file to edit.</param>
-        public CarColorEditor(GpExeEditor exeEditor)
+        /// <param name="exeFile">GpExeFile to edit.</param>
+        public CarColorEditor(GpExeFile exeFile)
         {
-            _exeEditor = exeEditor;
+            _exeFile = exeFile;
         }
 
         /// <summary>
@@ -27,9 +27,9 @@ namespace ArgData
         /// <returns>Car object with the colors of the team.</returns>
         public Car ReadCarColors(int teamIndex)
         {
-            int position = _exeEditor.GetCarColorsPosition(teamIndex);
+            int position = _exeFile.GetCarColorsPosition(teamIndex);
 
-            byte[] colors = new FileReader(_exeEditor.ExePath).ReadBytes(position, GpExeEditor.ColorsPerTeam);
+            byte[] colors = new FileReader(_exeFile.ExePath).ReadBytes(position, GpExeFile.ColorsPerTeam);
 
             return new Car(colors);
         }
@@ -44,10 +44,10 @@ namespace ArgData
 
             var list = new CarList();
 
-            for (int i = 0; i < GpExeEditor.NumberOfTeams; i++)
+            for (int i = 0; i < GpExeFile.NumberOfTeams; i++)
             {
-                byte[] carBytes = allCarBytes.Skip(i * GpExeEditor.ColorsPerTeam)
-                    .Take(GpExeEditor.ColorsPerTeam).ToArray();
+                byte[] carBytes = allCarBytes.Skip(i * GpExeFile.ColorsPerTeam)
+                    .Take(GpExeFile.ColorsPerTeam).ToArray();
                 list[i].SetColors(carBytes);
             }
 
@@ -56,9 +56,9 @@ namespace ArgData
 
         private byte[] ReadAllCarColors()
         {
-            return new FileReader(_exeEditor.ExePath).ReadBytes(
-                _exeEditor.GetCarColorsPosition(),
-                GpExeEditor.ColorsPerTeam * GpExeEditor.NumberOfTeams);
+            return new FileReader(_exeFile.ExePath).ReadBytes(
+                _exeFile.GetCarColorsPosition(),
+                GpExeFile.ColorsPerTeam * GpExeFile.NumberOfTeams);
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace ArgData
         public void WriteCarColors(Car car, int teamIndex)
         {
             byte[] carBytes = car.GetColorsToWriteToFile();
-            int position = _exeEditor.GetCarColorsPosition(teamIndex);
+            int position = _exeFile.GetCarColorsPosition(teamIndex);
 
-            new FileWriter(_exeEditor.ExePath).WriteBytes(carBytes, position);
+            new FileWriter(_exeFile.ExePath).WriteBytes(carBytes, position);
         }
 
         /// <summary>
@@ -85,9 +85,9 @@ namespace ArgData
             foreach (Car car in carList)
             {
                 byte[] carBytes = car.GetColorsToWriteToFile();
-                int position = _exeEditor.GetCarColorsPosition(teamIndex);
+                int position = _exeFile.GetCarColorsPosition(teamIndex);
 
-                new FileWriter(_exeEditor.ExePath).WriteBytes(carBytes, position);
+                new FileWriter(_exeFile.ExePath).WriteBytes(carBytes, position);
 
                 teamIndex++;
             }

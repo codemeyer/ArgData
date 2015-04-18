@@ -7,15 +7,15 @@ namespace ArgData
     /// </summary>
     public class GripLevelEditor
     {
-        private readonly GpExeEditor _exeEditor;
+        private readonly GpExeFile _exeFile;
 
         /// <summary>
         /// Initializes a new instance of a GripLevelEditor.
         /// </summary>
-        /// <param name="exeEditor">GpExeEditor for the file to edit.</param>
-        public GripLevelEditor(GpExeEditor exeEditor)
+        /// <param name="exeFile">GpExeFile to edit.</param>
+        public GripLevelEditor(GpExeFile exeFile)
         {
-            _exeEditor = exeEditor;
+            _exeFile = exeFile;
         }
 
         /// <summary>
@@ -25,8 +25,8 @@ namespace ArgData
         /// <returns>Grip level.</returns>
         public int ReadRaceGripLevel(int driverIndex)
         {
-            int position = _exeEditor.GetRaceGripLevelPositions(driverIndex);
-            byte value = new FileReader(_exeEditor.ExePath).ReadByte(position);
+            int position = _exeFile.GetRaceGripLevelPositions(driverIndex);
+            byte value = new FileReader(_exeFile.ExePath).ReadByte(position);
 
             return value;
         }
@@ -38,8 +38,8 @@ namespace ArgData
         /// <returns>Grip level.</returns>
         public int ReadQualifyingGripLevel(int driverIndex)
         {
-            int position = _exeEditor.GetQualifyingGripLevelPositions(driverIndex);
-            byte value = new FileReader(_exeEditor.ExePath).ReadByte(position);
+            int position = _exeFile.GetQualifyingGripLevelPositions(driverIndex);
+            byte value = new FileReader(_exeFile.ExePath).ReadByte(position);
 
             return value;
         }
@@ -51,8 +51,8 @@ namespace ArgData
         /// <param name="gripLevel">Grip level.</param>
         public void WriteRaceGripLevel(int driverIndex, byte gripLevel)
         {
-            int position = _exeEditor.GetRaceGripLevelPositions(driverIndex);
-            new FileWriter(_exeEditor.ExePath).WriteByte(gripLevel, position);
+            int position = _exeFile.GetRaceGripLevelPositions(driverIndex);
+            new FileWriter(_exeFile.ExePath).WriteByte(gripLevel, position);
         }
 
         /// <summary>
@@ -62,8 +62,8 @@ namespace ArgData
         /// <param name="gripLevel">Grip level.</param>
         public void WriteQualifyingGripLevel(int driverIndex, byte gripLevel)
         {
-            int position = _exeEditor.GetQualifyingGripLevelPositions(driverIndex);
-            new FileWriter(_exeEditor.ExePath).WriteByte(gripLevel, position);
+            int position = _exeFile.GetQualifyingGripLevelPositions(driverIndex);
+            new FileWriter(_exeFile.ExePath).WriteByte(gripLevel, position);
         }
     }
 }

@@ -4,14 +4,14 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class GpExeEditorFacts
+    public class GpExeFileFacts
     {
         [Fact]
         public void NotGpExeThrows()
         {
             string exePath = ExampleDataHelper.GetExampleDataPath("not.gpexe");
 
-            Action act = () => new GpExeEditor(exePath);
+            Action act = () => new GpExeFile(exePath);
 
             act.ShouldThrow<Exception>();
         }
@@ -21,9 +21,9 @@ namespace ArgData.Tests
         {
             string exePath = ExampleDataHelper.GpExePath();
 
-            var exeEditor = new GpExeEditor(exePath);
+            var exeEditor = new GpExeFile(exePath);
 
-            exeEditor.Should().BeOfType<GpExeEditor>();
+            exeEditor.Should().BeOfType<GpExeFile>();
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace ArgData.Tests
         {
             string path = ExampleDataHelper.GpExePath();
 
-            var exeInfo = GpExeEditor.GetGpExeInfo(path);
+            var exeInfo = GpExeFile.GetFileInfo(path);
 
             exeInfo.Should().Be(GpExeInfo.European105);
         }
@@ -41,7 +41,7 @@ namespace ArgData.Tests
         {
             string path = ExampleDataHelper.GetExampleDataPath("not.gpexe");
 
-            var exeInfo = GpExeEditor.GetGpExeInfo(path);
+            var exeInfo = GpExeFile.GetFileInfo(path);
 
             exeInfo.Should().Be(GpExeInfo.Unknown);
         }

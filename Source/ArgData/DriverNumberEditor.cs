@@ -9,15 +9,15 @@ namespace ArgData
     /// </summary>
     public class DriverNumberEditor
     {
-        private readonly GpExeEditor _exeEditor;
+        private readonly GpExeFile _exeFile;
 
         /// <summary>
         /// Initializes a new instance of a DriverNumberEditor.
         /// </summary>
-        /// <param name="exeEditor">GpExeEditor for the file to edit.</param>
-        public DriverNumberEditor(GpExeEditor exeEditor)
+        /// <param name="exeFile">GpExeFile to edit.</param>
+        public DriverNumberEditor(GpExeFile exeFile)
         {
-            _exeEditor = exeEditor;
+            _exeFile = exeFile;
         }
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace ArgData
         /// <returns>Byte array of driver numbers.</returns>
         public byte[] ReadDriverNumbers()
         {
-            int position = _exeEditor.GetDriverNumbersPosition();
+            int position = _exeFile.GetDriverNumbersPosition();
 
-            byte[] driverNumbers = new FileReader(_exeEditor.ExePath).ReadBytes(position, 40);
+            byte[] driverNumbers = new FileReader(_exeFile.ExePath).ReadBytes(position, 40);
 
             return driverNumbers;
         }
@@ -41,11 +41,11 @@ namespace ArgData
         {
             CheckDriverNumbers(driverNumbers);
 
-            var fileWriter = new FileWriter(_exeEditor.ExePath);
+            var fileWriter = new FileWriter(_exeFile.ExePath);
 
             for (int i = 0; i < driverNumbers.Length; i++)
             {
-                int position = _exeEditor.GetDriverNumbersPosition(i);
+                int position = _exeFile.GetDriverNumbersPosition(i);
                 fileWriter.WriteByte(driverNumbers[i], position);
             }
         }

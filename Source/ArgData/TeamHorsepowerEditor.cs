@@ -7,13 +7,13 @@ namespace ArgData
     /// </summary>
     public class TeamHorsepowerEditor
     {
-        private readonly GpExeEditor _exeEditor;
+        private readonly GpExeFile _exeEditor;
 
         /// <summary>
         /// Initializes a new instance of a TeamHorsepowerEditor.
         /// </summary>
         /// <param name="exeEditor">GpExeEditor for the file to edit.</param>
-        public TeamHorsepowerEditor(GpExeEditor exeEditor)
+        public TeamHorsepowerEditor(GpExeFile exeEditor)
         {
             _exeEditor = exeEditor;
         }

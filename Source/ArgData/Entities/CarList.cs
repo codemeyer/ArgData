@@ -27,7 +27,7 @@ namespace ArgData.Entities
         public CarList()
         {
             _list = new List<Car>();
-            for (int i = 0; i < GpExeEditor.NumberOfTeams; i++)
+            for (int i = 0; i < GpExeFile.NumberOfTeams; i++)
             {
                 _list.Add(new Car());
             }

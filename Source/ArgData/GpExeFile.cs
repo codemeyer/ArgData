@@ -5,15 +5,15 @@ namespace ArgData
     /// <summary>
     /// Used for editing a GP.EXE file.
     /// </summary>
-    public class GpExeEditor
+    public class GpExeFile
     {
         private readonly string _exePath;
 
         /// <summary>
-        /// Initializes an instance of GpExeEditor.
+        /// Initializes an instance of GpExeFile.
         /// </summary>
-        /// <param name="exePath"></param>
-        public GpExeEditor(string exePath)
+        /// <param name="exePath">Path to the GP.EXE file</param>
+        public GpExeFile(string exePath)
         {
             _exePath = exePath;
 
@@ -22,7 +22,7 @@ namespace ArgData
 
         private void CheckFileIsSupported(string exePath)
         {
-            var exeInfo = GetGpExeInfo(exePath);
+            var exeInfo = GetFileInfo(exePath);
 
             if (exeInfo != GpExeInfo.European105)
             {
@@ -36,7 +36,7 @@ namespace ArgData
         /// </summary>
         /// <param name="exePath">Path of the file to get info about.</param>
         /// <returns>GpExeInfo enum describing the file.</returns>
-        public static GpExeInfo GetGpExeInfo(string exePath)
+        public static GpExeInfo GetFileInfo(string exePath)
         {
             return new FileInspector().GetGpExeInfo(exePath);
         }
@@ -47,24 +47,6 @@ namespace ArgData
         public string ExePath
         {
             get { return _exePath; }
-        }
-
-        /// <summary>
-        /// Reads the horsepower value for the player.
-        /// </summary>
-        /// <returns>Player horsepower value.</returns>
-        public int ReadPlayerHorsepower()
-        {
-            return new PlayerHorsepowerEditor(this).ReadPlayerHorsepower();
-        }
-
-        /// <summary>
-        /// Writes the horsepower value for the player. The default value is 716.
-        /// </summary>
-        /// <param name="horsepower">Player horsepower value.</param>
-        public void WritePlayerHorsepower(int horsepower)
-        {
-            new PlayerHorsepowerEditor(this).WritePlayerHorsepower(horsepower);
         }
 
         /// <summary>

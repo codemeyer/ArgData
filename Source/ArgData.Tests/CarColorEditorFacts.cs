@@ -13,7 +13,7 @@ namespace ArgData.Tests
         {
             var expectedCarColors = new DefaultCarColors();
             string exampleDataPath = ExampleDataHelper.GpExePath();
-            var exeEditor = new GpExeEditor(exampleDataPath);
+            var exeEditor = new GpExeFile(exampleDataPath);
             var carColorEditor = new CarColorEditor(exeEditor);
 
             var carColors = carColorEditor.ReadCarColors();
@@ -29,7 +29,7 @@ namespace ArgData.Tests
         {
             var expectedCar = new DefaultCarColors()[0];
             string exampleDataPath = ExampleDataHelper.GpExePath();
-            var exeEditor = new GpExeEditor(exampleDataPath);
+            var exeEditor = new GpExeFile(exampleDataPath);
             var carColorEditor = new CarColorEditor(exeEditor);
 
             var car = carColorEditor.ReadCarColors(0);
@@ -53,14 +53,14 @@ namespace ArgData.Tests
         public void WriteAndReadCars()
         {
             var carList = new CarList();
-            for (int i = 0; i < GpExeEditor.NumberOfTeams; i++)
+            for (int i = 0; i < GpExeFile.NumberOfTeams; i++)
             {
                 byte b = Convert.ToByte(i + 1);
                 carList[i] = new Car(new [] { b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b });
             }
 
             string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
-            var exeEditor = new GpExeEditor(exampleDataPath);
+            var exeEditor = new GpExeFile(exampleDataPath);
             var carColorEditor = new CarColorEditor(exeEditor);
 
             carColorEditor.WriteCarColors(carList);
@@ -83,7 +83,7 @@ namespace ArgData.Tests
         {
             var carList = new CarList();
             string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
-            var exeEditor = new GpExeEditor(exampleDataPath);
+            var exeEditor = new GpExeFile(exampleDataPath);
             var car = new Car
             {
                 CockpitFront = 1,

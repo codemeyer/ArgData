@@ -58,7 +58,7 @@
     <Compile Include="DriverNumberEditorFacts.cs" />
     <Compile Include="Entities\CarFacts.cs" />
     <Compile Include="DefaultData\DefaultCarColors.cs" />
-    <Compile Include="GpExeEditorFacts.cs" />
+    <Compile Include="GpExeFileFacts.cs" />
     <Compile Include="GripLevelEditorFacts.cs" />
     <Compile Include="Meta\EnvironmentSetupFacts.cs" />
     <Compile Include="NamesFileParserFacts.cs" />

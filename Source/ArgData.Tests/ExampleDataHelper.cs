@@ -9,36 +9,36 @@ namespace ArgData.Tests
 
         internal static PlayerHorsepowerEditor PlayerHorsepowerEditorForDefault()
         {
-            return new PlayerHorsepowerEditor(new GpExeEditor(GpExePath()));
+            return new PlayerHorsepowerEditor(new GpExeFile(GpExePath()));
         }
 
         public static PlayerHorsepowerEditor PlayerHorsepowerEditorForCopy()
         {
-            return new PlayerHorsepowerEditor(new GpExeEditor(CopyOfGpExePath()));
+            return new PlayerHorsepowerEditor(new GpExeFile(CopyOfGpExePath()));
         }
 
         internal static DriverNumberEditor DriverNumberEditorForDefault()
         {
             string exampleDataPath = ExampleDataHelper.GpExePath();
-            return new DriverNumberEditor(new GpExeEditor(exampleDataPath));
+            return new DriverNumberEditor(new GpExeFile(exampleDataPath));
         }
 
         internal static DriverNumberEditor DriverNumberEditorForCopy()
         {
             string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
-            return new DriverNumberEditor(new GpExeEditor(exampleDataPath));
+            return new DriverNumberEditor(new GpExeFile(exampleDataPath));
         }
 
         internal static GripLevelEditor GripLevelEditorForDefault()
         {
             string exampleDataPath = ExampleDataHelper.GpExePath();
-            return new GripLevelEditor(new GpExeEditor(exampleDataPath));
+            return new GripLevelEditor(new GpExeFile(exampleDataPath));
         }
 
         internal static GripLevelEditor GetGripLevelEditorForCopy()
         {
             string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
-            return new GripLevelEditor(new GpExeEditor(exampleDataPath));
+            return new GripLevelEditor(new GpExeFile(exampleDataPath));
         }
 
         internal static string GpExePath()

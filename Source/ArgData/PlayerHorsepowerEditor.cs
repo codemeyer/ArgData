@@ -7,15 +7,15 @@ namespace ArgData
     /// </summary>
     public class PlayerHorsepowerEditor
     {
-        private readonly GpExeEditor _exeEditor;
+        private readonly GpExeFile _exeFile;
 
         /// <summary>
         /// Initializes a new instance of a PlayerHorsepowerEditor.
         /// </summary>
-        /// <param name="exeEditor">GpExeEditor for the file to edit.</param>
-        public PlayerHorsepowerEditor(GpExeEditor exeEditor)
+        /// <param name="exeFile">GpExeFile to edit.</param>
+        public PlayerHorsepowerEditor(GpExeFile exeFile)
         {
-            _exeEditor = exeEditor;
+            _exeFile = exeFile;
         }
 
         /// <summary>
@@ -24,10 +24,10 @@ namespace ArgData
         /// <returns>Player horsepower value.</returns>
         public int ReadPlayerHorsepower()
         {
-            var fileReader = new FileReader(_exeEditor.ExePath);
-            ushort rawHorsepower = fileReader.ReadUShort(_exeEditor.GetPlayerHorsepowerPosition());
+            var fileReader = new FileReader(_exeFile.ExePath);
+            ushort rawHorsepower = fileReader.ReadUShort(_exeFile.GetPlayerHorsepowerPosition());
 
-            return (rawHorsepower - 632) / 22;  // LOL
+            return (rawHorsepower - 632) / 22;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace ArgData
         {
             ushort rawHorsepower = (ushort)((horsepower * 22) + 632);
 
-            new FileWriter(_exeEditor.ExePath).WriteUInt16(rawHorsepower, _exeEditor.GetPlayerHorsepowerPosition());
+            new FileWriter(_exeFile.ExePath).WriteUInt16(rawHorsepower, _exeFile.GetPlayerHorsepowerPosition());
         }
     }
 }

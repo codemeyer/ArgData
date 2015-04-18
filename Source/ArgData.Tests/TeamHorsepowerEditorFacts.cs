@@ -14,7 +14,7 @@ namespace ArgData.Tests
                     655, 665, 640, 700, 630, 610, 680, 615 };
 
                 string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
-                var exeEditor = new GpExeEditor(exampleDataPath);
+                var exeEditor = new GpExeFile(exampleDataPath);
                 var horsepowerEditor = new TeamHorsepowerEditor(exeEditor);
 
                 for (int i = 0; i < expectedValues.Length; i++)
@@ -36,18 +36,18 @@ namespace ArgData.Tests
             {
                 string exampleDataFile = ExampleDataHelper.GetCopyOfExampleData("gp-orig.exe");
 
-                var exeEditor = new GpExeEditor(exampleDataFile);
+                var exeEditor = new GpExeFile(exampleDataFile);
                 var horsepowerEditor = new TeamHorsepowerEditor(exeEditor);
 
                 int startValue = 700;
 
-                for (int i = 0; i < GpExeEditor.NumberOfTeams; i++)
+                for (int i = 0; i < GpExeFile.NumberOfTeams; i++)
                 {
                     horsepowerEditor.WriteTeamHorsepower(i, startValue);
                     startValue++;
                 }
 
-                for (int i = 0; i < GpExeEditor.NumberOfTeams; i++)
+                for (int i = 0; i < GpExeFile.NumberOfTeams; i++)
                 {
                     var value = horsepowerEditor.ReadTeamHorsepower(i);
 

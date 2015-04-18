@@ -104,7 +104,7 @@ namespace ArgData.Tests
 
             var carColorEditor = new CarColorEditor(exeEditor);
 
-            carColorEditor.WriteCarColors(carList);
+            carColorEditor.WriteCarColors(carList[0], 0);
 
             var carColors = new CarColorEditor(exeEditor).ReadCarColors();
             var actualCar = carColors[0];

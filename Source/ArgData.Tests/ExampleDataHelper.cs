@@ -19,26 +19,22 @@ namespace ArgData.Tests
 
         internal static DriverNumberEditor DriverNumberEditorForDefault()
         {
-            string exampleDataPath = ExampleDataHelper.GpExePath();
-            return new DriverNumberEditor(new GpExeFile(exampleDataPath));
+            return new DriverNumberEditor(new GpExeFile(GpExePath()));
         }
 
         internal static DriverNumberEditor DriverNumberEditorForCopy()
         {
-            string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
-            return new DriverNumberEditor(new GpExeFile(exampleDataPath));
+            return new DriverNumberEditor(new GpExeFile(CopyOfGpExePath()));
         }
 
         internal static GripLevelEditor GripLevelEditorForDefault()
         {
-            string exampleDataPath = ExampleDataHelper.GpExePath();
-            return new GripLevelEditor(new GpExeFile(exampleDataPath));
+            return new GripLevelEditor(new GpExeFile(GpExePath()));
         }
 
         internal static GripLevelEditor GetGripLevelEditorForCopy()
         {
-            string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
-            return new GripLevelEditor(new GpExeFile(exampleDataPath));
+            return new GripLevelEditor(new GpExeFile(CopyOfGpExePath()));
         }
 
         internal static string GpExePath()

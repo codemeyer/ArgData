@@ -19,10 +19,10 @@ namespace ArgData.Tests
 
                 for (int i = 0; i < expectedValues.Length; i++)
                 {
-                    var fileHP = horsepowerEditor.ReadTeamHorsepower(i);
-                    var expectedHP = expectedValues[i];
+                    var fileHorsepower = horsepowerEditor.ReadTeamHorsepower(i);
+                    var expectedHorsepower = expectedValues[i];
 
-                    fileHP.Should().Be(expectedHP);
+                    fileHorsepower.Should().Be(expectedHorsepower);
                 }
 
                 ExampleDataHelper.DeleteFile(exampleDataPath);

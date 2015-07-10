@@ -23,7 +23,7 @@ namespace ArgData
         /// </summary>
         /// <param name="driverIndex">Index of driver to read race grip level for.</param>
         /// <returns>Grip level.</returns>
-        public int ReadRaceGripLevel(int driverIndex)
+        public byte ReadRaceGripLevel(int driverIndex)
         {
             int position = _exeFile.GetRaceGripLevelPositions(driverIndex);
             byte value = new FileReader(_exeFile.ExePath).ReadByte(position);
@@ -36,7 +36,7 @@ namespace ArgData
         /// </summary>
         /// <param name="driverIndex">Index of driver to read qualifying grip level for.</param>
         /// <returns>Grip level.</returns>
-        public int ReadQualifyingGripLevel(int driverIndex)
+        public byte ReadQualifyingGripLevel(int driverIndex)
         {
             int position = _exeFile.GetQualifyingGripLevelPositions(driverIndex);
             byte value = new FileReader(_exeFile.ExePath).ReadByte(position);

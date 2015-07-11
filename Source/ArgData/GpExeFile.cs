@@ -72,6 +72,16 @@ namespace ArgData
             return new DataPositions().CarColors;
         }
 
+        internal int GetPitCrewColorsPosition(int teamIndex)
+        {
+            return new DataPositions().PitCrewColors + (teamIndex * ColorsPerTeam);
+        }
+
+        internal int GetPitCrewColorsPosition()
+        {
+            return new DataPositions().PitCrewColors;
+        }
+
         internal int GetDriverNumbersPosition()
         {
             return new DataPositions().DriverNumbers;

@@ -8,5 +8,6 @@
         internal int RaceGripLevels { get { return 158460; } }
         internal int QualifyingGripLevels { get { return 158420; } }
         internal int DriverNumbers { get { return 154936; } }
+        internal int PitCrewColors { get { return 159421; } }
     }
 }

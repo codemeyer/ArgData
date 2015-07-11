@@ -1,0 +1,96 @@
+﻿using System.Linq;
+using ArgData.Entities;
+using ArgData.IO;
+
+namespace ArgData
+{
+    /// <summary>
+    /// Edits the pit crew colors of one or more teams.
+    /// </summary>
+    public class PitCrewColorEditor
+    {
+        private readonly GpExeFile _exeFile;
+
+        /// <summary>
+        /// Initializes a new instance of a PitCrewColorEditor.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to edit.</param>
+        public PitCrewColorEditor(GpExeFile exeFile)
+        {
+            _exeFile = exeFile;
+        }
+
+        /// <summary>
+        /// Reads the colors of the pit crew at the specified index.
+        /// </summary>
+        /// <param name="pitCrewIndex">Index of pit crew to read colors of.</param>
+        /// <returns>PitCrew object with the colors of the pit crew.</returns>
+        public PitCrew ReadPitCrewColors(int pitCrewIndex)
+        {
+            int position = _exeFile.GetPitCrewColorsPosition(pitCrewIndex);
+
+            byte[] colors = new FileReader(_exeFile.ExePath).ReadBytes(position, GpExeFile.ColorsPerTeam);
+
+            return new PitCrew(colors);
+        }
+
+        /// <summary>
+        /// Reads the colors of all the pit crews in the file.
+        /// </summary>
+        /// <returns>PitCrewList object with the colors of all the teams.</returns>
+        public PitCrewList ReadPitCrewColors()
+        {
+            byte[] allCarBytes = ReadAllPitCrewColors();
+
+            var list = new PitCrewList();
+
+            for (int i = 0; i < GpExeFile.NumberOfTeams; i++)
+            {
+                byte[] pitCrewBytes = allCarBytes.Skip(i * GpExeFile.ColorsPerTeam)
+                    .Take(GpExeFile.ColorsPerTeam).ToArray();
+                list[i].SetColors(pitCrewBytes);
+            }
+
+            return list;
+        }
+
+        private byte[] ReadAllPitCrewColors()
+        {
+            return new FileReader(_exeFile.ExePath).ReadBytes(
+                _exeFile.GetPitCrewColorsPosition(),
+                GpExeFile.ColorsPerTeam * GpExeFile.NumberOfTeams);
+        }
+
+        /// <summary>
+        /// Writes car colors for a team.
+        /// </summary>
+        /// <param name="car">Car with colors to write.</param>
+        /// <param name="teamIndex">Index of the team to write the colors for.</param>
+        public void WritePitCrewColors(PitCrew pitCrew, int teamIndex)
+        {
+            byte[] pitCrewBytes = pitCrew.GetColorsToWriteToFile();
+            int position = _exeFile.GetPitCrewColorsPosition(teamIndex);
+
+            new FileWriter(_exeFile.ExePath).WriteBytes(pitCrewBytes, position);
+        }
+
+        /// <summary>
+        /// Writes car colors for all the teams.
+        /// </summary>
+        /// <param name="pitCrewList">PitCrewList with colors to write.</param>
+        public void WritePitCrewColors(PitCrewList pitCrewList)
+        {
+            int teamIndex = 0;
+
+            foreach (PitCrew pitCrew in pitCrewList)
+            {
+                byte[] pitCrewBytes = pitCrew.GetColorsToWriteToFile();
+                int position = _exeFile.GetPitCrewColorsPosition(teamIndex);
+
+                new FileWriter(_exeFile.ExePath).WriteBytes(pitCrewBytes, position);
+
+                teamIndex++;
+            }
+        }
+    }
+}

@@ -26,9 +26,9 @@ namespace ArgData.Tests
             }
 
             [Fact]
-            public void ShouldReturnListOf_36_Drivers()
+            public void ShouldReturnListOf_40_Drivers()
             {
-                _data.Drivers.Count.Should().Be(36);
+                _data.Drivers.Count.Should().Be(40);
             }
 
             [Fact]
@@ -42,7 +42,7 @@ namespace ArgData.Tests
             [Fact]
             public void ShouldReturnListOf_18_Teams()
             {
-                _data.Teams.Count.Should().Be(18);
+                _data.Teams.Count.Should().Be(20);
             }
 
             [Fact]

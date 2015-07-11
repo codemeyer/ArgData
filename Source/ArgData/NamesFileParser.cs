@@ -34,7 +34,7 @@ namespace ArgData
         {
             var drivers = new List<Driver>();
 
-            for (int driverIndex = 0; driverIndex <= 35; driverIndex++)
+            for (int driverIndex = 0; driverIndex < 40; driverIndex++)
             {
                 int position = driverIndex * DriverNameLength;
                 var name = GetNameAtPosition(nameData, position);
@@ -49,7 +49,7 @@ namespace ArgData
         {
             var teams = new List<Team>();
 
-            for (int teamIndex = 0; teamIndex <= 17; teamIndex++)
+            for (int teamIndex = 0; teamIndex < 20; teamIndex++)
             {
                 int position = 960 + (teamIndex * TeamNameLength);
                 string name = GetNameAtPosition(nameData, position);

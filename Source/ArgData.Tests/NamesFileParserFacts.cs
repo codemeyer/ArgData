@@ -40,7 +40,7 @@ namespace ArgData.Tests
             }
 
             [Fact]
-            public void ShouldReturnListOf_18_Teams()
+            public void ShouldReturnListOf_20_Teams()
             {
                 _data.Teams.Count.Should().Be(20);
             }

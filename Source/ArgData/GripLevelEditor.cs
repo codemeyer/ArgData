@@ -3,7 +3,7 @@
 namespace ArgData
 {
     /// <summary>
-    /// Edits the race or qualifying grid level for computer drivers.
+    /// Edits the race or qualifying grip level for computer drivers.
     /// </summary>
     public class GripLevelEditor
     {

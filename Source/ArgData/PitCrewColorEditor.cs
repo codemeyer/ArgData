@@ -40,13 +40,13 @@ namespace ArgData
         /// <returns>PitCrewList object with the colors of all the teams.</returns>
         public PitCrewList ReadPitCrewColors()
         {
-            byte[] allCarBytes = ReadAllPitCrewColors();
+            byte[] allPitCrewBytes = ReadAllPitCrewColors();
 
             var list = new PitCrewList();
 
             for (int i = 0; i < GpExeFile.NumberOfTeams; i++)
             {
-                byte[] pitCrewBytes = allCarBytes.Skip(i * GpExeFile.ColorsPerTeam)
+                byte[] pitCrewBytes = allPitCrewBytes.Skip(i * GpExeFile.ColorsPerTeam)
                     .Take(GpExeFile.ColorsPerTeam).ToArray();
                 list[i].SetColors(pitCrewBytes);
             }
@@ -62,9 +62,9 @@ namespace ArgData
         }
 
         /// <summary>
-        /// Writes car colors for a team.
+        /// Writes pit crew colors for a team.
         /// </summary>
-        /// <param name="car">Car with colors to write.</param>
+        /// <param name="pitCrew">PitCrew with colors to write.</param>
         /// <param name="teamIndex">Index of the team to write the colors for.</param>
         public void WritePitCrewColors(PitCrew pitCrew, int teamIndex)
         {
@@ -75,7 +75,7 @@ namespace ArgData
         }
 
         /// <summary>
-        /// Writes car colors for all the teams.
+        /// Writes pit crew colors for all the teams.
         /// </summary>
         /// <param name="pitCrewList">PitCrewList with colors to write.</param>
         public void WritePitCrewColors(PitCrewList pitCrewList)

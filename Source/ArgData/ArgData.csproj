@@ -38,6 +38,7 @@
     <Reference Include="System.Runtime" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChecksumCalculator.cs" />
     <Compile Include="Entities\CarList.cs" />
     <Compile Include="DriverNumberEditor.cs" />
     <Compile Include="Entities\Car.cs" />
@@ -46,6 +47,7 @@
     <Compile Include="Entities\Driver.cs" />
     <Compile Include="Entities\SavedGameDriver.cs" />
     <Compile Include="FileInspector.cs" />
+    <Compile Include="GpChecksum.cs" />
     <Compile Include="GpExeInfo.cs" />
     <Compile Include="GripLevelEditor.cs" />
     <Compile Include="IO\FileReader.cs" />

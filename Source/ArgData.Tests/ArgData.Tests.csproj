@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarColorEditorFacts.cs" />
+    <Compile Include="ChecksumCalculatorFacts.cs" />
     <Compile Include="DriverNumberEditorFacts.cs" />
     <Compile Include="Entities\CarFacts.cs" />
     <Compile Include="DefaultData\DefaultCarColors.cs" />

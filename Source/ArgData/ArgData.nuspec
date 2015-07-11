@@ -15,4 +15,8 @@
     <copyright>Copyright © 2014-2015 Fredrik Meyer</copyright>
     <tags>F1GP</tags>
   </metadata>
+  <files>
+    <file src="bin\Release\ArgData.dll" target="lib\net45" />
+    <file src="bin\Release\ArgData.xml" target="lib\Net45" />
+  </files>
 </package>

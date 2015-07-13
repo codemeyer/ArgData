@@ -46,12 +46,15 @@
     <Compile Include="CarColorEditor.cs" />
     <Compile Include="DataPositions.cs" />
     <Compile Include="Entities\Driver.cs" />
+    <Compile Include="Entities\Helmet.cs" />
+    <Compile Include="Entities\HelmetList.cs" />
     <Compile Include="Entities\PitCrew.cs" />
     <Compile Include="Entities\SavedGameDriver.cs" />
     <Compile Include="FileInspector.cs" />
     <Compile Include="GpChecksum.cs" />
     <Compile Include="GpExeInfo.cs" />
     <Compile Include="GripLevelEditor.cs" />
+    <Compile Include="HelmetEditor.cs" />
     <Compile Include="IO\FileReader.cs" />
     <Compile Include="IO\FileWriter.cs" />
     <Compile Include="GpExeFile.cs" />

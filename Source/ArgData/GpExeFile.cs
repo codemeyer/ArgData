@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace ArgData
 {
@@ -106,5 +107,25 @@ namespace ArgData
         {
             return new DataPositions().QualifyingGripLevels + driverIndex;
         }
+
+        internal int GetHelmetColorsPosition(int helmetIndex)
+        {
+            int bytesForPreviousHelmets = BytesPerHelmet.Take(helmetIndex).Sum(b => b);
+
+            return new DataPositions().HelmetColors + bytesForPreviousHelmets;
+        }
+
+        internal int GetHelmetColorsPositionByteCountToRead(int helmetIndex)
+        {
+            return BytesPerHelmet[helmetIndex];
+        }
+
+        private readonly byte[] BytesPerHelmet = new byte[]
+        {
+            16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+            16, 16, 14, 16, 14, 16, 16, 16, 16, 16,
+            16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+            16, 16, 16, 16, 16, 14, 14, 14, 14, 14
+        };
     }
 }

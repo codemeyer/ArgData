@@ -57,12 +57,14 @@
   <ItemGroup>
     <Compile Include="CarColorEditorFacts.cs" />
     <Compile Include="ChecksumCalculatorFacts.cs" />
+    <Compile Include="DefaultData\DefaultHelmetColors.cs" />
     <Compile Include="DefaultData\DefaultPitCrewColors.cs" />
     <Compile Include="DriverNumberEditorFacts.cs" />
     <Compile Include="Entities\CarFacts.cs" />
     <Compile Include="DefaultData\DefaultCarColors.cs" />
     <Compile Include="GpExeFileFacts.cs" />
     <Compile Include="GripLevelEditorFacts.cs" />
+    <Compile Include="HelmetEditorFacts.cs" />
     <Compile Include="Meta\EnvironmentSetupFacts.cs" />
     <Compile Include="NamesFileParserFacts.cs" />
     <Compile Include="PaletteFacts.cs" />

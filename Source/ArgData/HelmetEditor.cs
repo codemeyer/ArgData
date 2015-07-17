@@ -30,12 +30,28 @@ namespace ArgData
             for (int i = 0; i < 40; i++)
             {
                 byte[] helmetBytes = new FileReader(_exeFile.ExePath)
-                    .ReadBytes(_exeFile.GetHelmetColorsPosition(i), 16);
+                    .ReadBytes(_exeFile.GetHelmetColorsPosition(i),
+                        _exeFile.GetHelmetColorsPositionByteCountToRead(i));
 
                 list[i].SetColors(helmetBytes);
             }
 
             return list;
+        }
+
+        public void WriteHelmetColors(HelmetList helmetList)
+        {
+            int helmetIndex = 0;
+
+            foreach (Helmet helmet in helmetList)
+            {
+                byte[] helmetBytes = helmet.GetColorsToWriteToFile();
+                int position = _exeFile.GetHelmetColorsPosition(helmetIndex);
+
+                new FileWriter(_exeFile.ExePath).WriteBytes(helmetBytes, position);
+
+                helmetIndex++;
+            }
         }
     }
 }

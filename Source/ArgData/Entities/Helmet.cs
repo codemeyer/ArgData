@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ArgData.Entities
 {
@@ -57,20 +58,20 @@ namespace ArgData.Entities
             {
                 Stripes = new byte[13]
                 {
-                    // TODO: fix for #13, #15 etc
+                    // TODO: verify completely for #13, #15 etc
                     helmetBytes[2],
                     helmetBytes[3],
                     helmetBytes[4],
                     helmetBytes[5],
-                    helmetBytes[7],
-                    helmetBytes[8],
-                    helmetBytes[9],
                     helmetBytes[10],
-                    helmetBytes[11],
-                    helmetBytes[12],
-                    0,
-                    0,
-                    0
+                    helmetBytes[10],
+                    helmetBytes[10],
+                    helmetBytes[10],
+                    helmetBytes[10],
+                    helmetBytes[10],
+                    helmetBytes[10],
+                    helmetBytes[10],
+                    helmetBytes[10]
                 };
             }
         }
@@ -95,31 +96,51 @@ namespace ArgData.Entities
 
         internal byte[] GetColorsToWriteToFile(int helmetIndex)
         {
-            // TODO: support #13, #15 etc
-            if (helmetIndex == 12 || helmetIndex == 14 || helmetIndex >= 35)
-                return new byte[0];
+            // TODO: support higher numbers?
+            if (helmetIndex >= 35) { return new byte[0]; }
 
-            var helmetBytes = new[]
+            List<byte> helmetBytes = new List<byte>();
+
+            helmetBytes.Add(Visor);
+            helmetBytes.Add(FixedValueForIndex1);
+            helmetBytes.Add(Stripes[0]);
+            helmetBytes.Add(Stripes[1]);
+            helmetBytes.Add(Stripes[2]);
+            helmetBytes.Add(Stripes[3]);
+            helmetBytes.Add(VisorSurround);
+
+            if (helmetIndex != 12 && helmetIndex != 14)
             {
-                Visor,
-                FixedValueForIndex1,
-                Stripes[0],
-                Stripes[1],
-                Stripes[2],
-                Stripes[3],
-                VisorSurround,
-                Stripes[4],
-                Stripes[5],
-                Stripes[6],
-                Stripes[7],
-                Stripes[8],
-                Stripes[9],
-                Stripes[10],
-                Stripes[11],
-                Stripes[12]
-            };
+                helmetBytes.Add(Stripes[4]);
+                helmetBytes.Add(Stripes[5]);
+                helmetBytes.Add(Stripes[6]);
+                helmetBytes.Add(Stripes[7]);
+                helmetBytes.Add(Stripes[8]);
+                helmetBytes.Add(Stripes[9]);
+                helmetBytes.Add(Stripes[10]);
+                helmetBytes.Add(Stripes[11]);
+                helmetBytes.Add(Stripes[12]);
+            }
+            else
+            {
+                if (helmetIndex == 14)
+                {
+                    helmetBytes.Add(23);
+                }
+                else if (helmetIndex == 12)
+                {
+                    helmetBytes.Add(199);
+                }
 
-            return helmetBytes;
+                helmetBytes.Add(0);
+                helmetBytes.Add(178);
+                helmetBytes.Add(Stripes[7]);
+                helmetBytes.Add(9);
+                helmetBytes.Add(0);
+                helmetBytes.Add(176);
+            }
+
+            return helmetBytes.ToArray();
         }
     }
 }

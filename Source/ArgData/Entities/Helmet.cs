@@ -93,9 +93,11 @@ namespace ArgData.Entities
 
         private const byte FixedValueForIndex1 = 1;
 
-        internal byte[] GetColorsToWriteToFile()
+        internal byte[] GetColorsToWriteToFile(int helmetIndex)
         {
             // TODO: support #13, #15 etc
+            if (helmetIndex == 12 || helmetIndex == 14 || helmetIndex >= 35)
+                return new byte[0];
 
             var helmetBytes = new[]
             {
@@ -112,7 +114,6 @@ namespace ArgData.Entities
                 Stripes[7],
                 Stripes[8],
                 Stripes[9],
-                Stripes[10],
                 Stripes[10],
                 Stripes[11],
                 Stripes[12]

@@ -45,7 +45,7 @@ namespace ArgData
 
             foreach (Helmet helmet in helmetList)
             {
-                byte[] helmetBytes = helmet.GetColorsToWriteToFile();
+                byte[] helmetBytes = helmet.GetColorsToWriteToFile(helmetIndex);
                 int position = _exeFile.GetHelmetColorsPosition(helmetIndex);
 
                 new FileWriter(_exeFile.ExePath).WriteBytes(helmetBytes, position);

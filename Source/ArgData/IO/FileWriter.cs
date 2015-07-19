@@ -13,7 +13,7 @@ namespace ArgData.IO
 
         internal void WriteUInt16(int value, int position)
         {
-            var writer = new BinaryWriter(new FileStream(_exePath, FileMode.OpenOrCreate));
+            var writer = new BinaryWriter(new FileStream(_exePath, FileMode.Open));
             writer.BaseStream.Position = position;
 
             writer.Write((ushort)value);
@@ -24,7 +24,7 @@ namespace ArgData.IO
 
         internal void WriteByte(byte value, int position)
         {
-            var writer = new BinaryWriter(new FileStream(_exePath, FileMode.OpenOrCreate));
+            var writer = new BinaryWriter(new FileStream(_exePath, FileMode.Open));
             writer.BaseStream.Position = position;
 
             writer.Write(value);
@@ -36,7 +36,7 @@ namespace ArgData.IO
 
         internal void WriteBytes(byte[] values, int position)
         {
-            var writer = new BinaryWriter(new FileStream(_exePath, FileMode.OpenOrCreate));
+            var writer = new BinaryWriter(new FileStream(_exePath, FileMode.Open));
             writer.BaseStream.Position = position;
 
             writer.Write(values);

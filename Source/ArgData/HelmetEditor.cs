@@ -39,6 +39,10 @@ namespace ArgData
             return list;
         }
 
+        /// <summary>
+        /// Writes the colors of all the helmets in the file.
+        /// </summary>
+        /// <param name="helmetList">HelmetList.</param>
         public void WriteHelmetColors(HelmetList helmetList)
         {
             int helmetIndex = 0;

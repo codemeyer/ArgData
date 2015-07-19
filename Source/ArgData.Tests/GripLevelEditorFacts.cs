@@ -10,7 +10,6 @@ namespace ArgData.Tests
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 2, 3, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33 };
-
             var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault();
 
             for (int i = 0; i < expectedValues.Length; i++)
@@ -23,11 +22,22 @@ namespace ArgData.Tests
         }
 
         [Fact]
+        public void ReadingRaceGripLevelsReturnsCorrectLevelsAll()
+        {
+            var expectedValues = new byte[] { 1, 4, 16, 9, 2, 3, 19, 21, 26, 31, 25, 27, 0, 28,
+                12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33, 0, 0, 0, 0, 0 };
+            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault();
+
+            byte[] gripLevels = gripLevelEditor.ReadRaceGripLevels();
+
+            gripLevels.ShouldBeEquivalentTo(expectedValues);
+        }
+
+        [Fact]
         public void ReturnsCorrectLevelsForQualifyingGrip()
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 3, 2, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33 };
-
             var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault();
 
             for (int i = 0; i < expectedValues.Length; i++)
@@ -37,6 +47,18 @@ namespace ArgData.Tests
 
                 fileGrip.Should().Be(expectedGrip);
             }
+        }
+
+        [Fact]
+        public void ReturnsCorrectLevelsForQualifyingGripAll()
+        {
+            var expectedValues = new byte[] { 1, 4, 16, 9, 3, 2, 19, 21, 26, 31, 25, 27, 0, 28,
+                12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33, 0, 0, 0, 0, 0 };
+            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault();
+
+            byte[] gripLevels = gripLevelEditor.ReadQualifyingGripLevels();
+
+            gripLevels.ShouldBeEquivalentTo(expectedValues);
         }
 
         [Fact]
@@ -60,6 +82,24 @@ namespace ArgData.Tests
         }
 
         [Fact]
+        public void WritingRaceGripLevelStoresCorrectValuesAll()
+        {
+            var gripLevelEditor = ExampleDataHelper.GetGripLevelEditorForCopy();
+
+            byte[] gripLevels = new byte[] {1, 2, 3, 4, 5};
+            gripLevelEditor.WriteRaceGripLevels(gripLevels);
+
+            for (byte i = 0; i < 5; i++)
+            {
+                var grip = gripLevelEditor.ReadRaceGripLevel(i);
+
+                grip.Should().Be((byte)(i+1));
+            }
+
+            ExampleDataHelper.DeleteLatestTempFile();
+        }
+
+        [Fact]
         public void WritingQualifyingGripLevelStoresCorrectValues()
         {
             var gripLevelEditor = ExampleDataHelper.GetGripLevelEditorForCopy();
@@ -74,6 +114,24 @@ namespace ArgData.Tests
                 var grip = gripLevelEditor.ReadQualifyingGripLevel(i);
 
                 grip.Should().Be(i);
+            }
+
+            ExampleDataHelper.DeleteLatestTempFile();
+        }
+
+        [Fact]
+        public void WritingQualifyingGripLevelStoresCorrectValuesAll()
+        {
+            var gripLevelEditor = ExampleDataHelper.GetGripLevelEditorForCopy();
+
+            byte[] gripLevels = new byte[] { 1, 2, 3, 4, 5 };
+            gripLevelEditor.WriteQualifyingGripLevels(gripLevels);
+
+            for (byte i = 0; i < 5; i++)
+            {
+                var grip = gripLevelEditor.ReadQualifyingGripLevel(i);
+
+                grip.Should().Be((byte)(i + 1));
             }
 
             ExampleDataHelper.DeleteLatestTempFile();

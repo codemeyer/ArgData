@@ -27,7 +27,7 @@ namespace ArgData.Entities
         public PitCrewList()
         {
             _list = new List<PitCrew>();
-            for (int i = 0; i < GpExeFile.NumberOfTeams; i++)
+            for (int i = 0; i < Constants.NumberOfAvailableTeams; i++)
             {
                 _list.Add(new PitCrew());
             }

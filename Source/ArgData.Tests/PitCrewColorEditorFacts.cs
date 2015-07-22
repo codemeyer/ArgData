@@ -45,7 +45,7 @@ namespace ArgData.Tests
         public void WriteAndReadPitCrews()
         {
             var pitCrewList = new PitCrewList();
-            for (int i = 0; i < GpExeFile.NumberOfTeams; i++)
+            for (int i = 0; i < Constants.NumberOfAvailableTeams; i++)
             {
                 byte b = Convert.ToByte(i + 1);
                 pitCrewList[i] = new PitCrew(new[] { b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b });

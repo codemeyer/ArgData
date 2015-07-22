@@ -66,7 +66,7 @@
     <Compile Include="GripLevelEditorFacts.cs" />
     <Compile Include="HelmetEditorFacts.cs" />
     <Compile Include="Meta\EnvironmentSetupFacts.cs" />
-    <Compile Include="NamesFileParserFacts.cs" />
+    <Compile Include="NamesFileEditorFacts.cs" />
     <Compile Include="PaletteFacts.cs" />
     <Compile Include="PitCrewColorEditorFacts.cs" />
     <Compile Include="PlayerHorsepowerEditorFacts.cs" />

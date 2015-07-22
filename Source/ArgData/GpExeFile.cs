@@ -50,12 +50,6 @@ namespace ArgData
             get { return _exePath; }
         }
 
-        /// <summary>
-        /// Gets the number of teams supported by ArgData.
-        /// </summary>
-        public const int NumberOfTeams = 18;
-
-
         internal int GetPlayerHorsepowerPosition()
         {
             return new DataPositions().PlayerHorsepower;

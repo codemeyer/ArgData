@@ -28,7 +28,7 @@ namespace ArgData
         {
             int position = _exeFile.GetDriverNumbersPosition();
 
-            byte[] driverNumbers = new FileReader(_exeFile.ExePath).ReadBytes(position, 40);
+            byte[] driverNumbers = new FileReader(_exeFile.ExePath).ReadBytes(position, Constants.NumberOfDrivers);
 
             return driverNumbers;
         }
@@ -52,7 +52,7 @@ namespace ArgData
 
         private void CheckDriverNumbers(byte[] driverNumbers)
         {
-            if (driverNumbers.Length != 40)
+            if (driverNumbers.Length != Constants.NumberOfDrivers)
             {
                 throw new Exception("Incorrect number of driver numbers provided. Must be exactly 40.");
             }

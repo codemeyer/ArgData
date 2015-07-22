@@ -1,4 +1,8 @@
-﻿namespace ArgData
+﻿using System;
+using System.IO;
+using ArgData.IO;
+
+namespace ArgData
 {
     /// <summary>
     /// Class used for calculating an F1GP checksum.
@@ -36,6 +40,31 @@
             _secondCalculatedValue = _secondCalculatedValue + value;
 
             _sumOfAllBytes += value;
+        }
+
+
+        /// <summary>
+        /// Updates the checksum (i.e. the last four bytes) of the specified file.
+        /// </summary>
+        /// <param name="path">Path to file.</param>
+        public static void UpdateChecksum(string path)
+        {
+            byte[] fileBytes = File.ReadAllBytes(path);
+            byte[] bytesToChecksum = new byte[fileBytes.Length - 4];
+            Array.Copy(fileBytes, bytesToChecksum, fileBytes.Length - 4);
+
+            var checksum = new ChecksumCalculator().Calculate(bytesToChecksum);
+
+            var file = File.Open(path, FileMode.Open);
+            var bin = new BinaryWriter(file);
+
+            bin.BaseStream.Position = file.Length - 4;
+            bin.Write((ushort)checksum.Checksum1);
+            bin.BaseStream.Position = file.Length - 2;
+            bin.Write((ushort)checksum.Checksum2);
+
+            file.Close();
+            file.Dispose();
         }
     }
 }

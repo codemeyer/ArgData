@@ -44,7 +44,7 @@ namespace ArgData
 
             var list = new PitCrewList();
 
-            for (int i = 0; i < GpExeFile.NumberOfTeams; i++)
+            for (int i = 0; i < Constants.NumberOfAvailableTeams; i++)
             {
                 byte[] pitCrewBytes = allPitCrewBytes.Skip(i * GpExeFile.ColorsPerTeam)
                     .Take(GpExeFile.ColorsPerTeam).ToArray();
@@ -58,7 +58,7 @@ namespace ArgData
         {
             return new FileReader(_exeFile.ExePath).ReadBytes(
                 _exeFile.GetPitCrewColorsPosition(),
-                GpExeFile.ColorsPerTeam * GpExeFile.NumberOfTeams);
+                GpExeFile.ColorsPerTeam * Constants.NumberOfAvailableTeams);
         }
 
         /// <summary>

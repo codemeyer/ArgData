@@ -81,5 +81,23 @@ namespace ArgData.Tests
                 // ignored
             }
         }
+
+        internal static byte[] ReadBytes(string path, int position, int count)
+        {
+            var stream = new FileStream(path, FileMode.Open);
+
+            var br = new BinaryReader(stream);
+
+            br.BaseStream.Position = position;
+            byte[] bytes = br.ReadBytes(count);
+
+            br.Close();
+            br.Dispose();
+            stream.Close();
+            stream.Dispose();
+
+            return bytes;
+        }
+
     }
 }

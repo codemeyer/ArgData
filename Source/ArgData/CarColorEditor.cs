@@ -44,7 +44,7 @@ namespace ArgData
 
             var list = new CarList();
 
-            for (int i = 0; i < Constants.NumberOfAvailableTeams; i++)
+            for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
             {
                 byte[] carBytes = allCarBytes.Skip(i * GpExeFile.ColorsPerTeam)
                     .Take(GpExeFile.ColorsPerTeam).ToArray();
@@ -58,7 +58,7 @@ namespace ArgData
         {
             return new FileReader(_exeFile.ExePath).ReadBytes(
                 _exeFile.GetCarColorsPosition(),
-                GpExeFile.ColorsPerTeam * Constants.NumberOfAvailableTeams);
+                GpExeFile.ColorsPerTeam * Constants.NumberOfSupportedTeams);
         }
 
         /// <summary>

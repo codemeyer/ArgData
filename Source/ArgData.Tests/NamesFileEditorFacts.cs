@@ -111,7 +111,7 @@ namespace ArgData.Tests
         private void SetupTeams()
         {
             _teams = new List<Team>();
-            for (int i = 1; i <= Constants.NumberOfAvailableTeams; i++)
+            for (int i = 1; i <= Constants.NumberOfSupportedTeams; i++)
             {
                 _teams.Add(new Team
                 {
@@ -124,7 +124,7 @@ namespace ArgData.Tests
         private void SetupDrivers()
         {
             _drivers = new List<Driver>();
-            for (int i = 1; i <= Constants.NumberOfAvailableDrivers; i++)
+            for (int i = 1; i <= Constants.NumberOfDrivers; i++)
             {
                 _drivers.Add(new Driver
                 {

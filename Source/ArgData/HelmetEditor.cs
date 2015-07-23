@@ -27,7 +27,7 @@ namespace ArgData
         {
             var list = new HelmetList();
 
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < Constants.NumberOfDrivers; i++)
             {
                 byte[] helmetBytes = new FileReader(_exeFile.ExePath)
                     .ReadBytes(_exeFile.GetHelmetColorsPosition(i),

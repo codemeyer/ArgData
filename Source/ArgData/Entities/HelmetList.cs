@@ -27,7 +27,7 @@ namespace ArgData.Entities
         public HelmetList()
         {
             _list = new List<Helmet>();
-            for (int i = 0; i < 40; i++)
+            for (int i = 0; i < Constants.NumberOfDrivers; i++)
             {
                 _list.Add(new Helmet());
             }

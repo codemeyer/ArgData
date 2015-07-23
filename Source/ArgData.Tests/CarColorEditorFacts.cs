@@ -53,7 +53,7 @@ namespace ArgData.Tests
         public void WriteAndReadCars()
         {
             var carList = new CarList();
-            for (int i = 0; i < Constants.NumberOfAvailableTeams; i++)
+            for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
             {
                 byte b = Convert.ToByte(i + 1);
                 carList[i] = new Car(new [] { b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b });

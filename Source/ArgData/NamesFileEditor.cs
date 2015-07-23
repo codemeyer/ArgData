@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,7 +7,7 @@ using ArgData.Entities;
 namespace ArgData
 {
     /// <summary>
-    /// Parses a names file.
+    /// Reads or writes a names file.
     /// </summary>
     public class NamesFileEditor
     {
@@ -93,10 +92,9 @@ namespace ArgData
 
             namesFile.Write(new byte[4] { 0, 0, 0, 0}, 0, 4);
 
-            //namesFile.Flush(true);
             namesFile.Close();
             namesFile.Dispose();
-            
+
             ChecksumCalculator.UpdateChecksum(path);
         }
 

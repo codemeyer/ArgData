@@ -96,7 +96,7 @@ namespace ArgData.Entities
 
         internal byte[] GetColorsToWriteToFile(int helmetIndex)
         {
-            // TODO: support higher numbers?
+            // TODO: support higher numbers (if possible?)
             if (helmetIndex >= 35) { return new byte[0]; }
 
             List<byte> helmetBytes = new List<byte>();
@@ -131,6 +131,12 @@ namespace ArgData.Entities
                 {
                     helmetBytes.Add(199);
                 }
+                // TODO: test with these values
+                // 35 => value 71
+                // 36 => value 7
+                // 37 => value 7
+                // 38 => value 7
+                // 39 => value 7
 
                 helmetBytes.Add(0);
                 helmetBytes.Add(178);

@@ -81,6 +81,30 @@ namespace ArgData.Tests
             ExampleDataHelper.DeleteLatestTempFile();
         }
 
-        // TODO: tests for special cases #13, #15, etc
+        [Fact]
+        public void WritingHelmet15_ReturnsPartWrittenColorsPartFixedValues()
+        {
+            string exampleDataPath = ExampleDataHelper.CopyOfGpExePath();
+            var exeEditor = new GpExeFile(exampleDataPath);
+            var helmetEditor = new HelmetEditor(exeEditor);
+
+            var helmetList = new HelmetList();
+            helmetList[14] = new Helmet(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 });
+
+            helmetEditor.WriteHelmetColors(helmetList);
+
+            var helmetColors = new HelmetEditor(exeEditor).ReadHelmetColors();
+
+            helmetColors[14].Visor.Should().Be(1);
+            helmetColors[14].VisorSurround.Should().Be(7);   // zero-based index 6
+            helmetColors[14].Stripes[0].Should().Be(3);
+
+            var specialBytes = ExampleDataHelper.ReadBytes(exampleDataPath, 159017, 14);
+            specialBytes.Should().ContainInOrder(new byte[] {23, 0, 178, /**/ 11 /**/, 9, 0, 176});
+
+            ExampleDataHelper.DeleteLatestTempFile();
+        }
+
+        // TODO: tests for more special cases
     }
 }

@@ -24,7 +24,7 @@ namespace ArgData.Entities
         {
             if (helmetColorBytes.Length != GpExeFile.ColorsPerTeam)
             {
-                throw new ArgumentOutOfRangeException("helmetColorBytes", "Helmet must be created with 14 or 16 colors");
+                throw new ArgumentOutOfRangeException(nameof(helmetColorBytes), "Helmet must be created with 14 or 16 colors");
             }
 
             SetColors(helmetColorBytes);

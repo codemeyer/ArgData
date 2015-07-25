@@ -27,7 +27,7 @@ namespace ArgData
 
             if (exeInfo != GpExeInfo.European105)
             {
-                string msg = string.Format("The specified file is of type {0}. ArgData currently only supports European105.", exeInfo);
+                string msg = $"The specified file is of type {exeInfo}. ArgData currently only supports European105.";
                 throw new Exception(msg);
             }
         }

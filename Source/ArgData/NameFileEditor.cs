@@ -7,27 +7,27 @@ using ArgData.Entities;
 namespace ArgData
 {
     /// <summary>
-    /// Reads or writes a names file.
+    /// Reads or writes a name file.
     /// </summary>
-    public class NamesFileEditor
+    public class NameFileEditor
     {
         private const int DriverNameLength = 24;
         private const int TeamNameLength = 13;
 
         /// <summary>
-        /// Read a names file.
+        /// Read a name file.
         /// </summary>
         /// <param name="path">Path to file.</param>
-        /// <returns>NamesFile with teams, engines and driver names.</returns>
-        public NamesFile Read(string path)
+        /// <returns>NameFile with teams, engines and driver names.</returns>
+        public NameFile Read(string path)
         {
-            // TODO: check that this is a names file
+            // TODO: check that this is a name file
             byte[] nameData = File.ReadAllBytes(path);
 
             var drivers = ParseDrivers(nameData);
             var teams = ParseTeams(nameData);
 
-            return new NamesFile(drivers, teams);
+            return new NameFile(drivers, teams);
         }
 
         private List<Driver> ParseDrivers(byte[] nameData)
@@ -77,7 +77,7 @@ namespace ArgData
         }
 
         /// <summary>
-        /// Write names file.
+        /// Write name file.
         /// </summary>
         /// <param name="path"></param>
         /// <param name="drivers">List of drivers, where index indicates driver number.</param>

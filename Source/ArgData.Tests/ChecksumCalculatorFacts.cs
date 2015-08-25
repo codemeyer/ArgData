@@ -8,7 +8,7 @@ namespace ArgData.Tests
     public class ChecksumCalculatorFacts
     {
         [Fact]
-        public void ReturnExpectedChecksumsForNamesFile()
+        public void ReturnExpectedChecksumsForNameFile()
         {
             string path = ExampleDataHelper.GetExampleDataPath("names1991.nam");
             byte[] allBytes = GetBytesToCalculateChecksumFor(path);
@@ -19,8 +19,6 @@ namespace ArgData.Tests
 
             values.Checksum1.Should().Be(16387);
             values.Checksum2.Should().Be(32103);
-
-            ExampleDataHelper.DeleteLatestTempFile();
         }
 
         [Fact]
@@ -34,8 +32,6 @@ namespace ArgData.Tests
 
             values.Checksum1.Should().Be(30567);
             values.Checksum2.Should().Be(7380);
-
-            ExampleDataHelper.DeleteLatestTempFile();
         }
 
         private byte[] GetBytesToCalculateChecksumFor(string path)

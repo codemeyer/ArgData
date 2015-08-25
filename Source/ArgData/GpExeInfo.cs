@@ -16,12 +16,7 @@
         European105,
 
         /// <summary>
-        /// Italian 1.05. Currently unsupported by ArgData.
-        /// </summary>
-        Italian105,
-
-        /// <summary>
-        /// US 1.05, World Circuit. Currently unsupported by ArgData.
+        /// US 1.05, World Circuit.
         /// </summary>
         Us105
     }

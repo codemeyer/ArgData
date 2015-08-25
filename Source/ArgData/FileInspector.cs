@@ -13,9 +13,6 @@ namespace ArgData
                 case 321878:
                     return GpExeInfo.European105;
 
-                case 321748:
-                    return GpExeInfo.Italian105;
-
                 case 321716:
                     return GpExeInfo.Us105;
 

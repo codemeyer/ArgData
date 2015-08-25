@@ -5,12 +5,12 @@ namespace ArgData.Entities
     /// <summary>
     /// Represents a file containing the names of the teams, engines and drivers.
     /// </summary>
-    public class NamesFile
+    public class NameFile
     {
         /// <summary>
-        /// Initializes a new instance of a NamesFile.
+        /// Initializes a new instance of a NameFile.
         /// </summary>
-        internal NamesFile(List<Driver> drivers, List<Team> teams)
+        internal NameFile(List<Driver> drivers, List<Team> teams)
         {
             Drivers = drivers;
             Teams = teams;

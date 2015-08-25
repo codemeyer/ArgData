@@ -36,7 +36,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
@@ -45,7 +44,6 @@
     <Compile Include="DriverNumberEditor.cs" />
     <Compile Include="Entities\Car.cs" />
     <Compile Include="CarColorEditor.cs" />
-    <Compile Include="DataPositions.cs" />
     <Compile Include="Entities\Driver.cs" />
     <Compile Include="Entities\Helmet.cs" />
     <Compile Include="Entities\HelmetList.cs" />
@@ -59,8 +57,8 @@
     <Compile Include="IO\FileReader.cs" />
     <Compile Include="IO\FileWriter.cs" />
     <Compile Include="GpExeFile.cs" />
-    <Compile Include="Entities\NamesFile.cs" />
-    <Compile Include="NamesFileEditor.cs" />
+    <Compile Include="Entities\NameFile.cs" />
+    <Compile Include="NameFileEditor.cs" />
     <Compile Include="Palette.cs" />
     <Compile Include="PitCrewColorEditor.cs" />
     <Compile Include="Entities\PitCrewList.cs" />

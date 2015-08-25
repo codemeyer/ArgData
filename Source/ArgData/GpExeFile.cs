@@ -19,15 +19,17 @@ namespace ArgData
             _exePath = exePath;
 
             CheckFileIsSupported(exePath);
+
+            SetupDataPositions();
         }
 
         private void CheckFileIsSupported(string exePath)
         {
             var exeInfo = GetFileInfo(exePath);
 
-            if (exeInfo != GpExeInfo.European105)
+            if (exeInfo != GpExeInfo.European105 && exeInfo != GpExeInfo.Us105)
             {
-                string msg = $"The specified file is of type {exeInfo}. ArgData currently only supports European105.";
+                string msg = $"The specified file is of type {exeInfo}. ArgData currently supports European105 and Us105.";
                 throw new Exception(msg);
             }
         }
@@ -42,6 +44,44 @@ namespace ArgData
             return new FileInspector().GetGpExeInfo(exePath);
         }
 
+        private void SetupDataPositions()
+        {
+            var fileInfo = GetFileInfo(ExePath);
+
+            switch (fileInfo)
+            {
+                case GpExeInfo.European105:
+                    PlayerHorsepowerPosition = 19848;
+                    TeamHorsepowerPosition = 158380;
+                    CarColorsPosition = 158500;
+                    RaceGripLevelsPosition = 158460;
+                    QualifyingGripLevelsPosition = 158420;
+                    DriverNumbersPosition = 154936;
+                    PitCrewColorsPosition = 159421;
+                    HelmetColorsPosition = 158795;
+                    break;
+                case GpExeInfo.Us105:
+                    PlayerHorsepowerPosition = 19848;
+                    TeamHorsepowerPosition = 158336;
+                    CarColorsPosition = 158456;
+                    RaceGripLevelsPosition = 158416;
+                    QualifyingGripLevelsPosition = 158376;
+                    DriverNumbersPosition = 154892;
+                    PitCrewColorsPosition = 159377;
+                    HelmetColorsPosition = 158751;
+                    break;
+            }
+        }
+
+        private int PlayerHorsepowerPosition { get; set; }
+        private int TeamHorsepowerPosition { get; set; }
+        private int CarColorsPosition { get; set; }
+        private int RaceGripLevelsPosition { get; set; }
+        private int QualifyingGripLevelsPosition { get; set; }
+        private int DriverNumbersPosition { get; set; }
+        private int PitCrewColorsPosition { get; set; }
+        private int HelmetColorsPosition { get; set; }
+
         /// <summary>
         /// Gets the path to the GP.EXE file.
         /// </summary>
@@ -52,61 +92,61 @@ namespace ArgData
 
         internal int GetPlayerHorsepowerPosition()
         {
-            return new DataPositions().PlayerHorsepower;
+            return PlayerHorsepowerPosition;
         }
 
         internal const int ColorsPerTeam = 16;
 
         internal int GetCarColorsPosition(int teamIndex)
         {
-            return new DataPositions().CarColors + (teamIndex * ColorsPerTeam);
+            return CarColorsPosition + (teamIndex * ColorsPerTeam);
         }
 
         internal int GetCarColorsPosition()
         {
-            return new DataPositions().CarColors;
+            return CarColorsPosition;
         }
 
         internal int GetPitCrewColorsPosition(int teamIndex)
         {
-            return new DataPositions().PitCrewColors + (teamIndex * ColorsPerTeam);
+            return PitCrewColorsPosition + (teamIndex * ColorsPerTeam);
         }
 
         internal int GetPitCrewColorsPosition()
         {
-            return new DataPositions().PitCrewColors;
+            return PitCrewColorsPosition;
         }
 
         internal int GetDriverNumbersPosition()
         {
-            return new DataPositions().DriverNumbers;
+            return DriverNumbersPosition;
         }
 
         internal int GetDriverNumbersPosition(int driverIndex)
         {
-            return GetDriverNumbersPosition() + driverIndex;
+            return DriverNumbersPosition + driverIndex;
         }
 
         internal int GetTeamHorsepowerPosition(int teamIndex)
         {
-            return new DataPositions().TeamHorsepower + (teamIndex * 2);
+            return TeamHorsepowerPosition + (teamIndex * 2);
         }
 
         internal int GetRaceGripLevelPositions(int driverIndex)
         {
-            return new DataPositions().RaceGripLevels + driverIndex;
+            return RaceGripLevelsPosition + driverIndex;
         }
 
         internal int GetQualifyingGripLevelPositions(int driverIndex)
         {
-            return new DataPositions().QualifyingGripLevels + driverIndex;
+            return QualifyingGripLevelsPosition + driverIndex;
         }
 
         internal int GetHelmetColorsPosition(int helmetIndex)
         {
             int bytesForPreviousHelmets = BytesPerHelmet.Take(helmetIndex).Sum(b => b);
 
-            return new DataPositions().HelmetColors + bytesForPreviousHelmets;
+            return HelmetColorsPosition + bytesForPreviousHelmets;
         }
 
         internal int GetHelmetColorsPositionByteCountToRead(int helmetIndex)
@@ -116,10 +156,7 @@ namespace ArgData
 
         private readonly byte[] BytesPerHelmet = new byte[]
         {
-            16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-            16, 16, 14, 16, 14, 16, 16, 16, 16, 16,
-            16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-            16, 16, 16, 16, 16, 14, 14, 14, 14, 14
+            16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 14, 16, 14, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 14, 14, 14, 14, 14
         };
     }
 }

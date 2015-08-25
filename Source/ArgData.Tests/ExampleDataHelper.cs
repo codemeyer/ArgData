@@ -3,48 +3,67 @@ using System.IO;
 
 namespace ArgData.Tests
 {
+    internal class ExampleDataContext : IDisposable
+    {
+        public GpExeFile ExeFile { get; }
+        public string ExePath { get; }
+
+        private ExampleDataContext(string exePath)
+        {
+            ExePath = exePath;
+            ExeFile = new GpExeFile(exePath);
+        }
+
+        public static ExampleDataContext ExeCopy(GpExeInfo exeInfo)
+        {
+            string exePath = ExampleDataHelper.CopyOfGpExePath(exeInfo);
+            return new ExampleDataContext(exePath);
+        }
+
+        public void Dispose()
+        {
+            File.Delete(ExePath);
+        }
+    }
+
     internal static class ExampleDataHelper
     {
-        private static string _latestTempFile;
-
-        internal static PlayerHorsepowerEditor PlayerHorsepowerEditorForDefault()
+        internal static PlayerHorsepowerEditor PlayerHorsepowerEditorForDefault(GpExeInfo exeInfo)
         {
-            return new PlayerHorsepowerEditor(new GpExeFile(GpExePath()));
+            return new PlayerHorsepowerEditor(new GpExeFile(GpExePath(exeInfo)));
         }
 
-        public static PlayerHorsepowerEditor PlayerHorsepowerEditorForCopy()
+        internal static DriverNumberEditor DriverNumberEditorForDefault(GpExeInfo exeInfo)
         {
-            return new PlayerHorsepowerEditor(new GpExeFile(CopyOfGpExePath()));
+            return new DriverNumberEditor(new GpExeFile(GpExePath(exeInfo)));
         }
 
-        internal static DriverNumberEditor DriverNumberEditorForDefault()
+        internal static GripLevelEditor GripLevelEditorForDefault(GpExeInfo exeInfo)
         {
-            return new DriverNumberEditor(new GpExeFile(GpExePath()));
+            return new GripLevelEditor(new GpExeFile(GpExePath(exeInfo)));
         }
 
-        internal static DriverNumberEditor DriverNumberEditorForCopy()
+        internal static string GpExePath(GpExeInfo exeVersion)
         {
-            return new DriverNumberEditor(new GpExeFile(CopyOfGpExePath()));
+            return GetExampleDataPath(FileNameFor(exeVersion));
         }
 
-        internal static GripLevelEditor GripLevelEditorForDefault()
+        internal static string CopyOfGpExePath(GpExeInfo exeVersion)
         {
-            return new GripLevelEditor(new GpExeFile(GpExePath()));
+            return GetCopyOfExampleData(FileNameFor(exeVersion));
         }
 
-        internal static GripLevelEditor GetGripLevelEditorForCopy()
+        private static string FileNameFor(GpExeInfo exeInfo)
         {
-            return new GripLevelEditor(new GpExeFile(CopyOfGpExePath()));
-        }
-
-        internal static string GpExePath()
-        {
-            return GetExampleDataPath("GP-ORIG.EXE");
-        }
-
-        internal static string CopyOfGpExePath()
-        {
-            return GetCopyOfExampleData("GP-ORIG.EXE");
+            switch (exeInfo)
+            {
+                case GpExeInfo.European105:
+                    return "GP-EU105.EXE";
+                case GpExeInfo.Us105:
+                    return "GP-US105.EXE";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(exeInfo), exeInfo, null);
+            }
         }
 
         internal static string GetExampleDataPath(string fileName)
@@ -54,32 +73,18 @@ namespace ArgData.Tests
             return Path.Combine(exampleDataEnvironment ?? string.Empty, fileName);
         }
 
-        internal static string GetCopyOfExampleData(string fileName)
+        private static string GetCopyOfExampleData(string fileName)
         {
             string originalLocation = GetExampleDataPath(fileName);
-            string tempFile = Path.GetTempFileName() + Path.GetExtension(fileName);
+            string tempFile = GetTempFileName(fileName);
             File.Copy(originalLocation, tempFile);
-
-            _latestTempFile = tempFile;
 
             return tempFile;
         }
 
-        internal static void DeleteLatestTempFile()
+        internal static string GetTempFileName(string extFileName)
         {
-            DeleteFile(_latestTempFile);
-        }
-
-        internal static void DeleteFile(string path)
-        {
-            try
-            {
-                File.Delete(path);
-            }
-            catch
-            {
-                // ignored
-            }
+            return Path.GetTempPath() + Path.GetRandomFileName() + extFileName;
         }
 
         internal static byte[] ReadBytes(string path, int position, int count)
@@ -98,6 +103,5 @@ namespace ArgData.Tests
 
             return bytes;
         }
-
     }
 }

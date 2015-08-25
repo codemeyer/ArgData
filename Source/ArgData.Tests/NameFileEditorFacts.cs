@@ -7,17 +7,17 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class NamesFileEditorFacts
+    public class NameFileEditorFacts
     {
         public class ReadingNameFile
         {
-            private readonly NamesFile _data;
+            private readonly NameFile _data;
 
             public ReadingNameFile()
             {
                 string exampleDataPath = ExampleDataHelper.GetExampleDataPath("names1991.nam");
 
-                var parser = new NamesFileEditor();
+                var parser = new NameFileEditor();
                 _data = parser.Read(exampleDataPath);
             }
 
@@ -79,16 +79,16 @@ namespace ArgData.Tests
         [Fact]
         public void FileShouldBeCorrectSize()
         {
-            string tempNamesFile = Path.GetTempFileName();
-            new NamesFileEditor().Write(tempNamesFile, _drivers, _teams);
+            string tempNameFile = ExampleDataHelper.GetTempFileName("names.nam");
+            new NameFileEditor().Write(tempNameFile, _drivers, _teams);
 
-            var fileInfo = new FileInfo(tempNamesFile);
+            var fileInfo = new FileInfo(tempNameFile);
 
             fileInfo.Length.Should().Be(1484);
 
             try
             {
-                File.Delete(tempNamesFile);
+                File.Delete(tempNameFile);
             }
             catch
             {
@@ -98,14 +98,22 @@ namespace ArgData.Tests
         [Fact]
         public void WriteAndRead()
         {
-            string tempNamesFile = Path.GetTempFileName();
-            new NamesFileEditor().Write(tempNamesFile, _drivers, _teams);
-            var namesFile = new NamesFileEditor().Read(tempNamesFile);
+            string tempNameFile = ExampleDataHelper.GetTempFileName("names.nam");
+            new NameFileEditor().Write(tempNameFile, _drivers, _teams);
+            var namesFile = new NameFileEditor().Read(tempNameFile);
 
             namesFile.Drivers.Count.Should().Be(40);
             namesFile.Teams.Count.Should().Be(20);
             namesFile.Drivers[0].Name.Should().Be("Driver 1");
             namesFile.Teams[0].Name.Should().Be("Team 1");
+
+            try
+            {
+                File.Delete(tempNameFile);
+            }
+            catch
+            {
+            }
         }
 
         private void SetupTeams()

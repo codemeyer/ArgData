@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using ArgData.Entities;
@@ -62,82 +62,56 @@ namespace ArgData.Tests
 
                 firstTeam.Engine.Should().Be("Honda");
             }
+
+            [Fact]
+            public void NonNameFileThrowsException()
+            {
+                var notNameFilePath = ExampleDataHelper.GpExePath(GpExeInfo.European105);
+
+                Action action = () => new NameFileEditor().Read(notNameFilePath);
+
+                action.ShouldThrow<Exception>();
+            }
         }
     }
 
     public class WritingNameFile
     {
-        private List<Team> _teams;
-        private List<Driver> _drivers;
+        private readonly NameFileTeamList _teams;
+        private readonly NameFileDriverList _drivers;
 
         public WritingNameFile()
         {
-            SetupTeams();
-            SetupDrivers();
+            _teams = new NameFileTeamList();
+            _drivers = new NameFileDriverList();
         }
 
         [Fact]
         public void FileShouldBeCorrectSize()
         {
-            string tempNameFile = ExampleDataHelper.GetTempFileName("names.nam");
-            new NameFileEditor().Write(tempNameFile, _drivers, _teams);
-
-            var fileInfo = new FileInfo(tempNameFile);
-
-            fileInfo.Length.Should().Be(1484);
-
-            try
+            using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                File.Delete(tempNameFile);
-            }
-            catch
-            {
+                new NameFileEditor().Write(context.FilePath, _drivers, _teams);
+
+                var fileInfo = new FileInfo(context.FilePath);
+
+                fileInfo.Length.Should().Be(1484);
             }
         }
 
         [Fact]
         public void WriteAndRead()
         {
-            string tempNameFile = ExampleDataHelper.GetTempFileName("names.nam");
-            new NameFileEditor().Write(tempNameFile, _drivers, _teams);
-            var namesFile = new NameFileEditor().Read(tempNameFile);
-
-            namesFile.Drivers.Count.Should().Be(40);
-            namesFile.Teams.Count.Should().Be(20);
-            namesFile.Drivers[0].Name.Should().Be("Driver 1");
-            namesFile.Teams[0].Name.Should().Be("Team 1");
-
-            try
+            using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                File.Delete(tempNameFile);
-            }
-            catch
-            {
-            }
-        }
+                new NameFileEditor().Write(context.FilePath, _drivers, _teams);
+                var namesFile = new NameFileEditor().Read(context.FilePath);
 
-        private void SetupTeams()
-        {
-            _teams = new List<Team>();
-            for (int i = 1; i <= Constants.NumberOfSupportedTeams; i++)
-            {
-                _teams.Add(new Team
-                {
-                    Name = string.Format("Team {0}", i),
-                    Engine = string.Format("Engine {0}", i)
-                });
-            }
-        }
+                namesFile.Drivers.Count.Should().Be(40);
+                namesFile.Teams.Count.Should().Be(20);
+                namesFile.Drivers[0].Name.Should().Be("Driver 1");
+                namesFile.Teams[0].Name.Should().Be("Team 1");
 
-        private void SetupDrivers()
-        {
-            _drivers = new List<Driver>();
-            for (int i = 1; i <= Constants.NumberOfDrivers; i++)
-            {
-                _drivers.Add(new Driver
-                {
-                    Name = string.Format("Driver {0}", i)
-                });
             }
         }
     }

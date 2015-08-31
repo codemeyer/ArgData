@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,7 +21,8 @@ namespace ArgData
         /// <returns>NameFile with teams, engines and driver names.</returns>
         public NameFile Read(string path)
         {
-            // TODO: check that this is a name file
+            ValidateFile(path);
+
             byte[] nameData = File.ReadAllBytes(path);
 
             var drivers = ParseDrivers(nameData);
@@ -30,24 +31,34 @@ namespace ArgData
             return new NameFile(drivers, teams);
         }
 
-        private List<Driver> ParseDrivers(byte[] nameData)
+        private void ValidateFile(string path)
         {
-            var drivers = new List<Driver>();
+            var fileInfo = new FileInfo(path);
+
+            if (fileInfo.Length != 1484)
+            {
+                throw new Exception($"The file '{path}' does not appear to be a name file.");
+            }
+        }
+
+        private NameFileDriverList ParseDrivers(byte[] nameData)
+        {
+            var drivers = new NameFileDriverList();
 
             for (int driverIndex = 0; driverIndex < Constants.NumberOfDrivers; driverIndex++)
             {
                 int position = driverIndex * DriverNameLength;
                 var name = GetNameAtPosition(nameData, position);
 
-                drivers.Add(new Driver { Name = name });
+                drivers[driverIndex].Name = name;
             }
 
             return drivers;
         }
 
-        private List<Team> ParseTeams(byte[] nameData)
+        private NameFileTeamList ParseTeams(byte[] nameData)
         {
-            var teams = new List<Team>();
+            var teams = new NameFileTeamList();
 
             for (int teamIndex = 0; teamIndex < Constants.NumberOfTeams; teamIndex++)
             {
@@ -57,12 +68,8 @@ namespace ArgData
                 int enginePosition = position + 260;
                 string engine = GetNameAtPosition(nameData, enginePosition);
 
-                var team = new Team
-                {
-                    Name = name,
-                    Engine = engine
-                };
-                teams.Add(team);
+                teams[teamIndex].Name = name;
+                teams[teamIndex].Engine = engine;
             }
 
             return teams;
@@ -82,7 +89,7 @@ namespace ArgData
         /// <param name="path"></param>
         /// <param name="drivers">List of drivers, where index indicates driver number.</param>
         /// <param name="teams">List of teams.</param>
-        public void Write(string path, IList<Driver> drivers, IList<Team> teams)
+        public void Write(string path, NameFileDriverList drivers, NameFileTeamList teams)
         {
             FileStream namesFile = File.Create(path);
 
@@ -98,14 +105,8 @@ namespace ArgData
             ChecksumCalculator.UpdateChecksum(path);
         }
 
-        private void WriteDrivers(FileStream namesFile, IList<Driver> drivers)
+        private void WriteDrivers(FileStream namesFile, NameFileDriverList drivers)
         {
-            // TODO: do not manipulate the list
-            while (drivers.Count < Constants.NumberOfDrivers)
-            {
-                drivers.Add(new Driver { Name = "Spare" });
-            }
-
             foreach (var driver in drivers)
             {
                 string driverName = driver.Name.PadRight(DriverNameLength, '\0');
@@ -114,14 +115,8 @@ namespace ArgData
             }
         }
 
-        private void WriteTeams(FileStream namesFile, IList<Team> teams)
+        private void WriteTeams(FileStream namesFile, NameFileTeamList teams)
         {
-            // TODO: do not manipulate the list
-            while (teams.Count < Constants.NumberOfTeams)
-            {
-                teams.Add(new Team { Name = "Spare", Engine = "Spare" });
-            }
-
             foreach (var team in teams)
             {
                 string teamName = team.Name.PadRight(TeamNameLength, '\0');
@@ -130,14 +125,8 @@ namespace ArgData
             }
         }
 
-        private void WriteEngines(FileStream namesFile, IList<Team> teams)
+        private void WriteEngines(FileStream namesFile, NameFileTeamList teams)
         {
-            // TODO: do not manipulate the list
-            while (teams.Count < Constants.NumberOfTeams)
-            {
-                teams.Add(new Team { Name = "Spare", Engine = "Spare" });
-            }
-
             foreach (var team in teams)
             {
                 string engineName = team.Engine.PadRight(TeamNameLength, '\0');

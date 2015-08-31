@@ -83,7 +83,7 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.ExeCopy(exeInfo))
             {
                 var pitCrewList = new PitCrewList();
-                var exeEditor = new GpExeFile(context.ExePath);
+                var exeEditor = new GpExeFile(context.FilePath);
                 var pitCrew = new PitCrew
                 {
                     ShirtPrimary = 1,

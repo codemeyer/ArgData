@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace ArgData.Entities
 {
     /// <summary>
@@ -10,7 +8,7 @@ namespace ArgData.Entities
         /// <summary>
         /// Initializes a new instance of a NameFile.
         /// </summary>
-        internal NameFile(List<Driver> drivers, List<Team> teams)
+        internal NameFile(NameFileDriverList drivers, NameFileTeamList teams)
         {
             Drivers = drivers;
             Teams = teams;
@@ -19,11 +17,11 @@ namespace ArgData.Entities
         /// <summary>
         /// List of drivers.
         /// </summary>
-        public List<Driver> Drivers { get; private set; }
+        public NameFileDriverList Drivers { get; private set; }
 
         /// <summary>
         /// List of teams.
         /// </summary>
-        public List<Team> Teams { get; private set; }
+        public NameFileTeamList Teams { get; private set; }
     }
 }

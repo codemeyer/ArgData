@@ -47,6 +47,8 @@
     <Compile Include="Entities\Driver.cs" />
     <Compile Include="Entities\Helmet.cs" />
     <Compile Include="Entities\HelmetList.cs" />
+    <Compile Include="Entities\NameFileDriverList.cs" />
+    <Compile Include="Entities\NameFileTeamList.cs" />
     <Compile Include="Entities\PitCrew.cs" />
     <Compile Include="Entities\SavedGameDriver.cs" />
     <Compile Include="FileInspector.cs" />

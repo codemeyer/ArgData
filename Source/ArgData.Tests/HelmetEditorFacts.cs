@@ -108,7 +108,7 @@ namespace ArgData.Tests
                 helmetColors[14].Stripes[0].Should().Be(3);
 
                 var helmetPosition = (exeInfo == GpExeInfo.European105) ? 159017 : 158973;
-                var specialBytes = ExampleDataHelper.ReadBytes(context.ExePath, helmetPosition, 14);
+                var specialBytes = ExampleDataHelper.ReadBytes(context.FilePath, helmetPosition, 14);
                 specialBytes.Should().ContainInOrder(new byte[] {23, 0, 178, /**/ 11 /**/, 9, 0, 176});
             }
         }

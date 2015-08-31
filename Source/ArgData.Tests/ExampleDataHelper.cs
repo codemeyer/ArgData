@@ -6,23 +6,35 @@ namespace ArgData.Tests
     internal class ExampleDataContext : IDisposable
     {
         public GpExeFile ExeFile { get; }
-        public string ExePath { get; }
+        public string FilePath { get; }
 
         private ExampleDataContext(string exePath)
         {
-            ExePath = exePath;
-            ExeFile = new GpExeFile(exePath);
+            FilePath = exePath;
+        }
+
+        private ExampleDataContext(GpExeFile exeFile)
+        {
+            ExeFile = exeFile;
+            FilePath = exeFile.ExePath;
         }
 
         public static ExampleDataContext ExeCopy(GpExeInfo exeInfo)
         {
             string exePath = ExampleDataHelper.CopyOfGpExePath(exeInfo);
-            return new ExampleDataContext(exePath);
+            var exeFile = new GpExeFile(exePath);
+            return new ExampleDataContext(exeFile);
+        }
+
+        public static ExampleDataContext GetTempFileName(string extFileName)
+        {
+            string filePath = Path.GetTempPath() + Path.GetRandomFileName() + extFileName;
+            return new ExampleDataContext(filePath);
         }
 
         public void Dispose()
         {
-            File.Delete(ExePath);
+            File.Delete(FilePath);
         }
     }
 

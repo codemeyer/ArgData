@@ -91,7 +91,7 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.ExeCopy(exeInfo))
             {
                 var carList = new CarList();
-                var exeEditor = new GpExeFile(context.ExePath);
+                var exeEditor = new GpExeFile(context.FilePath);
                 var car = new Car
                 {
                     CockpitFront = 1,

@@ -91,16 +91,14 @@ namespace ArgData
         /// <param name="teams">List of teams.</param>
         public void Write(string path, NameFileDriverList drivers, NameFileTeamList teams)
         {
-            FileStream namesFile = File.Create(path);
+            using (FileStream namesFile = File.Create(path))
+            {
+                WriteDrivers(namesFile, drivers);
+                WriteTeams(namesFile, teams);
+                WriteEngines(namesFile, teams);
 
-            WriteDrivers(namesFile, drivers);
-            WriteTeams(namesFile, teams);
-            WriteEngines(namesFile, teams);
-
-            namesFile.Write(new byte[4] { 0, 0, 0, 0}, 0, 4);
-
-            namesFile.Close();
-            namesFile.Dispose();
+                namesFile.Write(new byte[4] { 0, 0, 0, 0 }, 0, 4);
+            }
 
             ChecksumCalculator.UpdateChecksum(path);
         }

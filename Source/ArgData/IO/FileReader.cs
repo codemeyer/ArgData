@@ -13,53 +13,35 @@ namespace ArgData.IO
 
         internal ushort ReadUShort(int position)
         {
-            var stream = new FileStream(_exePath, FileMode.Open);
+            using (var br = new BinaryReader(new FileStream(_exePath, FileMode.Open)))
+            {
+                br.BaseStream.Position = position;
+                ushort value = br.ReadUInt16();
 
-            var br = new BinaryReader(stream);
-
-            br.BaseStream.Position = position;
-            ushort value = br.ReadUInt16();
-
-            br.Close();
-            br.Dispose();
-            stream.Close();
-            stream.Dispose();
-
-            return value;
+                return value;
+            }
         }
 
         internal byte ReadByte(int position)
         {
-            var stream = new FileStream(_exePath, FileMode.Open);
+            using (var br = new BinaryReader(new FileStream(_exePath, FileMode.Open)))
+            {
+                br.BaseStream.Position = position;
+                byte value = br.ReadByte();
 
-            var br = new BinaryReader(stream);
-
-            br.BaseStream.Position = position;
-            byte value = br.ReadByte();
-
-            br.Close();
-            br.Dispose();
-            stream.Close();
-            stream.Dispose();
-
-            return value;
+                return value;
+            }
         }
 
         internal byte[] ReadBytes(int position, int count)
         {
-            var stream = new FileStream(_exePath, FileMode.Open);
+            using (var br = new BinaryReader(new FileStream(_exePath, FileMode.Open)))
+            {
+                br.BaseStream.Position = position;
+                byte[] bytes = br.ReadBytes(count);
 
-            var br = new BinaryReader(stream);
-
-            br.BaseStream.Position = position;
-            byte[] bytes = br.ReadBytes(count);
-
-            br.Close();
-            br.Dispose();
-            stream.Close();
-            stream.Dispose();
-
-            return bytes;
+                return bytes;
+            }
         }
     }
 }

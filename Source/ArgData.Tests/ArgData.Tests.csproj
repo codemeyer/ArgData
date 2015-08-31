@@ -62,6 +62,7 @@
     <Compile Include="Entities\CarFacts.cs" />
     <Compile Include="DefaultData\DefaultCarColors.cs" />
     <Compile Include="Entities\NameFileDriverListFacts.cs" />
+    <Compile Include="Entities\NameFileTeamListFacts.cs" />
     <Compile Include="GpExeFileFacts.cs" />
     <Compile Include="GripLevelEditorFacts.cs" />
     <Compile Include="HelmetEditorFacts.cs" />

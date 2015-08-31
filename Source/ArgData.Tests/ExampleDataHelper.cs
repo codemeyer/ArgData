@@ -94,26 +94,20 @@ namespace ArgData.Tests
             return tempFile;
         }
 
-        internal static string GetTempFileName(string extFileName)
+        private static string GetTempFileName(string extFileName)
         {
             return Path.GetTempPath() + Path.GetRandomFileName() + extFileName;
         }
 
         internal static byte[] ReadBytes(string path, int position, int count)
         {
-            var stream = new FileStream(path, FileMode.Open);
+            using (var br = new BinaryReader(new FileStream(path, FileMode.Open)))
+            {
+                br.BaseStream.Position = position;
+                byte[] bytes = br.ReadBytes(count);
 
-            var br = new BinaryReader(stream);
-
-            br.BaseStream.Position = position;
-            byte[] bytes = br.ReadBytes(count);
-
-            br.Close();
-            br.Dispose();
-            stream.Close();
-            stream.Dispose();
-
-            return bytes;
+                return bytes;
+            }
         }
     }
 }

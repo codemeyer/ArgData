@@ -41,7 +41,6 @@ namespace ArgData
             _sumOfAllBytes += value;
         }
 
-
         /// <summary>
         /// Updates the checksum (i.e. the last four bytes) of the specified file.
         /// </summary>
@@ -55,15 +54,14 @@ namespace ArgData
             var checksum = new ChecksumCalculator().Calculate(bytesToChecksum);
 
             var file = File.Open(path, FileMode.Open);
-            var bin = new BinaryWriter(file);
 
-            bin.BaseStream.Position = file.Length - 4;
-            bin.Write((ushort)checksum.Checksum1);
-            bin.BaseStream.Position = file.Length - 2;
-            bin.Write((ushort)checksum.Checksum2);
-
-            file.Close();
-            file.Dispose();
+            using (var bin = new BinaryWriter(file))
+            {
+                bin.BaseStream.Position = file.Length - 4;
+                bin.Write((ushort)checksum.Checksum1);
+                bin.BaseStream.Position = file.Length - 2;
+                bin.Write((ushort)checksum.Checksum2);
+            }
         }
     }
 }

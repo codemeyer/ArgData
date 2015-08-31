@@ -144,19 +144,22 @@ namespace ArgData
 
         internal int GetHelmetColorsPosition(int helmetIndex)
         {
-            int bytesForPreviousHelmets = BytesPerHelmet.Take(helmetIndex).Sum(b => b);
+            int bytesForPreviousHelmets = _bytesPerHelmet.Take(helmetIndex).Sum(b => b);
 
             return HelmetColorsPosition + bytesForPreviousHelmets;
         }
 
         internal int GetHelmetColorsPositionByteCountToRead(int helmetIndex)
         {
-            return BytesPerHelmet[helmetIndex];
+            return _bytesPerHelmet[helmetIndex];
         }
 
-        private readonly byte[] BytesPerHelmet = new byte[]
+        private readonly byte[] _bytesPerHelmet =
         {
-            16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 14, 16, 14, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 14, 14, 14, 14, 14
+            16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+            16, 16, 14, 16, 14, 16, 16, 16, 16, 16,
+            16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
+            16, 16, 16, 16, 16, 14, 14, 14, 14, 14
         };
     }
 }

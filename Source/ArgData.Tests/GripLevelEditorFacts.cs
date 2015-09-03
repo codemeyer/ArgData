@@ -6,13 +6,13 @@ namespace ArgData.Tests
     public class GripLevelEditorFacts
     {
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReadingRaceGripLevelsReturnsCorrectLevels(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadingRaceGripLevelsReturnsCorrectLevels(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 2, 3, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33 };
-            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeInfo);
+            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeVersionInfo);
 
             for (int i = 0; i < expectedValues.Length; i++)
             {
@@ -24,13 +24,13 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReadingRaceGripLevelsReturnsCorrectLevelsAll(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadingRaceGripLevelsReturnsCorrectLevelsAll(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 2, 3, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33, 0, 0, 0, 0, 0 };
-            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeInfo);
+            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeVersionInfo);
 
             byte[] gripLevels = gripLevelEditor.ReadRaceGripLevels();
 
@@ -38,13 +38,13 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReturnsCorrectLevelsForQualifyingGrip(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReturnsCorrectLevelsForQualifyingGrip(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 3, 2, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33 };
-            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeInfo);
+            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeVersionInfo);
 
             for (int i = 0; i < expectedValues.Length; i++)
             {
@@ -56,13 +56,13 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReturnsCorrectLevelsForQualifyingGripAll(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReturnsCorrectLevelsForQualifyingGripAll(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 3, 2, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33, 0, 0, 0, 0, 0 };
-            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeInfo);
+            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeVersionInfo);
 
             byte[] gripLevels = gripLevelEditor.ReadQualifyingGripLevels();
 
@@ -70,11 +70,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WritingRaceGripLevelStoresCorrectValues(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WritingRaceGripLevelStoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var gripLevelEditor = new GripLevelEditor(context.ExeFile);
 
@@ -93,11 +93,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WritingRaceGripLevelStoresCorrectValuesAll(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WritingRaceGripLevelStoresCorrectValuesAll(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var gripLevelEditor = new GripLevelEditor(context.ExeFile);
 
@@ -114,11 +114,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WritingQualifyingGripLevelStoresCorrectValues(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WritingQualifyingGripLevelStoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var gripLevelEditor = new GripLevelEditor(context.ExeFile);
 
@@ -137,11 +137,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WritingQualifyingGripLevelStoresCorrectValuesAll(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WritingQualifyingGripLevelStoresCorrectValuesAll(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var gripLevelEditor = new GripLevelEditor(context.ExeFile);
 

@@ -9,12 +9,12 @@ namespace ArgData.Tests
     public class PitCrewColorEditorFacts
     {
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReadingOriginalPitCrewColorsReturnsExpectedValues(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadingOriginalPitCrewColorsReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             var expectedPitCrewColors = new DefaultPitCrewColors();
-            string exampleDataPath = ExampleDataHelper.GpExePath(exeInfo);
+            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeEditor = new GpExeFile(exampleDataPath);
             var pitCrewColorEditor = new PitCrewColorEditor(exeEditor);
 
@@ -27,12 +27,12 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReadingSingleOriginalPitCrewColorReturnsExpectedValues(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadingSingleOriginalPitCrewColorReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             var expectedPitCrew = new DefaultPitCrewColors()[0];
-            string exampleDataPath = ExampleDataHelper.GpExePath(exeInfo);
+            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeEditor = new GpExeFile(exampleDataPath);
             var pitCrewColorEditor = new PitCrewColorEditor(exeEditor);
 
@@ -46,9 +46,9 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WriteAndReadPitCrews(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteAndReadPitCrews(GpExeVersionInfo exeVersionInfo)
         {
             var pitCrewList = new PitCrewList();
             for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
@@ -57,7 +57,7 @@ namespace ArgData.Tests
                 pitCrewList[i] = new PitCrew(new[] { b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b });
             }
 
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var pitCrewColorEditor = new PitCrewColorEditor(context.ExeFile);
 
@@ -76,11 +76,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WriteAndReadPitCrew(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteAndReadPitCrew(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var pitCrewList = new PitCrewList();
                 var exeEditor = new GpExeFile(context.FilePath);

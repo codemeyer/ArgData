@@ -9,12 +9,12 @@ namespace ArgData.Tests
     public class CarColorEditorFacts
     {
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReadingOriginalCarColorsReturnsExpectedValues(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadingOriginalCarColorsReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             var expectedCarColors = new DefaultCarColors();
-            string exampleDataPath = ExampleDataHelper.GpExePath(exeInfo);
+            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeEditor = new GpExeFile(exampleDataPath);
             var carColorEditor = new CarColorEditor(exeEditor);
 
@@ -27,12 +27,12 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReadingSingleOriginalCarColorReturnsExpectedValues(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadingSingleOriginalCarColorReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             var expectedCar = new DefaultCarColors()[0];
-            string exampleDataPath = ExampleDataHelper.GpExePath(exeInfo);
+            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeEditor = new GpExeFile(exampleDataPath);
             var carColorEditor = new CarColorEditor(exeEditor);
 
@@ -54,11 +54,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WriteAndReadCars(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteAndReadCars(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var carList = new CarList();
                 for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
@@ -84,11 +84,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WriteAndReadCar(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteAndReadCar(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var carList = new CarList();
                 var exeEditor = new GpExeFile(context.FilePath);

@@ -7,11 +7,11 @@ namespace ArgData.Tests
     public class DriverNumberEditorFacts
     {
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReadingOriginalDriverNumbersReturnsExpectedValues(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadingOriginalDriverNumbersReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
-            var driverNumberEditor = ExampleDataHelper.DriverNumberEditorForDefault(exeInfo);
+            var driverNumberEditor = ExampleDataHelper.DriverNumberEditorForDefault(exeVersionInfo);
 
             byte[] driverNumbers = driverNumberEditor.ReadDriverNumbers();
 
@@ -24,11 +24,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WritingNumbersStoresExpectedValues(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WritingNumbersStoresExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 byte[] driverNumbers = CreateIncrementingDriverNumberArray(40);
                 var driverNumberEditor = new DriverNumberEditor(context.ExeFile);
@@ -53,11 +53,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void FewerThan_39_DriversThenThrowException(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void FewerThan_39_DriversThenThrowException(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 byte[] tooFewDriverNumbers = CreateIncrementingDriverNumberArray(39);
                 var driverNumberEditor = new DriverNumberEditor(context.ExeFile);
@@ -69,11 +69,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void MoreThan_40_DriverNumbersThrowsException(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void MoreThan_40_DriverNumbersThrowsException(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 byte[] tooManyDriverNumbers = CreateIncrementingDriverNumberArray(41);
                 var driverNumberEditor = new DriverNumberEditor(context.ExeFile);
@@ -85,11 +85,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void IfLessThan_26_ActiveDriversThenThrowException(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void IfLessThan_26_ActiveDriversThenThrowException(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 byte[] first20 = CreateIncrementingDriverNumberArray(20);
                 byte[] full = new byte[40];
@@ -103,11 +103,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void DriverNumberHigherThan40ThrowsException(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void DriverNumberHigherThan40ThrowsException(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 byte[] driverNumbers = CreateIncrementingDriverNumberArray(40);
                 var driverNumberEditor = new DriverNumberEditor(context.ExeFile);

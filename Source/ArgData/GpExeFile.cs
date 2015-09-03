@@ -27,7 +27,7 @@ namespace ArgData
         {
             var exeInfo = GetFileInfo(exePath);
 
-            if (exeInfo != GpExeInfo.European105 && exeInfo != GpExeInfo.Us105)
+            if (exeInfo != GpExeVersionInfo.European105 && exeInfo != GpExeVersionInfo.Us105)
             {
                 string msg = $"The specified file is of type {exeInfo}. ArgData currently supports European105 and Us105.";
                 throw new Exception(msg);
@@ -38,8 +38,8 @@ namespace ArgData
         /// Gets info about the specified F1GP executable.
         /// </summary>
         /// <param name="exePath">Path of the file to get info about.</param>
-        /// <returns>GpExeInfo enum describing the file.</returns>
-        public static GpExeInfo GetFileInfo(string exePath)
+        /// <returns>GpExeVersionInfo enum describing the file.</returns>
+        public static GpExeVersionInfo GetFileInfo(string exePath)
         {
             return new FileInspector().GetGpExeInfo(exePath);
         }
@@ -50,7 +50,7 @@ namespace ArgData
 
             switch (fileInfo)
             {
-                case GpExeInfo.European105:
+                case GpExeVersionInfo.European105:
                     PlayerHorsepowerPosition = 19848;
                     TeamHorsepowerPosition = 158380;
                     CarColorsPosition = 158500;
@@ -60,7 +60,7 @@ namespace ArgData
                     PitCrewColorsPosition = 159421;
                     HelmetColorsPosition = 158795;
                     break;
-                case GpExeInfo.Us105:
+                case GpExeVersionInfo.Us105:
                     PlayerHorsepowerPosition = 19848;
                     TeamHorsepowerPosition = 158336;
                     CarColorsPosition = 158456;

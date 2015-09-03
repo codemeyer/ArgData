@@ -3,7 +3,7 @@
     /// <summary>
     /// Info about the GP.EXE file version.
     /// </summary>
-    public enum GpExeInfo
+    public enum GpExeVersionInfo
     {
         /// <summary>
         /// The file is of an unknown version of GP.EXE, or not a valid GP.EXE at all.

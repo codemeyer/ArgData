@@ -19,9 +19,9 @@ namespace ArgData.Tests
             FilePath = exeFile.ExePath;
         }
 
-        public static ExampleDataContext ExeCopy(GpExeInfo exeInfo)
+        public static ExampleDataContext ExeCopy(GpExeVersionInfo exeVersionInfo)
         {
-            string exePath = ExampleDataHelper.CopyOfGpExePath(exeInfo);
+            string exePath = ExampleDataHelper.CopyOfGpExePath(exeVersionInfo);
             var exeFile = new GpExeFile(exePath);
             return new ExampleDataContext(exeFile);
         }
@@ -40,41 +40,41 @@ namespace ArgData.Tests
 
     internal static class ExampleDataHelper
     {
-        internal static PlayerHorsepowerEditor PlayerHorsepowerEditorForDefault(GpExeInfo exeInfo)
+        internal static PlayerHorsepowerEditor PlayerHorsepowerEditorForDefault(GpExeVersionInfo exeVersionInfo)
         {
-            return new PlayerHorsepowerEditor(new GpExeFile(GpExePath(exeInfo)));
+            return new PlayerHorsepowerEditor(new GpExeFile(GpExePath(exeVersionInfo)));
         }
 
-        internal static DriverNumberEditor DriverNumberEditorForDefault(GpExeInfo exeInfo)
+        internal static DriverNumberEditor DriverNumberEditorForDefault(GpExeVersionInfo exeVersionInfo)
         {
-            return new DriverNumberEditor(new GpExeFile(GpExePath(exeInfo)));
+            return new DriverNumberEditor(new GpExeFile(GpExePath(exeVersionInfo)));
         }
 
-        internal static GripLevelEditor GripLevelEditorForDefault(GpExeInfo exeInfo)
+        internal static GripLevelEditor GripLevelEditorForDefault(GpExeVersionInfo exeVersionInfo)
         {
-            return new GripLevelEditor(new GpExeFile(GpExePath(exeInfo)));
+            return new GripLevelEditor(new GpExeFile(GpExePath(exeVersionInfo)));
         }
 
-        internal static string GpExePath(GpExeInfo exeVersion)
+        internal static string GpExePath(GpExeVersionInfo exeVersion)
         {
             return GetExampleDataPath(FileNameFor(exeVersion));
         }
 
-        internal static string CopyOfGpExePath(GpExeInfo exeVersion)
+        internal static string CopyOfGpExePath(GpExeVersionInfo exeVersion)
         {
             return GetCopyOfExampleData(FileNameFor(exeVersion));
         }
 
-        private static string FileNameFor(GpExeInfo exeInfo)
+        private static string FileNameFor(GpExeVersionInfo exeVersionInfo)
         {
-            switch (exeInfo)
+            switch (exeVersionInfo)
             {
-                case GpExeInfo.European105:
+                case GpExeVersionInfo.European105:
                     return "GP-EU105.EXE";
-                case GpExeInfo.Us105:
+                case GpExeVersionInfo.Us105:
                     return "GP-US105.EXE";
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(exeInfo), exeInfo, null);
+                    throw new ArgumentOutOfRangeException(nameof(exeVersionInfo), exeVersionInfo, null);
             }
         }
 

@@ -4,20 +4,20 @@ namespace ArgData
 {
     internal class FileInspector
     {
-        internal GpExeInfo GetGpExeInfo(string exePath)
+        internal GpExeVersionInfo GetGpExeInfo(string exePath)
         {
             var fileInfo = new FileInfo(exePath);
 
             switch (fileInfo.Length)
             {
                 case 321878:
-                    return GpExeInfo.European105;
+                    return GpExeVersionInfo.European105;
 
                 case 321716:
-                    return GpExeInfo.Us105;
+                    return GpExeVersionInfo.Us105;
 
                 default:
-                    return GpExeInfo.Unknown;
+                    return GpExeVersionInfo.Unknown;
             }
         }
     }

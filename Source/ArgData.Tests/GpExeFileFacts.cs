@@ -19,7 +19,7 @@ namespace ArgData.Tests
         [Fact]
         public void IsGpExeShouldJustWork()
         {
-            string exePath = ExampleDataHelper.GpExePath(GpExeInfo.European105);
+            string exePath = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
 
             var exeEditor = new GpExeFile(exePath);
 
@@ -29,21 +29,21 @@ namespace ArgData.Tests
         [Fact]
         public void EuropeanGpExeReturnsExpectedResult()
         {
-            string path = ExampleDataHelper.GpExePath(GpExeInfo.European105);
+            string path = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
 
             var exeInfo = GpExeFile.GetFileInfo(path);
 
-            exeInfo.Should().Be(GpExeInfo.European105);
+            exeInfo.Should().Be(GpExeVersionInfo.European105);
         }
 
         [Fact]
         public void WorldCircuitUsGpExeReturnsExpectedResult()
         {
-            string path = ExampleDataHelper.GpExePath(GpExeInfo.Us105);
+            string path = ExampleDataHelper.GpExePath(GpExeVersionInfo.Us105);
 
             var exeInfo = GpExeFile.GetFileInfo(path);
 
-            exeInfo.Should().Be(GpExeInfo.Us105);
+            exeInfo.Should().Be(GpExeVersionInfo.Us105);
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace ArgData.Tests
 
             var exeInfo = GpExeFile.GetFileInfo(path);
 
-            exeInfo.Should().Be(GpExeInfo.Unknown);
+            exeInfo.Should().Be(GpExeVersionInfo.Unknown);
         }
     }
 }

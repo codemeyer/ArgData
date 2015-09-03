@@ -8,12 +8,12 @@ namespace ArgData.Tests
     public class HelmetEditorFacts
     {
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReadingOriginalHelmetColors_FirstHelmetReturnsSennaColors(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadingOriginalHelmetColors_FirstHelmetReturnsSennaColors(GpExeVersionInfo exeVersionInfo)
         {
             var expectedHelmetColors = new DefaultHelmetColors();
-            string exampleDataPath = ExampleDataHelper.GpExePath(exeInfo);
+            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeEditor = new GpExeFile(exampleDataPath);
             var helmetEditor = new HelmetEditor(exeEditor);
 
@@ -26,12 +26,12 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReadingOriginalHelmetColors_LastHelmetReturnsVanDePoeleColors(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadingOriginalHelmetColors_LastHelmetReturnsVanDePoeleColors(GpExeVersionInfo exeVersionInfo)
         {
             var expectedHelmetColors = new DefaultHelmetColors();
-            string exampleDataPath = ExampleDataHelper.GpExePath(exeInfo);
+            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeEditor = new GpExeFile(exampleDataPath);
             var helmetEditor = new HelmetEditor(exeEditor);
 
@@ -44,11 +44,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WritingFirstHelmet_ReturnsWrittenColors(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WritingFirstHelmet_ReturnsWrittenColors(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var helmetEditor = new HelmetEditor(context.ExeFile);
 
@@ -66,11 +66,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WritingLastHelmet_ReturnsWrittenColors(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WritingLastHelmet_ReturnsWrittenColors(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var helmetEditor = new HelmetEditor(context.ExeFile);
 
@@ -88,11 +88,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WritingHelmet15_ReturnsPartWrittenColorsPartFixedValues(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WritingHelmet15_ReturnsPartWrittenColorsPartFixedValues(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var helmetEditor = new HelmetEditor(context.ExeFile);
 
@@ -107,7 +107,7 @@ namespace ArgData.Tests
                 helmetColors[14].VisorSurround.Should().Be(7); // zero-based index 6
                 helmetColors[14].Stripes[0].Should().Be(3);
 
-                var helmetPosition = (exeInfo == GpExeInfo.European105) ? 159017 : 158973;
+                var helmetPosition = (exeVersionInfo == GpExeVersionInfo.European105) ? 159017 : 158973;
                 var specialBytes = ExampleDataHelper.ReadBytes(context.FilePath, helmetPosition, 14);
                 specialBytes.Should().ContainInOrder(new byte[] {23, 0, 178, /**/ 11 /**/, 9, 0, 176});
             }

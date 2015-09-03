@@ -51,9 +51,10 @@
     <Compile Include="Entities\NameFileTeamList.cs" />
     <Compile Include="Entities\PitCrew.cs" />
     <Compile Include="Entities\SavedGameDriver.cs" />
+    <Compile Include="Entities\Setup.cs" />
     <Compile Include="FileInspector.cs" />
     <Compile Include="GpChecksum.cs" />
-    <Compile Include="GpExeInfo.cs" />
+    <Compile Include="GpExeVersionInfo.cs" />
     <Compile Include="GripLevelEditor.cs" />
     <Compile Include="HelmetEditor.cs" />
     <Compile Include="IO\FileReader.cs" />
@@ -69,6 +70,7 @@
     <Compile Include="Entities\SavedGame.cs" />
     <Compile Include="SavedGameFileParser.cs" />
     <Compile Include="Entities\Team.cs" />
+    <Compile Include="SetupEditor.cs" />
     <Compile Include="TeamHorsepowerEditor.cs" />
   </ItemGroup>
   <ItemGroup>

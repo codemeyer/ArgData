@@ -8,14 +8,14 @@ namespace ArgData.Tests
         public class ReadingHorsepowerValuesFromOriginalExeFile
         {
             [Theory]
-            [InlineData(GpExeInfo.European105)]
-            [InlineData(GpExeInfo.Us105)]
-            public void ReturnsCorrectHorsepowerLevelsForEachTeam(GpExeInfo exeInfo)
+            [InlineData(GpExeVersionInfo.European105)]
+            [InlineData(GpExeVersionInfo.Us105)]
+            public void ReturnsCorrectHorsepowerLevelsForEachTeam(GpExeVersionInfo exeVersionInfo)
             {
                 var expectedValues = new[] { 716, 676, 716, 650, 620, 625, 620, 665, 610, 680,
                     655, 665, 640, 700, 630, 610, 680, 615 };
 
-                string exampleDataPath = ExampleDataHelper.GpExePath(exeInfo);
+                string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
                 var exeEditor = new GpExeFile(exampleDataPath);
                 var horsepowerEditor = new TeamHorsepowerEditor(exeEditor);
 
@@ -32,11 +32,11 @@ namespace ArgData.Tests
         public class WritingHorsepowerValues
         {
             [Theory]
-            [InlineData(GpExeInfo.European105)]
-            [InlineData(GpExeInfo.Us105)]
-            public void StoresAndReturnsTheCorrectValues(GpExeInfo exeInfo)
+            [InlineData(GpExeVersionInfo.European105)]
+            [InlineData(GpExeVersionInfo.Us105)]
+            public void StoresAndReturnsTheCorrectValues(GpExeVersionInfo exeVersionInfo)
             {
-                using (var context = ExampleDataContext.ExeCopy(exeInfo))
+                using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
                 {
                     var horsepowerEditor = new TeamHorsepowerEditor(context.ExeFile);
 

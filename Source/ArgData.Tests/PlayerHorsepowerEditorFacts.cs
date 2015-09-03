@@ -6,11 +6,11 @@ namespace ArgData.Tests
     public class PlayerHorsepowerEditorFacts
     {
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void ReadingPlayerHorsepowerValuesReturnsCorrectDefaultData(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadingPlayerHorsepowerValuesReturnsCorrectDefaultData(GpExeVersionInfo exeVersionInfo)
         {
-            var horsepowerEditor = ExampleDataHelper.PlayerHorsepowerEditorForDefault(exeInfo);
+            var horsepowerEditor = ExampleDataHelper.PlayerHorsepowerEditorForDefault(exeVersionInfo);
 
             var playerHorsepower = horsepowerEditor.ReadPlayerHorsepower();
 
@@ -18,11 +18,11 @@ namespace ArgData.Tests
         }
 
         [Theory]
-        [InlineData(GpExeInfo.European105)]
-        [InlineData(GpExeInfo.Us105)]
-        public void WritingPlayerHorsepowerValuesStoresExpectedData(GpExeInfo exeInfo)
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WritingPlayerHorsepowerValuesStoresExpectedData(GpExeVersionInfo exeVersionInfo)
         {
-            using (var context = ExampleDataContext.ExeCopy(exeInfo))
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var horsepowerEditor = new PlayerHorsepowerEditor(context.ExeFile);
 

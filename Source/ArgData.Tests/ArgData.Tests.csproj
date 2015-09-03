@@ -74,6 +74,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SavedGameFileParserFacts.cs" />
     <Compile Include="ExampleDataHelper.cs" />
+    <Compile Include="SetupEditorFacts.cs" />
     <Compile Include="TeamHorsepowerEditorFacts.cs" />
   </ItemGroup>
   <ItemGroup>

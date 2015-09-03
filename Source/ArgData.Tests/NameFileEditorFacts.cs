@@ -66,7 +66,7 @@ namespace ArgData.Tests
             [Fact]
             public void NonNameFileThrowsException()
             {
-                var notNameFilePath = ExampleDataHelper.GpExePath(GpExeInfo.European105);
+                var notNameFilePath = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
 
                 Action action = () => new NameFileEditor().Read(notNameFilePath);
 

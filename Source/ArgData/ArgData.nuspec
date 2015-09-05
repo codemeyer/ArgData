@@ -6,12 +6,12 @@
     <title>$title$</title>
     <authors>Fredrik Meyer</authors>
     <owners>Fredrik Meyer</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <licenseUrl>https://raw.githubusercontent.com/codemeyer/ArgData/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/codemeyer/ArgData</projectUrl>
+    <!--<iconUrl></iconUrl>-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>API for editing most things related to Formula 1 Grand Prix by Microprose</description>
-    <releaseNotes>...</releaseNotes>
+    <!--<releaseNotes></releaseNotes>-->
     <copyright>Copyright © 2014-2015 Fredrik Meyer</copyright>
     <tags>F1GP</tags>
   </metadata>

@@ -7,7 +7,7 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class NameFileEditorFacts
+    public class NameFileFacts
     {
         public class ReadingNameFile
         {
@@ -17,7 +17,7 @@ namespace ArgData.Tests
             {
                 string exampleDataPath = ExampleDataHelper.GetExampleDataPath("names1991.nam");
 
-                var parser = new NameFileEditor();
+                var parser = new NameFileReader();
                 _data = parser.Read(exampleDataPath);
             }
 
@@ -68,7 +68,7 @@ namespace ArgData.Tests
             {
                 var notNameFilePath = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
 
-                Action action = () => new NameFileEditor().Read(notNameFilePath);
+                Action action = () => new NameFileReader().Read(notNameFilePath);
 
                 action.ShouldThrow<Exception>();
             }
@@ -91,7 +91,7 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                new NameFileEditor().Write(context.FilePath, _drivers, _teams);
+                new NameFileWriter().Write(context.FilePath, _drivers, _teams);
 
                 var fileInfo = new FileInfo(context.FilePath);
 
@@ -104,14 +104,13 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                new NameFileEditor().Write(context.FilePath, _drivers, _teams);
-                var namesFile = new NameFileEditor().Read(context.FilePath);
+                new NameFileWriter().Write(context.FilePath, _drivers, _teams);
+                var namesFile = new NameFileReader().Read(context.FilePath);
 
                 namesFile.Drivers.Count.Should().Be(40);
                 namesFile.Teams.Count.Should().Be(20);
                 namesFile.Drivers[0].Name.Should().Be("Driver 1");
                 namesFile.Teams[0].Name.Should().Be("Team 1");
-
             }
         }
     }

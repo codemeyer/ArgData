@@ -3,16 +3,16 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class PlayerHorsepowerEditorFacts
+    public class PlayerHorsepowerFacts
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
         public void ReadingPlayerHorsepowerValuesReturnsCorrectDefaultData(GpExeVersionInfo exeVersionInfo)
         {
-            var horsepowerEditor = ExampleDataHelper.PlayerHorsepowerEditorForDefault(exeVersionInfo);
+            var horsepowerReader = ExampleDataHelper.PlayerHorsepowerReaderForDefault(exeVersionInfo);
 
-            var playerHorsepower = horsepowerEditor.ReadPlayerHorsepower();
+            var playerHorsepower = horsepowerReader.ReadPlayerHorsepower();
 
             playerHorsepower.Should().Be(716);
         }
@@ -24,11 +24,13 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var horsepowerEditor = new PlayerHorsepowerEditor(context.ExeFile);
+                var horsepowerWriter = new PlayerHorsepowerWriter(context.ExeFile);
 
-                horsepowerEditor.WritePlayerHorsepower(640);
+                horsepowerWriter.WritePlayerHorsepower(640);
 
-                var readHorsepower = horsepowerEditor.ReadPlayerHorsepower();
+                var horsepowerReader = new PlayerHorsepowerReader(context.ExeFile);
+
+                var readHorsepower = horsepowerReader.ReadPlayerHorsepower();
                 readHorsepower.Should().Be(640);
             }
         }

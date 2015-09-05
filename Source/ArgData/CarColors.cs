@@ -5,17 +5,17 @@ using ArgData.IO;
 namespace ArgData
 {
     /// <summary>
-    /// Edits the car colors of one or more teams.
+    /// Reads the car colors of one or more teams.
     /// </summary>
-    public class CarColorEditor
+    public class CarColorReader
     {
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a CarColorEditor.
+        /// Initializes a new instance of a CarColorReader.
         /// </summary>
-        /// <param name="exeFile">GpExeFile to edit.</param>
-        public CarColorEditor(GpExeFile exeFile)
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        public CarColorReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
@@ -59,6 +59,24 @@ namespace ArgData
             return new FileReader(_exeFile.ExePath).ReadBytes(
                 _exeFile.GetCarColorsPosition(),
                 GpExeFile.ColorsPerTeam * Constants.NumberOfSupportedTeams);
+        }
+    }
+
+
+    /// <summary>
+    /// Writes the car colors of one or more teams.
+    /// </summary>
+    public class CarColorWriter
+    {
+        private readonly GpExeFile _exeFile;
+
+        /// <summary>
+        /// Initializes a new instance of a CarColorWriter.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to write to.</param>
+        public CarColorWriter(GpExeFile exeFile)
+        {
+            _exeFile = exeFile;
         }
 
         /// <summary>

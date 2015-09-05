@@ -4,16 +4,16 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class DriverNumberEditorFacts
+    public class DriverNumberFacts
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
         public void ReadingOriginalDriverNumbersReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
-            var driverNumberEditor = ExampleDataHelper.DriverNumberEditorForDefault(exeVersionInfo);
+            var driverNumberReader = ExampleDataHelper.DriverNumberReaderForDefault(exeVersionInfo);
 
-            byte[] driverNumbers = driverNumberEditor.ReadDriverNumbers();
+            byte[] driverNumbers = driverNumberReader.ReadDriverNumbers();
 
             driverNumbers[0].Should().Be(1);
             driverNumbers[12].Should().Be(14, "Grouillard is number 14 in slot 13 (i.e. index 12)");
@@ -31,11 +31,12 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 byte[] driverNumbers = CreateIncrementingDriverNumberArray(40);
-                var driverNumberEditor = new DriverNumberEditor(context.ExeFile);
+                var driverNumberWriter = new DriverNumberWriter(context.ExeFile);
 
-                driverNumberEditor.WriteDriverNumbers(driverNumbers);
+                driverNumberWriter.WriteDriverNumbers(driverNumbers);
 
-                byte[] readNumbers = driverNumberEditor.ReadDriverNumbers();
+                var driverNumberReader = new DriverNumberReader(context.ExeFile);
+                byte[] readNumbers = driverNumberReader.ReadDriverNumbers();
                 readNumbers[0].Should().Be(1);
                 readNumbers[39].Should().Be(40);
             }
@@ -60,9 +61,9 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 byte[] tooFewDriverNumbers = CreateIncrementingDriverNumberArray(39);
-                var driverNumberEditor = new DriverNumberEditor(context.ExeFile);
+                var driverNumberWriter = new DriverNumberWriter(context.ExeFile);
 
-                Action act = () => driverNumberEditor.WriteDriverNumbers(tooFewDriverNumbers);
+                Action act = () => driverNumberWriter.WriteDriverNumbers(tooFewDriverNumbers);
 
                 act.ShouldThrow<Exception>();
             }
@@ -76,9 +77,9 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 byte[] tooManyDriverNumbers = CreateIncrementingDriverNumberArray(41);
-                var driverNumberEditor = new DriverNumberEditor(context.ExeFile);
+                var driverNumberWriter = new DriverNumberWriter(context.ExeFile);
 
-                Action act = () => driverNumberEditor.WriteDriverNumbers(tooManyDriverNumbers);
+                Action act = () => driverNumberWriter.WriteDriverNumbers(tooManyDriverNumbers);
 
                 act.ShouldThrow<Exception>();
             }
@@ -94,9 +95,9 @@ namespace ArgData.Tests
                 byte[] first20 = CreateIncrementingDriverNumberArray(20);
                 byte[] full = new byte[40];
                 first20.CopyTo(full, 0);
-                var driverNumberEditor = new DriverNumberEditor(context.ExeFile);
+                var driverNumberWriter = new DriverNumberWriter(context.ExeFile);
 
-                Action act = () => driverNumberEditor.WriteDriverNumbers(full);
+                Action act = () => driverNumberWriter.WriteDriverNumbers(full);
 
                 act.ShouldThrow<Exception>();
             }
@@ -110,10 +111,10 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 byte[] driverNumbers = CreateIncrementingDriverNumberArray(40);
-                var driverNumberEditor = new DriverNumberEditor(context.ExeFile);
+                var driverNumberWriter = new DriverNumberWriter(context.ExeFile);
 
                 driverNumbers[10] = 41;
-                Action act = () => driverNumberEditor.WriteDriverNumbers(driverNumbers);
+                Action act = () => driverNumberWriter.WriteDriverNumbers(driverNumbers);
 
                 act.ShouldThrow<Exception>();
             }

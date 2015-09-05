@@ -4,26 +4,24 @@ using System.Linq;
 namespace ArgData
 {
     /// <summary>
-    /// Used for editing a GP.EXE file.
+    /// Represents a GP.EXE file that will be read from or written to.
     /// </summary>
     public class GpExeFile
     {
-        private readonly string _exePath;
-
         /// <summary>
         /// Initializes an instance of GpExeFile.
         /// </summary>
         /// <param name="exePath">Path to the GP.EXE file</param>
         public GpExeFile(string exePath)
         {
-            _exePath = exePath;
+            ExePath = exePath;
 
-            CheckFileIsSupported(exePath);
+            ValidateFileSupport(exePath);
 
-            SetupDataPositions();
+            SetDataPositions();
         }
 
-        private void CheckFileIsSupported(string exePath)
+        private void ValidateFileSupport(string exePath)
         {
             var exeInfo = GetFileInfo(exePath);
 
@@ -41,10 +39,10 @@ namespace ArgData
         /// <returns>GpExeVersionInfo enum describing the file.</returns>
         public static GpExeVersionInfo GetFileInfo(string exePath)
         {
-            return new FileInspector().GetGpExeInfo(exePath);
+            return new FileInspector().GetGpExeVersionInfo(exePath);
         }
 
-        private void SetupDataPositions()
+        private void SetDataPositions()
         {
             var fileInfo = GetFileInfo(ExePath);
 
@@ -60,6 +58,7 @@ namespace ArgData
                     PitCrewColorsPosition = 159421;
                     HelmetColorsPosition = 158795;
                     break;
+
                 case GpExeVersionInfo.Us105:
                     PlayerHorsepowerPosition = 19848;
                     TeamHorsepowerPosition = 158336;
@@ -85,10 +84,7 @@ namespace ArgData
         /// <summary>
         /// Gets the path to the GP.EXE file.
         /// </summary>
-        public string ExePath
-        {
-            get { return _exePath; }
-        }
+        public string ExePath { get; }
 
         internal int GetPlayerHorsepowerPosition()
         {

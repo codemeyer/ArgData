@@ -6,7 +6,7 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class CarColorEditorFacts
+    public class CarColorFacts
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
@@ -15,10 +15,10 @@ namespace ArgData.Tests
         {
             var expectedCarColors = new DefaultCarColors();
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var exeEditor = new GpExeFile(exampleDataPath);
-            var carColorEditor = new CarColorEditor(exeEditor);
+            var exeFile = new GpExeFile(exampleDataPath);
+            var carColorReader = new CarColorReader(exeFile);
 
-            var carColors = carColorEditor.ReadCarColors();
+            var carColors = carColorReader.ReadCarColors();
 
             for (int i = 0; i < 1; i++)
             {
@@ -33,10 +33,10 @@ namespace ArgData.Tests
         {
             var expectedCar = new DefaultCarColors()[0];
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var exeEditor = new GpExeFile(exampleDataPath);
-            var carColorEditor = new CarColorEditor(exeEditor);
+            var exeFile = new GpExeFile(exampleDataPath);
+            var carColorReader = new CarColorReader(exeFile);
 
-            var car = carColorEditor.ReadCarColors(0);
+            var car = carColorReader.ReadCarColors(0);
 
             car.CockpitFront.Should().Be(expectedCar.CockpitFront);
             car.CockpitSide.Should().Be(expectedCar.CockpitSide);
@@ -67,14 +67,14 @@ namespace ArgData.Tests
                     carList[i] = new Car(new[] {b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b});
                 }
 
-                var carColorEditor = new CarColorEditor(context.ExeFile);
+                var carColorWriter = new CarColorWriter(context.ExeFile);
 
-                carColorEditor.WriteCarColors(carList);
+                carColorWriter.WriteCarColors(carList);
 
-                var carColors = new CarColorEditor(context.ExeFile).ReadCarColors();
+                var carColorReader = new CarColorReader(context.ExeFile).ReadCarColors();
 
                 byte expectedColor = 1;
-                foreach (Car car in carColors)
+                foreach (Car car in carColorReader)
                 {
                     car.NoseTop.Should().Be(expectedColor);
 
@@ -91,7 +91,7 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var carList = new CarList();
-                var exeEditor = new GpExeFile(context.FilePath);
+                var exeFile = new GpExeFile(context.FilePath);
                 var car = new Car
                 {
                     CockpitFront = 1,
@@ -110,12 +110,12 @@ namespace ArgData.Tests
                 };
                 carList[0] = car;
 
-                var carColorEditor = new CarColorEditor(exeEditor);
+                var carColorWriter = new CarColorWriter(exeFile);
 
-                carColorEditor.WriteCarColors(carList[0], 0);
+                carColorWriter.WriteCarColors(carList[0], 0);
 
-                var carColors = new CarColorEditor(exeEditor).ReadCarColors();
-                var actualCar = carColors[0];
+                var carColorReader = new CarColorReader(exeFile).ReadCarColors();
+                var actualCar = carColorReader[0];
 
                 actualCar.CockpitFront.Should().Be(1);
                 actualCar.CockpitSide.Should().Be(2);

@@ -40,19 +40,19 @@ namespace ArgData.Tests
 
     internal static class ExampleDataHelper
     {
-        internal static PlayerHorsepowerEditor PlayerHorsepowerEditorForDefault(GpExeVersionInfo exeVersionInfo)
+        internal static PlayerHorsepowerReader PlayerHorsepowerReaderForDefault(GpExeVersionInfo exeVersionInfo)
         {
-            return new PlayerHorsepowerEditor(new GpExeFile(GpExePath(exeVersionInfo)));
+            return new PlayerHorsepowerReader(new GpExeFile(GpExePath(exeVersionInfo)));
         }
 
-        internal static DriverNumberEditor DriverNumberEditorForDefault(GpExeVersionInfo exeVersionInfo)
+        internal static DriverNumberReader DriverNumberReaderForDefault(GpExeVersionInfo exeVersionInfo)
         {
-            return new DriverNumberEditor(new GpExeFile(GpExePath(exeVersionInfo)));
+            return new DriverNumberReader(new GpExeFile(GpExePath(exeVersionInfo)));
         }
 
-        internal static GripLevelEditor GripLevelEditorForDefault(GpExeVersionInfo exeVersionInfo)
+        internal static GripLevelReader GripLevelReaderForDefault(GpExeVersionInfo exeVersionInfo)
         {
-            return new GripLevelEditor(new GpExeFile(GpExePath(exeVersionInfo)));
+            return new GripLevelReader(new GpExeFile(GpExePath(exeVersionInfo)));
         }
 
         internal static string GpExePath(GpExeVersionInfo exeVersion)

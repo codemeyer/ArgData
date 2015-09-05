@@ -5,17 +5,17 @@ using ArgData.IO;
 namespace ArgData
 {
     /// <summary>
-    /// Edits the pit crew colors of one or more teams.
+    /// Reads pit crew colors of one or more teams.
     /// </summary>
-    public class PitCrewColorEditor
+    public class PitCrewColorReader
     {
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a PitCrewColorEditor.
+        /// Initializes a new instance of a PitCrewColorReader.
         /// </summary>
-        /// <param name="exeFile">GpExeFile to edit.</param>
-        public PitCrewColorEditor(GpExeFile exeFile)
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        public PitCrewColorReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
@@ -46,7 +46,7 @@ namespace ArgData
 
             for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
             {
-                byte[] pitCrewBytes = allPitCrewBytes.Skip(i * GpExeFile.ColorsPerTeam)
+                byte[] pitCrewBytes = allPitCrewBytes.Skip(i*GpExeFile.ColorsPerTeam)
                     .Take(GpExeFile.ColorsPerTeam).ToArray();
                 list[i].SetColors(pitCrewBytes);
             }
@@ -58,7 +58,24 @@ namespace ArgData
         {
             return new FileReader(_exeFile.ExePath).ReadBytes(
                 _exeFile.GetPitCrewColorsPosition(),
-                GpExeFile.ColorsPerTeam * Constants.NumberOfSupportedTeams);
+                GpExeFile.ColorsPerTeam*Constants.NumberOfSupportedTeams);
+        }
+    }
+
+    /// <summary>
+    /// Writes pit crew colors of one or more teams.
+    /// </summary>
+    public class PitCrewColorWriter
+    {
+        private readonly GpExeFile _exeFile;
+
+        /// <summary>
+        /// Initializes a new instance of a PitCrewColorWriter.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to edit.</param>
+        public PitCrewColorWriter(GpExeFile exeFile)
+        {
+            _exeFile = exeFile;
         }
 
         /// <summary>

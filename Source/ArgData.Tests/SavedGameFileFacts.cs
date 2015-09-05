@@ -4,18 +4,18 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class SavedGameFileParserFacts
+    public class SavedGameFileFacts
     {
-        public class ParsingSavedGameFile
+        public class ReadingSavedGameFile
         {
             private readonly SavedGame _data;
 
-            public ParsingSavedGameFile()
+            public ReadingSavedGameFile()
             {
                 string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_after_r3.gam");
 
-                var parser = new SavedGameFileParser();
-                _data = parser.Parse(exampleDataPath);
+                var gameFileReader = new SavedGameFileReader();
+                _data = gameFileReader.ReadSavedGame(exampleDataPath);
             }
 
             [Fact]

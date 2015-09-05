@@ -54,28 +54,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CarColorEditorFacts.cs" />
+    <Compile Include="CarColorFacts.cs" />
     <Compile Include="ChecksumCalculatorFacts.cs" />
     <Compile Include="DefaultData\DefaultHelmetColors.cs" />
     <Compile Include="DefaultData\DefaultPitCrewColors.cs" />
-    <Compile Include="DriverNumberEditorFacts.cs" />
+    <Compile Include="DriverNumberFacts.cs" />
     <Compile Include="Entities\CarFacts.cs" />
     <Compile Include="DefaultData\DefaultCarColors.cs" />
     <Compile Include="Entities\NameFileDriverListFacts.cs" />
     <Compile Include="Entities\NameFileTeamListFacts.cs" />
     <Compile Include="GpExeFileFacts.cs" />
-    <Compile Include="GripLevelEditorFacts.cs" />
-    <Compile Include="HelmetEditorFacts.cs" />
+    <Compile Include="GripLevelFacts.cs" />
+    <Compile Include="HelmetFacts.cs" />
     <Compile Include="Meta\EnvironmentSetupFacts.cs" />
-    <Compile Include="NameFileEditorFacts.cs" />
+    <Compile Include="NameFileFacts.cs" />
     <Compile Include="PaletteFacts.cs" />
-    <Compile Include="PitCrewColorEditorFacts.cs" />
-    <Compile Include="PlayerHorsepowerEditorFacts.cs" />
+    <Compile Include="PitCrewColorFacts.cs" />
+    <Compile Include="PlayerHorsepowerFacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SavedGameFileParserFacts.cs" />
+    <Compile Include="SavedGameFileFacts.cs" />
     <Compile Include="ExampleDataHelper.cs" />
-    <Compile Include="SetupEditorFacts.cs" />
-    <Compile Include="TeamHorsepowerEditorFacts.cs" />
+    <Compile Include="SetupFacts.cs" />
+    <Compile Include="TeamHorsepowerFacts.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExampleData\not.gpexe">

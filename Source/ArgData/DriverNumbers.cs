@@ -5,17 +5,17 @@ using ArgData.IO;
 namespace ArgData
 {
     /// <summary>
-    /// Edits the driver numbers, or inactives a driver.
+    /// Reads the driver numbers.
     /// </summary>
-    public class DriverNumberEditor
+    public class DriverNumberReader
     {
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a DriverNumberEditor.
+        /// Initializes a new instance of a DriverNumberReader.
         /// </summary>
-        /// <param name="exeFile">GpExeFile to edit.</param>
-        public DriverNumberEditor(GpExeFile exeFile)
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        public DriverNumberReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
@@ -32,9 +32,26 @@ namespace ArgData
 
             return driverNumbers;
         }
+    }
+
+    /// <summary>
+    /// Writes the driver numbers, or inactives a driver.
+    /// </summary>
+    public class DriverNumberWriter
+    {
+        private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Writes driver numbers. If set to 0, a driver is inactivated.
+        /// Initializes a new instance of a DriverNumberWriter.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to write to.</param>
+        public DriverNumberWriter(GpExeFile exeFile)
+        {
+            _exeFile = exeFile;
+        }
+
+        /// <summary>
+        /// Writes driver numbers. If a driver number is set to 0, the driver is inactivated.
         /// </summary>
         /// <param name="driverNumbers">Byte array of driver numbers.</param>
         public void WriteDriverNumbers(byte[] driverNumbers)

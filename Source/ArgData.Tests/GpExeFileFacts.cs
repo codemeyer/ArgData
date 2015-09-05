@@ -21,9 +21,9 @@ namespace ArgData.Tests
         {
             string exePath = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
 
-            var exeEditor = new GpExeFile(exePath);
+            var exeFile = new GpExeFile(exePath);
 
-            exeEditor.Should().BeOfType<GpExeFile>();
+            exeFile.Should().BeOfType<GpExeFile>();
         }
 
         [Fact]

@@ -7,20 +7,16 @@ using ArgData.Entities;
 namespace ArgData
 {
     /// <summary>
-    /// Parses saved game files.
+    /// Reads saved game files.
     /// </summary>
-    public class SavedGameFileParser
+    public class SavedGameFileReader
     {
-        private const int DriverNameLength = 24;
-        private const int ResultsStartPoint = 828;
-        private const int RacesPerSeason = 16;
-
         /// <summary>
-        /// Parses a saved game file.
+        /// Reads a saved game file.
         /// </summary>
         /// <param name="path">Path to saved game.</param>
         /// <returns>SavedGame with drivers and results.</returns>
-        public SavedGame Parse(string path)
+        public SavedGame ReadSavedGame(string path)
         {
             byte[] bytes = File.ReadAllBytes(path);
 
@@ -44,7 +40,7 @@ namespace ArgData
 
             for (int driverIndex = 0; driverIndex <= 34; driverIndex++)
             {
-                int position = 2094 + driverIndex * DriverNameLength;
+                int position = 2094 + driverIndex * SavedGameFileConstants.DriverNameLength;
                 var name = GetNameAtPosition(bytes, position);
 
                 if (string.IsNullOrWhiteSpace(name))
@@ -78,7 +74,7 @@ namespace ArgData
 
             for (int i = 0; i <= racesCompleted - 1; i++)
             {
-                int resultPosition = ResultsStartPoint + (RacesPerSeason * driverIndex) + i;
+                int resultPosition = SavedGameFileConstants.ResultsStartPoint + (SavedGameFileConstants.RacesPerSeason * driverIndex) + i;
                 int result = bytes[resultPosition];
 
                 results.Add(result);
@@ -86,5 +82,12 @@ namespace ArgData
 
             return results;
         }
+    }
+
+    internal static class SavedGameFileConstants
+    {
+        internal const int DriverNameLength = 24;
+        internal const int ResultsStartPoint = 828;
+        internal const int RacesPerSeason = 16;
     }
 }

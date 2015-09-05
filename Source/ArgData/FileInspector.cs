@@ -4,7 +4,7 @@ namespace ArgData
 {
     internal class FileInspector
     {
-        internal GpExeVersionInfo GetGpExeInfo(string exePath)
+        internal GpExeVersionInfo GetGpExeVersionInfo(string exePath)
         {
             var fileInfo = new FileInfo(exePath);
 

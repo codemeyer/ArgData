@@ -4,17 +4,17 @@ using ArgData.IO;
 namespace ArgData
 {
     /// <summary>
-    /// Edits the helmet colors.
+    /// Reads driver helmet colors.
     /// </summary>
-    public class HelmetEditor
+    public class HelmetReader
     {
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a HelmetEditor.
+        /// Initializes a new instance of a HelmetReader.
         /// </summary>
-        /// <param name="exeFile">GpExeFile to edit.</param>
-        public HelmetEditor(GpExeFile exeFile)
+        /// <param name="exeFile">GpExeFile to read to.</param>
+        public HelmetReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
@@ -37,6 +37,23 @@ namespace ArgData
             }
 
             return list;
+        }
+    }
+
+    /// <summary>
+    /// Writes driver helmet colors.
+    /// </summary>
+    public class HelmetWriter
+    {
+        private readonly GpExeFile _exeFile;
+
+        /// <summary>
+        /// Initializes a new instance of a HelmetWriter.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to write to.</param>
+        public HelmetWriter(GpExeFile exeFile)
+        {
+            _exeFile = exeFile;
         }
 
         /// <summary>

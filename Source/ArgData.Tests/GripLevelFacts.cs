@@ -3,7 +3,7 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class GripLevelEditorFacts
+    public class GripLevelFacts
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
@@ -12,11 +12,11 @@ namespace ArgData.Tests
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 2, 3, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33 };
-            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeVersionInfo);
+            var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
 
             for (int i = 0; i < expectedValues.Length; i++)
             {
-                var fileGrip = gripLevelEditor.ReadRaceGripLevel(i);
+                var fileGrip = gripLevelReader.ReadRaceGripLevel(i);
                 var expectedGrip = expectedValues[i];
 
                 fileGrip.Should().Be(expectedGrip);
@@ -30,9 +30,9 @@ namespace ArgData.Tests
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 2, 3, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33, 0, 0, 0, 0, 0 };
-            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeVersionInfo);
+            var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
 
-            byte[] gripLevels = gripLevelEditor.ReadRaceGripLevels();
+            byte[] gripLevels = gripLevelReader.ReadRaceGripLevels();
 
             gripLevels.ShouldBeEquivalentTo(expectedValues);
         }
@@ -44,11 +44,11 @@ namespace ArgData.Tests
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 3, 2, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33 };
-            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeVersionInfo);
+            var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
 
             for (int i = 0; i < expectedValues.Length; i++)
             {
-                var fileGrip = gripLevelEditor.ReadQualifyingGripLevel(i);
+                var fileGrip = gripLevelReader.ReadQualifyingGripLevel(i);
                 var expectedGrip = expectedValues[i];
 
                 fileGrip.Should().Be(expectedGrip);
@@ -62,9 +62,9 @@ namespace ArgData.Tests
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 3, 2, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33, 0, 0, 0, 0, 0 };
-            var gripLevelEditor = ExampleDataHelper.GripLevelEditorForDefault(exeVersionInfo);
+            var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
 
-            byte[] gripLevels = gripLevelEditor.ReadQualifyingGripLevels();
+            byte[] gripLevels = gripLevelReader.ReadQualifyingGripLevels();
 
             gripLevels.ShouldBeEquivalentTo(expectedValues);
         }
@@ -76,16 +76,18 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var gripLevelEditor = new GripLevelEditor(context.ExeFile);
+                var gripLevelWriter = new GripLevelWriter(context.ExeFile);
 
                 for (byte i = 0; i < 5; i++)
                 {
-                    gripLevelEditor.WriteRaceGripLevel(i, i);
+                    gripLevelWriter.WriteRaceGripLevel(i, i);
                 }
 
+                var gripLevelReader = new GripLevelReader(context.ExeFile);
+
                 for (byte i = 0; i < 5; i++)
                 {
-                    var grip = gripLevelEditor.ReadRaceGripLevel(i);
+                    var grip = gripLevelReader.ReadRaceGripLevel(i);
 
                     grip.Should().Be(i);
                 }
@@ -99,14 +101,16 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var gripLevelEditor = new GripLevelEditor(context.ExeFile);
+                var gripLevelWriter = new GripLevelWriter(context.ExeFile);
 
                 byte[] gripLevels = new byte[] {1, 2, 3, 4, 5};
-                gripLevelEditor.WriteRaceGripLevels(gripLevels);
+                gripLevelWriter.WriteRaceGripLevels(gripLevels);
+
+                var gripLevelReader = new GripLevelReader(context.ExeFile);
 
                 for (byte i = 0; i < 5; i++)
                 {
-                    var grip = gripLevelEditor.ReadRaceGripLevel(i);
+                    var grip = gripLevelReader.ReadRaceGripLevel(i);
 
                     grip.Should().Be((byte)(i + 1));
                 }
@@ -120,16 +124,18 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var gripLevelEditor = new GripLevelEditor(context.ExeFile);
+                var gripLevelWriter = new GripLevelWriter(context.ExeFile);
 
                 for (byte i = 0; i < 5; i++)
                 {
-                    gripLevelEditor.WriteQualifyingGripLevel(i, i);
+                    gripLevelWriter.WriteQualifyingGripLevel(i, i);
                 }
 
+                var gripLevelReader = new GripLevelReader(context.ExeFile);
+
                 for (byte i = 0; i < 5; i++)
                 {
-                    var grip = gripLevelEditor.ReadQualifyingGripLevel(i);
+                    var grip = gripLevelReader.ReadQualifyingGripLevel(i);
 
                     grip.Should().Be(i);
                 }
@@ -143,14 +149,16 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var gripLevelEditor = new GripLevelEditor(context.ExeFile);
+                var gripLevelWriter = new GripLevelWriter(context.ExeFile);
 
                 byte[] gripLevels = new byte[] {1, 2, 3, 4, 5};
-                gripLevelEditor.WriteQualifyingGripLevels(gripLevels);
+                gripLevelWriter.WriteQualifyingGripLevels(gripLevels);
+
+                var gripLevelReader = new GripLevelReader(context.ExeFile);
 
                 for (byte i = 0; i < 5; i++)
                 {
-                    var grip = gripLevelEditor.ReadQualifyingGripLevel(i);
+                    var grip = gripLevelReader.ReadQualifyingGripLevel(i);
 
                     grip.Should().Be((byte)(i + 1));
                 }

@@ -6,18 +6,18 @@ using ArgData.IO;
 namespace ArgData
 {
     /// <summary>
-    /// Reads or writes setup files.
+    /// Reads setup files.
     /// </summary>
-    public class SetupEditor
+    public class SetupReader
     {
         /// <summary>
         /// Reads a single setup file.
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public Setup Read(string path)
+        /// <param name="path">Path to the setup file.</param>
+        /// <returns>Setup.</returns>
+        public Setup ReadSingle(string path)
         {
-            CheckSingleSetupFile(path);
+            ValidateSingleSetupFile(path);
 
             byte[] setupBytes = new FileReader(path).ReadBytes(0, 14);
 
@@ -39,7 +39,7 @@ namespace ArgData
             return setup;
         }
 
-        private static void CheckSingleSetupFile(string path)
+        private static void ValidateSingleSetupFile(string path)
         {
             var fileInfo = new FileInfo(path);
 

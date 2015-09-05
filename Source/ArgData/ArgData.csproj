@@ -41,9 +41,9 @@
     <Compile Include="Constants.cs" />
     <Compile Include="ChecksumCalculator.cs" />
     <Compile Include="Entities\CarList.cs" />
-    <Compile Include="DriverNumberEditor.cs" />
+    <Compile Include="DriverNumbers.cs" />
     <Compile Include="Entities\Car.cs" />
-    <Compile Include="CarColorEditor.cs" />
+    <Compile Include="CarColors.cs" />
     <Compile Include="Entities\Driver.cs" />
     <Compile Include="Entities\Helmet.cs" />
     <Compile Include="Entities\HelmetList.cs" />
@@ -55,23 +55,23 @@
     <Compile Include="FileInspector.cs" />
     <Compile Include="GpChecksum.cs" />
     <Compile Include="GpExeVersionInfo.cs" />
-    <Compile Include="GripLevelEditor.cs" />
-    <Compile Include="HelmetEditor.cs" />
+    <Compile Include="GripLevels.cs" />
+    <Compile Include="Helmets.cs" />
     <Compile Include="IO\FileReader.cs" />
     <Compile Include="IO\FileWriter.cs" />
     <Compile Include="GpExeFile.cs" />
     <Compile Include="Entities\NameFile.cs" />
-    <Compile Include="NameFileEditor.cs" />
+    <Compile Include="NameFiles.cs" />
     <Compile Include="Palette.cs" />
-    <Compile Include="PitCrewColorEditor.cs" />
+    <Compile Include="PitCrewColors.cs" />
     <Compile Include="Entities\PitCrewList.cs" />
-    <Compile Include="PlayerHorsepowerEditor.cs" />
+    <Compile Include="PlayerHorsepower.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\SavedGame.cs" />
-    <Compile Include="SavedGameFileParser.cs" />
+    <Compile Include="SavedGameFiles.cs" />
     <Compile Include="Entities\Team.cs" />
-    <Compile Include="SetupEditor.cs" />
-    <Compile Include="TeamHorsepowerEditor.cs" />
+    <Compile Include="SetupReader.cs" />
+    <Compile Include="TeamHorsepower.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ArgData.nuspec" />

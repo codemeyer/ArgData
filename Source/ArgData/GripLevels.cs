@@ -5,15 +5,15 @@ namespace ArgData
     /// <summary>
     /// Edits the race or qualifying grip level for computer drivers.
     /// </summary>
-    public class GripLevelEditor
+    public class GripLevelReader
     {
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a GripLevelEditor.
+        /// Initializes a new instance of a GripLevelReader.
         /// </summary>
         /// <param name="exeFile">GpExeFile to edit.</param>
-        public GripLevelEditor(GpExeFile exeFile)
+        public GripLevelReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
@@ -66,6 +66,23 @@ namespace ArgData
             byte[] values = new FileReader(_exeFile.ExePath).ReadBytes(position, 40);
 
             return values;
+        }
+    }
+
+    /// <summary>
+    /// Edits the race or qualifying grip level for computer drivers.
+    /// </summary>
+    public class GripLevelWriter
+    {
+        private readonly GpExeFile _exeFile;
+
+        /// <summary>
+        /// Initializes a new instance of a GripLevelWriter.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to edit.</param>
+        public GripLevelWriter(GpExeFile exeFile)
+        {
+            _exeFile = exeFile;
         }
 
         /// <summary>

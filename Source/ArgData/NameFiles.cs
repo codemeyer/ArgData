@@ -7,13 +7,10 @@ using ArgData.Entities;
 namespace ArgData
 {
     /// <summary>
-    /// Reads or writes a name file.
+    /// Reads a name file from disk.
     /// </summary>
-    public class NameFileEditor
+    public class NameFileReader
     {
-        private const int DriverNameLength = 24;
-        private const int TeamNameLength = 13;
-
         /// <summary>
         /// Read a name file.
         /// </summary>
@@ -47,7 +44,7 @@ namespace ArgData
 
             for (int driverIndex = 0; driverIndex < Constants.NumberOfDrivers; driverIndex++)
             {
-                int position = driverIndex * DriverNameLength;
+                int position = driverIndex * NameFileConstants.DriverNameLength;
                 var name = GetNameAtPosition(nameData, position);
 
                 drivers[driverIndex].Name = name;
@@ -62,7 +59,7 @@ namespace ArgData
 
             for (int teamIndex = 0; teamIndex < Constants.NumberOfTeams; teamIndex++)
             {
-                int position = 960 + (teamIndex * TeamNameLength);
+                int position = 960 + (teamIndex * NameFileConstants.TeamNameLength);
                 string name = GetNameAtPosition(nameData, position);
 
                 int enginePosition = position + 260;
@@ -82,7 +79,14 @@ namespace ArgData
 
             return name;
         }
+    }
 
+
+    /// <summary>
+    /// Writes a name file to disk.
+    /// </summary>
+    public class NameFileWriter
+    {
         /// <summary>
         /// Write name file.
         /// </summary>
@@ -107,9 +111,9 @@ namespace ArgData
         {
             foreach (var driver in drivers)
             {
-                string driverName = driver.Name.PadRight(DriverNameLength, '\0');
+                string driverName = driver.Name.PadRight(NameFileConstants.DriverNameLength, '\0');
                 byte[] nameBytes = Encoding.ASCII.GetBytes(driverName);
-                namesFile.Write(nameBytes, 0, DriverNameLength);
+                namesFile.Write(nameBytes, 0, NameFileConstants.DriverNameLength);
             }
         }
 
@@ -117,9 +121,9 @@ namespace ArgData
         {
             foreach (var team in teams)
             {
-                string teamName = team.Name.PadRight(TeamNameLength, '\0');
+                string teamName = team.Name.PadRight(NameFileConstants.TeamNameLength, '\0');
                 byte[] teamNameBytes = Encoding.ASCII.GetBytes(teamName);
-                namesFile.Write(teamNameBytes, 0, TeamNameLength);
+                namesFile.Write(teamNameBytes, 0, NameFileConstants.TeamNameLength);
             }
         }
 
@@ -127,10 +131,16 @@ namespace ArgData
         {
             foreach (var team in teams)
             {
-                string engineName = team.Engine.PadRight(TeamNameLength, '\0');
+                string engineName = team.Engine.PadRight(NameFileConstants.TeamNameLength, '\0');
                 byte[] engineNameBytes = Encoding.ASCII.GetBytes(engineName);
-                namesFile.Write(engineNameBytes, 0, TeamNameLength);
+                namesFile.Write(engineNameBytes, 0, NameFileConstants.TeamNameLength);
             }
         }
+    }
+
+    internal static class NameFileConstants
+    {
+        internal const int DriverNameLength = 24;
+        internal const int TeamNameLength = 13;
     }
 }

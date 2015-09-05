@@ -5,15 +5,15 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class SetupEditorFacts
+    public class SetupFacts
     {
         [Fact]
         public void Read_ReadingSetupFile1_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w40-39_bb0_tyC_ra24-32-39-46-53-61");
-            var setupEditor = new SetupEditor();
+            var setupReader = new SetupReader();
 
-            var setup = setupEditor.Read(path);
+            var setup = setupReader.ReadSingle(path);
 
             setup.FrontWing.Should().Be(40);
             setup.RearWing.Should().Be(39);
@@ -32,9 +32,9 @@ namespace ArgData.Tests
         public void Read_ReadingSetupFile2_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w0-15_bb32f_tyA_ra17-31-39-46-50-56");
-            var setupEditor = new SetupEditor();
+            var setupReader = new SetupReader();
 
-            var setup = setupEditor.Read(path);
+            var setup = setupReader.ReadSingle(path);
 
             setup.FrontWing.Should().Be(0);
             setup.RearWing.Should().Be(15);
@@ -53,9 +53,9 @@ namespace ArgData.Tests
         public void Read_ReadingSetupFile3_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w24-8_bb5f_tyB_ra25-34-42-50-57-64");
-            var setupEditor = new SetupEditor();
+            var setupReader = new SetupReader();
 
-            var setup = setupEditor.Read(path);
+            var setup = setupReader.ReadSingle(path);
 
             setup.FrontWing.Should().Be(24);
             setup.RearWing.Should().Be(8);
@@ -74,9 +74,9 @@ namespace ArgData.Tests
         public void Read_ReadingSetupFile4_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w64-60_bb6r_tyD_ra16-30-38-45-49-55");
-            var setupEditor = new SetupEditor();
+            var setupReader = new SetupReader();
 
-            var setup = setupEditor.Read(path);
+            var setup = setupReader.ReadSingle(path);
 
             setup.FrontWing.Should().Be(64);
             setup.RearWing.Should().Be(60);
@@ -95,9 +95,9 @@ namespace ArgData.Tests
         public void Read_NotSingleSetupFile_Throws()
         {
             var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE");
-            var setupEditor = new SetupEditor();
+            var setupReader = new SetupReader();
 
-            Action act = () => setupEditor.Read(path);
+            Action act = () => setupReader.ReadSingle(path);
 
             act.ShouldThrow<Exception>();
         }

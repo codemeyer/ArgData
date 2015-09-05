@@ -5,7 +5,7 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class HelmetEditorFacts
+    public class HelmetFacts
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
@@ -14,10 +14,10 @@ namespace ArgData.Tests
         {
             var expectedHelmetColors = new DefaultHelmetColors();
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var exeEditor = new GpExeFile(exampleDataPath);
-            var helmetEditor = new HelmetEditor(exeEditor);
+            var exeFile = new GpExeFile(exampleDataPath);
+            var helmetReader = new HelmetReader(exeFile);
 
-            var helmetColors = helmetEditor.ReadHelmetColors();
+            var helmetColors = helmetReader.ReadHelmetColors();
 
             var actualHelmet = helmetColors[0];
             actualHelmet.Visor.Should().Be(expectedHelmetColors[0].Visor);
@@ -32,10 +32,10 @@ namespace ArgData.Tests
         {
             var expectedHelmetColors = new DefaultHelmetColors();
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var exeEditor = new GpExeFile(exampleDataPath);
-            var helmetEditor = new HelmetEditor(exeEditor);
+            var exeFile = new GpExeFile(exampleDataPath);
+            var helmetReader = new HelmetReader(exeFile);
 
-            var helmetColors = helmetEditor.ReadHelmetColors();
+            var helmetColors = helmetReader.ReadHelmetColors();
 
             var actualHelmet = helmetColors[34];
             actualHelmet.Visor.Should().Be(expectedHelmetColors[34].Visor);
@@ -50,14 +50,14 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var helmetEditor = new HelmetEditor(context.ExeFile);
+                var helmetWriter = new HelmetWriter(context.ExeFile);
 
                 var helmetList = new HelmetList();
                 helmetList[0] = new Helmet(new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
 
-                helmetEditor.WriteHelmetColors(helmetList);
+                helmetWriter.WriteHelmetColors(helmetList);
 
-                var helmetColors = new HelmetEditor(context.ExeFile).ReadHelmetColors();
+                var helmetColors = new HelmetReader(context.ExeFile).ReadHelmetColors();
 
                 helmetColors[0].Visor.Should().Be(1);
                 helmetColors[0].VisorSurround.Should().Be(7); // zero-based index 6
@@ -72,14 +72,14 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var helmetEditor = new HelmetEditor(context.ExeFile);
+                var helmetWriter = new HelmetWriter(context.ExeFile);
 
                 var helmetList = new HelmetList();
                 helmetList[34] = new Helmet(new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
 
-                helmetEditor.WriteHelmetColors(helmetList);
+                helmetWriter.WriteHelmetColors(helmetList);
 
-                var helmetColors = new HelmetEditor(context.ExeFile).ReadHelmetColors();
+                var helmetColors = new HelmetReader(context.ExeFile).ReadHelmetColors();
 
                 helmetColors[34].Visor.Should().Be(1);
                 helmetColors[34].VisorSurround.Should().Be(7); // zero-based index 6
@@ -94,14 +94,14 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var helmetEditor = new HelmetEditor(context.ExeFile);
+                var helmetWriter = new HelmetWriter(context.ExeFile);
 
                 var helmetList = new HelmetList();
                 helmetList[14] = new Helmet(new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
 
-                helmetEditor.WriteHelmetColors(helmetList);
+                helmetWriter.WriteHelmetColors(helmetList);
 
-                var helmetColors = new HelmetEditor(context.ExeFile).ReadHelmetColors();
+                var helmetColors = new HelmetReader(context.ExeFile).ReadHelmetColors();
 
                 helmetColors[14].Visor.Should().Be(1);
                 helmetColors[14].VisorSurround.Should().Be(7); // zero-based index 6

@@ -26,6 +26,12 @@ namespace ArgData.Tests
             return new ExampleDataContext(exeFile);
         }
 
+        public static ExampleDataContext PreferencesCopy()
+        {
+            string filePath = ExampleDataHelper.CopyOfPrefsPath();
+            return new ExampleDataContext(filePath);
+        }
+
         public static ExampleDataContext GetTempFileName(string extFileName)
         {
             string filePath = Path.GetTempPath() + Path.GetRandomFileName() + extFileName;
@@ -63,6 +69,11 @@ namespace ArgData.Tests
         internal static string CopyOfGpExePath(GpExeVersionInfo exeVersion)
         {
             return GetCopyOfExampleData(FileNameFor(exeVersion));
+        }
+
+        internal static string CopyOfPrefsPath()
+        {
+            return GetCopyOfExampleData("f1prefs-src.dat");
         }
 
         private static string FileNameFor(GpExeVersionInfo exeVersionInfo)

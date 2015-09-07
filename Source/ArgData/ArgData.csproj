@@ -66,6 +66,7 @@
     <Compile Include="PitCrewColors.cs" />
     <Compile Include="Entities\PitCrewList.cs" />
     <Compile Include="PlayerHorsepower.cs" />
+    <Compile Include="Preferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\SavedGame.cs" />
     <Compile Include="SavedGameFiles.cs" />

@@ -4,16 +4,16 @@ namespace ArgData.IO
 {
     internal class FileReader
     {
-        internal FileReader(string exePath)
+        internal FileReader(string path)
         {
-            _exePath = exePath;
+            _path = path;
         }
 
-        private readonly string _exePath;
+        private readonly string _path;
 
         internal ushort ReadUShort(int position)
         {
-            using (var br = new BinaryReader(new FileStream(_exePath, FileMode.Open)))
+            using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
             {
                 br.BaseStream.Position = position;
                 ushort value = br.ReadUInt16();
@@ -24,7 +24,7 @@ namespace ArgData.IO
 
         internal byte ReadByte(int position)
         {
-            using (var br = new BinaryReader(new FileStream(_exePath, FileMode.Open)))
+            using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
             {
                 br.BaseStream.Position = position;
                 byte value = br.ReadByte();
@@ -35,7 +35,7 @@ namespace ArgData.IO
 
         internal byte[] ReadBytes(int position, int count)
         {
-            using (var br = new BinaryReader(new FileStream(_exePath, FileMode.Open)))
+            using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
             {
                 br.BaseStream.Position = position;
                 byte[] bytes = br.ReadBytes(count);

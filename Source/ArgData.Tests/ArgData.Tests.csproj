@@ -71,6 +71,7 @@
     <Compile Include="PaletteFacts.cs" />
     <Compile Include="PitCrewColorFacts.cs" />
     <Compile Include="PlayerHorsepowerFacts.cs" />
+    <Compile Include="PreferencesFacts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SavedGameFileFacts.cs" />
     <Compile Include="ExampleDataHelper.cs" />

@@ -6,15 +6,15 @@ namespace ArgData
     /// <summary>
     /// Reads driver helmet colors.
     /// </summary>
-    public class HelmetReader
+    public class HelmetColorReader
     {
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a HelmetReader.
+        /// Initializes a new instance of a HelmetColorReader.
         /// </summary>
         /// <param name="exeFile">GpExeFile to read to.</param>
-        public HelmetReader(GpExeFile exeFile)
+        public HelmetColorReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
@@ -43,15 +43,15 @@ namespace ArgData
     /// <summary>
     /// Writes driver helmet colors.
     /// </summary>
-    public class HelmetWriter
+    public class HelmetColorWriter
     {
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a HelmetWriter.
+        /// Initializes a new instance of a HelmetColorWriter.
         /// </summary>
         /// <param name="exeFile">GpExeFile to write to.</param>
-        public HelmetWriter(GpExeFile exeFile)
+        public HelmetColorWriter(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }

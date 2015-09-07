@@ -56,7 +56,7 @@
     <Compile Include="GpChecksum.cs" />
     <Compile Include="GpExeVersionInfo.cs" />
     <Compile Include="GripLevels.cs" />
-    <Compile Include="Helmets.cs" />
+    <Compile Include="HelmetColors.cs" />
     <Compile Include="IO\FileReader.cs" />
     <Compile Include="IO\FileWriter.cs" />
     <Compile Include="GpExeFile.cs" />

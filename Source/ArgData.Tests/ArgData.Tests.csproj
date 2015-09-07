@@ -65,7 +65,7 @@
     <Compile Include="Entities\NameFileTeamListFacts.cs" />
     <Compile Include="GpExeFileFacts.cs" />
     <Compile Include="GripLevelFacts.cs" />
-    <Compile Include="HelmetFacts.cs" />
+    <Compile Include="HelmetColorFacts.cs" />
     <Compile Include="Meta\EnvironmentSetupFacts.cs" />
     <Compile Include="NameFileFacts.cs" />
     <Compile Include="PaletteFacts.cs" />

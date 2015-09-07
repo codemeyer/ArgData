@@ -5,7 +5,7 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class HelmetFacts
+    public class HelmetColorFacts
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
@@ -15,7 +15,7 @@ namespace ArgData.Tests
             var expectedHelmetColors = new DefaultHelmetColors();
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeFile = new GpExeFile(exampleDataPath);
-            var helmetReader = new HelmetReader(exeFile);
+            var helmetReader = new HelmetColorReader(exeFile);
 
             var helmetColors = helmetReader.ReadHelmetColors();
 
@@ -33,7 +33,7 @@ namespace ArgData.Tests
             var expectedHelmetColors = new DefaultHelmetColors();
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeFile = new GpExeFile(exampleDataPath);
-            var helmetReader = new HelmetReader(exeFile);
+            var helmetReader = new HelmetColorReader(exeFile);
 
             var helmetColors = helmetReader.ReadHelmetColors();
 
@@ -50,14 +50,14 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var helmetWriter = new HelmetWriter(context.ExeFile);
+                var helmetWriter = new HelmetColorWriter(context.ExeFile);
 
                 var helmetList = new HelmetList();
                 helmetList[0] = new Helmet(new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
 
                 helmetWriter.WriteHelmetColors(helmetList);
 
-                var helmetColors = new HelmetReader(context.ExeFile).ReadHelmetColors();
+                var helmetColors = new HelmetColorReader(context.ExeFile).ReadHelmetColors();
 
                 helmetColors[0].Visor.Should().Be(1);
                 helmetColors[0].VisorSurround.Should().Be(7); // zero-based index 6
@@ -72,14 +72,14 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var helmetWriter = new HelmetWriter(context.ExeFile);
+                var helmetWriter = new HelmetColorWriter(context.ExeFile);
 
                 var helmetList = new HelmetList();
                 helmetList[34] = new Helmet(new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
 
                 helmetWriter.WriteHelmetColors(helmetList);
 
-                var helmetColors = new HelmetReader(context.ExeFile).ReadHelmetColors();
+                var helmetColors = new HelmetColorReader(context.ExeFile).ReadHelmetColors();
 
                 helmetColors[34].Visor.Should().Be(1);
                 helmetColors[34].VisorSurround.Should().Be(7); // zero-based index 6
@@ -94,14 +94,14 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var helmetWriter = new HelmetWriter(context.ExeFile);
+                var helmetWriter = new HelmetColorWriter(context.ExeFile);
 
                 var helmetList = new HelmetList();
                 helmetList[14] = new Helmet(new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16});
 
                 helmetWriter.WriteHelmetColors(helmetList);
 
-                var helmetColors = new HelmetReader(context.ExeFile).ReadHelmetColors();
+                var helmetColors = new HelmetColorReader(context.ExeFile).ReadHelmetColors();
 
                 helmetColors[14].Visor.Should().Be(1);
                 helmetColors[14].VisorSurround.Should().Be(7); // zero-based index 6

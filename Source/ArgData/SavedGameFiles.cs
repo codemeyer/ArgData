@@ -38,7 +38,7 @@ namespace ArgData
         {
             var drivers = new List<SavedGameDriver>();
 
-            for (int driverIndex = 0; driverIndex <= 34; driverIndex++)
+            for (int driverIndex = 0; driverIndex < Constants.NumberOfDrivers; driverIndex++)
             {
                 int position = 2094 + driverIndex * SavedGameFileConstants.DriverNameLength;
                 var name = GetNameAtPosition(bytes, position);

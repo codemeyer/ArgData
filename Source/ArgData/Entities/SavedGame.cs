@@ -12,7 +12,7 @@ namespace ArgData.Entities
         /// </summary>
         /// <param name="drivers">Drivers who have competed.</param>
         /// <param name="numberOfRacesCompleted">Number of races completed.</param>
-        public SavedGame(List<SavedGameDriver> drivers, int numberOfRacesCompleted)
+        internal SavedGame(List<SavedGameDriver> drivers, int numberOfRacesCompleted)
         {
             Drivers = drivers;
             NumberOfRacesCompleted = numberOfRacesCompleted;
@@ -26,6 +26,6 @@ namespace ArgData.Entities
         /// <summary>
         /// The drivers and their results.
         /// </summary>
-        public List<SavedGameDriver> Drivers { get; private set; }
+        public IReadOnlyList<SavedGameDriver> Drivers { get; private set; }
     }
 }

@@ -17,7 +17,7 @@ namespace ArgData.Entities
         public NameFileDriverList()
         {
             _drivers = new List<Driver>();
-            for (int i = 1; i <= 40; i++)
+            for (int i = 1; i <= Constants.NumberOfDrivers; i++)
             {
                 _drivers.Add(new Driver
                 {
@@ -61,10 +61,11 @@ namespace ArgData.Entities
         {
             get
             {
-                if (index < 0 || index > 39)
+                if (index < 0 || index > Constants.NumberOfDrivers - 1)
                 {
                     throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 0 and 39");
                 }
+
                 return _drivers[index];
             }
         }

@@ -25,9 +25,9 @@ namespace ArgData.Tests
             }
 
             [Fact]
-            public void NumberOfDriversShouldBe_34()
+            public void NumberOfDriversShouldBe_39()
             {
-                _data.Drivers.Count.Should().Be(34);
+                _data.Drivers.Count.Should().Be(39, "because there is only one driver with an empty name");
             }
 
             [Fact]
@@ -45,13 +45,50 @@ namespace ArgData.Tests
             [Fact]
             public void AllDriversShouldHaveThreeResults()
             {
-                _data.Drivers.ForEach(d => d.Results.Count.Should().Be(3));
+                foreach (var driver in _data.Drivers)
+                {
+                    driver.Results.Count.Should().Be(3);
+                }
             }
 
             [Fact]
             public void FirstDriverShouldHaveFinished_First_First_Third()
             {
                 _data.Drivers[0].Results.Should().ContainInOrder(1, 1, 3);
+            }
+        }
+    }
+
+    public class ReadingSavedGameFileWithFewerDriversThanOriginal
+    {
+        private readonly SavedGame _data;
+
+        public ReadingSavedGameFileWithFewerDriversThanOriginal()
+        {
+            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_fewerdrv.gam");
+
+            var gameFileReader = new SavedGameFileReader();
+            _data = gameFileReader.ReadSavedGame(exampleDataPath);
+        }
+
+        [Fact]
+        public void NumberOfRacesShouldBe_8()
+        {
+            _data.NumberOfRacesCompleted.Should().Be(8);
+        }
+
+        [Fact]
+        public void NumberOfDriversShouldBe_26()
+        {
+            _data.Drivers.Count.Should().Be(26);
+        }
+
+        [Fact]
+        public void AllDriversShouldHaveEightResults()
+        {
+            foreach (var driver in _data.Drivers)
+            {
+                driver.Results.Count.Should().Be(8);
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using ArgData.Entities;
+using FluentAssertions;
 using Xunit;
 
 namespace ArgData.Tests
@@ -16,7 +17,7 @@ namespace ArgData.Tests
 
             for (int i = 0; i < expectedValues.Length; i++)
             {
-                var fileGrip = gripLevelReader.ReadRaceGripLevel(i);
+                var fileGrip = gripLevelReader.ReadRaceGripLevel(i + 1);
                 var expectedGrip = expectedValues[i];
 
                 fileGrip.Should().Be(expectedGrip);
@@ -32,7 +33,7 @@ namespace ArgData.Tests
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33, 0, 0, 0, 0, 0 };
             var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
 
-            byte[] gripLevels = gripLevelReader.ReadRaceGripLevels();
+            var gripLevels = gripLevelReader.ReadRaceGripLevels().ToArray();
 
             gripLevels.ShouldBeEquivalentTo(expectedValues);
         }
@@ -64,9 +65,21 @@ namespace ArgData.Tests
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33, 0, 0, 0, 0, 0 };
             var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
 
-            byte[] gripLevels = gripLevelReader.ReadQualifyingGripLevels();
+            var gripLevels = gripLevelReader.ReadQualifyingGripLevels().ToArray();
 
             gripLevels.ShouldBeEquivalentTo(expectedValues);
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReturnsCorrectValueWhenReadingSingleGripLevel(GpExeVersionInfo exeVersionInfo)
+        {
+            var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
+
+            var gripLevels = gripLevelReader.ReadRaceGripLevels();
+
+            gripLevels.GetByDriverNumber(5).Should().Be(2);
         }
 
         [Theory]
@@ -103,12 +116,15 @@ namespace ArgData.Tests
             {
                 var gripLevelWriter = new GripLevelWriter(context.ExeFile);
 
-                byte[] gripLevels = new byte[] {1, 2, 3, 4, 5};
+                var gripLevels = new GripLevelList();
+                gripLevels.SetByDriverNumber(1, 1);
+                gripLevels.SetByDriverNumber(2, 2);
+                gripLevels.SetByDriverNumber(3, 3);
                 gripLevelWriter.WriteRaceGripLevels(gripLevels);
 
                 var gripLevelReader = new GripLevelReader(context.ExeFile);
 
-                for (byte i = 0; i < 5; i++)
+                for (byte i = 0; i < 2; i++)
                 {
                     var grip = gripLevelReader.ReadRaceGripLevel(i);
 
@@ -151,12 +167,15 @@ namespace ArgData.Tests
             {
                 var gripLevelWriter = new GripLevelWriter(context.ExeFile);
 
-                byte[] gripLevels = new byte[] {1, 2, 3, 4, 5};
+                var gripLevels = new GripLevelList();
+                gripLevels.SetByDriverNumber(1, 1);
+                gripLevels.SetByDriverNumber(2, 2);
+                gripLevels.SetByDriverNumber(3, 3);
                 gripLevelWriter.WriteQualifyingGripLevels(gripLevels);
 
                 var gripLevelReader = new GripLevelReader(context.ExeFile);
 
-                for (byte i = 0; i < 5; i++)
+                for (byte i = 0; i < 2; i++)
                 {
                     var grip = gripLevelReader.ReadQualifyingGripLevel(i);
 

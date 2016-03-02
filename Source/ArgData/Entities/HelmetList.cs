@@ -11,14 +11,23 @@ namespace ArgData.Entities
         private readonly List<Helmet> _list;
 
         /// <summary>
-        /// Gets the Helmet at the specified index.
+        /// Gets the Helmet for the driver with the specified driver number.
         /// </summary>
-        /// <param name="index">Index of the Helmet to return.</param>
-        /// <returns>The Helmet object at the specified index.</returns>
-        public Helmet this[int index]
+        /// <param name="driverNumber">Driver number.</param>
+        /// <returns>The Helmet at the specified index.</returns>
+        public Helmet GetByDriverNumber(byte driverNumber)
         {
-            get { return _list[index]; }
-            set { _list[index] = value; }
+            return _list[driverNumber - 1];
+        }
+
+        /// <summary>
+        /// Sets the Helmet for the driver with the specified driver number.
+        /// </summary>
+        /// <param name="driverNumber">Driver number.</param>
+        /// <param name="helmet"></param>
+        public void SetByDriverNumber(byte driverNumber, Helmet helmet)
+        {
+            _list[driverNumber - 1] = helmet;
         }
 
         /// <summary>

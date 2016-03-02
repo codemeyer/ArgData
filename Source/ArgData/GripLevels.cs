@@ -1,4 +1,5 @@
-﻿using ArgData.IO;
+﻿using ArgData.Entities;
+using ArgData.IO;
 
 namespace ArgData
 {
@@ -21,11 +22,11 @@ namespace ArgData
         /// <summary>
         /// Reads the race grip level of the driver at the specified index. Lower value indicates higher grip.
         /// </summary>
-        /// <param name="driverIndex">Index of driver to read race grip level for.</param>
+        /// <param name="driverNumber">Driver number to read race grip level for.</param>
         /// <returns>Grip level.</returns>
-        public byte ReadRaceGripLevel(int driverIndex)
+        public byte ReadRaceGripLevel(int driverNumber)
         {
-            int position = _exeFile.GetRaceGripLevelPositions(driverIndex);
+            int position = _exeFile.GetRaceGripLevelPositions(driverNumber);
             byte value = new FileReader(_exeFile.ExePath).ReadByte(position);
 
             return value;
@@ -35,12 +36,12 @@ namespace ArgData
         /// Reads the race grip levels of all drivers. Lower value indicates higher grip.
         /// </summary>
         /// <returns>Byte array of grip levels.</returns>
-        public byte[] ReadRaceGripLevels()
+        public GripLevelList ReadRaceGripLevels()
         {
-            int position = _exeFile.GetRaceGripLevelPositions(0);
+            int position = _exeFile.GetRaceGripLevelPosition();
             byte[] values = new FileReader(_exeFile.ExePath).ReadBytes(position, 40);
 
-            return values;
+            return new GripLevelList(values);
         }
 
         /// <summary>
@@ -60,12 +61,12 @@ namespace ArgData
         /// Reads the qualifying grip level of all drivers. Lower value indicates higher grip.
         /// </summary>
         /// <returns>Byte array of grip levels.</returns>
-        public byte[] ReadQualifyingGripLevels()
+        public GripLevelList ReadQualifyingGripLevels()
         {
             int position = _exeFile.GetQualifyingGripLevelPositions(0);
             byte[] values = new FileReader(_exeFile.ExePath).ReadBytes(position, 40);
 
-            return values;
+            return new GripLevelList(values);
         }
     }
 
@@ -99,11 +100,11 @@ namespace ArgData
         /// <summary>
         /// Writes the race grip level for all drivers in numerical order. Lower value indicates higher grip.
         /// </summary>
-        /// <param name="gripLevels">Byte array of grip levels.</param>
-        public void WriteRaceGripLevels(byte[] gripLevels)
+        /// <param name="gripLevels">Grip levels.</param>
+        public void WriteRaceGripLevels(GripLevelList gripLevels)
         {
             int position = _exeFile.GetRaceGripLevelPositions(0);
-            new FileWriter(_exeFile.ExePath).WriteBytes(gripLevels, position);
+            new FileWriter(_exeFile.ExePath).WriteBytes(gripLevels.ToArray(), position);
         }
 
         /// <summary>
@@ -121,10 +122,10 @@ namespace ArgData
         /// Writes the qualifying grip level for all drivers in numerical order. Lower value indicates higher grip.
         /// </summary>
         /// <param name="gripLevels">Byte array of grip levels.</param>
-        public void WriteQualifyingGripLevels(byte[] gripLevels)
+        public void WriteQualifyingGripLevels(GripLevelList gripLevels)
         {
             int position = _exeFile.GetQualifyingGripLevelPositions(0);
-            new FileWriter(_exeFile.ExePath).WriteBytes(gripLevels, position);
+            new FileWriter(_exeFile.ExePath).WriteBytes(gripLevels.ToArray(), position);
         }
     }
 }

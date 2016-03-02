@@ -13,7 +13,6 @@ namespace ArgData.Tests
         [InlineData(GpExeVersionInfo.Us105)]
         public void ReadingOriginalCarColorsReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
-            var expectedCarColors = new DefaultCarColors();
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeFile = new GpExeFile(exampleDataPath);
             var carColorReader = new CarColorReader(exeFile);
@@ -22,7 +21,7 @@ namespace ArgData.Tests
 
             for (int i = 0; i < 1; i++)
             {
-                carColors[i].ShouldBeEquivalentTo(expectedCarColors[i]);
+                carColors[i].ShouldBeEquivalentTo(DefaultCarColors.GetByIndex(i));
             }
         }
 
@@ -31,7 +30,7 @@ namespace ArgData.Tests
         [InlineData(GpExeVersionInfo.Us105)]
         public void ReadingSingleOriginalCarColorReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
-            var expectedCar = new DefaultCarColors()[0];
+            var expectedCar = DefaultCarColors.GetByIndex(0);
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeFile = new GpExeFile(exampleDataPath);
             var carColorReader = new CarColorReader(exeFile);

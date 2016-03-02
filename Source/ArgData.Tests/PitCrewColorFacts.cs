@@ -13,7 +13,6 @@ namespace ArgData.Tests
         [InlineData(GpExeVersionInfo.Us105)]
         public void ReadingOriginalPitCrewColorsReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
-            var expectedPitCrewColors = new DefaultPitCrewColors();
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeFile = new GpExeFile(exampleDataPath);
             var pitCrewColorReader = new PitCrewColorReader(exeFile);
@@ -22,7 +21,7 @@ namespace ArgData.Tests
 
             for (int i = 0; i < 14; i++)
             {
-                pitCrewColors[i].ShouldBeEquivalentTo(expectedPitCrewColors[i]);
+                pitCrewColors[i].ShouldBeEquivalentTo(DefaultPitCrewColors.GetByIndex(i));
             }
         }
 
@@ -31,7 +30,7 @@ namespace ArgData.Tests
         [InlineData(GpExeVersionInfo.Us105)]
         public void ReadingSingleOriginalPitCrewColorReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
-            var expectedPitCrew = new DefaultPitCrewColors()[0];
+            var expectedPitCrew = DefaultPitCrewColors.GetByIndex(0);
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var exeFile = new GpExeFile(exampleDataPath);
             var pitCrewColorReader = new PitCrewColorReader(exeFile);

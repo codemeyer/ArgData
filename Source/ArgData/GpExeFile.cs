@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 
 namespace ArgData
@@ -39,7 +40,19 @@ namespace ArgData
         /// <returns>GpExeVersionInfo enum describing the file.</returns>
         public static GpExeVersionInfo GetFileInfo(string exePath)
         {
-            return new FileInspector().GetGpExeVersionInfo(exePath);
+            var fileInfo = new FileInfo(exePath);
+
+            switch (fileInfo.Length)
+            {
+                case 321878:
+                    return GpExeVersionInfo.European105;
+
+                case 321716:
+                    return GpExeVersionInfo.Us105;
+
+                default:
+                    return GpExeVersionInfo.Unknown;
+            }
         }
 
         private void SetDataPositions()
@@ -128,10 +141,20 @@ namespace ArgData
             return TeamHorsepowerPosition + (teamIndex * 2);
         }
 
-        internal int GetRaceGripLevelPositions(int driverIndex)
+        internal int GetRaceGripLevelPosition()
         {
-            return RaceGripLevelsPosition + driverIndex;
+            return RaceGripLevelsPosition;
         }
+
+        internal int GetRaceGripLevelPositions(int driverNumber)
+        {
+            return RaceGripLevelsPosition + driverNumber - 1;
+        }
+
+        //internal int GetRaceGripLevelPositions(int driverIndex)
+        //{
+        //    return RaceGripLevelsPosition + driverIndex;
+        //}
 
         internal int GetQualifyingGripLevelPositions(int driverIndex)
         {

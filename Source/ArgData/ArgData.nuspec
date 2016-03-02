@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>API for editing most things related to Formula 1 Grand Prix by Microprose</description>
     <!--<releaseNotes></releaseNotes>-->
-    <copyright>Copyright © 2014-2015 Fredrik Meyer</copyright>
+    <copyright>Copyright © 2014-2016 Fredrik Meyer</copyright>
     <tags>F1GP</tags>
   </metadata>
   <files>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using ArgData.Entities;
 using ArgData.IO;
 
 namespace ArgData
@@ -23,14 +24,14 @@ namespace ArgData
         /// <summary>
         /// Reads the driver numbers. 0 indicates an inactivated driver.
         /// </summary>
-        /// <returns>Byte array of driver numbers.</returns>
-        public byte[] ReadDriverNumbers()
+        /// <returns>DriverNumberList containing all driver numbers.</returns>
+        public DriverNumberList ReadDriverNumbers()
         {
             int position = _exeFile.GetDriverNumbersPosition();
 
             byte[] driverNumbers = new FileReader(_exeFile.ExePath).ReadBytes(position, Constants.NumberOfDrivers);
 
-            return driverNumbers;
+            return new DriverNumberList(driverNumbers);
         }
     }
 
@@ -53,35 +54,32 @@ namespace ArgData
         /// <summary>
         /// Writes driver numbers. If a driver number is set to 0, the driver is inactivated.
         /// </summary>
-        /// <param name="driverNumbers">Byte array of driver numbers.</param>
-        public void WriteDriverNumbers(byte[] driverNumbers)
+        /// <param name="driverNumbers">DriverNumberList of driver numbers.</param>
+        public void WriteDriverNumbers(DriverNumberList driverNumbers)
         {
             CheckDriverNumbers(driverNumbers);
 
             var fileWriter = new FileWriter(_exeFile.ExePath);
 
-            for (int i = 0; i < driverNumbers.Length; i++)
+            for (byte b = 0; b < Constants.NumberOfDrivers; b++)
             {
-                int position = _exeFile.GetDriverNumbersPosition(i);
-                fileWriter.WriteByte(driverNumbers[i], position);
+                int position = _exeFile.GetDriverNumbersPosition(b);
+                fileWriter.WriteByte(driverNumbers[b], position);
             }
         }
 
-        private void CheckDriverNumbers(byte[] driverNumbers)
+        private void CheckDriverNumbers(DriverNumberList driverNumbers)
         {
-            if (driverNumbers.Length != Constants.NumberOfDrivers)
-            {
-                throw new Exception("Incorrect number of driver numbers provided. Must be exactly 40.");
-            }
+            byte[] numbers = driverNumbers.GetNumbers();
 
-            int activeCount = driverNumbers.Count(driverNumber => driverNumber > 0);
+            int activeCount = numbers.Count(driverNumber => driverNumber > 0);
 
             if (activeCount < 26)
             {
                 throw new Exception("Too few active drivers. Must be at least 26.");
             }
 
-            if (driverNumbers.Any(driverNumber => driverNumber > 40))
+            if (numbers.Any(driverNumber => driverNumber > 40))
             {
                 throw new Exception("Too high driver number specified. A driver number cannot be higher than 40.");
             }

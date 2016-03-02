@@ -40,11 +40,13 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="ChecksumCalculator.cs" />
+    <Compile Include="Entities\DriverNumberList.cs" />
     <Compile Include="Entities\CarList.cs" />
     <Compile Include="DriverNumbers.cs" />
     <Compile Include="Entities\Car.cs" />
     <Compile Include="CarColors.cs" />
     <Compile Include="Entities\Driver.cs" />
+    <Compile Include="Entities\GripLevelList.cs" />
     <Compile Include="Entities\Helmet.cs" />
     <Compile Include="Entities\HelmetList.cs" />
     <Compile Include="Entities\NameFileDriverList.cs" />
@@ -52,7 +54,6 @@
     <Compile Include="Entities\PitCrew.cs" />
     <Compile Include="Entities\SavedGameDriver.cs" />
     <Compile Include="Entities\Setup.cs" />
-    <Compile Include="FileInspector.cs" />
     <Compile Include="GpChecksum.cs" />
     <Compile Include="GpExeVersionInfo.cs" />
     <Compile Include="GripLevels.cs" />

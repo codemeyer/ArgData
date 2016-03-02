@@ -1,4 +1,5 @@
-﻿using ArgData.Entities;
+﻿using System;
+using ArgData.Entities;
 using ArgData.IO;
 
 namespace ArgData
@@ -33,7 +34,7 @@ namespace ArgData
                     .ReadBytes(_exeFile.GetHelmetColorsPosition(i),
                         _exeFile.GetHelmetColorsPositionByteCountToRead(i));
 
-                list[i].SetColors(helmetBytes);
+                list.GetByDriverNumber(Convert.ToByte(i + 1)).SetColors(helmetBytes);
             }
 
             return list;

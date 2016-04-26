@@ -63,7 +63,7 @@ namespace ArgData
         /// <returns>Byte array of grip levels.</returns>
         public GripLevelList ReadQualifyingGripLevels()
         {
-            int position = _exeFile.GetQualifyingGripLevelPositions(0);
+            int position = _exeFile.GetQualifyingGripLevelPosition();
             byte[] values = new FileReader(_exeFile.ExePath).ReadBytes(position, 40);
 
             return new GripLevelList(values);

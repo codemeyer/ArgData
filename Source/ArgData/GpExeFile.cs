@@ -151,14 +151,14 @@ namespace ArgData
             return RaceGripLevelsPosition + driverNumber - 1;
         }
 
-        //internal int GetRaceGripLevelPositions(int driverIndex)
-        //{
-        //    return RaceGripLevelsPosition + driverIndex;
-        //}
-
-        internal int GetQualifyingGripLevelPositions(int driverIndex)
+        internal int GetQualifyingGripLevelPosition()
         {
-            return QualifyingGripLevelsPosition + driverIndex;
+            return QualifyingGripLevelsPosition;
+        }
+
+        internal int GetQualifyingGripLevelPositions(int driverNumber)
+        {
+            return QualifyingGripLevelsPosition + driverNumber - 1;
         }
 
         internal int GetHelmetColorsPosition(int helmetIndex)

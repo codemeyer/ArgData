@@ -49,7 +49,7 @@ namespace ArgData.Tests
 
             for (int i = 0; i < expectedValues.Length; i++)
             {
-                var fileGrip = gripLevelReader.ReadQualifyingGripLevel(i);
+                var fileGrip = gripLevelReader.ReadQualifyingGripLevel(i + 1);
                 var expectedGrip = expectedValues[i];
 
                 fileGrip.Should().Be(expectedGrip);

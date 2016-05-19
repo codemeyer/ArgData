@@ -78,6 +78,7 @@
     <Compile Include="ExampleDataHelper.cs" />
     <Compile Include="SetupFacts.cs" />
     <Compile Include="TeamHorsepowerFacts.cs" />
+    <Compile Include="WetWeatherSettingsFacts.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExampleData\not.gpexe">

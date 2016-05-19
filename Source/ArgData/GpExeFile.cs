@@ -59,6 +59,8 @@ namespace ArgData
         protected abstract int DriverNumbersPosition { get; }
         protected abstract int PitCrewColorsPosition { get; }
         protected abstract int HelmetColorsPosition { get; }
+        protected abstract int RainAtFirstTrackPosition { get; }
+        protected abstract int ChanceOfRainPosition { get; }
 
         internal int GetPlayerHorsepowerPosition()
         {
@@ -138,6 +140,16 @@ namespace ArgData
         {
             16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 14, 16, 14, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 14, 14, 14, 14, 14
         };
+
+        internal int GetRainAtFirstTrackPosition()
+        {
+            return RainAtFirstTrackPosition;
+        }
+
+        internal int GetChanceOfRainPosition()
+        {
+            return ChanceOfRainPosition;
+        }
     }
 
     internal static class GpExeFileFactory
@@ -169,6 +181,8 @@ namespace ArgData
         protected override int DriverNumbersPosition => 154892;
         protected override int PitCrewColorsPosition => 159377;
         protected override int HelmetColorsPosition => 158751;
+        protected override int RainAtFirstTrackPosition => 106319;
+        protected override int ChanceOfRainPosition => 58394;
 
         internal Us105GpExeFile(string exePath) : base(exePath)
         {
@@ -185,6 +199,8 @@ namespace ArgData
         protected override int DriverNumbersPosition => 154936;
         protected override int PitCrewColorsPosition => 159421;
         protected override int HelmetColorsPosition => 158795;
+        protected override int RainAtFirstTrackPosition => 106319;
+        protected override int ChanceOfRainPosition => 58394;
 
         internal European105GpExeFile(string exePath) : base(exePath)
         {

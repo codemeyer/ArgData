@@ -43,5 +43,10 @@ namespace ArgData.IO
                 return bytes;
             }
         }
+
+        internal byte[] ReadAll()
+        {
+            return File.ReadAllBytes(_path);
+        }
     }
 }

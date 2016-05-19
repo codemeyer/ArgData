@@ -54,6 +54,7 @@
     <Compile Include="Entities\PitCrew.cs" />
     <Compile Include="Entities\SavedGameDriver.cs" />
     <Compile Include="Entities\Setup.cs" />
+    <Compile Include="Entities\SetupList.cs" />
     <Compile Include="GpChecksum.cs" />
     <Compile Include="GpExeVersionInfo.cs" />
     <Compile Include="GripLevels.cs" />
@@ -72,7 +73,7 @@
     <Compile Include="Entities\SavedGame.cs" />
     <Compile Include="SavedGameFiles.cs" />
     <Compile Include="Entities\Team.cs" />
-    <Compile Include="SetupReader.cs" />
+    <Compile Include="Setups.cs" />
     <Compile Include="TeamHorsepower.cs" />
   </ItemGroup>
   <ItemGroup>

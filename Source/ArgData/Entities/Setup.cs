@@ -8,47 +8,47 @@
         /// <summary>
         /// Gets or sets the front wing setting. Allowed values between 0 and 64.
         /// </summary>
-        public byte FrontWing { get; set; }
+        public byte FrontWing { get; set; } = 40;
 
         /// <summary>
         /// Gets or sets the rear wing setting. Allowed values between 0 and 64.
         /// </summary>
-        public byte RearWing { get; set; }
+        public byte RearWing { get; set; } = 40;
 
         /// <summary>
-        /// Gets or sets the ratio of the first gear.
+        /// Gets or sets the ratio of the first gear. Must be 16 or higher, and lower than GearRatio2.
         /// </summary>
-        public byte GearRatio1 { get; set; }
+        public byte GearRatio1 { get; set; } = 24;
 
         /// <summary>
-        /// Gets or sets the ratio of the second gear.
+        /// Gets or sets the ratio of the second gear. Must be higher than GearRatio1 and lower than GearRatio3.
         /// </summary>
-        public byte GearRatio2 { get; set; }
+        public byte GearRatio2 { get; set; } = 32;
 
         /// <summary>
-        /// Gets or sets the ratio of the third gear.
+        /// Gets or sets the ratio of the third gear. Must be higher than GearRatio2 and lower than GearRatio4.
         /// </summary>
-        public byte GearRatio3 { get; set; }
+        public byte GearRatio3 { get; set; } = 39;
 
         /// <summary>
-        /// Gets or sets the ratio of the fourth gear.
+        /// Gets or sets the ratio of the fourth gear. Must be higher than GearRatio3 and lower than GearRatio5.
         /// </summary>
-        public byte GearRatio4 { get; set; }
+        public byte GearRatio4 { get; set; } = 46;
 
         /// <summary>
-        /// Gets or sets the ratio of the fifth gear.
+        /// Gets or sets the ratio of the fifth gear. Must be higher than GearRatio4 and lower than GearRatio6.
         /// </summary>
-        public byte GearRatio5 { get; set; }
+        public byte GearRatio5 { get; set; } = 53;
 
         /// <summary>
-        /// Gets or sets the ratio of the sixth gear.
+        /// Gets or sets the ratio of the sixth gear. Must be higher than GearRatio5 and lower than, or equal to, 80.
         /// </summary>
-        public byte GearRatio6 { get; set; }
-        
+        public byte GearRatio6 { get; set; } = 61;
+
         /// <summary>
         /// Gets or sets the tyre compound.
         /// </summary>
-        public SetupTyreCompound TyresCompound { get; set; }
+        public SetupTyreCompound TyresCompound { get; set; } = SetupTyreCompound.C;
 
         /// <summary>
         /// Gets or sets the brake balance value. Allowed values between 0 and 32.
@@ -59,6 +59,47 @@
         /// Gets or sets the brake balance direction, front or rear. If the brake balance is set to 0, direction does not matter.
         /// </summary>
         public SetupBrakeBalanceDirection BrakeBalanceDirection { get; set; }
+
+        /// <summary>
+        /// Whether the values currently entered in the setup are within allowed ranges.
+        /// </summary>
+        public bool IsValid
+        {
+            get
+            {
+                if (FrontWing > 64)
+                    return false;
+
+                if (RearWing > 64)
+                    return false;
+
+                if (BrakeBalanceValue > 32)
+                    return false;
+
+                if (GearRatio1 < 16)
+                    return false;
+
+                if (GearRatio1 >= GearRatio2)
+                    return false;
+
+                if (GearRatio2 >= GearRatio3)
+                    return false;
+
+                if (GearRatio3 >= GearRatio4)
+                    return false;
+
+                if (GearRatio4 >= GearRatio5)
+                    return false;
+
+                if (GearRatio5 >= GearRatio6)
+                    return false;
+
+                if (GearRatio6 > 80)
+                    return false;
+
+                return true;
+            }
+        }
     }
 
     /// <summary>

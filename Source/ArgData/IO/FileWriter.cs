@@ -40,5 +40,13 @@ namespace ArgData.IO
                 writer.Write(values);
             }
         }
+
+        public FileWriter CreateFile()
+        {
+            var fileStream = File.Open(_path, FileMode.OpenOrCreate);
+            fileStream.Close();
+            fileStream.Dispose();
+            return this;
+        }
     }
 }

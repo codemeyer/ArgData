@@ -11,10 +11,16 @@ namespace ArgData
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a GripLevelReader.
+        /// Creates a GripLevelReader for the specified GP.EXE file.
         /// </summary>
-        /// <param name="exeFile">GpExeFile to edit.</param>
-        public GripLevelReader(GpExeFile exeFile)
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>GripLevelReader.</returns>
+        public static GripLevelReader For(GpExeFile exeFile)
+        {
+            return new GripLevelReader(exeFile);
+        }
+
+        private GripLevelReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
@@ -78,10 +84,16 @@ namespace ArgData
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a GripLevelWriter.
+        /// Creates a GripLevelWriter for the specified GP.EXE file.
         /// </summary>
-        /// <param name="exeFile">GpExeFile to edit.</param>
-        public GripLevelWriter(GpExeFile exeFile)
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>GripLevelWriter.</returns>
+        public static GripLevelWriter For(GpExeFile exeFile)
+        {
+            return new GripLevelWriter(exeFile);
+        }
+
+        private GripLevelWriter(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }

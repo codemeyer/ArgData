@@ -12,10 +12,16 @@ namespace ArgData
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a PitCrewColorReader.
+        /// Creates a PitCrewColorReader for the specified GP.EXE file.
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
-        public PitCrewColorReader(GpExeFile exeFile)
+        /// <returns>PitCrewColorReader.</returns>
+        public static PitCrewColorReader For(GpExeFile exeFile)
+        {
+            return new PitCrewColorReader(exeFile);
+        }
+
+        private PitCrewColorReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
@@ -46,7 +52,7 @@ namespace ArgData
 
             for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
             {
-                byte[] pitCrewBytes = allPitCrewBytes.Skip(i*GpExeFile.ColorsPerTeam)
+                byte[] pitCrewBytes = allPitCrewBytes.Skip(i * GpExeFile.ColorsPerTeam)
                     .Take(GpExeFile.ColorsPerTeam).ToArray();
                 list[i].SetColors(pitCrewBytes);
             }
@@ -58,7 +64,7 @@ namespace ArgData
         {
             return new FileReader(_exeFile.ExePath).ReadBytes(
                 _exeFile.GetPitCrewColorsPosition(),
-                GpExeFile.ColorsPerTeam*Constants.NumberOfSupportedTeams);
+                GpExeFile.ColorsPerTeam * Constants.NumberOfSupportedTeams);
         }
     }
 
@@ -70,10 +76,16 @@ namespace ArgData
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a PitCrewColorWriter.
+        /// Creates a PitCrewColorWriter for the specified GP.EXE file.
         /// </summary>
-        /// <param name="exeFile">GpExeFile to edit.</param>
-        public PitCrewColorWriter(GpExeFile exeFile)
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>PitCrewColorWriter.</returns>
+        public static PitCrewColorWriter For(GpExeFile exeFile)
+        {
+            return new PitCrewColorWriter(exeFile);
+        }
+
+        private PitCrewColorWriter(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }

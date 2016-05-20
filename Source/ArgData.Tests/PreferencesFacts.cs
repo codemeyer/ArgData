@@ -1,4 +1,5 @@
 ﻿using System;
+using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
 
@@ -10,7 +11,7 @@ namespace ArgData.Tests
         public void Read_WithAutoloadNames_ReturnsPathToNameFile()
         {
             string exampleDataPath = ExampleDataHelper.GetExampleDataPath("f1prefs-1.dat");
-            var preferencesReader = new PreferencesReader(exampleDataPath);
+            var preferencesReader = PreferencesReader.For(PreferencesFile.At(exampleDataPath));
 
             string nameFile = preferencesReader.GetAutoLoadedNameFile();
 
@@ -21,7 +22,7 @@ namespace ArgData.Tests
         public void Read_WithoutAutoLoadedNames_ReturnsNull()
         {
             string exampleDataPath = ExampleDataHelper.GetExampleDataPath("f1prefs-2.dat");
-            var preferencesReader = new PreferencesReader(exampleDataPath);
+            var preferencesReader = PreferencesReader.For(PreferencesFile.At(exampleDataPath));
 
             string nameFile = preferencesReader.GetAutoLoadedNameFile();
 
@@ -33,7 +34,7 @@ namespace ArgData.Tests
         {
             string exampleDataPath = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE");
 
-            Action act = () => new PreferencesReader(exampleDataPath);
+            Action act = () => PreferencesReader.For(PreferencesFile.At(exampleDataPath));
 
             act.ShouldThrow<Exception>();
         }
@@ -43,10 +44,10 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.PreferencesCopy())
             {
-                var preferencesWriter = new PreferencesWriter(context.FilePath);
+                var preferencesWriter = PreferencesWriter.For(PreferencesFile.At(context.FilePath));
                 preferencesWriter.SetAutoLoadedNameFile("gpsvz\name.nam");
 
-                var preferencesReader = new PreferencesReader(context.FilePath);
+                var preferencesReader = PreferencesReader.For(PreferencesFile.At(context.FilePath));
                 string nameFile = preferencesReader.GetAutoLoadedNameFile();
 
                 nameFile.Should().Be("gpsvz\name.nam");
@@ -58,7 +59,7 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.PreferencesCopy())
             {
-                var preferencesWriter = new PreferencesWriter(context.FilePath);
+                var preferencesWriter = PreferencesWriter.For(PreferencesFile.At(context.FilePath));
                 Action act = () => preferencesWriter.SetAutoLoadedNameFile("123456789012345678901234567890123");
 
                 act.ShouldThrow<Exception>();

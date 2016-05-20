@@ -11,19 +11,21 @@ namespace ArgData.Tests
         {
             string exePath = ExampleDataHelper.GetExampleDataPath("not.gpexe");
 
-            Action act = () => new GpExeFile(exePath);
+            Action act = () => GpExeFile.At(exePath);
 
             act.ShouldThrow<Exception>();
         }
 
-        [Fact]
-        public void IsGpExeShouldJustWork()
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void CorrectGpExeFilesCanBeCreated(GpExeVersionInfo exeVersion)
         {
-            string exePath = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
+            string exePath = ExampleDataHelper.GpExePath(exeVersion);
 
-            var exeFile = new GpExeFile(exePath);
+            var exeFile = GpExeFile.At(exePath);
 
-            exeFile.Should().BeOfType<GpExeFile>();
+            exeFile.Should().BeAssignableTo<GpExeFile>();
         }
 
         [Fact]

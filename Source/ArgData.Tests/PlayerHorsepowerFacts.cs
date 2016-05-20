@@ -24,11 +24,11 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var horsepowerWriter = new PlayerHorsepowerWriter(context.ExeFile);
+                var horsepowerWriter = PlayerHorsepowerWriter.For(context.ExeFile);
 
                 horsepowerWriter.WritePlayerHorsepower(640);
 
-                var horsepowerReader = new PlayerHorsepowerReader(context.ExeFile);
+                var horsepowerReader = PlayerHorsepowerReader.For(context.ExeFile);
 
                 var readHorsepower = horsepowerReader.ReadPlayerHorsepower();
                 readHorsepower.Should().Be(640);

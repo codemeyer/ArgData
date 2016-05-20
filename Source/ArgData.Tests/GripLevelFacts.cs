@@ -89,14 +89,14 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var gripLevelWriter = new GripLevelWriter(context.ExeFile);
+                var gripLevelWriter = GripLevelWriter.For(context.ExeFile);
 
                 for (byte i = 0; i < 5; i++)
                 {
                     gripLevelWriter.WriteRaceGripLevel(i, i);
                 }
 
-                var gripLevelReader = new GripLevelReader(context.ExeFile);
+                var gripLevelReader = GripLevelReader.For(context.ExeFile);
 
                 for (byte i = 0; i < 5; i++)
                 {
@@ -114,7 +114,7 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var gripLevelWriter = new GripLevelWriter(context.ExeFile);
+                var gripLevelWriter = GripLevelWriter.For(context.ExeFile);
 
                 var gripLevels = new GripLevelList();
                 gripLevels.SetByDriverNumber(1, 1);
@@ -122,7 +122,7 @@ namespace ArgData.Tests
                 gripLevels.SetByDriverNumber(3, 3);
                 gripLevelWriter.WriteRaceGripLevels(gripLevels);
 
-                var gripLevelReader = new GripLevelReader(context.ExeFile);
+                var gripLevelReader = GripLevelReader.For(context.ExeFile);
 
                 for (byte i = 0; i < 2; i++)
                 {
@@ -140,14 +140,14 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var gripLevelWriter = new GripLevelWriter(context.ExeFile);
+                var gripLevelWriter = GripLevelWriter.For(context.ExeFile);
 
                 for (byte i = 0; i < 5; i++)
                 {
                     gripLevelWriter.WriteQualifyingGripLevel(i, i);
                 }
 
-                var gripLevelReader = new GripLevelReader(context.ExeFile);
+                var gripLevelReader = GripLevelReader.For(context.ExeFile);
 
                 for (byte i = 0; i < 5; i++)
                 {
@@ -165,7 +165,7 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var gripLevelWriter = new GripLevelWriter(context.ExeFile);
+                var gripLevelWriter = GripLevelWriter.For(context.ExeFile);
 
                 var gripLevels = new GripLevelList();
                 gripLevels.SetByDriverNumber(1, 1);
@@ -173,7 +173,7 @@ namespace ArgData.Tests
                 gripLevels.SetByDriverNumber(3, 3);
                 gripLevelWriter.WriteQualifyingGripLevels(gripLevels);
 
-                var gripLevelReader = new GripLevelReader(context.ExeFile);
+                var gripLevelReader = GripLevelReader.For(context.ExeFile);
 
                 for (byte i = 0; i < 2; i++)
                 {

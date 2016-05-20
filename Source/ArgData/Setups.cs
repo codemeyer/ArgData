@@ -9,14 +9,14 @@ namespace ArgData
     /// <summary>
     /// Reads setup files from disk.
     /// </summary>
-    public class SetupReader
+    public static class SetupReader
     {
         /// <summary>
         /// Reads a single setup file.
         /// </summary>
         /// <param name="path">Path to the setup file.</param>
         /// <returns>Setup.</returns>
-        public Setup ReadSingle(string path)
+        public static Setup ReadSingle(string path)
         {
             ValidateSingleSetupFile(path);
 
@@ -30,7 +30,7 @@ namespace ArgData
         /// </summary>
         /// <param name="path">Path to the setups file.</param>
         /// <returns>List of setups.</returns>
-        public SetupList ReadMultiple(string path)
+        public static SetupList ReadMultiple(string path)
         {
             ValidateMultipleSetupFile(path);
 
@@ -59,7 +59,7 @@ namespace ArgData
             return list;
         }
 
-        private Setup CreateSetupFromByteArray(byte[] setupBytes)
+        private static Setup CreateSetupFromByteArray(byte[] setupBytes)
         {
             return new Setup
             {
@@ -104,14 +104,14 @@ namespace ArgData
                 : Convert.ToByte(256 - value);
         }
 
-        private SetupBrakeBalanceDirection GetBrakeBalanceDirection(byte value)
+        private static SetupBrakeBalanceDirection GetBrakeBalanceDirection(byte value)
         {
             return (value < 128)
                 ? SetupBrakeBalanceDirection.Front
                 : SetupBrakeBalanceDirection.Rear;
         }
 
-        private SetupTyreCompound GetTyreCompound(byte value)
+        private static SetupTyreCompound GetTyreCompound(byte value)
         {
             return (SetupTyreCompound)Enum.Parse(typeof(SetupTyreCompound), value.ToString());
         }
@@ -121,14 +121,14 @@ namespace ArgData
     /// <summary>
     /// Writes single or multiple setup files to disk.
     /// </summary>
-    public class SetupWriter
+    public static class SetupWriter
     {
         /// <summary>
         /// Writes a single setup to disk.
         /// </summary>
         /// <param name="setup">Setup to save.</param>
         /// <param name="path">Path to file. Will be created or overwritten.</param>
-        public void WriteSingle(Setup setup, string path)
+        public static void WriteSingle(Setup setup, string path)
         {
             byte[] setupBytes = new byte[14];
 
@@ -148,7 +148,12 @@ namespace ArgData
             ChecksumCalculator.UpdateChecksum(path);
         }
 
-        public void WriteMultiple(SetupList setups, string path)
+        /// <summary>
+        /// Writes a file containing multiple setups to disk.
+        /// </summary>
+        /// <param name="setups">Setups to save.</param>
+        /// <param name="path">Path to file. Will be created or overwritten.</param>
+        public static void WriteMultiple(SetupList setups, string path)
         {
             byte[] setupBytes = new byte[326];
 
@@ -199,12 +204,12 @@ namespace ArgData
             ChecksumCalculator.UpdateChecksum(path);
         }
 
-        private byte GetTyreCompound(SetupTyreCompound tyresCompound)
+        private static byte GetTyreCompound(SetupTyreCompound tyresCompound)
         {
             return (byte)tyresCompound;
         }
 
-        private byte GetBrakeBalance(byte value, SetupBrakeBalanceDirection direction)
+        private static byte GetBrakeBalance(byte value, SetupBrakeBalanceDirection direction)
         {
             if (value == 0)
                 return 0;

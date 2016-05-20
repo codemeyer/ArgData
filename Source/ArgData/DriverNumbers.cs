@@ -13,10 +13,16 @@ namespace ArgData
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a DriverNumberReader.
+        /// Creates a DriverNumberReader for the specified GP.EXE file.
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
-        public DriverNumberReader(GpExeFile exeFile)
+        /// <returns>DriverNumberReader.</returns>
+        public static DriverNumberReader For(GpExeFile exeFile)
+        {
+            return new DriverNumberReader(exeFile);
+        }
+
+        private DriverNumberReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
@@ -43,10 +49,16 @@ namespace ArgData
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a DriverNumberWriter.
+        /// Creates a DriverNumberWriter for the specified GP.EXE file.
         /// </summary>
-        /// <param name="exeFile">GpExeFile to write to.</param>
-        public DriverNumberWriter(GpExeFile exeFile)
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>DriverNumberWriter.</returns>
+        public static DriverNumberWriter For(GpExeFile exeFile)
+        {
+            return new DriverNumberWriter(exeFile);
+        }
+
+        private DriverNumberWriter(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }

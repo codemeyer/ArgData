@@ -17,8 +17,7 @@ namespace ArgData.Tests
             {
                 string exampleDataPath = ExampleDataHelper.GetExampleDataPath("names1991.nam");
 
-                var parser = new NameFileReader();
-                _data = parser.Read(exampleDataPath);
+                _data = NameFileReader.Read(exampleDataPath);
             }
 
             [Fact]
@@ -68,7 +67,7 @@ namespace ArgData.Tests
             {
                 var notNameFilePath = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
 
-                Action action = () => new NameFileReader().Read(notNameFilePath);
+                Action action = () => NameFileReader.Read(notNameFilePath);
 
                 action.ShouldThrow<Exception>();
             }
@@ -91,7 +90,7 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                new NameFileWriter().Write(context.FilePath, _drivers, _teams);
+                NameFileWriter.Write(context.FilePath, _drivers, _teams);
 
                 var fileInfo = new FileInfo(context.FilePath);
 
@@ -104,8 +103,8 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                new NameFileWriter().Write(context.FilePath, _drivers, _teams);
-                var namesFile = new NameFileReader().Read(context.FilePath);
+                NameFileWriter.Write(context.FilePath, _drivers, _teams);
+                var namesFile = NameFileReader.Read(context.FilePath);
 
                 namesFile.Drivers.Count.Should().Be(40);
                 namesFile.Teams.Count.Should().Be(20);

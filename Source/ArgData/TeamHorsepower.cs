@@ -7,16 +7,22 @@ namespace ArgData
     /// </summary>
     public class TeamHorsepowerReader
     {
-        private readonly GpExeFile _exeFile;
-
         /// <summary>
-        /// Initializes a new instance of a TeamHorsepowerReader.
+        /// Creates a TeamHorsepowerReader for the specified GP.EXE file.
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
-        public TeamHorsepowerReader(GpExeFile exeFile)
+        /// <returns>TeamHorsepowerReader.</returns>
+        public static TeamHorsepowerReader For(GpExeFile exeFile)
+        {
+            return new TeamHorsepowerReader(exeFile);
+        }
+
+        private TeamHorsepowerReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
+
+        private readonly GpExeFile _exeFile;
 
         /// <summary>
         /// Reads the horsepower value of the team at the specified index.
@@ -38,16 +44,22 @@ namespace ArgData
     /// </summary>
     public class TeamHorsepowerWriter
     {
-        private readonly GpExeFile _exeFile;
-
         /// <summary>
-        /// Initializes a new instance of a TeamHorsepowerWriter.
+        /// Creates a TeamHorsepowerWriter for the specified GP.EXE file.
         /// </summary>
         /// <param name="exeFile">GpExeFile to write to.</param>
-        public TeamHorsepowerWriter(GpExeFile exeFile)
+        /// <returns>TeamHorsepowerWriter.</returns>
+        public static TeamHorsepowerWriter For(GpExeFile exeFile)
+        {
+            return new TeamHorsepowerWriter(exeFile);
+        }
+
+        private TeamHorsepowerWriter(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
+
+        private readonly GpExeFile _exeFile;
 
         /// <summary>
         /// Writes the horsepower value for the team at the specified index.

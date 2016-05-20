@@ -12,10 +12,16 @@ namespace ArgData
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a CarColorReader.
+        /// Creates a CarColorReader for the specified GP.EXE file.
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
-        public CarColorReader(GpExeFile exeFile)
+        /// <returns>CarColorReader.</returns>
+        public static CarColorReader For(GpExeFile exeFile)
+        {
+            return new CarColorReader(exeFile);
+        }
+
+        private CarColorReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
@@ -71,10 +77,16 @@ namespace ArgData
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a CarColorWriter.
+        /// Creates a CarColorWriter for the specified GP.EXE file.
         /// </summary>
-        /// <param name="exeFile">GpExeFile to write to.</param>
-        public CarColorWriter(GpExeFile exeFile)
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>CarColorWriter.</returns>
+        public static CarColorWriter For(GpExeFile exeFile)
+        {
+            return new CarColorWriter(exeFile);
+        }
+
+        private CarColorWriter(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }

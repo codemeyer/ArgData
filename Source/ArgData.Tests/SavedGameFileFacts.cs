@@ -14,8 +14,7 @@ namespace ArgData.Tests
             {
                 string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_after_r3.gam");
 
-                var gameFileReader = new SavedGameFileReader();
-                _data = gameFileReader.ReadSavedGame(exampleDataPath);
+                _data = SavedGameFileReader.ReadSavedGame(exampleDataPath);
             }
 
             [Fact]
@@ -67,8 +66,7 @@ namespace ArgData.Tests
         {
             string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_fewerdrv.gam");
 
-            var gameFileReader = new SavedGameFileReader();
-            _data = gameFileReader.ReadSavedGame(exampleDataPath);
+            _data = SavedGameFileReader.ReadSavedGame(exampleDataPath);
         }
 
         [Fact]

@@ -7,30 +7,16 @@ namespace ArgData
     /// <summary>
     /// Represents a GP.EXE file that will be read from or written to.
     /// </summary>
-    public class GpExeFile
+    public abstract class GpExeFile
     {
         /// <summary>
-        /// Initializes an instance of GpExeFile.
+        /// Gets a reference to the GP.EXE file at the specified location.
         /// </summary>
-        /// <param name="exePath">Path to the GP.EXE file</param>
-        public GpExeFile(string exePath)
+        /// <param name="exePath"></param>
+        /// <returns></returns>
+        public static GpExeFile At(string exePath)
         {
-            ExePath = exePath;
-
-            ValidateFileSupport(exePath);
-
-            SetDataPositions();
-        }
-
-        private void ValidateFileSupport(string exePath)
-        {
-            var exeInfo = GetFileInfo(exePath);
-
-            if (exeInfo != GpExeVersionInfo.European105 && exeInfo != GpExeVersionInfo.Us105)
-            {
-                string msg = $"The specified file is of type {exeInfo}. ArgData currently supports European105 and Us105.";
-                throw new Exception(msg);
-            }
+            return GpExeFileFactory.CreateFromPath(exePath);
         }
 
         /// <summary>
@@ -55,49 +41,24 @@ namespace ArgData
             }
         }
 
-        private void SetDataPositions()
+        internal GpExeFile(string exePath)
         {
-            var fileInfo = GetFileInfo(ExePath);
-
-            switch (fileInfo)
-            {
-                case GpExeVersionInfo.European105:
-                    PlayerHorsepowerPosition = 19848;
-                    TeamHorsepowerPosition = 158380;
-                    CarColorsPosition = 158500;
-                    RaceGripLevelsPosition = 158460;
-                    QualifyingGripLevelsPosition = 158420;
-                    DriverNumbersPosition = 154936;
-                    PitCrewColorsPosition = 159421;
-                    HelmetColorsPosition = 158795;
-                    break;
-
-                case GpExeVersionInfo.Us105:
-                    PlayerHorsepowerPosition = 19848;
-                    TeamHorsepowerPosition = 158336;
-                    CarColorsPosition = 158456;
-                    RaceGripLevelsPosition = 158416;
-                    QualifyingGripLevelsPosition = 158376;
-                    DriverNumbersPosition = 154892;
-                    PitCrewColorsPosition = 159377;
-                    HelmetColorsPosition = 158751;
-                    break;
-            }
+            ExePath = exePath;
         }
-
-        private int PlayerHorsepowerPosition { get; set; }
-        private int TeamHorsepowerPosition { get; set; }
-        private int CarColorsPosition { get; set; }
-        private int RaceGripLevelsPosition { get; set; }
-        private int QualifyingGripLevelsPosition { get; set; }
-        private int DriverNumbersPosition { get; set; }
-        private int PitCrewColorsPosition { get; set; }
-        private int HelmetColorsPosition { get; set; }
 
         /// <summary>
         /// Gets the path to the GP.EXE file.
         /// </summary>
         public string ExePath { get; }
+
+        protected abstract int PlayerHorsepowerPosition { get; }
+        protected abstract int TeamHorsepowerPosition { get; }
+        protected abstract int CarColorsPosition { get; }
+        protected abstract int RaceGripLevelsPosition { get; }
+        protected abstract int QualifyingGripLevelsPosition { get; }
+        protected abstract int DriverNumbersPosition { get; }
+        protected abstract int PitCrewColorsPosition { get; }
+        protected abstract int HelmetColorsPosition { get; }
 
         internal int GetPlayerHorsepowerPosition()
         {
@@ -175,10 +136,58 @@ namespace ArgData
 
         private readonly byte[] _bytesPerHelmet =
         {
-            16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-            16, 16, 14, 16, 14, 16, 16, 16, 16, 16,
-            16, 16, 16, 16, 16, 16, 16, 16, 16, 16,
-            16, 16, 16, 16, 16, 14, 14, 14, 14, 14
+            16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 14, 16, 14, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 14, 14, 14, 14, 14
         };
+    }
+
+    internal static class GpExeFileFactory
+    {
+        internal static GpExeFile CreateFromPath(string exePath)
+        {
+            var exeInfo = GpExeFile.GetFileInfo(exePath);
+
+            switch (exeInfo)
+            {
+                case GpExeVersionInfo.European105:
+                    return new European105GpExeFile(exePath);
+                case GpExeVersionInfo.Us105:
+                    return new Us105GpExeFile(exePath);
+                default:
+                    string msg = $"The specified file is of type {exeInfo}. ArgData currently supports European105 and Us105.";
+                    throw new Exception(msg);
+            }
+        }
+    }
+
+    internal class Us105GpExeFile : GpExeFile
+    {
+        protected override int PlayerHorsepowerPosition => 19848;
+        protected override int TeamHorsepowerPosition => 158336;
+        protected override int CarColorsPosition => 158456;
+        protected override int RaceGripLevelsPosition => 158416;
+        protected override int QualifyingGripLevelsPosition => 158376;
+        protected override int DriverNumbersPosition => 154892;
+        protected override int PitCrewColorsPosition => 159377;
+        protected override int HelmetColorsPosition => 158751;
+
+        internal Us105GpExeFile(string exePath) : base(exePath)
+        {
+        }
+    }
+
+    internal class European105GpExeFile : GpExeFile
+    {
+        protected override int PlayerHorsepowerPosition => 19848;
+        protected override int TeamHorsepowerPosition => 158380;
+        protected override int CarColorsPosition => 158500;
+        protected override int RaceGripLevelsPosition => 158460;
+        protected override int QualifyingGripLevelsPosition => 158420;
+        protected override int DriverNumbersPosition => 154936;
+        protected override int PitCrewColorsPosition => 159421;
+        protected override int HelmetColorsPosition => 158795;
+
+        internal European105GpExeFile(string exePath) : base(exePath)
+        {
+        }
     }
 }

@@ -16,8 +16,7 @@ namespace ArgData.Tests
         {
             var expectedHelmet = DefaultHelmetColors.GetByDriverNumber(1);
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var exeFile = new GpExeFile(exampleDataPath);
-            var helmetReader = new HelmetColorReader(exeFile);
+            var helmetReader = HelmetColorReader.For(GpExeFile.At(exampleDataPath));
 
             var helmetColors = helmetReader.ReadHelmetColors();
 
@@ -34,8 +33,7 @@ namespace ArgData.Tests
         {
             var expectedHelmet = DefaultHelmetColors.GetByDriverNumber(35);
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var exeFile = new GpExeFile(exampleDataPath);
-            var helmetReader = new HelmetColorReader(exeFile);
+            var helmetReader = HelmetColorReader.For(GpExeFile.At(exampleDataPath));
 
             var helmetColors = helmetReader.ReadHelmetColors();
 
@@ -52,7 +50,7 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var helmetWriter = new HelmetColorWriter(context.ExeFile);
+                var helmetWriter = HelmetColorWriter.For(context.ExeFile);
 
                 var helmetList = new HelmetList();
                 helmetList.SetByDriverNumber(1, new Helmet(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }));
@@ -73,7 +71,7 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var helmetWriter = new HelmetColorWriter(context.ExeFile);
+                var helmetWriter = HelmetColorWriter.For(context.ExeFile);
 
                 var helmetList = new HelmetList();
                 helmetList.SetByDriverNumber(35, new Helmet(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }));
@@ -94,6 +92,7 @@ namespace ArgData.Tests
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
+                TestSpecialCaseHelmet(13, 199, 0, context, exeVersionInfo);
                 TestSpecialCaseHelmet(15, 23, 0, context, exeVersionInfo);
                 TestSpecialCaseHelmet(36, 71, 1, context, exeVersionInfo);
                 TestSpecialCaseHelmet(37, 7, 0, context, exeVersionInfo);
@@ -105,7 +104,7 @@ namespace ArgData.Tests
 
         private void TestSpecialCaseHelmet(byte driverNumber, byte alteringValue1, byte alteringValue2, ExampleDataContext context, GpExeVersionInfo exeVersionInfo)
         {
-            var helmetWriter = new HelmetColorWriter(context.ExeFile);
+            var helmetWriter = HelmetColorWriter.For(context.ExeFile);
 
             var helmetList = new HelmetList();
             helmetList.SetByDriverNumber(driverNumber, new Helmet(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }));
@@ -119,13 +118,13 @@ namespace ArgData.Tests
             helmet.Stripes[0].Should().Be(3);
 
             var helmetPosition = GetHelmetColorsPosition(driverNumber - 1, exeVersionInfo);
-            var specialBytes = ExampleDataHelper.ReadBytes(context.FilePath, helmetPosition, driverNumber - 1);
+            var specialBytes = ExampleDataHelper.ReadBytes(context.FilePath, helmetPosition, _bytesPerHelmet[driverNumber-1]);
             specialBytes.Should().ContainInOrder(new byte[] { alteringValue1, alteringValue2, 178, /**/ 11 /**/, 9, 0, 176 });
         }
 
         private Helmet ReadHelmetByNumber(byte driverNumber, GpExeFile exeFile)
         {
-            var helmetColors = new HelmetColorReader(exeFile).ReadHelmetColors();
+            var helmetColors = HelmetColorReader.For(exeFile).ReadHelmetColors();
             return helmetColors.GetByDriverNumber(driverNumber);
         }
 

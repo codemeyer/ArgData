@@ -9,14 +9,14 @@ namespace ArgData
     /// <summary>
     /// Reads saved game files.
     /// </summary>
-    public class SavedGameFileReader
+    public static class SavedGameFileReader
     {
         /// <summary>
         /// Reads a saved game file.
         /// </summary>
         /// <param name="path">Path to saved game.</param>
         /// <returns>SavedGame with drivers and results.</returns>
-        public SavedGame ReadSavedGame(string path)
+        public static SavedGame ReadSavedGame(string path)
         {
             byte[] bytes = File.ReadAllBytes(path);
 
@@ -28,13 +28,13 @@ namespace ArgData
             return savedGame;
         }
 
-        private int GetNumberOfRacesCompleted(byte[] bytes)
+        private static int GetNumberOfRacesCompleted(byte[] bytes)
         {
             int races = bytes[26] + 1;
             return races;
         }
 
-        private List<SavedGameDriver> ParseDrivers(byte[] bytes, int racesCompleted)
+        private static List<SavedGameDriver> ParseDrivers(byte[] bytes, int racesCompleted)
         {
             var drivers = new List<SavedGameDriver>();
 
@@ -68,7 +68,7 @@ namespace ArgData
             return name;
         }
 
-        private List<int> GetDriverResults(byte[] bytes, int driverIndex, int racesCompleted)
+        private static List<int> GetDriverResults(byte[] bytes, int driverIndex, int racesCompleted)
         {
             var results = new List<int>();
 

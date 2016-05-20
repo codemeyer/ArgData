@@ -32,11 +32,11 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 DriverNumberList driverNumbers = CreateIncrementingDriverNumberList(40);
-                var driverNumberWriter = new DriverNumberWriter(context.ExeFile);
+                var driverNumberWriter = DriverNumberWriter.For(context.ExeFile);
 
                 driverNumberWriter.WriteDriverNumbers(driverNumbers);
 
-                var driverNumberReader = new DriverNumberReader(context.ExeFile);
+                var driverNumberReader = DriverNumberReader.For(context.ExeFile);
                 DriverNumberList readNumbers = driverNumberReader.ReadDriverNumbers();
                 readNumbers[0].Should().Be(1);
                 readNumbers[39].Should().Be(40);
@@ -67,7 +67,7 @@ namespace ArgData.Tests
                 {
                     driverNumbers[b] = 0;
                 }
-                var driverNumberWriter = new DriverNumberWriter(context.ExeFile);
+                var driverNumberWriter = DriverNumberWriter.For(context.ExeFile);
 
                 Action act = () => driverNumberWriter.WriteDriverNumbers(driverNumbers);
 
@@ -83,7 +83,7 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var driverNumbers = CreateIncrementingDriverNumberList(40);
-                var driverNumberWriter = new DriverNumberWriter(context.ExeFile);
+                var driverNumberWriter = DriverNumberWriter.For(context.ExeFile);
 
                 driverNumbers[10] = 41;
                 Action act = () => driverNumberWriter.WriteDriverNumbers(driverNumbers);

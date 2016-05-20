@@ -85,7 +85,7 @@ namespace ArgData.Tests
                 {
                     List<int> range = Palette.GetRangeForColor(i);
 
-                    range.Should().NotBeNull(string.Format("Color {0} not found in range.", i));
+                    range.Should().NotBeNull($"Color {i} not found in range.");
                 }
             }
         }

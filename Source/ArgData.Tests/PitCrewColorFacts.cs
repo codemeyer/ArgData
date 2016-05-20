@@ -14,8 +14,7 @@ namespace ArgData.Tests
         public void ReadingOriginalPitCrewColorsReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var exeFile = new GpExeFile(exampleDataPath);
-            var pitCrewColorReader = new PitCrewColorReader(exeFile);
+            var pitCrewColorReader = PitCrewColorReader.For(GpExeFile.At(exampleDataPath));
 
             var pitCrewColors = pitCrewColorReader.ReadPitCrewColors();
 
@@ -32,8 +31,7 @@ namespace ArgData.Tests
         {
             var expectedPitCrew = DefaultPitCrewColors.GetByIndex(0);
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var exeFile = new GpExeFile(exampleDataPath);
-            var pitCrewColorReader = new PitCrewColorReader(exeFile);
+            var pitCrewColorReader = PitCrewColorReader.For(GpExeFile.At(exampleDataPath));
 
             var pitCrew = pitCrewColorReader.ReadPitCrewColors(0);
 
@@ -58,11 +56,11 @@ namespace ArgData.Tests
 
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
-                var pitCrewColorWriter = new PitCrewColorWriter(context.ExeFile);
+                var pitCrewColorWriter = PitCrewColorWriter.For(context.ExeFile);
 
                 pitCrewColorWriter.WritePitCrewColors(pitCrewList);
 
-                var pitCrewColorReader = new PitCrewColorReader(context.ExeFile).ReadPitCrewColors();
+                var pitCrewColorReader = PitCrewColorReader.For(context.ExeFile).ReadPitCrewColors();
 
                 byte expectedColor = 1;
                 foreach (PitCrew pitCrew in pitCrewColorReader)
@@ -82,7 +80,6 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var pitCrewList = new PitCrewList();
-                var exeFile = new GpExeFile(context.FilePath);
                 var pitCrew = new PitCrew
                 {
                     ShirtPrimary = 1,
@@ -93,12 +90,12 @@ namespace ArgData.Tests
                 };
                 pitCrewList[0] = pitCrew;
 
-                var pitCrewColorWriter = new PitCrewColorWriter(exeFile);
+                var pitCrewColorWriter = PitCrewColorWriter.For(context.ExeFile);
 
                 pitCrewColorWriter.WritePitCrewColors(pitCrewList[0], 0);
 
-                var pitCrewColorReader = new PitCrewColorReader(exeFile).ReadPitCrewColors();
-                var actualPitCrew = pitCrewColorReader[0];
+                var readPitCrewColors = PitCrewColorReader.For(context.ExeFile).ReadPitCrewColors();
+                var actualPitCrew = readPitCrewColors[0];
 
                 actualPitCrew.ShirtPrimary.Should().Be(1);
                 actualPitCrew.ShirtSecondary.Should().Be(2);

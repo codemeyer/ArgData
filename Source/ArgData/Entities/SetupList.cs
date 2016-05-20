@@ -2,6 +2,9 @@ using System.Collections.Generic;
 
 namespace ArgData.Entities
 {
+    /// <summary>
+    /// Represents a list of qualifying and race setups for all tracks.
+    /// </summary>
     public class SetupList
     {
         /// <summary>

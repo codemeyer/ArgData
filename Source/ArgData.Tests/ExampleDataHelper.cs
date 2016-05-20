@@ -22,7 +22,7 @@ namespace ArgData.Tests
         public static ExampleDataContext ExeCopy(GpExeVersionInfo exeVersionInfo)
         {
             string exePath = ExampleDataHelper.CopyOfGpExePath(exeVersionInfo);
-            var exeFile = new GpExeFile(exePath);
+            var exeFile = GpExeFile.At(exePath);
             return new ExampleDataContext(exeFile);
         }
 
@@ -48,17 +48,17 @@ namespace ArgData.Tests
     {
         internal static PlayerHorsepowerReader PlayerHorsepowerReaderForDefault(GpExeVersionInfo exeVersionInfo)
         {
-            return new PlayerHorsepowerReader(new GpExeFile(GpExePath(exeVersionInfo)));
+            return PlayerHorsepowerReader.For(GpExeFile.At(GpExePath(exeVersionInfo)));
         }
 
         internal static DriverNumberReader DriverNumberReaderForDefault(GpExeVersionInfo exeVersionInfo)
         {
-            return new DriverNumberReader(new GpExeFile(GpExePath(exeVersionInfo)));
+            return DriverNumberReader.For(GpExeFile.At(GpExePath(exeVersionInfo)));
         }
 
         internal static GripLevelReader GripLevelReaderForDefault(GpExeVersionInfo exeVersionInfo)
         {
-            return new GripLevelReader(new GpExeFile(GpExePath(exeVersionInfo)));
+            return GripLevelReader.For(GpExeFile.At(GpExePath(exeVersionInfo)));
         }
 
         internal static string GpExePath(GpExeVersionInfo exeVersion)

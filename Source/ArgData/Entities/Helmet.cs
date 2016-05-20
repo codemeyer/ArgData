@@ -22,6 +22,7 @@ namespace ArgData.Entities
         /// <param name="helmetColorBytes">The colors to set. Must be exactly 14 or 16 bytes.</param>
         public Helmet(byte[] helmetColorBytes)
         {
+            // TODO: if-statement does not match error message
             if (helmetColorBytes.Length != GpExeFile.ColorsPerTeam)
             {
                 throw new ArgumentOutOfRangeException(nameof(helmetColorBytes), "Helmet must be created with 14 or 16 colors");
@@ -96,15 +97,16 @@ namespace ArgData.Entities
 
         internal byte[] GetColorsToWriteToFile(int helmetIndex)
         {
-            List<byte> helmetBytes = new List<byte>();
-
-            helmetBytes.Add(Visor);
-            helmetBytes.Add(FixedValueForIndex1);
-            helmetBytes.Add(Stripes[0]);
-            helmetBytes.Add(Stripes[1]);
-            helmetBytes.Add(Stripes[2]);
-            helmetBytes.Add(Stripes[3]);
-            helmetBytes.Add(VisorSurround);
+            var helmetBytes = new List<byte>
+            {
+                Visor,
+                FixedValueForIndex1,
+                Stripes[0],
+                Stripes[1],
+                Stripes[2],
+                Stripes[3],
+                VisorSurround
+            };
 
             if (helmetIndex != 12 && helmetIndex != 14 && helmetIndex < 35)
             {
@@ -120,13 +122,13 @@ namespace ArgData.Entities
             }
             else
             {
-                if (helmetIndex == 14)
-                {
-                    helmetBytes.Add(23);
-                }
-                else if (helmetIndex == 12)
+                if (helmetIndex == 12)
                 {
                     helmetBytes.Add(199);
+                }
+                else if (helmetIndex == 14)
+                {
+                    helmetBytes.Add(23);
                 }
                 else if (helmetIndex == 35)
                 {

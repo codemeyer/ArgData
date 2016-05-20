@@ -3,17 +3,23 @@
 namespace ArgData
 {
     /// <summary>
-    /// Read horsepower values for the player.
+    /// Reads the horsepower value for the player.
     /// </summary>
     public class PlayerHorsepowerReader
     {
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a PlayerHorsepowerReader.
+        /// Creates a PlayerHorsepowerReader for the specified GP.EXE file.
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
-        public PlayerHorsepowerReader(GpExeFile exeFile)
+        /// <returns>PlayerHorsepowerReader.</returns>
+        public static PlayerHorsepowerReader For(GpExeFile exeFile)
+        {
+            return new PlayerHorsepowerReader(exeFile);
+        }
+
+        private PlayerHorsepowerReader(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }
@@ -40,10 +46,16 @@ namespace ArgData
         private readonly GpExeFile _exeFile;
 
         /// <summary>
-        /// Initializes a new instance of a PlayerHorsepowerWriter.
+        /// Creates a PlayerHorsepowerWriter for the specified GP.EXE file.
         /// </summary>
-        /// <param name="exeFile">GpExeFile to write to.</param>
-        public PlayerHorsepowerWriter(GpExeFile exeFile)
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>PlayerHorsepowerWriter.</returns>
+        public static PlayerHorsepowerWriter For(GpExeFile exeFile)
+        {
+            return new PlayerHorsepowerWriter(exeFile);
+        }
+
+        private PlayerHorsepowerWriter(GpExeFile exeFile)
         {
             _exeFile = exeFile;
         }

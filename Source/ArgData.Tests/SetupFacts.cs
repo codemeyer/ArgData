@@ -11,9 +11,8 @@ namespace ArgData.Tests
         public void Read_ReadingSetupFile1_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w40-39_bb0_tyC_ra24-32-39-46-53-61");
-            var setupReader = new SetupReader();
 
-            var setup = setupReader.ReadSingle(path);
+            var setup = SetupReader.ReadSingle(path);
 
             setup.FrontWing.Should().Be(40);
             setup.RearWing.Should().Be(39);
@@ -32,9 +31,8 @@ namespace ArgData.Tests
         public void Read_ReadingSetupFile2_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w0-15_bb32f_tyA_ra17-31-39-46-50-56");
-            var setupReader = new SetupReader();
 
-            var setup = setupReader.ReadSingle(path);
+            var setup = SetupReader.ReadSingle(path);
 
             setup.FrontWing.Should().Be(0);
             setup.RearWing.Should().Be(15);
@@ -53,9 +51,8 @@ namespace ArgData.Tests
         public void Read_ReadingSetupFile3_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w24-8_bb5f_tyB_ra25-34-42-50-57-64");
-            var setupReader = new SetupReader();
 
-            var setup = setupReader.ReadSingle(path);
+            var setup = SetupReader.ReadSingle(path);
 
             setup.FrontWing.Should().Be(24);
             setup.RearWing.Should().Be(8);
@@ -74,9 +71,8 @@ namespace ArgData.Tests
         public void Read_ReadingSetupFile4_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w64-60_bb6r_tyD_ra16-30-38-45-49-55");
-            var setupReader = new SetupReader();
 
-            var setup = setupReader.ReadSingle(path);
+            var setup = SetupReader.ReadSingle(path);
 
             setup.FrontWing.Should().Be(64);
             setup.RearWing.Should().Be(60);
@@ -95,9 +91,8 @@ namespace ArgData.Tests
         public void Read_NotSingleSetupFile_Throws()
         {
             var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE");
-            var setupReader = new SetupReader();
 
-            Action act = () => setupReader.ReadSingle(path);
+            Action act = () => SetupReader.ReadSingle(path);
 
             act.ShouldThrow<Exception>();
         }
@@ -106,9 +101,8 @@ namespace ArgData.Tests
         public void Read_MultipleSetupsNotSeparate_ReturnsFalse()
         {
             var path = ExampleDataHelper.GetExampleDataPath("LOTSETUP");
-            var setupReader = new SetupReader();
 
-            var list = setupReader.ReadMultiple(path);
+            var list = SetupReader.ReadMultiple(path);
 
             list.SeparateSetups.Should().BeFalse();
         }
@@ -117,9 +111,8 @@ namespace ArgData.Tests
         public void Read_MultipleSetupsSeparate_ReturnsTrue()
         {
             var path = ExampleDataHelper.GetExampleDataPath("LOTSETUS");
-            var setupReader = new SetupReader();
 
-            var list = setupReader.ReadMultiple(path);
+            var list = SetupReader.ReadMultiple(path);
 
             list.SeparateSetups.Should().BeTrue();
         }
@@ -128,9 +121,8 @@ namespace ArgData.Tests
         public void Read_MultipleSetups_ReturnsCorrectWingLevels()
         {
             var path = ExampleDataHelper.GetExampleDataPath("LOTSETUP");
-            var setupReader = new SetupReader();
 
-            var list = setupReader.ReadMultiple(path);
+            var list = SetupReader.ReadMultiple(path);
 
             byte index = 1;
 
@@ -153,9 +145,8 @@ namespace ArgData.Tests
         public void Read_NotMultipleSetupFile_Throws()
         {
             var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE");
-            var setupReader = new SetupReader();
 
-            Action act = () => setupReader.ReadMultiple(path);
+            Action act = () => SetupReader.ReadMultiple(path);
 
             act.ShouldThrow<Exception>();
         }
@@ -163,7 +154,6 @@ namespace ArgData.Tests
         [Fact]
         public void WriteSingle_KnownValues_AreStoredCorrectly()
         {
-            var setupWriter = new SetupWriter();
             var setup = new Setup
             {
                 FrontWing = 19,
@@ -181,10 +171,9 @@ namespace ArgData.Tests
 
             using (var context = ExampleDataContext.GetTempFileName(".set"))
             {
-                setupWriter.WriteSingle(setup, context.FilePath);
+                SetupWriter.WriteSingle(setup, context.FilePath);
 
-                var setupReader = new SetupReader();
-                var setupOnDisk = setupReader.ReadSingle(context.FilePath);
+                var setupOnDisk = SetupReader.ReadSingle(context.FilePath);
 
                 setupOnDisk.FrontWing.Should().Be(setup.FrontWing);
                 setupOnDisk.RearWing.Should().Be(setup.RearWing);
@@ -205,16 +194,13 @@ namespace ArgData.Tests
         [InlineData("setup-w0-15_bb32f_tyA_ra17-31-39-46-50-56")]
         public void WriteSingle_KnownSetup_StoredCorrectly(string knownSetupFile)
         {
-            var setupReader = new SetupReader();
-            var setup = setupReader.ReadSingle(ExampleDataHelper.GetExampleDataPath(knownSetupFile));
-
-            var setupWriter = new SetupWriter();
+            var setup = SetupReader.ReadSingle(ExampleDataHelper.GetExampleDataPath(knownSetupFile));
 
             using (var context = ExampleDataContext.GetTempFileName(".set"))
             {
-                setupWriter.WriteSingle(setup, context.FilePath);
+                SetupWriter.WriteSingle(setup, context.FilePath);
 
-                var setupOnDisk = setupReader.ReadSingle(context.FilePath);
+                var setupOnDisk = SetupReader.ReadSingle(context.FilePath);
 
                 setupOnDisk.FrontWing.Should().Be(setup.FrontWing);
                 setupOnDisk.RearWing.Should().Be(setup.RearWing);
@@ -233,15 +219,13 @@ namespace ArgData.Tests
         [Fact]
         public void WriteMultiple()
         {
-            var setupWriter = new SetupWriter();
             var setups = CreateSetupListForTest(true);
 
             using (var context = ExampleDataContext.GetTempFileName(".set"))
             {
-                setupWriter.WriteMultiple(setups, context.FilePath);
+                SetupWriter.WriteMultiple(setups, context.FilePath);
 
-                var setupReader = new SetupReader();
-                var setupsOnDisk = setupReader.ReadMultiple(context.FilePath);
+                var setupsOnDisk = SetupReader.ReadMultiple(context.FilePath);
 
                 setupsOnDisk.SeparateSetups.Should().BeTrue();
 
@@ -286,9 +270,10 @@ namespace ArgData.Tests
 
         private SetupList CreateSetupListForTest(bool separate)
         {
-            var setups = new SetupList();
-
-            setups.SeparateSetups = separate;
+            var setups = new SetupList
+            {
+                SeparateSetups = separate
+            };
 
             byte index = 1;
 

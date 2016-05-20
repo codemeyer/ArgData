@@ -14,8 +14,7 @@ namespace ArgData.Tests
         public void ReadingOriginalCarColorsReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var exeFile = new GpExeFile(exampleDataPath);
-            var carColorReader = new CarColorReader(exeFile);
+            var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
 
             var carColors = carColorReader.ReadCarColors();
 
@@ -32,8 +31,7 @@ namespace ArgData.Tests
         {
             var expectedCar = DefaultCarColors.GetByIndex(0);
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var exeFile = new GpExeFile(exampleDataPath);
-            var carColorReader = new CarColorReader(exeFile);
+            var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
 
             var car = carColorReader.ReadCarColors(0);
 
@@ -66,11 +64,11 @@ namespace ArgData.Tests
                     carList[i] = new Car(new[] {b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b});
                 }
 
-                var carColorWriter = new CarColorWriter(context.ExeFile);
+                var carColorWriter = CarColorWriter.For(context.ExeFile);
 
                 carColorWriter.WriteCarColors(carList);
 
-                var carColorReader = new CarColorReader(context.ExeFile).ReadCarColors();
+                var carColorReader = CarColorReader.For(context.ExeFile).ReadCarColors();
 
                 byte expectedColor = 1;
                 foreach (Car car in carColorReader)
@@ -90,7 +88,6 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
                 var carList = new CarList();
-                var exeFile = new GpExeFile(context.FilePath);
                 var car = new Car
                 {
                     CockpitFront = 1,
@@ -109,11 +106,11 @@ namespace ArgData.Tests
                 };
                 carList[0] = car;
 
-                var carColorWriter = new CarColorWriter(exeFile);
+                var carColorWriter = CarColorWriter.For(context.ExeFile);
 
                 carColorWriter.WriteCarColors(carList[0], 0);
 
-                var carColorReader = new CarColorReader(exeFile).ReadCarColors();
+                var carColorReader = CarColorReader.For(context.ExeFile).ReadCarColors();
                 var actualCar = carColorReader[0];
 
                 actualCar.CockpitFront.Should().Be(1);

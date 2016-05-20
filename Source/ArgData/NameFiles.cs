@@ -9,14 +9,14 @@ namespace ArgData
     /// <summary>
     /// Reads a name file from disk.
     /// </summary>
-    public class NameFileReader
+    public static class NameFileReader
     {
         /// <summary>
         /// Read a name file.
         /// </summary>
         /// <param name="path">Path to file.</param>
         /// <returns>NameFile with teams, engines and driver names.</returns>
-        public NameFile Read(string path)
+        public static NameFile Read(string path)
         {
             ValidateFile(path);
 
@@ -28,7 +28,7 @@ namespace ArgData
             return new NameFile(drivers, teams);
         }
 
-        private void ValidateFile(string path)
+        private static void ValidateFile(string path)
         {
             var fileInfo = new FileInfo(path);
 
@@ -38,7 +38,7 @@ namespace ArgData
             }
         }
 
-        private NameFileDriverList ParseDrivers(byte[] nameData)
+        private static NameFileDriverList ParseDrivers(byte[] nameData)
         {
             var drivers = new NameFileDriverList();
 
@@ -53,7 +53,7 @@ namespace ArgData
             return drivers;
         }
 
-        private NameFileTeamList ParseTeams(byte[] nameData)
+        private static NameFileTeamList ParseTeams(byte[] nameData)
         {
             var teams = new NameFileTeamList();
 
@@ -85,7 +85,7 @@ namespace ArgData
     /// <summary>
     /// Writes a name file to disk.
     /// </summary>
-    public class NameFileWriter
+    public static class NameFileWriter
     {
         /// <summary>
         /// Write name file.
@@ -93,7 +93,7 @@ namespace ArgData
         /// <param name="path"></param>
         /// <param name="drivers">List of drivers, where index indicates driver number.</param>
         /// <param name="teams">List of teams.</param>
-        public void Write(string path, NameFileDriverList drivers, NameFileTeamList teams)
+        public static void Write(string path, NameFileDriverList drivers, NameFileTeamList teams)
         {
             using (FileStream namesFile = File.Create(path))
             {
@@ -107,7 +107,7 @@ namespace ArgData
             ChecksumCalculator.UpdateChecksum(path);
         }
 
-        private void WriteDrivers(FileStream namesFile, NameFileDriverList drivers)
+        private static void WriteDrivers(FileStream namesFile, NameFileDriverList drivers)
         {
             foreach (var driver in drivers)
             {
@@ -117,7 +117,7 @@ namespace ArgData
             }
         }
 
-        private void WriteTeams(FileStream namesFile, NameFileTeamList teams)
+        private static void WriteTeams(FileStream namesFile, NameFileTeamList teams)
         {
             foreach (var team in teams)
             {
@@ -127,7 +127,7 @@ namespace ArgData
             }
         }
 
-        private void WriteEngines(FileStream namesFile, NameFileTeamList teams)
+        private static void WriteEngines(FileStream namesFile, NameFileTeamList teams)
         {
             foreach (var team in teams)
             {

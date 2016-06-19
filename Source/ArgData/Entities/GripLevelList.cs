@@ -29,6 +29,11 @@ namespace ArgData.Entities
         /// <returns>Byte value representing the grip level. Lower value means higher grip.</returns>
         public byte GetByDriverNumber(byte driverNumber)
         {
+            if (driverNumber == 0 || driverNumber > 40)
+            {
+                return 0;
+            }
+
             return _gripLevels[driverNumber - 1];
         }
 
@@ -59,6 +64,10 @@ namespace ArgData.Entities
             return GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns GripLevels as an array.
+        /// </summary>
+        /// <returns></returns>
         public byte[] ToArray()
         {
             return _gripLevels;

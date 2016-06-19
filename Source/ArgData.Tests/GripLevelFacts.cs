@@ -70,6 +70,26 @@ namespace ArgData.Tests
             gripLevels.ShouldBeEquivalentTo(expectedValues);
         }
 
+        [Fact]
+        public void RaceGripLevelForDriver_0_ShouldBe_0()
+        {
+            var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(GpExeVersionInfo.European105);
+
+            var gripLevels = gripLevelReader.ReadRaceGripLevels();
+
+            gripLevels.GetByDriverNumber(0).Should().Be(0);
+        }
+
+        [Fact]
+        public void QualifyingGripLevelForDriver_0_ShouldBe_0()
+        {
+            var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(GpExeVersionInfo.European105);
+
+            var gripLevels = gripLevelReader.ReadQualifyingGripLevels();
+
+            gripLevels.GetByDriverNumber(0).Should().Be(0);
+        }
+
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]

@@ -81,19 +81,7 @@
     <Compile Include="WetWeatherSettingsFacts.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ExampleData\not.gpexe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ExampleData\season_after_r3.gam">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
-    <None Include="ExampleData\names1991.nam">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ExampleData\season_after_r1.gam">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ArgData\ArgData.csproj">

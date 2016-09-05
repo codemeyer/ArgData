@@ -9,7 +9,7 @@ namespace ArgData.Tests
         [Fact]
         public void NotGpExeThrows()
         {
-            string exePath = ExampleDataHelper.GetExampleDataPath("not.gpexe");
+            string exePath = ExampleDataHelper.GetExampleDataPath("not.gpexe", TestDataFileType.Exe);
 
             Action act = () => GpExeFile.At(exePath);
 
@@ -51,7 +51,7 @@ namespace ArgData.Tests
         [Fact]
         public void SomeOtherFileReturnsUnknown()
         {
-            string path = ExampleDataHelper.GetExampleDataPath("not.gpexe");
+            string path = ExampleDataHelper.GetExampleDataPath("not.gpexe", TestDataFileType.Exe);
 
             var exeInfo = GpExeFile.GetFileInfo(path);
 

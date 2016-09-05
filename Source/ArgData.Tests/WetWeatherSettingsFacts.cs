@@ -21,7 +21,7 @@ namespace ArgData.Tests
         [Fact]
         public void ReadWetWeatherSettings_RainAtFirstTrack_ReturnsTrue()
         {
-            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("GPWETPHO.EXE");
+            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("GPWETPHO.EXE", TestDataFileType.Exe);
             var reader = WetWeatherSettingsReader.For(GpExeFile.At(exampleDataPath));
 
             var settings = reader.ReadSettings();
@@ -43,7 +43,7 @@ namespace ArgData.Tests
         [Fact]
         public void ReadWetWeatherSettings_ChanceOfRain10Pct_Returns10()
         {
-            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("GPWET10.EXE");
+            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("GPWET10.EXE", TestDataFileType.Exe);
             var reader = WetWeatherSettingsReader.For(GpExeFile.At(exampleDataPath));
 
             var settings = reader.ReadSettings();

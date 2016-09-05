@@ -15,7 +15,7 @@ namespace ArgData.Tests
 
             public ReadingNameFile()
             {
-                string exampleDataPath = ExampleDataHelper.GetExampleDataPath("names1991.nam");
+                string exampleDataPath = ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names);
 
                 _data = NameFileReader.Read(exampleDataPath);
             }

@@ -12,7 +12,7 @@ namespace ArgData.Tests
 
             public ReadingSavedGameFile()
             {
-                string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_after_r3.gam");
+                string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_after_r3.gam", TestDataFileType.Saves);
 
                 _data = SavedGameFileReader.ReadSavedGame(exampleDataPath);
             }
@@ -64,7 +64,7 @@ namespace ArgData.Tests
 
         public ReadingSavedGameFileWithFewerDriversThanOriginal()
         {
-            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_fewerdrv.gam");
+            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_fewerdrv.gam", TestDataFileType.Saves);
 
             _data = SavedGameFileReader.ReadSavedGame(exampleDataPath);
         }

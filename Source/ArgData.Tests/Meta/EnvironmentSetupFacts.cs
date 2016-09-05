@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using FluentAssertions;
 using Xunit;
 
@@ -7,12 +9,19 @@ namespace ArgData.Tests.Meta
     public class EnvironmentSetupFacts
     {
         [Fact]
-        public void MustHaveEnvironmentVariableSet()
+        public void TestFilesMustExist()
         {
-            string exampleDataPath = Environment.GetEnvironmentVariable("BUILD_ARGDATA_EXAMPLEDATA");
+            string path = ExampleDataHelper.GetExampleDataBaseFolder();
 
-            exampleDataPath.Should()
-                .NotBeNullOrEmpty("the environment variable BUILD_ARGDATA_EXAMPLEDATA must be set for the integration tests to work");
+            Directory.Exists(path).Should().BeTrue("the TestData folder must exist.");
+
+            foreach (var dataFolder in Enum.GetNames(typeof(TestDataFileType)))
+            {
+                string folder = Path.Combine(path, dataFolder);
+
+                Directory.Exists(folder).Should().BeTrue($"the TestData folder {dataFolder} must exist.");
+                Directory.GetFiles(folder).Length.Should().BeGreaterOrEqualTo(1, "the folder should contain some files.");
+            }
         }
     }
 }

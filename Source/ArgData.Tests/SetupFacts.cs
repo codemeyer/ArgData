@@ -10,7 +10,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_ReadingSetupFile1_ReturnsExpectedValues()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("setup-w40-39_bb0_tyC_ra24-32-39-46-53-61");
+            var path = ExampleDataHelper.GetExampleDataPath("setup-w40-39_bb0_tyC_ra24-32-39-46-53-61", TestDataFileType.Setups);
 
             var setup = SetupReader.ReadSingle(path);
 
@@ -29,7 +29,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_ReadingSetupFile2_ReturnsExpectedValues()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("setup-w0-15_bb32f_tyA_ra17-31-39-46-50-56");
+            var path = ExampleDataHelper.GetExampleDataPath("setup-w0-15_bb32f_tyA_ra17-31-39-46-50-56", TestDataFileType.Setups);
 
             var setup = SetupReader.ReadSingle(path);
 
@@ -48,7 +48,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_ReadingSetupFile3_ReturnsExpectedValues()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("setup-w24-8_bb5f_tyB_ra25-34-42-50-57-64");
+            var path = ExampleDataHelper.GetExampleDataPath("setup-w24-8_bb5f_tyB_ra25-34-42-50-57-64", TestDataFileType.Setups);
 
             var setup = SetupReader.ReadSingle(path);
 
@@ -67,7 +67,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_ReadingSetupFile4_ReturnsExpectedValues()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("setup-w64-60_bb6r_tyD_ra16-30-38-45-49-55");
+            var path = ExampleDataHelper.GetExampleDataPath("setup-w64-60_bb6r_tyD_ra16-30-38-45-49-55", TestDataFileType.Setups);
 
             var setup = SetupReader.ReadSingle(path);
 
@@ -86,7 +86,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_NotSingleSetupFile_Throws()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE");
+            var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE", TestDataFileType.Exe);
 
             Action act = () => SetupReader.ReadSingle(path);
 
@@ -96,7 +96,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_MultipleSetupsNotSeparate_ReturnsFalse()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("LOTSETUP");
+            var path = ExampleDataHelper.GetExampleDataPath("LOTSETUP", TestDataFileType.Setups);
 
             var list = SetupReader.ReadMultiple(path);
 
@@ -106,7 +106,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_MultipleSetupsSeparate_ReturnsTrue()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("LOTSETUS");
+            var path = ExampleDataHelper.GetExampleDataPath("LOTSETUS", TestDataFileType.Setups);
 
             var list = SetupReader.ReadMultiple(path);
 
@@ -116,7 +116,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_MultipleSetups_ReturnsCorrectWingLevels()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("LOTSETUP");
+            var path = ExampleDataHelper.GetExampleDataPath("LOTSETUP", TestDataFileType.Setups);
 
             var list = SetupReader.ReadMultiple(path);
 
@@ -140,7 +140,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_NotMultipleSetupFile_Throws()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE");
+            var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE", TestDataFileType.Exe);
 
             Action act = () => SetupReader.ReadMultiple(path);
 
@@ -188,7 +188,7 @@ namespace ArgData.Tests
         [InlineData("setup-w0-15_bb32f_tyA_ra17-31-39-46-50-56")]
         public void WriteSingle_KnownSetup_StoredCorrectly(string knownSetupFile)
         {
-            var setup = SetupReader.ReadSingle(ExampleDataHelper.GetExampleDataPath(knownSetupFile));
+            var setup = SetupReader.ReadSingle(ExampleDataHelper.GetExampleDataPath(knownSetupFile, TestDataFileType.Setups));
 
             using (var context = ExampleDataContext.GetTempFileName(".set"))
             {

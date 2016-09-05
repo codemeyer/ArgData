@@ -1,6 +1,7 @@
-# ExampleData
-GP-ORIG.EXE
+# ArgData TestData
 
+TestData/*
+!TestData/Download.ps1
 
 #################
 ## Visual Studio
@@ -67,7 +68,9 @@ _TeamCity*
 *.dotCover
 
 # NCrunch
-*.ncrunch*
+_NCrunch_*
+.*crunch*.local.xml
+nCrunchTemp_*
 .*crunch*.local.xml
 
 # Installshield output folder

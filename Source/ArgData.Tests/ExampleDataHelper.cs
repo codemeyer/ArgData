@@ -63,17 +63,17 @@ namespace ArgData.Tests
 
         internal static string GpExePath(GpExeVersionInfo exeVersion)
         {
-            return GetExampleDataPath(FileNameFor(exeVersion));
+            return GetExampleDataPath(FileNameFor(exeVersion), TestDataFileType.Exe);
         }
 
         internal static string CopyOfGpExePath(GpExeVersionInfo exeVersion)
         {
-            return GetCopyOfExampleData(FileNameFor(exeVersion));
+            return GetCopyOfExampleData(FileNameFor(exeVersion), TestDataFileType.Exe);
         }
 
         internal static string CopyOfPrefsPath()
         {
-            return GetCopyOfExampleData("f1prefs-src.dat");
+            return GetCopyOfExampleData("f1prefs-src.dat", TestDataFileType.Prefs);
         }
 
         private static string FileNameFor(GpExeVersionInfo exeVersionInfo)
@@ -89,20 +89,26 @@ namespace ArgData.Tests
             }
         }
 
-        internal static string GetExampleDataPath(string fileName)
+        private static string GetCopyOfExampleData(string fileName, TestDataFileType dataFileType)
         {
-            string exampleDataEnvironment = Environment.GetEnvironmentVariable("BUILD_ARGDATA_EXAMPLEDATA");
-
-            return Path.Combine(exampleDataEnvironment ?? string.Empty, fileName);
-        }
-
-        private static string GetCopyOfExampleData(string fileName)
-        {
-            string originalLocation = GetExampleDataPath(fileName);
+            string originalLocation = GetExampleDataPath(fileName, dataFileType);
             string tempFile = GetTempFileName(fileName);
             File.Copy(originalLocation, tempFile);
 
             return tempFile;
+        }
+
+        internal static string GetExampleDataPath(string fileName, TestDataFileType dataFileType)
+        {
+            return Path.Combine(GetExampleDataBaseFolder() + dataFileType, fileName);
+        }
+
+        internal static string GetExampleDataBaseFolder()
+        {
+            string fullPath = System.Reflection.Assembly.GetAssembly(typeof(ExampleDataHelper)).Location;
+            string directory = Path.GetDirectoryName(fullPath);
+
+            return Path.Combine(directory, @"..\..\..\..\TestData\");
         }
 
         private static string GetTempFileName(string extFileName)
@@ -120,5 +126,15 @@ namespace ArgData.Tests
                 return bytes;
             }
         }
+    }
+
+    internal enum TestDataFileType
+    {
+        Exe,
+        Names,
+        Prefs,
+        Saves,
+        Tracks,
+        Setups
     }
 }

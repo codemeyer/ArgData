@@ -10,7 +10,7 @@ namespace ArgData.Tests
         [Fact]
         public void ReturnExpectedChecksumsForNameFile()
         {
-            string path = ExampleDataHelper.GetExampleDataPath("names1991.nam");
+            string path = ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names);
             byte[] allBytes = GetBytesToCalculateChecksumFor(path);
 
             var calc = new ChecksumCalculator();
@@ -24,7 +24,7 @@ namespace ArgData.Tests
         [Fact]
         public void ReturnExpectedChecksumsForTrackFile()
         {
-            string path = ExampleDataHelper.GetExampleDataPath("F1CT01.DAT");
+            string path = ExampleDataHelper.GetExampleDataPath("F1CT01.DAT", TestDataFileType.Tracks);
             byte[] allBytes = GetBytesToCalculateChecksumFor(path);
             var calc = new ChecksumCalculator();
 

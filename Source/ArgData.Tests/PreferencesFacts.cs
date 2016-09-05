@@ -10,7 +10,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_WithAutoloadNames_ReturnsPathToNameFile()
         {
-            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("f1prefs-1.dat");
+            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("f1prefs-1.dat", TestDataFileType.Prefs);
             var preferencesReader = PreferencesReader.For(PreferencesFile.At(exampleDataPath));
 
             string nameFile = preferencesReader.GetAutoLoadedNameFile();
@@ -21,7 +21,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_WithoutAutoLoadedNames_ReturnsNull()
         {
-            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("f1prefs-2.dat");
+            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("f1prefs-2.dat", TestDataFileType.Prefs);
             var preferencesReader = PreferencesReader.For(PreferencesFile.At(exampleDataPath));
 
             string nameFile = preferencesReader.GetAutoLoadedNameFile();
@@ -32,7 +32,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_NotPreferencesFile_ThrowsException()
         {
-            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE");
+            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE", TestDataFileType.Exe);
 
             Action act = () => PreferencesReader.For(PreferencesFile.At(exampleDataPath));
 

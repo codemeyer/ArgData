@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using ArgData.Entities;
 using ArgData.IO;
 
@@ -77,15 +78,18 @@ namespace ArgData
         {
             int helmetIndex = 0;
 
+            var allHelmetBytes = new List<byte>();
+
             foreach (Helmet helmet in helmetList)
             {
                 byte[] helmetBytes = helmet.GetColorsToWriteToFile(helmetIndex);
-                int position = _exeFile.GetHelmetColorsPosition(helmetIndex);
 
-                new FileWriter(_exeFile.ExePath).WriteBytes(helmetBytes, position);
+                allHelmetBytes.AddRange(helmetBytes);
 
                 helmetIndex++;
             }
+
+            new FileWriter(_exeFile.ExePath).WriteBytes(allHelmetBytes.ToArray(), _exeFile.GetHelmetColorsPosition(0));
         }
     }
 }

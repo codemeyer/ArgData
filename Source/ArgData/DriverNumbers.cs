@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ArgData.Entities;
 using ArgData.IO;
@@ -71,13 +72,15 @@ namespace ArgData
         {
             CheckDriverNumbers(driverNumbers);
 
-            var fileWriter = new FileWriter(_exeFile.ExePath);
+            var allDriverNumberBytes = new List<byte>();
 
             for (byte b = 0; b < Constants.NumberOfDrivers; b++)
             {
-                int position = _exeFile.GetDriverNumbersPosition(b);
-                fileWriter.WriteByte(driverNumbers[b], position);
+                allDriverNumberBytes.Add(driverNumbers[b]);
             }
+
+            var fileWriter = new FileWriter(_exeFile.ExePath);
+            fileWriter.WriteBytes(allDriverNumberBytes.ToArray(), _exeFile.GetDriverNumbersPosition(0));
         }
 
         private void CheckDriverNumbers(DriverNumberList driverNumbers)

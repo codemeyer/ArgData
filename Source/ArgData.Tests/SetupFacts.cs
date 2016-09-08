@@ -22,9 +22,8 @@ namespace ArgData.Tests
             setup.GearRatio4.Should().Be(46);
             setup.GearRatio5.Should().Be(53);
             setup.GearRatio6.Should().Be(61);
-            setup.TyresCompound.Should().Be(SetupTyreCompound.C);
-            setup.BrakeBalanceValue.Should().Be(0);
-            setup.BrakeBalanceDirection.Should().Be(SetupBrakeBalanceDirection.Front);
+            setup.TyreCompound.Should().Be(SetupTyreCompound.C);
+            setup.BrakeBalance.Should().Be(0);
         }
 
         [Fact]
@@ -42,9 +41,8 @@ namespace ArgData.Tests
             setup.GearRatio4.Should().Be(46);
             setup.GearRatio5.Should().Be(50);
             setup.GearRatio6.Should().Be(56);
-            setup.TyresCompound.Should().Be(SetupTyreCompound.A);
-            setup.BrakeBalanceValue.Should().Be(32);
-            setup.BrakeBalanceDirection.Should().Be(SetupBrakeBalanceDirection.Front);
+            setup.TyreCompound.Should().Be(SetupTyreCompound.A);
+            setup.BrakeBalance.Should().Be(32);
         }
 
         [Fact]
@@ -62,9 +60,8 @@ namespace ArgData.Tests
             setup.GearRatio4.Should().Be(50);
             setup.GearRatio5.Should().Be(57);
             setup.GearRatio6.Should().Be(64);
-            setup.TyresCompound.Should().Be(SetupTyreCompound.B);
-            setup.BrakeBalanceValue.Should().Be(5);
-            setup.BrakeBalanceDirection.Should().Be(SetupBrakeBalanceDirection.Front);
+            setup.TyreCompound.Should().Be(SetupTyreCompound.B);
+            setup.BrakeBalance.Should().Be(5);
         }
 
         [Fact]
@@ -82,9 +79,8 @@ namespace ArgData.Tests
             setup.GearRatio4.Should().Be(45);
             setup.GearRatio5.Should().Be(49);
             setup.GearRatio6.Should().Be(55);
-            setup.TyresCompound.Should().Be(SetupTyreCompound.D);
-            setup.BrakeBalanceValue.Should().Be(6);
-            setup.BrakeBalanceDirection.Should().Be(SetupBrakeBalanceDirection.Rear);
+            setup.TyreCompound.Should().Be(SetupTyreCompound.D);
+            setup.BrakeBalance.Should().Be(-6);
         }
 
         [Fact]
@@ -158,15 +154,14 @@ namespace ArgData.Tests
             {
                 FrontWing = 19,
                 RearWing = 60,
-                BrakeBalanceValue = 5,
-                BrakeBalanceDirection = SetupBrakeBalanceDirection.Rear,
+                BrakeBalance = -5,
                 GearRatio1 = 25,
                 GearRatio2 = 28,
                 GearRatio3 = 33,
                 GearRatio4 = 38,
                 GearRatio5 = 40,
                 GearRatio6 = 46,
-                TyresCompound = SetupTyreCompound.D
+                TyreCompound = SetupTyreCompound.D
             };
 
             using (var context = ExampleDataContext.GetTempFileName(".set"))
@@ -183,9 +178,8 @@ namespace ArgData.Tests
                 setupOnDisk.GearRatio4.Should().Be(setup.GearRatio4);
                 setupOnDisk.GearRatio5.Should().Be(setup.GearRatio5);
                 setupOnDisk.GearRatio6.Should().Be(setup.GearRatio6);
-                setupOnDisk.TyresCompound.Should().Be(setup.TyresCompound);
-                setupOnDisk.BrakeBalanceValue.Should().Be(setup.BrakeBalanceValue);
-                setupOnDisk.BrakeBalanceDirection.Should().Be(setup.BrakeBalanceDirection);
+                setupOnDisk.TyreCompound.Should().Be(setup.TyreCompound);
+                setupOnDisk.BrakeBalance.Should().Be(setup.BrakeBalance);
             }
         }
 
@@ -210,9 +204,8 @@ namespace ArgData.Tests
                 setupOnDisk.GearRatio4.Should().Be(setup.GearRatio4);
                 setupOnDisk.GearRatio5.Should().Be(setup.GearRatio5);
                 setupOnDisk.GearRatio6.Should().Be(setup.GearRatio6);
-                setupOnDisk.TyresCompound.Should().Be(setup.TyresCompound);
-                setupOnDisk.BrakeBalanceValue.Should().Be(setup.BrakeBalanceValue);
-                setupOnDisk.BrakeBalanceDirection.Should().Be(setup.BrakeBalanceDirection);
+                setupOnDisk.TyreCompound.Should().Be(setup.TyreCompound);
+                setupOnDisk.BrakeBalance.Should().Be(setup.BrakeBalance);
             }
         }
 
@@ -242,9 +235,8 @@ namespace ArgData.Tests
                     setup.GearRatio4.Should().Be(33);
                     setup.GearRatio5.Should().Be(34);
                     setup.GearRatio6.Should().Be(45);
-                    setup.TyresCompound.Should().Be(SetupTyreCompound.B);
-                    setup.BrakeBalanceValue.Should().Be(10);
-                    setup.BrakeBalanceDirection.Should().Be(SetupBrakeBalanceDirection.Front);
+                    setup.TyreCompound.Should().Be(SetupTyreCompound.B);
+                    setup.BrakeBalance.Should().Be(10);
                     index++;
                 }
 
@@ -259,9 +251,8 @@ namespace ArgData.Tests
                     setup.GearRatio4.Should().Be(33);
                     setup.GearRatio5.Should().Be(34);
                     setup.GearRatio6.Should().Be(45);
-                    setup.TyresCompound.Should().Be(SetupTyreCompound.C);
-                    setup.BrakeBalanceValue.Should().Be(25);
-                    setup.BrakeBalanceDirection.Should().Be(SetupBrakeBalanceDirection.Rear);
+                    setup.TyreCompound.Should().Be(SetupTyreCompound.C);
+                    setup.BrakeBalance.Should().Be(-25);
 
                     index++;
                 }
@@ -288,9 +279,8 @@ namespace ArgData.Tests
                 setup.GearRatio4 = 33;
                 setup.GearRatio5 = 34;
                 setup.GearRatio6 = 45;
-                setup.TyresCompound = SetupTyreCompound.B;
-                setup.BrakeBalanceValue = 10;
-                setup.BrakeBalanceDirection = SetupBrakeBalanceDirection.Front;
+                setup.TyreCompound = SetupTyreCompound.B;
+                setup.BrakeBalance = 10;
 
                 index++;
             }
@@ -306,9 +296,8 @@ namespace ArgData.Tests
                 setup.GearRatio4 = 33;
                 setup.GearRatio5 = 34;
                 setup.GearRatio6 = 45;
-                setup.TyresCompound = SetupTyreCompound.C;
-                setup.BrakeBalanceValue = 25;
-                setup.BrakeBalanceDirection = SetupBrakeBalanceDirection.Rear;
+                setup.TyreCompound = SetupTyreCompound.C;
+                setup.BrakeBalance = -25;
 
                 index++;
             }

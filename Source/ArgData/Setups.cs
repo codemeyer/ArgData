@@ -71,9 +71,8 @@ namespace ArgData
                 GearRatio4 = setupBytes[5],
                 GearRatio5 = setupBytes[6],
                 GearRatio6 = setupBytes[7],
-                TyresCompound = GetTyreCompound(setupBytes[8]),
-                BrakeBalanceValue = GetBrakeBalanceValue(setupBytes[9]),
-                BrakeBalanceDirection = GetBrakeBalanceDirection(setupBytes[9])
+                TyreCompound = GetTyreCompound(setupBytes[8]),
+                BrakeBalance = GetBrakeBalanceValue(setupBytes[9])
             };
         }
 
@@ -97,18 +96,9 @@ namespace ArgData
             }
         }
 
-        private static byte GetBrakeBalanceValue(byte value)
+        private static sbyte GetBrakeBalanceValue(byte value)
         {
-            return (value < 128)
-                ? value
-                : Convert.ToByte(256 - value);
-        }
-
-        private static SetupBrakeBalanceDirection GetBrakeBalanceDirection(byte value)
-        {
-            return (value < 128)
-                ? SetupBrakeBalanceDirection.Front
-                : SetupBrakeBalanceDirection.Rear;
+            return unchecked((sbyte)value);
         }
 
         private static SetupTyreCompound GetTyreCompound(byte value)
@@ -140,8 +130,8 @@ namespace ArgData
             setupBytes[5] = setup.GearRatio4;
             setupBytes[6] = setup.GearRatio5;
             setupBytes[7] = setup.GearRatio6;
-            setupBytes[8] = GetTyreCompound(setup.TyresCompound);
-            setupBytes[9] = GetBrakeBalance(setup.BrakeBalanceValue, setup.BrakeBalanceDirection);
+            setupBytes[8] = GetTyreCompound(setup.TyreCompound);
+            setupBytes[9] = GetBrakeBalance(setup.BrakeBalance);
 
             new FileWriter(path).CreateFile().WriteBytes(setupBytes, 0);
 
@@ -176,8 +166,8 @@ namespace ArgData
                 setupBytes[offset + 5] = setup.GearRatio4;
                 setupBytes[offset + 6] = setup.GearRatio5;
                 setupBytes[offset + 7] = setup.GearRatio6;
-                setupBytes[offset + 8] = GetTyreCompound(setup.TyresCompound);
-                setupBytes[offset + 9] = GetBrakeBalance(setup.BrakeBalanceValue, setup.BrakeBalanceDirection);
+                setupBytes[offset + 8] = GetTyreCompound(setup.TyreCompound);
+                setupBytes[offset + 9] = GetBrakeBalance(setup.BrakeBalance);
 
                 offset += 10;
             }
@@ -193,8 +183,8 @@ namespace ArgData
                 setupBytes[offset + 5] = setup.GearRatio4;
                 setupBytes[offset + 6] = setup.GearRatio5;
                 setupBytes[offset + 7] = setup.GearRatio6;
-                setupBytes[offset + 8] = GetTyreCompound(setup.TyresCompound);
-                setupBytes[offset + 9] = GetBrakeBalance(setup.BrakeBalanceValue, setup.BrakeBalanceDirection);
+                setupBytes[offset + 8] = GetTyreCompound(setup.TyreCompound);
+                setupBytes[offset + 9] = GetBrakeBalance(setup.BrakeBalance);
 
                 offset += 10;
             }
@@ -209,15 +199,9 @@ namespace ArgData
             return (byte)tyresCompound;
         }
 
-        private static byte GetBrakeBalance(byte value, SetupBrakeBalanceDirection direction)
+        private static byte GetBrakeBalance(sbyte value)
         {
-            if (value == 0)
-                return 0;
-
-            if (direction == SetupBrakeBalanceDirection.Front)
-                return value;
-            else
-                return Convert.ToByte(256 - value);
+            return (byte)value;
         }
     }
 }

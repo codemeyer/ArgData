@@ -41,7 +41,7 @@ namespace ArgData.Tests.Entities
         {
             var setup = new Setup
             {
-                BrakeBalanceValue = 33
+                BrakeBalance = 33
             };
 
             setup.IsValid.Should().BeFalse();

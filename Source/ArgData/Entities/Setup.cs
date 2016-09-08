@@ -48,17 +48,12 @@
         /// <summary>
         /// Gets or sets the tyre compound.
         /// </summary>
-        public SetupTyreCompound TyresCompound { get; set; } = SetupTyreCompound.C;
+        public SetupTyreCompound TyreCompound { get; set; } = SetupTyreCompound.C;
 
         /// <summary>
-        /// Gets or sets the brake balance value. Allowed values between 0 and 32.
+        /// Gets or sets the brake balance value. Allowed values between -32 (Rear) and 32 (Front).
         /// </summary>
-        public byte BrakeBalanceValue { get; set; }
-
-        /// <summary>
-        /// Gets or sets the brake balance direction, front or rear. If the brake balance is set to 0, direction does not matter.
-        /// </summary>
-        public SetupBrakeBalanceDirection BrakeBalanceDirection { get; set; }
+        public sbyte BrakeBalance { get; set; }
 
         /// <summary>
         /// Whether the values currently entered in the setup are within allowed ranges.
@@ -73,7 +68,10 @@
                 if (RearWing > 64)
                     return false;
 
-                if (BrakeBalanceValue > 32)
+                if (BrakeBalance > 32)
+                    return false;
+
+                if (BrakeBalance < -32)
                     return false;
 
                 if (GearRatio1 < 16)
@@ -110,37 +108,21 @@
         /// <summary>
         /// Tyre compound A, the hardest tyre.
         /// </summary>
-        A,
+        A = 0,
 
         /// <summary>
         /// Tyre compound B.
         /// </summary>
-        B,
+        B = 1,
 
         /// <summary>
         /// Tyre compound C.
         /// </summary>
-        C,
+        C = 2,
 
         /// <summary>
         /// Tyre compound D, the softest tyre (except qualifying tyres).
         /// </summary>
-        D
-    }
-
-    /// <summary>
-    /// Brake balance direction, Front or Rear.
-    /// </summary>
-    public enum SetupBrakeBalanceDirection
-    {
-        /// <summary>
-        /// Front brake balance.
-        /// </summary>
-        Front,
-
-        /// <summary>
-        /// Rear brake balance.
-        /// </summary>
-        Rear
+        D = 3
     }
 }

@@ -105,8 +105,7 @@ namespace ArgData.Tests
 
         internal static string GetExampleDataBaseFolder()
         {
-            string fullPath = System.Reflection.Assembly.GetAssembly(typeof(ExampleDataHelper)).Location;
-            string directory = Path.GetDirectoryName(fullPath);
+            string directory = AppDomain.CurrentDomain.BaseDirectory;
 
             return Path.Combine(directory, @"..\..\..\..\TestData\");
         }

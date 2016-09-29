@@ -186,6 +186,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData("setup-w24-8_bb5f_tyB_ra25-34-42-50-57-64")]
         [InlineData("setup-w0-15_bb32f_tyA_ra17-31-39-46-50-56")]
+        [InlineData("setup-w64-60_bb6r_tyD_ra16-30-38-45-49-55")]
         public void WriteSingle_KnownSetup_StoredCorrectly(string knownSetupFile)
         {
             var setup = SetupReader.ReadSingle(ExampleDataHelper.GetExampleDataPath(knownSetupFile, TestDataFileType.Setups));

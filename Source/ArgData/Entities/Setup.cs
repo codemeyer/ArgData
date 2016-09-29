@@ -16,32 +16,32 @@
         public byte RearWing { get; set; } = 40;
 
         /// <summary>
-        /// Gets or sets the ratio of the first gear. Must be 16 or higher, and lower than GearRatio2.
+        /// Gets or sets the ratio of the first gear. Must be 16 or greater, and less than GearRatio2.
         /// </summary>
         public byte GearRatio1 { get; set; } = 24;
 
         /// <summary>
-        /// Gets or sets the ratio of the second gear. Must be higher than GearRatio1 and lower than GearRatio3.
+        /// Gets or sets the ratio of the second gear. Must be greater than GearRatio1 and less than GearRatio3.
         /// </summary>
         public byte GearRatio2 { get; set; } = 32;
 
         /// <summary>
-        /// Gets or sets the ratio of the third gear. Must be higher than GearRatio2 and lower than GearRatio4.
+        /// Gets or sets the ratio of the third gear. Must be greater than GearRatio2 and less than GearRatio4.
         /// </summary>
         public byte GearRatio3 { get; set; } = 39;
 
         /// <summary>
-        /// Gets or sets the ratio of the fourth gear. Must be higher than GearRatio3 and lower than GearRatio5.
+        /// Gets or sets the ratio of the fourth gear. Must be greater than GearRatio3 and less than GearRatio5.
         /// </summary>
         public byte GearRatio4 { get; set; } = 46;
 
         /// <summary>
-        /// Gets or sets the ratio of the fifth gear. Must be higher than GearRatio4 and lower than GearRatio6.
+        /// Gets or sets the ratio of the fifth gear. Must be greater than GearRatio4 and less than GearRatio6.
         /// </summary>
         public byte GearRatio5 { get; set; } = 53;
 
         /// <summary>
-        /// Gets or sets the ratio of the sixth gear. Must be higher than GearRatio5 and lower than, or equal to, 80.
+        /// Gets or sets the ratio of the sixth gear. Must be greater than GearRatio5 and less than or equal to 80.
         /// </summary>
         public byte GearRatio6 { get; set; } = 61;
 

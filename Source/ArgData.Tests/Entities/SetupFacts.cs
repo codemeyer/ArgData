@@ -15,7 +15,7 @@ namespace ArgData.Tests.Entities
         }
 
         [Fact]
-        public void IsValid_WhenFrontWingHigherThan64_ReturnsFalse()
+        public void IsValid_WhenFrontWingGreaterThan64_ReturnsFalse()
         {
             var setup = new Setup
             {
@@ -26,7 +26,7 @@ namespace ArgData.Tests.Entities
         }
 
         [Fact]
-        public void IsValid_WhenRearWingHigherThan64_ReturnsFalse()
+        public void IsValid_WhenRearWingGreaterThan64_ReturnsFalse()
         {
             var setup = new Setup
             {
@@ -37,7 +37,7 @@ namespace ArgData.Tests.Entities
         }
 
         [Fact]
-        public void IsValid_WhenBrakeBalanceHigherThan32_ReturnsFalse()
+        public void IsValid_WhenBrakeBalanceGreaterThan32_ReturnsFalse()
         {
             var setup = new Setup
             {
@@ -48,7 +48,18 @@ namespace ArgData.Tests.Entities
         }
 
         [Fact]
-        public void IsValid_WhenGearRatio1LowerThan16_ReturnsFalse()
+        public void IsValid_WhenBrakeBalanceLessThanMinus32_ReturnsFalse()
+        {
+            var setup = new Setup
+            {
+                BrakeBalance = -33
+            };
+
+            setup.IsValid.Should().BeFalse();
+        }
+
+        [Fact]
+        public void IsValid_WhenGearRatio1LessThan16_ReturnsFalse()
         {
             var setup = new Setup
             {
@@ -59,7 +70,7 @@ namespace ArgData.Tests.Entities
         }
 
         [Fact]
-        public void IsValid_WhenGearRatio1IsHigherThanGearRatio2_ReturnsFalse()
+        public void IsValid_WhenGearRatio1IsGreaterThanGearRatio2_ReturnsFalse()
         {
             var setup = new Setup
             {
@@ -71,7 +82,7 @@ namespace ArgData.Tests.Entities
         }
 
         [Fact]
-        public void IsValid_WhenGearRatio2IsHigherThanGearRatio3_ReturnsFalse()
+        public void IsValid_WhenGearRatio2IsGreaterThanGearRatio3_ReturnsFalse()
         {
             var setup = new Setup
             {
@@ -83,7 +94,7 @@ namespace ArgData.Tests.Entities
         }
 
         [Fact]
-        public void IsValid_WhenGearRatio3IsHigherThanGearRatio4_ReturnsFalse()
+        public void IsValid_WhenGearRatio3IsGreaterThanGearRatio4_ReturnsFalse()
         {
             var setup = new Setup
             {
@@ -95,7 +106,7 @@ namespace ArgData.Tests.Entities
         }
 
         [Fact]
-        public void IsValid_WhenGearRatio4IsHigherThanGearRatio5_ReturnsFalse()
+        public void IsValid_WhenGearRatio4IsGreaterThanGearRatio5_ReturnsFalse()
         {
             var setup = new Setup
             {
@@ -107,7 +118,7 @@ namespace ArgData.Tests.Entities
         }
 
         [Fact]
-        public void IsValid_WhenGearRatio5IsHigherThanGearRatio6_ReturnsFalse()
+        public void IsValid_WhenGearRatio5IsGreaterThanGearRatio6_ReturnsFalse()
         {
             var setup = new Setup
             {
@@ -119,7 +130,7 @@ namespace ArgData.Tests.Entities
         }
 
         [Fact]
-        public void IsValid_WhenGearRatio6IsHigherThan80_ReturnsFalse()
+        public void IsValid_WhenGearRatio6IsGreaterThan80_ReturnsFalse()
         {
             var setup = new Setup
             {

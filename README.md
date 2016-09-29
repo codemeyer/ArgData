@@ -24,5 +24,4 @@ This simple piece of software stands on the shoulders of giants. Huge gratitude 
 
 * Steve Smith - for the amazing F1Ed
 * Trevor Kellaway - for an endless number of F1GP utilities, including GPEditor
-* Steven Young - for GP2edit and GP3edit, inspiring the driver performance calculation
 * Paul Hoad - for the C++ code for calculating F1GP file checksums he sent me in 1998

@@ -194,9 +194,9 @@ namespace ArgData
             ChecksumCalculator.UpdateChecksum(path);
         }
 
-        private static byte GetTyreCompound(SetupTyreCompound tyresCompound)
+        private static byte GetTyreCompound(SetupTyreCompound tyreCompound)
         {
-            return (byte)tyresCompound;
+            return (byte)tyreCompound;
         }
 
         private static byte GetBrakeBalance(sbyte value)

@@ -35,7 +35,7 @@ namespace ArgData
         public Car ReadCarColors(int teamIndex)
         {
             if (teamIndex < 0 || teamIndex > Constants.NumberOfSupportedTeams - 1)
-                throw new IndexOutOfRangeException($"{nameof(teamIndex)} must be between 0 and 17");
+                throw new ArgumentOutOfRangeException(nameof(teamIndex), $"{nameof(teamIndex)} must be between 0 and 17");
 
             int position = _exeFile.GetCarColorsPosition(teamIndex);
 
@@ -103,7 +103,7 @@ namespace ArgData
         public void WriteCarColors(Car car, int teamIndex)
         {
             if (teamIndex < 0 || teamIndex > Constants.NumberOfSupportedTeams - 1)
-                throw new IndexOutOfRangeException($"{nameof(teamIndex)} must be between 0 and 17");
+                throw new ArgumentOutOfRangeException(nameof(teamIndex), $"{nameof(teamIndex)} must be between 0 and 17");
 
             byte[] carBytes = car.GetColorsToWriteToFile();
             int position = _exeFile.GetCarColorsPosition(teamIndex);

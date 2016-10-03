@@ -141,7 +141,7 @@ namespace ArgData.Tests
 
             Action action = () => carColorReader.ReadCarColors(-1);
 
-            action.ShouldThrow<IndexOutOfRangeException>();
+            action.ShouldThrow<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -154,7 +154,7 @@ namespace ArgData.Tests
 
             Action action = () => carColorReader.ReadCarColors(18);
 
-            action.ShouldThrow<IndexOutOfRangeException>();
+            action.ShouldThrow<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -168,7 +168,7 @@ namespace ArgData.Tests
 
                 Action action = () => carColorWriter.WriteCarColors(new Car(), -1);
 
-                action.ShouldThrow<IndexOutOfRangeException>();
+                action.ShouldThrow<ArgumentOutOfRangeException>();
             }
         }
 
@@ -183,7 +183,7 @@ namespace ArgData.Tests
 
                 Action action = () => carColorWriter.WriteCarColors(new Car(), 18);
 
-                action.ShouldThrow<IndexOutOfRangeException>();
+                action.ShouldThrow<ArgumentOutOfRangeException>();
             }
         }
 

@@ -128,5 +128,65 @@ namespace ArgData.Tests
                 actualCar.SidepodTop.Should().Be(13);
             }
         }
+
+        // TODO: test that teamIndex outside 0-17 throws IndexOutOfRange
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadIndexLessThan_0_Throws(GpExeVersionInfo exeVersionInfo)
+        {
+            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
+            var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
+
+            Action action = () => carColorReader.ReadCarColors(-1);
+
+            action.ShouldThrow<IndexOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadIndexGreaterThan_17_Throws(GpExeVersionInfo exeVersionInfo)
+        {
+            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
+            var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
+
+            Action action = () => carColorReader.ReadCarColors(18);
+
+            action.ShouldThrow<IndexOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteIndexLessThan_0_Throws(GpExeVersionInfo exeVersionInfo)
+        {
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
+            {
+                var carColorWriter = CarColorWriter.For(context.ExeFile);
+
+                Action action = () => carColorWriter.WriteCarColors(new Car(), -1);
+
+                action.ShouldThrow<IndexOutOfRangeException>();
+            }
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteIndexGreaterThan_17_Throws(GpExeVersionInfo exeVersionInfo)
+        {
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
+            {
+                var carColorWriter = CarColorWriter.For(context.ExeFile);
+
+                Action action = () => carColorWriter.WriteCarColors(new Car(), 18);
+
+                action.ShouldThrow<IndexOutOfRangeException>();
+            }
+        }
+
+
     }
 }

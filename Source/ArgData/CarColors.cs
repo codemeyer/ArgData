@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ArgData.Entities;
 using ArgData.IO;
 
@@ -33,6 +34,9 @@ namespace ArgData
         /// <returns>Car object with the colors of the team.</returns>
         public Car ReadCarColors(int teamIndex)
         {
+            if (teamIndex < 0 || teamIndex > Constants.NumberOfSupportedTeams - 1)
+                throw new IndexOutOfRangeException($"{nameof(teamIndex)} must be between 0 and 17");
+
             int position = _exeFile.GetCarColorsPosition(teamIndex);
 
             byte[] colors = new FileReader(_exeFile.ExePath).ReadBytes(position, GpExeFile.ColorsPerTeam);
@@ -98,6 +102,9 @@ namespace ArgData
         /// <param name="teamIndex">Index of the team to write the colors for.</param>
         public void WriteCarColors(Car car, int teamIndex)
         {
+            if (teamIndex < 0 || teamIndex > Constants.NumberOfSupportedTeams - 1)
+                throw new IndexOutOfRangeException($"{nameof(teamIndex)} must be between 0 and 17");
+
             byte[] carBytes = car.GetColorsToWriteToFile();
             int position = _exeFile.GetCarColorsPosition(teamIndex);
 

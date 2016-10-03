@@ -96,7 +96,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_MultipleSetupsNotSeparate_ReturnsFalse()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("LOTSETUP", TestDataFileType.Setups);
+            var path = ExampleDataHelper.GetExampleDataPath("multi-setups", TestDataFileType.Setups);
 
             var list = SetupReader.ReadMultiple(path);
 
@@ -106,7 +106,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_MultipleSetupsSeparate_ReturnsTrue()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("LOTSETUS", TestDataFileType.Setups);
+            var path = ExampleDataHelper.GetExampleDataPath("multi-setups-separate", TestDataFileType.Setups);
 
             var list = SetupReader.ReadMultiple(path);
 
@@ -116,7 +116,7 @@ namespace ArgData.Tests
         [Fact]
         public void Read_MultipleSetups_ReturnsCorrectWingLevels()
         {
-            var path = ExampleDataHelper.GetExampleDataPath("LOTSETUP", TestDataFileType.Setups);
+            var path = ExampleDataHelper.GetExampleDataPath("multi-setups", TestDataFileType.Setups);
 
             var list = SetupReader.ReadMultiple(path);
 

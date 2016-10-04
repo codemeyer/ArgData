@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace ArgData
         /// <returns></returns>
         public static Color GetColor(int index)
         {
+            Validate(index);
+
             return _palette[index];
         }
 
@@ -366,6 +369,8 @@ namespace ArgData
         /// <returns>The next brightest color in the color range. If there is no brighter color, the specified color is returned.</returns>
         public static int GetBrighterColor(int index)
         {
+            Validate(index);
+
             List<int> range = GetRangeForColor(index);
             int indexInRange = range.IndexOf(index);
 
@@ -384,6 +389,8 @@ namespace ArgData
         /// <returns>The next darkest color in the color range. If there is no darkest color, the specified color is returned.</returns>
         public static int GetDarkerColor(int index)
         {
+            Validate(index);
+
             List<int> range = GetRangeForColor(index);
             int indexInRange = range.IndexOf(index);
 
@@ -393,6 +400,15 @@ namespace ArgData
             }
 
             return index;
+        }
+
+        private static void Validate(int index)
+        {
+            if (index < 0)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            if (index > 255)
+                throw new ArgumentOutOfRangeException(nameof(index));
         }
 
         /// <summary>

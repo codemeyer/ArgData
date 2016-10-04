@@ -51,7 +51,6 @@ namespace ArgData.Tests
             settings.ChanceOfRain.Should().Be(10);
         }
 
-
         [Fact]
         public void WriteWetWeatherSettings_ExpectedRainChanceStored()
         {
@@ -107,6 +106,22 @@ namespace ArgData.Tests
 
                 action.ShouldThrow<ArgumentOutOfRangeException>();
             }
+        }
+
+        [Fact]
+        public void CreateReaderFor_NullGpExe_ThrowsArgumentNullException()
+        {
+            Action action = () => WetWeatherSettingsReader.For(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void CreateWriterFor_NullGpExe_ThrowsArgumentNullException()
+        {
+            Action action = () => WetWeatherSettingsWriter.For(null);
+
+            action.ShouldThrow<ArgumentNullException>();
         }
     }
 }

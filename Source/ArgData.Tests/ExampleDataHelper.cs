@@ -110,7 +110,7 @@ namespace ArgData.Tests
             return Path.Combine(directory, @"..\..\..\..\TestData\");
         }
 
-        private static string GetTempFileName(string extFileName)
+        internal static string GetTempFileName(string extFileName)
         {
             return Path.GetTempPath() + Path.GetRandomFileName() + extFileName;
         }

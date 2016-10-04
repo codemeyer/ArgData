@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,9 @@ namespace ArgData
         /// <returns>SavedGame with drivers and results.</returns>
         public static SavedGame ReadSavedGame(string path)
         {
+            if (path == null) { throw new ArgumentNullException(nameof(path)); }
+            if (!File.Exists(path)) { throw new FileNotFoundException(@"Could not find saved game file '{path}'."); }
+
             byte[] bytes = File.ReadAllBytes(path);
 
             int numberOfRacesCompleted = GetNumberOfRacesCompleted(bytes);

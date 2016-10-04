@@ -43,9 +43,8 @@ namespace ArgData.IO
 
         public FileWriter CreateFile()
         {
-            var fileStream = File.Open(_path, FileMode.OpenOrCreate);
-            fileStream.Close();
-            fileStream.Dispose();
+            using (File.Open(_path, FileMode.OpenOrCreate)) { }
+
             return this;
         }
     }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ArgData.Entities;
@@ -20,6 +21,8 @@ namespace ArgData
         /// <returns>PreferencesReader.</returns>
         public static PreferencesReader For(PreferencesFile prefsFile)
         {
+            if (prefsFile == null) { throw new ArgumentNullException(nameof(prefsFile)); }
+
             return new PreferencesReader(prefsFile);
         }
 
@@ -46,7 +49,7 @@ namespace ArgData
             return GetTextFromBytes(data);
         }
 
-        private static string GetTextFromBytes(byte[] nameData)
+        private static string GetTextFromBytes(IEnumerable<byte> nameData)
         {
             byte[] nameBytes = nameData.TakeWhile(b => b != 0).ToArray();
             string name = Encoding.ASCII.GetString(nameBytes);
@@ -69,6 +72,8 @@ namespace ArgData
         /// <returns>PreferencesWriter.</returns>
         public static PreferencesWriter For(PreferencesFile prefsFile)
         {
+            if (prefsFile == null) { throw new ArgumentNullException(nameof(prefsFile)); }
+
             return new PreferencesWriter(prefsFile);
         }
 

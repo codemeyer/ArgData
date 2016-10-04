@@ -65,5 +65,21 @@ namespace ArgData.Tests
                 act.ShouldThrow<Exception>();
             }
         }
+
+        [Fact]
+        public void CreateReaderFor_Null_ThrowsArgumentNullException()
+        {
+            Action action = () => PreferencesReader.For(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void CreateWriterFor_Null_ThrowsArgumentNullException()
+        {
+            Action action = () => PreferencesWriter.For(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
     }
 }

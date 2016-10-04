@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using Xunit;
 
 namespace ArgData.Tests
@@ -8,7 +9,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReadingPlayerHorsepowerValuesReturnsCorrectDefaultData(GpExeVersionInfo exeVersionInfo)
+        public void ReadPlayerHorsepower_DefaultValue_ReturnsExpectedValue(GpExeVersionInfo exeVersionInfo)
         {
             var horsepowerReader = ExampleDataHelper.PlayerHorsepowerReaderForDefault(exeVersionInfo);
 
@@ -20,7 +21,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WritingPlayerHorsepowerValuesStoresExpectedData(GpExeVersionInfo exeVersionInfo)
+        public void WritePlayerHorsepower_KnownValue_StoresExpectedValue(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -32,6 +33,36 @@ namespace ArgData.Tests
 
                 var readHorsepower = horsepowerReader.ReadPlayerHorsepower();
                 readHorsepower.Should().Be(640);
+            }
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(1460)]
+        public void WritePlayerHorsepower_InsideRange_DoesNotThrowArgumentOutOfRangeException(int horsepower)
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var horsepowerWriter = PlayerHorsepowerWriter.For(context.ExeFile);
+
+                Action action = () => horsepowerWriter.WritePlayerHorsepower(horsepower);
+
+                action.ShouldNotThrow<ArgumentOutOfRangeException>();
+            }
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1461)]
+        public void WritePlayerHorsepower_OutsideRange_ThrowsArgumentOutOfRangeException(int horsepower)
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var horsepowerWriter = PlayerHorsepowerWriter.For(context.ExeFile);
+
+                Action action = () => horsepowerWriter.WritePlayerHorsepower(horsepower);
+
+                action.ShouldThrow<ArgumentOutOfRangeException>();
             }
         }
     }

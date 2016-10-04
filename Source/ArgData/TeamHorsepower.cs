@@ -1,4 +1,5 @@
-﻿using ArgData.IO;
+﻿using System;
+using ArgData.IO;
 
 namespace ArgData
 {
@@ -14,6 +15,8 @@ namespace ArgData
         /// <returns>TeamHorsepowerReader.</returns>
         public static TeamHorsepowerReader For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new TeamHorsepowerReader(exeFile);
         }
 
@@ -51,6 +54,8 @@ namespace ArgData
         /// <returns>TeamHorsepowerWriter.</returns>
         public static TeamHorsepowerWriter For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new TeamHorsepowerWriter(exeFile);
         }
 
@@ -68,6 +73,9 @@ namespace ArgData
         /// <param name="horsepower">Horsepower value to write.</param>
         public void WriteTeamHorsepower(int teamIndex, int horsepower)
         {
+            if (teamIndex < 0 || teamIndex >= Constants.NumberOfTeams)
+                throw new ArgumentOutOfRangeException(nameof(teamIndex), "teamIndex must be between 0 and 19.");
+
             int position = _exeFile.GetTeamHorsepowerPosition(teamIndex);
 
             new FileWriter(_exeFile.ExePath).WriteUInt16(horsepower, position);

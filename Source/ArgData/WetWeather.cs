@@ -18,6 +18,8 @@ namespace ArgData
         /// <returns>WetWeatherSettingsReader.</returns>
         public static WetWeatherSettingsReader For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new WetWeatherSettingsReader(exeFile);
         }
 
@@ -69,6 +71,8 @@ namespace ArgData
         /// <returns>WetWeatherSettingsWriter.</returns>
         public static WetWeatherSettingsWriter For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new WetWeatherSettingsWriter(exeFile);
         }
 

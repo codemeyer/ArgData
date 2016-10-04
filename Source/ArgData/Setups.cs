@@ -78,6 +78,9 @@ namespace ArgData
 
         private static void ValidateSingleSetupFile(string path)
         {
+            if (path == null) { throw new ArgumentNullException(nameof(path)); }
+            if (!File.Exists(path)) { throw new FileNotFoundException($"Could not find setup file '{path}'"); }
+
             var fileInfo = new FileInfo(path);
 
             if (fileInfo.Length != 14)
@@ -88,6 +91,9 @@ namespace ArgData
 
         private static void ValidateMultipleSetupFile(string path)
         {
+            if (path == null) { throw new ArgumentNullException(nameof(path)); }
+            if (!File.Exists(path)) { throw new FileNotFoundException($"Could not find setup file '{path}'"); }
+
             var fileInfo = new FileInfo(path);
 
             if (fileInfo.Length != 326)
@@ -120,6 +126,8 @@ namespace ArgData
         /// <param name="path">Path to file. Will be created or overwritten.</param>
         public static void WriteSingle(Setup setup, string path)
         {
+            Validate(setup);
+
             byte[] setupBytes = new byte[14];
 
             setupBytes[0] = setup.FrontWing;
@@ -145,6 +153,8 @@ namespace ArgData
         /// <param name="path">Path to file. Will be created or overwritten.</param>
         public static void WriteMultiple(SetupList setups, string path)
         {
+            Validate(setups);
+
             byte[] setupBytes = new byte[326];
 
             if (setups.SeparateSetups)
@@ -192,6 +202,27 @@ namespace ArgData
             new FileWriter(path).CreateFile().WriteBytes(setupBytes, 0);
 
             ChecksumCalculator.UpdateChecksum(path);
+        }
+
+        private static void Validate(Setup setup)
+        {
+            if (!setup.IsValid)
+                throw new ArgumentOutOfRangeException(nameof(setup), "One or more setups is invalid.");
+        }
+
+        private static void Validate(SetupList setups)
+        {
+            foreach (var setup in setups.QualifyingSetups)
+            {
+                if (!setup.IsValid)
+                    throw new ArgumentOutOfRangeException(nameof(setups), "One or more setups is invalid.");
+            }
+
+            foreach (var setup in setups.RaceSetups)
+            {
+                if (!setup.IsValid)
+                    throw new ArgumentOutOfRangeException(nameof(setups), "One or more setups is invalid.");
+            }
         }
 
         private static byte GetTyreCompound(SetupTyreCompound tyreCompound)

@@ -19,6 +19,8 @@ namespace ArgData
         /// <returns>HelmetColorReader.</returns>
         public static HelmetColorReader For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new HelmetColorReader(exeFile);
         }
 
@@ -59,9 +61,11 @@ namespace ArgData
         /// Creates a HelmetColorWriter for the specified GP.EXE file.
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
-        /// <returns>HelmetColorReader.</returns>
+        /// <returns>HelmetColorWriter.</returns>
         public static HelmetColorWriter For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new HelmetColorWriter(exeFile);
         }
 
@@ -76,6 +80,8 @@ namespace ArgData
         /// <param name="helmetList">HelmetList.</param>
         public void WriteHelmetColors(HelmetList helmetList)
         {
+            if (helmetList == null) { throw new ArgumentNullException(nameof(helmetList)); }
+
             int helmetIndex = 0;
 
             var allHelmetBytes = new List<byte>();

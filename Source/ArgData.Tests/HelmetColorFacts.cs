@@ -12,7 +12,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReadingOriginalHelmetColors_FirstHelmetReturnsSennaColors(GpExeVersionInfo exeVersionInfo)
+        public void ReadHelmetColors_OriginalColors_FirstHelmetReturnsSennaColors(GpExeVersionInfo exeVersionInfo)
         {
             var expectedHelmet = DefaultHelmetColors.GetByDriverNumber(1);
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
@@ -29,7 +29,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReadingOriginalHelmetColors_LastHelmetReturnsVanDePoeleColors(GpExeVersionInfo exeVersionInfo)
+        public void ReadHelmetColors_OriginalHelmetColors_LastHelmetReturnsVanDePoeleColors(GpExeVersionInfo exeVersionInfo)
         {
             var expectedHelmet = DefaultHelmetColors.GetByDriverNumber(35);
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
@@ -46,7 +46,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WritingFirstHelmet_ReturnsWrittenColors(GpExeVersionInfo exeVersionInfo)
+        public void WriteHelmetColors_FirstHelmet_StoresWrittenValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -67,7 +67,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WritingLastHelmet_ReturnsWrittenColors(GpExeVersionInfo exeVersionInfo)
+        public void WriteHelmetColors_LastHelmet_StoresWrittenValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -88,7 +88,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WritingSpecialCaseHelmets15And36To40_ReturnsPartWrittenColorsPartFixedValues(GpExeVersionInfo exeVersionInfo)
+        public void WriteHelmetColors_SpecialCaseHelmets15And36To40_StoresPartWrittenColorsPartFixedValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -149,7 +149,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(0)]
         [InlineData(41)]
-        public void ReadingOutsideRangeThrowsException(byte value)
+        public void GetByDriverNumber_OutsideRange_ThrowsArgumentOutOfRangeException(byte value)
         {
             var helmetList = new HelmetList();
 
@@ -161,13 +161,44 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(0)]
         [InlineData(41)]
-        public void WritingOutsideRangeThrowsException(byte value)
+        public void SetByDriverNumber_OutsideRange_ThrowsArgumentOutOfRangeException(byte value)
         {
             var helmetList = new HelmetList();
 
             Action action = () => helmetList.SetByDriverNumber(value, new Helmet());
 
             action.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteHelmetColors_HelmetListNull_ThrowsArgumentNullException(GpExeVersionInfo exeVersionInfo)
+        {
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
+            {
+                var helmetColorWriter = HelmetColorWriter.For(context.ExeFile);
+
+                Action action = () => helmetColorWriter.WriteHelmetColors(null);
+
+                action.ShouldThrow<ArgumentNullException>();
+            }
+        }
+
+        [Fact]
+        public void HelmetColorReaderFor_WithNull_ThrowsArgumentNullException()
+        {
+            Action act = () => HelmetColorReader.For(null);
+
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void HelmetColorWriterFor_WithNull_ThrowsArgumentNullException()
+        {
+            Action act = () => HelmetColorWriter.For(null);
+
+            act.ShouldThrow<ArgumentNullException>();
         }
     }
 }

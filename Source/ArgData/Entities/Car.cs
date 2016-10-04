@@ -23,7 +23,7 @@ namespace ArgData.Entities
         {
             if (carColorBytes.Length != GpExeFile.ColorsPerTeam)
             {
-                throw new Exception($"Car must be created with {GpExeFile.ColorsPerTeam} colors");
+                throw new ArgumentOutOfRangeException(nameof(carColorBytes), $"Car must be created with {GpExeFile.ColorsPerTeam} colors");
             }
 
             SetColors(carColorBytes);

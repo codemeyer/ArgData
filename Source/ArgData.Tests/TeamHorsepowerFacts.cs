@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using Xunit;
 
 namespace ArgData.Tests
@@ -8,7 +9,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReadingHorsepowerValuesFromOriginalExeFile_ReturnsCorrectHorsepowerLevelsForEachTeam(GpExeVersionInfo exeVersionInfo)
+        public void ReadTeamHorsepower_OriginalValues_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new[] { 716, 676, 716, 650, 620, 625, 620, 665, 610, 680,
                 655, 665, 640, 700, 630, 610, 680, 615 };
@@ -27,7 +28,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WritingHorsepowerValues_StoresAndReturnsTheCorrectValues(GpExeVersionInfo exeVersionInfo)
+        public void WriteTeamHorsepower_KnownValues_StoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -49,6 +50,52 @@ namespace ArgData.Tests
 
                     value.Should().Be(700 + i);
                 }
+            }
+        }
+
+        [Fact]
+        public void CreateReaderFor_NullGpExe_ThrowsArgumentNullException()
+        {
+            Action action = () => TeamHorsepowerReader.For(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void CreateWriterFor_NullGpExe_ThrowsArgumentNullException()
+        {
+            Action action = () => TeamHorsepowerWriter.For(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(19)]
+        public void WriteTeamHorsepower_InsideRange_DoesNotThrowArgumentOutOfRangeException(int teamIndex)
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var horsepowerWriter = TeamHorsepowerWriter.For(context.ExeFile);
+
+                Action action = () => horsepowerWriter.WriteTeamHorsepower(teamIndex, 700);
+
+                action.ShouldNotThrow<ArgumentOutOfRangeException>();
+            }
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(20)]
+        public void WriteTeamHorsepower_OutsideRange_ThrowsArgumentOutOfRangeException(int teamIndex)
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var horsepowerWriter = TeamHorsepowerWriter.For(context.ExeFile);
+
+                Action action = () => horsepowerWriter.WriteTeamHorsepower(teamIndex, 700);
+
+                action.ShouldThrow<ArgumentOutOfRangeException>();
             }
         }
     }

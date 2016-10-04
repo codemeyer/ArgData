@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using ArgData.Entities;
 using ArgData.IO;
 
@@ -18,6 +19,8 @@ namespace ArgData
         /// <returns>PitCrewColorReader.</returns>
         public static PitCrewColorReader For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new PitCrewColorReader(exeFile);
         }
 
@@ -82,6 +85,8 @@ namespace ArgData
         /// <returns>PitCrewColorWriter.</returns>
         public static PitCrewColorWriter For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new PitCrewColorWriter(exeFile);
         }
 

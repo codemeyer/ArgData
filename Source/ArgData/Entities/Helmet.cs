@@ -22,8 +22,7 @@ namespace ArgData.Entities
         /// <param name="helmetColorBytes">The colors to set. Must be exactly 14 or 16 bytes.</param>
         public Helmet(byte[] helmetColorBytes)
         {
-            // TODO: if-statement does not match error message
-            if (helmetColorBytes.Length != GpExeFile.ColorsPerTeam)
+            if (helmetColorBytes.Length != 14 && helmetColorBytes.Length != 16)
             {
                 throw new ArgumentOutOfRangeException(nameof(helmetColorBytes), "Helmet must be created with 14 or 16 colors");
             }
@@ -59,7 +58,6 @@ namespace ArgData.Entities
             {
                 Stripes = new byte[13]
                 {
-                    // TODO: verify completely for #13, #15 etc
                     helmetBytes[2],
                     helmetBytes[3],
                     helmetBytes[4],

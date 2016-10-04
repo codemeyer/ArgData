@@ -2,6 +2,7 @@
 using System.Linq;
 using ArgData.Entities;
 using ArgData.IO;
+using ArgData.Validation;
 
 namespace ArgData
 {
@@ -19,6 +20,8 @@ namespace ArgData
         /// <returns>CarColorReader.</returns>
         public static CarColorReader For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new CarColorReader(exeFile);
         }
 
@@ -34,8 +37,7 @@ namespace ArgData
         /// <returns>Car object with the colors of the team.</returns>
         public Car ReadCarColors(int teamIndex)
         {
-            if (teamIndex < 0 || teamIndex > Constants.NumberOfSupportedTeams - 1)
-                throw new ArgumentOutOfRangeException(nameof(teamIndex), $"{nameof(teamIndex)} must be between 0 and 17");
+            TeamIndexValidator.Validate(teamIndex);
 
             int position = _exeFile.GetCarColorsPosition(teamIndex);
 
@@ -87,6 +89,8 @@ namespace ArgData
         /// <returns>CarColorWriter.</returns>
         public static CarColorWriter For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new CarColorWriter(exeFile);
         }
 
@@ -102,8 +106,8 @@ namespace ArgData
         /// <param name="teamIndex">Index of the team to write the colors for.</param>
         public void WriteCarColors(Car car, int teamIndex)
         {
-            if (teamIndex < 0 || teamIndex > Constants.NumberOfSupportedTeams - 1)
-                throw new ArgumentOutOfRangeException(nameof(teamIndex), $"{nameof(teamIndex)} must be between 0 and 17");
+            TeamIndexValidator.Validate(teamIndex);
+            if (car == null) { throw new ArgumentNullException(nameof(car)); }
 
             byte[] carBytes = car.GetColorsToWriteToFile();
             int position = _exeFile.GetCarColorsPosition(teamIndex);
@@ -117,6 +121,8 @@ namespace ArgData
         /// <param name="carList">CarList with colors to write.</param>
         public void WriteCarColors(CarList carList)
         {
+            if (carList == null) { throw new ArgumentNullException(nameof(carList)); }
+
             int teamIndex = 0;
 
             foreach (Car car in carList)

@@ -8,7 +8,7 @@ namespace ArgData.Tests.Entities
     public class CarFacts
     {
         [Fact]
-        public void CarHasDefaultColors()
+        public void Car_HasDefaultColors()
         {
             var car = new Car(new byte[16]);
 
@@ -16,13 +16,13 @@ namespace ArgData.Tests.Entities
         }
 
         [Fact]
-        public void CarMustBeCreatedWithCorrectNumberOfColors()
+        public void Car_CreatedWithOtherThan_16_Bytes_ThrowsArgumentOutOfRangeException()
         {
             byte[] tooFewColors = new byte[5];
 
-            Action act = () => new Car(tooFewColors);
+            Action action = () => new Car(tooFewColors);
 
-            act.ShouldThrow<Exception>();
+            action.ShouldThrow<ArgumentOutOfRangeException>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ArgData.Entities;
+﻿using System;
+using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
 
@@ -9,7 +10,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReadingRaceGripLevelsReturnsCorrectLevels(GpExeVersionInfo exeVersionInfo)
+        public void ReadRaceGripLevel_DefaultValuesPerDriver_ReturnsExpectedLevels(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 2, 3, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33 };
@@ -27,7 +28,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReadingRaceGripLevelsReturnsCorrectLevelsAll(GpExeVersionInfo exeVersionInfo)
+        public void ReadRaceGripLevel_DefaultValuesArray_ReturnsExpectedLevels(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 2, 3, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33, 0, 0, 0, 0, 0 };
@@ -41,7 +42,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReturnsCorrectLevelsForQualifyingGrip(GpExeVersionInfo exeVersionInfo)
+        public void ReadQualifyingGripLevel_DefaultValuesPerDriver_ReturnsExpectedLevels(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 3, 2, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33 };
@@ -59,7 +60,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReturnsCorrectLevelsForQualifyingGripAll(GpExeVersionInfo exeVersionInfo)
+        public void ReadQualifyingGripLevel_DefaultValuesArray_ReturnsExpectedLevels(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 3, 2, 19, 21, 26, 31, 25, 27, 0, 28,
                 12, 14, 30, 32, 8, 7, 18, 15, 11, 17, 20, 24, 5, 6, 22, 23, 34, 13, 10, 29, 33, 0, 0, 0, 0, 0 };
@@ -71,7 +72,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void RaceGripLevelForDriver_0_ShouldBe_0()
+        public void ReadRaceGripLevels_DriverNumber_0_Returns_0()
         {
             var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(GpExeVersionInfo.European105);
 
@@ -81,7 +82,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void QualifyingGripLevelForDriver_0_ShouldBe_0()
+        public void ReadQualifyingGripLevels_DriverNumber_0_Returns_0()
         {
             var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(GpExeVersionInfo.European105);
 
@@ -93,7 +94,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReturnsCorrectValueWhenReadingSingleGripLevel(GpExeVersionInfo exeVersionInfo)
+        public void ReadRaceGroupLevels_GetSingleDriverGrip_ReturnsExpectedValue(GpExeVersionInfo exeVersionInfo)
         {
             var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
 
@@ -105,7 +106,61 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WritingRaceGripLevelStoresCorrectValues(GpExeVersionInfo exeVersionInfo)
+        public void ReadRaceGripLevel_DriverNumberLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+        {
+            var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
+
+            Action action = () => gripLevelReader.ReadRaceGripLevel(-1);
+
+            action.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadRaceGripLevel_DriverNumberGreaterThan_40_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+        {
+            var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
+
+            Action action = () => gripLevelReader.ReadRaceGripLevel(41);
+
+            action.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteRaceGripLevel_DriverNumberLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+        {
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
+            {
+                var gripLevelWriter = GripLevelWriter.For(context.ExeFile);
+
+                Action action = () => gripLevelWriter.WriteRaceGripLevel(-1, 1);
+
+                action.ShouldThrow<ArgumentOutOfRangeException>();
+            }
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteRaceGripLevel_DriverNumberGreaterThan_40_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+        {
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
+            {
+                var gripLevelWriter = GripLevelWriter.For(context.ExeFile);
+
+                Action action = () => gripLevelWriter.WriteRaceGripLevel(41, 1);
+
+                action.ShouldThrow<ArgumentOutOfRangeException>();
+            }
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteRaceGripLevel_KnownValues_StoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -130,7 +185,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WritingRaceGripLevelStoresCorrectValuesAll(GpExeVersionInfo exeVersionInfo)
+        public void WriteRaceGripLevel_UpdateKnownValues_StoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -156,7 +211,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WritingQualifyingGripLevelStoresCorrectValues(GpExeVersionInfo exeVersionInfo)
+        public void WriteQualifyingGripLevel_KnownValues_StoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -181,7 +236,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WritingQualifyingGripLevelStoresCorrectValuesAll(GpExeVersionInfo exeVersionInfo)
+        public void WriteQualifyingGripLevel_UpdateKnownValues_StoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -202,6 +257,76 @@ namespace ArgData.Tests
                     grip.Should().Be((byte)(i + 1));
                 }
             }
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadQualifyingGripLevel_DriverNumberLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+        {
+            var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
+
+            Action action = () => gripLevelReader.ReadQualifyingGripLevel(-1);
+
+            action.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void ReadQualifyingGripLevel_DriverNumberGreaterThan_40_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+        {
+            var gripLevelReader = ExampleDataHelper.GripLevelReaderForDefault(exeVersionInfo);
+
+            Action action = () => gripLevelReader.ReadQualifyingGripLevel(41);
+
+            action.ShouldThrow<ArgumentOutOfRangeException>();
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteQualifyingGripLevel_DriverIndexLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+        {
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
+            {
+                var gripLevelWriter = GripLevelWriter.For(context.ExeFile);
+
+                Action action = () => gripLevelWriter.WriteQualifyingGripLevel(-1, 1);
+
+                action.ShouldThrow<ArgumentOutOfRangeException>();
+            }
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        public void WriteQualifyingGripLevel_DriverNumberGreaterThan_40_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+        {
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
+            {
+                var gripLevelWriter = GripLevelWriter.For(context.ExeFile);
+
+                Action action = () => gripLevelWriter.WriteQualifyingGripLevel(41, 1);
+
+                action.ShouldThrow<ArgumentOutOfRangeException>();
+            }
+        }
+
+        [Fact]
+        public void GripLevelReader_WithNull_ThrowsArgumentNullException()
+        {
+            Action act = () => GripLevelReader.For(null);
+
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void GripLevelWriterFor_WithNull_ThrowsArgumentNullException()
+        {
+            Action act = () => GripLevelWriter.For(null);
+
+            act.ShouldThrow<ArgumentNullException>();
         }
     }
 }

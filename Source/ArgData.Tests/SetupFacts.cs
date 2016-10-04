@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
@@ -8,7 +9,7 @@ namespace ArgData.Tests
     public class SetupFacts
     {
         [Fact]
-        public void Read_ReadingSetupFile1_ReturnsExpectedValues()
+        public void ReadSingle_ReadingSetupFile1_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w40-39_bb0_tyC_ra24-32-39-46-53-61", TestDataFileType.Setups);
 
@@ -27,7 +28,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void Read_ReadingSetupFile2_ReturnsExpectedValues()
+        public void ReadSingle_ReadingSetupFile2_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w0-15_bb32f_tyA_ra17-31-39-46-50-56", TestDataFileType.Setups);
 
@@ -46,7 +47,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void Read_ReadingSetupFile3_ReturnsExpectedValues()
+        public void ReadSingle_ReadingSetupFile3_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w24-8_bb5f_tyB_ra25-34-42-50-57-64", TestDataFileType.Setups);
 
@@ -65,7 +66,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void Read_ReadingSetupFile4_ReturnsExpectedValues()
+        public void ReadSingle_ReadingSetupFile4_ReturnsExpectedValues()
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w64-60_bb6r_tyD_ra16-30-38-45-49-55", TestDataFileType.Setups);
 
@@ -84,7 +85,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void Read_NotSingleSetupFile_Throws()
+        public void ReadSingle_NotSingleSetupFile_Throws()
         {
             var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE", TestDataFileType.Exe);
 
@@ -94,7 +95,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void Read_MultipleSetupsNotSeparate_ReturnsFalse()
+        public void ReadMultiple_MultipleSetupsNotSeparate_ReturnsFalse()
         {
             var path = ExampleDataHelper.GetExampleDataPath("multi-setups", TestDataFileType.Setups);
 
@@ -104,7 +105,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void Read_MultipleSetupsSeparate_ReturnsTrue()
+        public void ReadMultiple_MultipleSetupsSeparate_ReturnsTrue()
         {
             var path = ExampleDataHelper.GetExampleDataPath("multi-setups-separate", TestDataFileType.Setups);
 
@@ -114,7 +115,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void Read_MultipleSetups_ReturnsCorrectWingLevels()
+        public void ReadMultiple_MultipleSetups_ReturnsCorrectWingLevels()
         {
             var path = ExampleDataHelper.GetExampleDataPath("multi-setups", TestDataFileType.Setups);
 
@@ -138,7 +139,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void Read_NotMultipleSetupFile_Throws()
+        public void ReadMultiple_NotMultipleSetupFile_Throws()
         {
             var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE", TestDataFileType.Exe);
 
@@ -211,7 +212,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void WriteMultiple()
+        public void WriteMultiple_KnownValues_StoresExpectedValues()
         {
             var setups = CreateSetupListForTest(true);
 
@@ -304,6 +305,77 @@ namespace ArgData.Tests
             }
 
             return setups;
+        }
+
+        [Fact]
+        public void WriteSingle_SetupInvalid_ThrowsException()
+        {
+            var setup = new Setup
+            {
+                GearRatio1 = 1
+            };
+
+            Action action = () => SetupWriter.WriteSingle(setup, ExampleDataHelper.GetTempFileName(".set"));
+
+            action.ShouldThrow<Exception>();
+        }
+
+        [Fact]
+        public void WriteMultiple_QualifyingSetupInvalid_ThrowsException()
+        {
+            var setups = new SetupList();
+            setups.QualifyingSetups[10].GearRatio1 = 1;
+
+            Action action = () => SetupWriter.WriteMultiple(setups, ExampleDataHelper.GetTempFileName(".set"));
+
+            action.ShouldThrow<Exception>();
+        }
+
+        [Fact]
+        public void WriteMultiple_RaceSetupInvalid_ThrowsException()
+        {
+            var setups = new SetupList();
+            setups.RaceSetups[5].GearRatio1 = 1;
+
+            Action action = () => SetupWriter.WriteMultiple(setups, ExampleDataHelper.GetTempFileName(".set"));
+
+            action.ShouldThrow<Exception>();
+        }
+
+        [Fact]
+        public void ReadSingle_FileNull_ThrowsArgumentNullException()
+        {
+            Action action = () => SetupReader.ReadSingle(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ReadSingle_FileNotFound_ThrowsFileNotFoundException()
+        {
+            var nonExistingFile = ExampleDataHelper.GetExampleDataPath("setup-does-not-exist.setup", TestDataFileType.Setups);
+
+            Action action = () => SetupReader.ReadSingle(nonExistingFile);
+
+            action.ShouldThrow<FileNotFoundException>();
+        }
+
+        [Fact]
+        public void ReadMultiple_FileNull_ThrowsArgumentNullException()
+        {
+            Action action = () => SetupReader.ReadMultiple(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ReadMultiple_FileNotFound_ThrowsFileNotFoundException()
+        {
+            var nonExistingFile = ExampleDataHelper.GetExampleDataPath("setup-does-not-exist.setup", TestDataFileType.Setups);
+
+            Action action = () => SetupReader.ReadMultiple(nonExistingFile);
+
+            action.ShouldThrow<FileNotFoundException>();
         }
     }
 }

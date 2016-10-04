@@ -9,88 +9,87 @@ namespace ArgData.Tests
 {
     public class NameFileFacts
     {
-        public class ReadingNameFile
+        [Fact]
+        public void Read_ReturnedDataShouldNotBeNull()
         {
-            private readonly NameFile _data;
+            var nameFile = GetExampleNameFile();
 
-            public ReadingNameFile()
-            {
-                string exampleDataPath = ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names);
-
-                _data = NameFileReader.Read(exampleDataPath);
-            }
-
-            [Fact]
-            public void ReturnedDataShouldNotBeNull()
-            {
-                _data.Should().NotBeNull();
-            }
-
-            [Fact]
-            public void ShouldReturnListOf_40_Drivers()
-            {
-                _data.Drivers.Count.Should().Be(40);
-            }
-
-            [Fact]
-            public void FirstDriverShouldBeAyrtonSenna()
-            {
-                Driver firstDriver = _data.Drivers.First();
-
-                firstDriver.Name.Should().Be("Ayrton Senna");
-            }
-
-            [Fact]
-            public void ShouldReturnListOf_20_Teams()
-            {
-                _data.Teams.Count.Should().Be(20);
-            }
-
-            [Fact]
-            public void FirstTeamShouldBeMcLaren()
-            {
-                Team firstTeam = _data.Teams.First();
-
-                firstTeam.Name.Should().Be("McLaren");
-            }
-
-            [Fact]
-            public void FirstTeamEngineShouldBeHonda()
-            {
-                Team firstTeam = _data.Teams.First();
-
-                firstTeam.Engine.Should().Be("Honda");
-            }
-
-            [Fact]
-            public void NonNameFileThrowsException()
-            {
-                var notNameFilePath = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
-
-                Action action = () => NameFileReader.Read(notNameFilePath);
-
-                action.ShouldThrow<Exception>();
-            }
-        }
-    }
-
-    public class WritingNameFile
-    {
-        private readonly NameFileTeamList _teams;
-        private readonly NameFileDriverList _drivers;
-
-        public WritingNameFile()
-        {
-            _teams = new NameFileTeamList();
-            _drivers = new NameFileDriverList();
+            nameFile.Should().NotBeNull();
         }
 
         [Fact]
-        public void FileShouldBeCorrectSize()
+        public void Read_ShouldReturnListOf_40_Drivers()
         {
+            var nameFile = GetExampleNameFile();
+
+            nameFile.Drivers.Count.Should().Be(40);
+        }
+
+        [Fact]
+        public void Read_FirstDriverShouldBeAyrtonSenna()
+        {
+            var nameFile = GetExampleNameFile();
+
+            Driver firstDriver = nameFile.Drivers.First();
+
+            firstDriver.Name.Should().Be("Ayrton Senna");
+        }
+
+        [Fact]
+        public void Read_ShouldReturnListOf_20_Teams()
+        {
+            var nameFile = GetExampleNameFile();
+
+            nameFile.Teams.Count.Should().Be(20);
+        }
+
+        [Fact]
+        public void Read_FirstTeamShouldBeMcLarenHonda()
+        {
+            var nameFile = GetExampleNameFile();
+
+            Team firstTeam = nameFile.Teams.First();
+
+            firstTeam.Name.Should().Be("McLaren");
+            firstTeam.Engine.Should().Be("Honda");
+        }
+
+        private NameFile GetExampleNameFile()
+        {
+            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names);
+
+            return NameFileReader.Read(exampleDataPath);
+        }
+
+        [Fact]
+        public void Read_NonExistingFile_ThrowsFileNotFoundException()
+        {
+            string nonExistingFile = ExampleDataHelper.GetExampleDataPath("names-not-exist.nam", TestDataFileType.Names);
+
+            Action action = () => NameFileReader.Read(nonExistingFile);
+
+            action.ShouldThrow<FileNotFoundException>();
+        }
+
+        [Fact]
+        public void Read_NonNameFile_ThrowsException()
+        {
+            var notNameFilePath = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
+
+            Action action = () => NameFileReader.Read(notNameFilePath);
+
+            action.ShouldThrow<Exception>();
+        }
+
+        [Fact]
+        public void Write_FileShouldBeCorrectSize()
+        {
+            var teams = new NameFileTeamList();
+            var drivers = new NameFileDriverList();
+
             using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                NameFileWriter.Write(context.FilePath, _drivers, _teams);
+                NameFileWriter.Write(context.FilePath, drivers, teams);
 
                 var fileInfo = new FileInfo(context.FilePath);
 
@@ -99,17 +98,57 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void WriteAndRead()
+        public void Write_CorrectValuesStored()
         {
+            var teams = new NameFileTeamList();
+            var drivers = new NameFileDriverList();
+
             using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                NameFileWriter.Write(context.FilePath, _drivers, _teams);
+                NameFileWriter.Write(context.FilePath, drivers, teams);
                 var namesFile = NameFileReader.Read(context.FilePath);
 
                 namesFile.Drivers.Count.Should().Be(40);
                 namesFile.Teams.Count.Should().Be(20);
                 namesFile.Drivers[0].Name.Should().Be("Driver 1");
                 namesFile.Teams[0].Name.Should().Be("Team 1");
+            }
+        }
+
+        [Fact]
+        public void Write_TooLongDriverNames_AreTruncated()
+        {
+            var teams = new NameFileTeamList();
+            var drivers = new NameFileDriverList();
+
+            drivers[0].Name = "12345678901234567890123oh";
+
+            using (var context = ExampleDataContext.GetTempFileName("names.nam"))
+            {
+                NameFileWriter.Write(context.FilePath, drivers, teams);
+                var namesFile = NameFileReader.Read(context.FilePath);
+                namesFile.Drivers[0].Name.Should().Be("12345678901234567890123");
+                namesFile.Drivers[1].Name.Should().Be("Driver 2");
+            }
+        }
+
+        [Fact]
+        public void Write_TooLongTeamNamesAndEngines_AreTruncated()
+        {
+            var teams = new NameFileTeamList();
+            var drivers = new NameFileDriverList();
+
+            teams[0].Name = "123456789012oh";
+            teams[0].Engine = "123456789012oh";
+
+            using (var context = ExampleDataContext.GetTempFileName("names.nam"))
+            {
+                NameFileWriter.Write(context.FilePath, drivers, teams);
+                var namesFile = NameFileReader.Read(context.FilePath);
+                namesFile.Teams[0].Name.Should().Be("123456789012");
+                namesFile.Teams[1].Name.Should().Be("Team 2");
+                namesFile.Teams[0].Engine.Should().Be("123456789012");
+                namesFile.Teams[1].Engine.Should().Be("Engine 2");
             }
         }
     }

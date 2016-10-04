@@ -20,6 +20,8 @@ namespace ArgData
         /// <returns>DriverNumberReader.</returns>
         public static DriverNumberReader For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new DriverNumberReader(exeFile);
         }
 
@@ -56,6 +58,8 @@ namespace ArgData
         /// <returns>DriverNumberWriter.</returns>
         public static DriverNumberWriter For(GpExeFile exeFile)
         {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
             return new DriverNumberWriter(exeFile);
         }
 
@@ -70,6 +74,7 @@ namespace ArgData
         /// <param name="driverNumbers">DriverNumberList of driver numbers.</param>
         public void WriteDriverNumbers(DriverNumberList driverNumbers)
         {
+            if (driverNumbers == null) { throw new ArgumentNullException(nameof(driverNumbers)); }
             CheckDriverNumbers(driverNumbers);
 
             var allDriverNumberBytes = new List<byte>();

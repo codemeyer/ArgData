@@ -1,93 +1,119 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using FluentAssertions;
 using Xunit;
 
 namespace ArgData.Tests
 {
-    namespace PaletteFacts
+    public class PaletteFacts
     {
-        public class SelectingColors
+        [Fact]
+        public void SelectColor_FirstColorIsBlack()
         {
-            [Fact]
-            public void FirstColorIsBlack()
+            Color color = Palette.GetColor(0);
+
+            color.ToArgb().Should().Be(Color.Black.ToArgb());
+        }
+
+        [Fact]
+        public void SelectColor_LastColorIsLightGrey()
+        {
+            Color color = Palette.GetColor(255);
+
+            color.R.Should().Be(color.G);
+            color.G.Should().Be(color.B);
+            color.R.Should().Be(252);
+        }
+
+        [Fact]
+        public void ColorRange_BrighterColorIsAvailable_ReturnBrighterColorInRange()
+        {
+            Color color = Palette.GetColor(85);
+            int brighterColorIndex = Palette.GetBrighterColor(85);
+            Color brighterColor = Palette.GetColor(brighterColorIndex);
+
+            brighterColor.R.Should().BeGreaterOrEqualTo(color.R);
+            brighterColor.G.Should().BeGreaterOrEqualTo(color.G);
+            brighterColor.B.Should().BeGreaterOrEqualTo(color.B);
+        }
+
+        // !
+        [Fact]
+        public void ColorRange_BrighterColorIsNotAvailable_ReturnsSameColor()
+        {
+            int brighterColorIndex = Palette.GetBrighterColor(95);
+
+            brighterColorIndex.Should().Be(95);
+        }
+
+        [Fact]
+        public void ColorRange_DarkerColorIsAvailable_ReturnsNextDarkerColorInRange()
+        {
+            Color color = Palette.GetColor(84);
+            int darkerColorIndex = Palette.GetDarkerColor(84);
+            Color darkerColor = Palette.GetColor(darkerColorIndex);
+
+            darkerColor.R.Should().BeLessOrEqualTo(color.R);
+            darkerColor.G.Should().BeLessOrEqualTo(color.G);
+            darkerColor.B.Should().BeLessOrEqualTo(color.B);
+        }
+
+        [Fact]
+        public void GetDarkerColor_DarkerColorIsNotAvailable_ReturnsSameColor()
+        {
+            int darkerColorIndex = Palette.GetDarkerColor(80);
+
+            darkerColorIndex.Should().Be(80);
+        }
+
+        [Fact]
+        public void GetBrighterColor_ReverseRange_ReturnsExpectedResults()
+        {
+            int brighterColorIndex = Palette.GetBrighterColor(142);
+
+            brighterColorIndex.Should().Be(141);
+        }
+
+        [Fact]
+        public void GetRangeForColor_AllColorsShouldBeInSomeColorRange()
+        {
+            for (int i = 0; i <= 255; i++)
             {
-                Color color = Palette.GetColor(0);
+                List<int> range = Palette.GetRangeForColor(i);
 
-                color.ToArgb().Should().Be(Color.Black.ToArgb());
-            }
-
-            [Fact]
-            public void LastColorIsLightGrey()
-            {
-                Color color = Palette.GetColor(255);
-
-                color.R.Should().Be(color.G);
-                color.G.Should().Be(color.B);
-                color.R.Should().Be(252);
+                range.Should().NotBeNull($"Color {i} not found in range.");
             }
         }
 
-        public class ColorRanges
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(256)]
+        public void GetColor_OutOfRange_ThrowsException(int index)
         {
-            [Fact]
-            public void WhenBrighterColorIsAvailableNextBrighterColorInRangeIsFound()
-            {
-                Color color = Palette.GetColor(85);
-                int brighterColorIndex = Palette.GetBrighterColor(85);
-                Color brighterColor = Palette.GetColor(brighterColorIndex);
+            Action action = () => Palette.GetColor(index);
 
-                brighterColor.R.Should().BeGreaterOrEqualTo(color.R);
-                brighterColor.G.Should().BeGreaterOrEqualTo(color.G);
-                brighterColor.B.Should().BeGreaterOrEqualTo(color.B);
-            }
+            action.ShouldThrow<ArgumentOutOfRangeException>();
+        }
 
-            [Fact]
-            public void WhenBrighterColorIsNotAvailableThenSameColorIsReturned()
-            {
-                int brighterColorIndex = Palette.GetBrighterColor(95);
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(256)]
+        public void GetDarkerColor_OutOfRange_ThrowsException(int index)
+        {
+            Action action = () => Palette.GetDarkerColor(index);
 
-                brighterColorIndex.Should().Be(95);
-            }
+            action.ShouldThrow<ArgumentOutOfRangeException>();
+        }
 
-            [Fact]
-            public void WhenDarkerColorIsAvailableNextDarkerColorInRangeIsReturned()
-            {
-                Color color = Palette.GetColor(84);
-                int darkerColorIndex = Palette.GetDarkerColor(84);
-                Color darkerColor = Palette.GetColor(darkerColorIndex);
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(256)]
+        public void GetBrighterColor_OutOfRange_ThrowsException(int index)
+        {
+            Action action = () => Palette.GetBrighterColor(index);
 
-                darkerColor.R.Should().BeLessOrEqualTo(color.R);
-                darkerColor.G.Should().BeLessOrEqualTo(color.G);
-                darkerColor.B.Should().BeLessOrEqualTo(color.B);
-            }
-
-            [Fact]
-            public void WhenDarkerColorIsNotAvailableThenSameColorIsReturned()
-            {
-                int darkerColorIndex = Palette.GetDarkerColor(80);
-
-                darkerColorIndex.Should().Be(80);
-            }
-
-            [Fact]
-            public void ReverseRangeReturnsExpectedResults()
-            {
-                int brighterColorIndex = Palette.GetBrighterColor(142);
-
-                brighterColorIndex.Should().Be(141);
-            }
-
-            [Fact]
-            public void AllColorsShouldBeInSomeColorRange()
-            {
-                for (int i = 0; i <= 255; i++)
-                {
-                    List<int> range = Palette.GetRangeForColor(i);
-
-                    range.Should().NotBeNull($"Color {i} not found in range.");
-                }
-            }
+            action.ShouldThrow<ArgumentOutOfRangeException>();
         }
     }
 }

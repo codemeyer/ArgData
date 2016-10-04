@@ -8,7 +8,7 @@ namespace ArgData.Tests
     public class ChecksumCalculatorFacts
     {
         [Fact]
-        public void ReturnExpectedChecksumsForNameFile()
+        public void Calculate_ForNameFile_ReturnsExpectedChecksum()
         {
             string path = ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names);
             byte[] allBytes = GetBytesToCalculateChecksumFor(path);
@@ -22,7 +22,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void ReturnExpectedChecksumsForTrackFile()
+        public void Calculate_ForTrackFile_ReturnExpectedChecksum()
         {
             string path = ExampleDataHelper.GetExampleDataPath("F1CT01.DAT", TestDataFileType.Tracks);
             byte[] allBytes = GetBytesToCalculateChecksumFor(path);
@@ -42,6 +42,16 @@ namespace ArgData.Tests
             Array.Copy(allFileBytes, allChecksumBytes, allFileBytes.Length - 4);
 
             return allChecksumBytes;
+        }
+
+        [Fact]
+        public void UpdateChecksum_FileDoesNotExist_ThrowFileNotFoundException()
+        {
+            string path = ExampleDataHelper.GetExampleDataPath("filenotfound", TestDataFileType.Names);
+
+            Action action = () => ChecksumCalculator.UpdateChecksum(path);
+
+            action.ShouldThrow<FileNotFoundException>();
         }
     }
 }

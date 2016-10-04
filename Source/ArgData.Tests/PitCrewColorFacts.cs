@@ -11,7 +11,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReadingOriginalPitCrewColorsReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
+        public void ReadPitCrewColors_OriginalColors_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var pitCrewColorReader = PitCrewColorReader.For(GpExeFile.At(exampleDataPath));
@@ -27,7 +27,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReadingSingleOriginalPitCrewColorReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
+        public void ReadPitCrewColors_SingleOriginalColor_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             var expectedPitCrew = DefaultPitCrewColors.GetByIndex(0);
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
@@ -45,7 +45,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WriteAndReadPitCrews(GpExeVersionInfo exeVersionInfo)
+        public void WritePitCrewColors_KnownValues_StoresExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             var pitCrewList = new PitCrewList();
             for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
@@ -75,7 +75,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WriteAndReadPitCrew(GpExeVersionInfo exeVersionInfo)
+        public void WritePitCrewColors_KnownSingleCrewValues_StoresExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -103,6 +103,22 @@ namespace ArgData.Tests
                 actualPitCrew.PantsSecondary.Should().Be(4);
                 actualPitCrew.Socks.Should().Be(5);
             }
+        }
+
+        [Fact]
+        public void PitCrewColorReader_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => PitCrewColorReader.For(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void PitCrewColorWriterFor_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => PitCrewColorWriter.For(null);
+
+            action.ShouldThrow<ArgumentNullException>();
         }
     }
 }

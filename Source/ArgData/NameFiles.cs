@@ -30,6 +30,8 @@ namespace ArgData
 
         private static void ValidateFile(string path)
         {
+            if (!File.Exists(path)) { throw new FileNotFoundException("Could not find name file", path); }
+
             var fileInfo = new FileInfo(path);
 
             if (fileInfo.Length != 1484)
@@ -111,7 +113,7 @@ namespace ArgData
         {
             foreach (var driver in drivers)
             {
-                string driverName = driver.Name.PadRight(NameFileConstants.DriverNameLength, '\0');
+                string driverName = PadTruncate(driver.Name, NameFileConstants.DriverNameLength);
                 byte[] nameBytes = Encoding.ASCII.GetBytes(driverName);
                 namesFile.Write(nameBytes, 0, NameFileConstants.DriverNameLength);
             }
@@ -121,7 +123,7 @@ namespace ArgData
         {
             foreach (var team in teams)
             {
-                string teamName = team.Name.PadRight(NameFileConstants.TeamNameLength, '\0');
+                string teamName = PadTruncate(team.Name, NameFileConstants.TeamNameLength);
                 byte[] teamNameBytes = Encoding.ASCII.GetBytes(teamName);
                 namesFile.Write(teamNameBytes, 0, NameFileConstants.TeamNameLength);
             }
@@ -131,10 +133,19 @@ namespace ArgData
         {
             foreach (var team in teams)
             {
-                string engineName = team.Engine.PadRight(NameFileConstants.TeamNameLength, '\0');
+                string engineName = PadTruncate(team.Engine, NameFileConstants.TeamNameLength);
                 byte[] engineNameBytes = Encoding.ASCII.GetBytes(engineName);
                 namesFile.Write(engineNameBytes, 0, NameFileConstants.TeamNameLength);
             }
+        }
+
+        private static string PadTruncate(string value, int wantedLength)
+        {
+            var trimmedValue = value.Length < wantedLength
+                ? value
+                : value.Substring(0, wantedLength - 1);
+
+            return trimmedValue.PadRight(wantedLength, '\0');
         }
     }
 

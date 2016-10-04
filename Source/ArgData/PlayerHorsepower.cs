@@ -1,4 +1,5 @@
-﻿using ArgData.IO;
+﻿using System;
+using ArgData.IO;
 
 namespace ArgData
 {
@@ -63,12 +64,28 @@ namespace ArgData
         /// <summary>
         /// Writes the horsepower value for the player. The default value is 716.
         /// </summary>
-        /// <param name="horsepower">Player horsepower value.</param>
+        /// <param name="horsepower">Player horsepower value. Permitted values between 1 and 1460.</param>
         public void WritePlayerHorsepower(int horsepower)
         {
-            ushort rawHorsepower = (ushort)((horsepower * 22) + 632);
+            Validate(horsepower);
+
+            ushort rawHorsepower = RawValueFromHorsepower(horsepower);
 
             new FileWriter(_exeFile.ExePath).WriteUInt16(rawHorsepower, _exeFile.GetPlayerHorsepowerPosition());
+        }
+
+        private void Validate(int horsepower)
+        {
+            if (horsepower < 1)
+                throw new ArgumentOutOfRangeException(nameof(horsepower));
+
+            if (RawValueFromHorsepower(horsepower) > short.MaxValue)
+                throw new ArgumentOutOfRangeException(nameof(horsepower));
+        }
+
+        private ushort RawValueFromHorsepower(int horsepower)
+        {
+            return (ushort)(horsepower * 22 + 632);
         }
     }
 }

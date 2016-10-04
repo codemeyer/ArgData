@@ -10,7 +10,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void ReadingOriginalDriverNumbersReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
+        public void ReadDriverNumbers_OriginalDrivers_HaveExpectedNumbers(GpExeVersionInfo exeVersionInfo)
         {
             var driverNumberReader = ExampleDataHelper.DriverNumberReaderForDefault(exeVersionInfo);
 
@@ -27,7 +27,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void WritingNumbersStoresExpectedValues(GpExeVersionInfo exeVersionInfo)
+        public void WriteDriverNumbers_WithKnownValues_StoresExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -58,7 +58,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void IfLessThan_26_ActiveDriversThenThrowException(GpExeVersionInfo exeVersionInfo)
+        public void WriteDriverNumbers_LessThan_26_ActiveDrivers_ThrowsException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -78,7 +78,7 @@ namespace ArgData.Tests
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
-        public void DriverNumberHigherThan40ThrowsException(GpExeVersionInfo exeVersionInfo)
+        public void WriteDriverNumbers_AnyDriverNumberHigherThan40_ThrowsException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -89,6 +89,35 @@ namespace ArgData.Tests
                 Action act = () => driverNumberWriter.WriteDriverNumbers(driverNumbers);
 
                 act.ShouldThrow<Exception>();
+            }
+        }
+
+        [Fact]
+        public void DriverNumberReaderFor_WithNull_ThrowsArgumentNullException()
+        {
+            Action act = () => DriverNumberReader.For(null);
+
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void DriverNumberWriterFor_WithNull_ThrowsArgumentNullException()
+        {
+            Action act = () => DriverNumberWriter.For(null);
+
+            act.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void WriteDriverNumbers_Null_ThrowsArgumentNullException()
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var driverNumberWriter = DriverNumberWriter.For(context.ExeFile);
+
+                Action act = () => driverNumberWriter.WriteDriverNumbers(null);
+
+                act.ShouldThrow<ArgumentNullException>();
             }
         }
     }

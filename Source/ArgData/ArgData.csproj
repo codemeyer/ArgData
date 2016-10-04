@@ -77,11 +77,16 @@
     <Compile Include="Entities\Team.cs" />
     <Compile Include="Setups.cs" />
     <Compile Include="TeamHorsepower.cs" />
+    <Compile Include="Validation\DriverNumberValidator.cs" />
+    <Compile Include="Validation\TeamIndexValidator.cs" />
     <Compile Include="WetWeather.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ArgData.nuspec" />
+    <None Include="ArgData.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

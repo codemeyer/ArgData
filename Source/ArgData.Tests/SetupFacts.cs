@@ -89,9 +89,9 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE", TestDataFileType.Exe);
 
-            Action act = () => SetupReader.ReadSingle(path);
+            Action action = () => SetupReader.ReadSingle(path);
 
-            act.ShouldThrow<Exception>();
+            action.ShouldThrow<Exception>();
         }
 
         [Fact]
@@ -143,9 +143,9 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE", TestDataFileType.Exe);
 
-            Action act = () => SetupReader.ReadMultiple(path);
+            Action action = () => SetupReader.ReadMultiple(path);
 
-            act.ShouldThrow<Exception>();
+            action.ShouldThrow<Exception>();
         }
 
         [Fact]
@@ -376,6 +376,22 @@ namespace ArgData.Tests
             Action action = () => SetupReader.ReadMultiple(nonExistingFile);
 
             action.ShouldThrow<FileNotFoundException>();
+        }
+
+        [Fact]
+        public void WriteSingle_SetupNull_ThrowsArgumentNullException()
+        {
+            Action action = () => SetupWriter.WriteSingle(null, "any-path.set");
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void WriteMultiple_SetupNull_ThrowsArgumentNullException()
+        {
+            Action action = () => SetupWriter.WriteMultiple(null, "any-path.set");
+
+            action.ShouldThrow<ArgumentNullException>();
         }
     }
 }

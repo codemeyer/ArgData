@@ -127,8 +127,16 @@ namespace ArgData
         /// <param name="gripLevels">GripLevelList with grip levels.</param>
         public void WriteRaceGripLevels(GripLevelList gripLevels)
         {
+            Validate(gripLevels);
+
             int position = _exeFile.GetRaceGripLevelPositions(0);
             new FileWriter(_exeFile.ExePath).WriteBytes(gripLevels.ToArray(), position);
+        }
+
+        private static void Validate(GripLevelList gripLevels)
+        {
+            if (gripLevels == null)
+                throw new ArgumentNullException(nameof(gripLevels));
         }
 
         /// <summary>
@@ -150,6 +158,8 @@ namespace ArgData
         /// <param name="gripLevels">GripLevelList with of grip levels.</param>
         public void WriteQualifyingGripLevels(GripLevelList gripLevels)
         {
+            Validate(gripLevels);
+
             int position = _exeFile.GetQualifyingGripLevelPositions(0);
             new FileWriter(_exeFile.ExePath).WriteBytes(gripLevels.ToArray(), position);
         }

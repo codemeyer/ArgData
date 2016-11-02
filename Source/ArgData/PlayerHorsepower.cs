@@ -83,7 +83,7 @@ namespace ArgData
                 throw new ArgumentOutOfRangeException(nameof(horsepower));
         }
 
-        private ushort RawValueFromHorsepower(int horsepower)
+        private static ushort RawValueFromHorsepower(int horsepower)
         {
             return (ushort)(horsepower * 22 + 632);
         }

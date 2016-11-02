@@ -188,17 +188,17 @@ namespace ArgData.Tests
         [Fact]
         public void HelmetColorReaderFor_WithNull_ThrowsArgumentNullException()
         {
-            Action act = () => HelmetColorReader.For(null);
+            Action action = () => HelmetColorReader.For(null);
 
-            act.ShouldThrow<ArgumentNullException>();
+            action.ShouldThrow<ArgumentNullException>();
         }
 
         [Fact]
         public void HelmetColorWriterFor_WithNull_ThrowsArgumentNullException()
         {
-            Action act = () => HelmetColorWriter.For(null);
+            Action action = () => HelmetColorWriter.For(null);
 
-            act.ShouldThrow<ArgumentNullException>();
+            action.ShouldThrow<ArgumentNullException>();
         }
     }
 }

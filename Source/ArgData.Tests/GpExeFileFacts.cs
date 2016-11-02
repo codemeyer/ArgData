@@ -11,9 +11,9 @@ namespace ArgData.Tests
         {
             string exePath = ExampleDataHelper.GetExampleDataPath("not.gpexe", TestDataFileType.Exe);
 
-            Action act = () => GpExeFile.At(exePath);
+            Action action = () => GpExeFile.At(exePath);
 
-            act.ShouldThrow<Exception>();
+            action.ShouldThrow<ArgumentException>();
         }
 
         [Theory]

@@ -34,9 +34,9 @@ namespace ArgData.Tests
         {
             string exampleDataPath = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE", TestDataFileType.Exe);
 
-            Action act = () => PreferencesReader.For(PreferencesFile.At(exampleDataPath));
+            Action action = () => PreferencesReader.For(PreferencesFile.At(exampleDataPath));
 
-            act.ShouldThrow<Exception>();
+            action.ShouldThrow<ArgumentException>();
         }
 
         [Fact]
@@ -60,9 +60,23 @@ namespace ArgData.Tests
             using (var context = ExampleDataContext.PreferencesCopy())
             {
                 var preferencesWriter = PreferencesWriter.For(PreferencesFile.At(context.FilePath));
-                Action act = () => preferencesWriter.SetAutoLoadedNameFile("123456789012345678901234567890123");
 
-                act.ShouldThrow<Exception>();
+                Action action = () => preferencesWriter.SetAutoLoadedNameFile("123456789012345678901234567890123");
+
+                action.ShouldThrow<ArgumentOutOfRangeException>();
+            }
+        }
+
+        [Fact]
+        public void Write_SetAutoLoadedNamesWithNullPath_ThrowsException()
+        {
+            using (var context = ExampleDataContext.PreferencesCopy())
+            {
+                var preferencesWriter = PreferencesWriter.For(PreferencesFile.At(context.FilePath));
+
+                Action action = () => preferencesWriter.SetAutoLoadedNameFile(null);
+
+                action.ShouldThrow<ArgumentNullException>();
             }
         }
 

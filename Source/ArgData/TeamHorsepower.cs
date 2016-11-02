@@ -1,5 +1,6 @@
 ﻿using System;
 using ArgData.IO;
+using ArgData.Validation;
 
 namespace ArgData
 {
@@ -34,6 +35,8 @@ namespace ArgData
         /// <returns>Team horsepower value.</returns>
         public int ReadTeamHorsepower(int teamIndex)
         {
+            TeamIndexValidator.Validate(teamIndex);
+
             int position = _exeFile.GetTeamHorsepowerPosition(teamIndex);
 
             ushort horsepower = new FileReader(_exeFile.ExePath).ReadUShort(position);
@@ -73,8 +76,7 @@ namespace ArgData
         /// <param name="horsepower">Horsepower value to write.</param>
         public void WriteTeamHorsepower(int teamIndex, int horsepower)
         {
-            if (teamIndex < 0 || teamIndex >= Constants.NumberOfTeams)
-                throw new ArgumentOutOfRangeException(nameof(teamIndex), "teamIndex must be between 0 and 19.");
+            TeamIndexValidator.Validate(teamIndex);
 
             int position = _exeFile.GetTeamHorsepowerPosition(teamIndex);
 

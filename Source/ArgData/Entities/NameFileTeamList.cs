@@ -17,7 +17,7 @@ namespace ArgData.Entities
         public NameFileTeamList()
         {
             _teams = new List<Team>();
-            for (int i = 1; i <= 20; i++)
+            for (int i = 1; i <= Constants.NumberOfTeams; i++)
             {
                 _teams.Add(new Team
                 {
@@ -62,9 +62,9 @@ namespace ArgData.Entities
         {
             get
             {
-                if (index < 0 || index > 19)
+                if (index < 0 || index > Constants.NumberOfTeams-1)
                 {
-                    throw new ArgumentOutOfRangeException(nameof(index), "Index must be between 0 and 19");
+                    throw new ArgumentOutOfRangeException(nameof(index), $"Index must be between 0 and {Constants.NumberOfTeams-1}");
                 }
                 return _teams[index];
             }

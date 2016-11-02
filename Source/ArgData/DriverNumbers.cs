@@ -88,7 +88,7 @@ namespace ArgData
             fileWriter.WriteBytes(allDriverNumberBytes.ToArray(), _exeFile.GetDriverNumbersPosition(0));
         }
 
-        private void CheckDriverNumbers(DriverNumberList driverNumbers)
+        private static void CheckDriverNumbers(DriverNumberList driverNumbers)
         {
             byte[] numbers = driverNumbers.GetNumbers();
 
@@ -96,12 +96,12 @@ namespace ArgData
 
             if (activeCount < 26)
             {
-                throw new Exception("Too few active drivers. Must be at least 26.");
+                throw new ArgumentException("Too few active drivers. Must be at least 26.");
             }
 
             if (numbers.Any(driverNumber => driverNumber > 40))
             {
-                throw new Exception("Too high driver number specified. A driver number cannot be higher than 40.");
+                throw new ArgumentException("Too high driver number specified. A driver number cannot be higher than 40.");
             }
         }
     }

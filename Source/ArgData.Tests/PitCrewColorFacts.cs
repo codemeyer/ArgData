@@ -51,7 +51,7 @@ namespace ArgData.Tests
             for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
             {
                 byte b = Convert.ToByte(i + 1);
-                pitCrewList[i] = new PitCrew(new[] { b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b });
+                pitCrewList[i] = new PitCrew(new[] {b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b});
             }
 
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -119,6 +119,32 @@ namespace ArgData.Tests
             Action action = () => PitCrewColorWriter.For(null);
 
             action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void WritePitCrewColors_NullPitCrew_ThrowsArgumentNullException()
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var pitCrewColorWriter = PitCrewColorWriter.For(context.ExeFile);
+
+                Action action = () => pitCrewColorWriter.WritePitCrewColors(null, 1);
+
+                action.ShouldThrow<ArgumentNullException>();
+            }
+        }
+
+        [Fact]
+        public void WritePitCrewColors_NullList_ThrowsArgumentNullException()
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var pitCrewColorWriter = PitCrewColorWriter.For(context.ExeFile);
+
+                Action action = () => pitCrewColorWriter.WritePitCrewColors(null);
+
+                action.ShouldThrow<ArgumentNullException>();
+            }
         }
     }
 }

@@ -12,23 +12,23 @@ namespace ArgData
     /// </summary>
     public class PreferencesReader
     {
-        private readonly PreferencesFile _prefsFile;
+        private readonly PreferencesFile _preferencesFile;
 
         /// <summary>
         /// Creates a PreferencesReader for the specified F1PREFS.DAT file.
         /// </summary>
-        /// <param name="prefsFile">PreferencesFile to read from.</param>
+        /// <param name="preferencesFile">PreferencesFile to read from.</param>
         /// <returns>PreferencesReader.</returns>
-        public static PreferencesReader For(PreferencesFile prefsFile)
+        public static PreferencesReader For(PreferencesFile preferencesFile)
         {
-            if (prefsFile == null) { throw new ArgumentNullException(nameof(prefsFile)); }
+            if (preferencesFile == null) { throw new ArgumentNullException(nameof(preferencesFile)); }
 
-            return new PreferencesReader(prefsFile);
+            return new PreferencesReader(preferencesFile);
         }
 
-        private PreferencesReader(PreferencesFile prefsFile)
+        private PreferencesReader(PreferencesFile preferencesFile)
         {
-            _prefsFile = prefsFile;
+            _preferencesFile = preferencesFile;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace ArgData
         /// <returns>Relative path and name of name file. If no file is set to auto-load, returns null.</returns>
         public string GetAutoLoadedNameFile()
         {
-            var fileReader = new FileReader(_prefsFile.Path);
+            var fileReader = new FileReader(_preferencesFile.Path);
 
             byte activated = fileReader.ReadByte(PreferencesContants.AutoLoadNameFileActivatedPosition);
 
@@ -63,23 +63,23 @@ namespace ArgData
     /// </summary>
     public class PreferencesWriter
     {
-        private readonly PreferencesFile _prefsFile;
+        private readonly PreferencesFile _preferencesFile;
 
         /// <summary>
         /// Creates a PreferencesWriter for the specified F1PREFS.DAT file.
         /// </summary>
-        /// <param name="prefsFile">PreferencesFiles to read from.</param>
+        /// <param name="preferencesFile">PreferencesFile to read from.</param>
         /// <returns>PreferencesWriter.</returns>
-        public static PreferencesWriter For(PreferencesFile prefsFile)
+        public static PreferencesWriter For(PreferencesFile preferencesFile)
         {
-            if (prefsFile == null) { throw new ArgumentNullException(nameof(prefsFile)); }
+            if (preferencesFile == null) { throw new ArgumentNullException(nameof(preferencesFile)); }
 
-            return new PreferencesWriter(prefsFile);
+            return new PreferencesWriter(preferencesFile);
         }
 
-        private PreferencesWriter(PreferencesFile prefsFile)
+        private PreferencesWriter(PreferencesFile preferencesFile)
         {
-            _prefsFile = prefsFile;
+            _preferencesFile = preferencesFile;
         }
 
         /// <summary>
@@ -88,12 +88,13 @@ namespace ArgData
         /// <param name="nameFilePath">Relative path to F1GP installation. Max 31 chars.</param>
         public void SetAutoLoadedNameFile(string nameFilePath)
         {
-            if (nameFilePath.Length > 31)
-            {
-                throw new Exception($"The path '{nameFilePath}' exceeds the max length of 31 chars.");
-            }
+            if (string.IsNullOrEmpty(nameFilePath))
+                throw new ArgumentNullException(nameof(nameFilePath));
 
-            var writer = new FileWriter(_prefsFile.Path);
+            if (nameFilePath.Length > 31)
+                throw new ArgumentOutOfRangeException($"The path '{nameFilePath}' exceeds the max length of 31 chars.");
+
+            var writer = new FileWriter(_preferencesFile.Path);
 
             string pathToWrite = nameFilePath.PadRight(PreferencesContants.AutoLoadNameFileLength, '\0');
             byte[] pathBytes = Encoding.ASCII.GetBytes(pathToWrite);
@@ -101,7 +102,7 @@ namespace ArgData
             writer.WriteByte(255, PreferencesContants.AutoLoadNameFileActivatedPosition);
             writer.WriteBytes(pathBytes, PreferencesContants.AutoLoadNameFilePathPosition);
 
-            ChecksumCalculator.UpdateChecksum(_prefsFile.Path);
+            ChecksumCalculator.UpdateChecksum(_preferencesFile.Path);
         }
     }
 

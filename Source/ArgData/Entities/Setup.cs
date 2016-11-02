@@ -1,4 +1,6 @@
-﻿namespace ArgData.Entities
+﻿using System;
+
+namespace ArgData.Entities
 {
     /// <summary>
     /// Single car setup.
@@ -53,6 +55,7 @@
         /// <summary>
         /// Gets or sets the brake balance value. Allowed values between -32 (Rear) and 32 (Front).
         /// </summary>
+        [CLSCompliant(false)]
         public sbyte BrakeBalance { get; set; }
 
         /// <summary>

@@ -10,21 +10,21 @@ namespace ArgData.Entities
     {
         internal string Path { get; }
 
-        private PreferencesFile(string prefsPath)
+        private PreferencesFile(string path)
         {
-            Path = prefsPath;
+            Path = path;
         }
 
         /// <summary>
         /// Returns a reference to a Preferences file at the specified location.
         /// </summary>
-        /// <param name="prefsPath"></param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        public static PreferencesFile At(string prefsPath)
+        public static PreferencesFile At(string path)
         {
-            ValidatePreferencesFile(prefsPath);
+            ValidatePreferencesFile(path);
 
-            return new PreferencesFile(prefsPath);
+            return new PreferencesFile(path);
         }
 
         private static void ValidatePreferencesFile(string path)
@@ -33,7 +33,7 @@ namespace ArgData.Entities
 
             if (fileInfo.Length != PreferencesContants.PreferencesFileLength)
             {
-                throw new Exception($"The file '{path}' does not appear to be a preferences file.");
+                throw new ArgumentException($"The file '{path}' does not appear to be a preferences file.");
             }
         }
     }

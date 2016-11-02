@@ -157,6 +157,19 @@ namespace ArgData.Tests
             }
         }
 
+        [Fact]
+        public void WriteRaceGripLevels_NullList_ThrowsArgumentNullException()
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var gripLevelWriter = GripLevelWriter.For(context.ExeFile);
+
+                Action action = () => gripLevelWriter.WriteRaceGripLevels(null);
+
+                action.ShouldThrow<ArgumentNullException>();
+            }
+        }
+
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
@@ -298,6 +311,19 @@ namespace ArgData.Tests
             }
         }
 
+        [Fact]
+        public void WriteQualifyingGripLevels_NullList_ThrowsArgumentNullException()
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var gripLevelWriter = GripLevelWriter.For(context.ExeFile);
+
+                Action action = () => gripLevelWriter.WriteQualifyingGripLevels(null);
+
+                action.ShouldThrow<ArgumentNullException>();
+            }
+        }
+
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
@@ -316,17 +342,17 @@ namespace ArgData.Tests
         [Fact]
         public void GripLevelReader_WithNull_ThrowsArgumentNullException()
         {
-            Action act = () => GripLevelReader.For(null);
+            Action action = () => GripLevelReader.For(null);
 
-            act.ShouldThrow<ArgumentNullException>();
+            action.ShouldThrow<ArgumentNullException>();
         }
 
         [Fact]
         public void GripLevelWriterFor_WithNull_ThrowsArgumentNullException()
         {
-            Action act = () => GripLevelWriter.For(null);
+            Action action = () => GripLevelWriter.For(null);
 
-            act.ShouldThrow<ArgumentNullException>();
+            action.ShouldThrow<ArgumentNullException>();
         }
     }
 }

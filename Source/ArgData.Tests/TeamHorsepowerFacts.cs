@@ -71,7 +71,39 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(0)]
-        [InlineData(19)]
+        [InlineData(17)]
+        public void ReadTeamHorsepower_InsideRange_DoesNotThrowArgumentOutOfRangeException(int teamIndex)
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var horsepowerWriter = TeamHorsepowerReader.For(context.ExeFile);
+
+                Action action = () => horsepowerWriter.ReadTeamHorsepower(teamIndex);
+
+                action.ShouldNotThrow<ArgumentOutOfRangeException>();
+            }
+
+        }
+
+        [Theory]
+        [InlineData(-1)]
+        [InlineData(18)]
+        public void ReadTeamHorsepower_OutsideRange_DoesNotThrowArgumentOutOfRangeException(int teamIndex)
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var horsepowerWriter = TeamHorsepowerReader.For(context.ExeFile);
+
+                Action action = () => horsepowerWriter.ReadTeamHorsepower(teamIndex);
+
+                action.ShouldThrow<ArgumentOutOfRangeException>();
+            }
+
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(17)]
         public void WriteTeamHorsepower_InsideRange_DoesNotThrowArgumentOutOfRangeException(int teamIndex)
         {
             using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
@@ -86,7 +118,7 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(-1)]
-        [InlineData(20)]
+        [InlineData(18)]
         public void WriteTeamHorsepower_OutsideRange_ThrowsArgumentOutOfRangeException(int teamIndex)
         {
             using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))

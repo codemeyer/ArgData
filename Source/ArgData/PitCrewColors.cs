@@ -2,6 +2,7 @@
 using System.Linq;
 using ArgData.Entities;
 using ArgData.IO;
+using ArgData.Validation;
 
 namespace ArgData
 {
@@ -102,6 +103,9 @@ namespace ArgData
         /// <param name="teamIndex">Index of the team to write the colors for.</param>
         public void WritePitCrewColors(PitCrew pitCrew, int teamIndex)
         {
+            if (pitCrew == null) throw new ArgumentNullException(nameof(pitCrew));
+            TeamIndexValidator.Validate(teamIndex);
+
             byte[] pitCrewBytes = pitCrew.GetColorsToWriteToFile();
             int position = _exeFile.GetPitCrewColorsPosition(teamIndex);
 
@@ -114,6 +118,8 @@ namespace ArgData
         /// <param name="pitCrewList">PitCrewList with colors to write.</param>
         public void WritePitCrewColors(PitCrewList pitCrewList)
         {
+            if (pitCrewList == null) throw new ArgumentNullException(nameof(pitCrewList));
+
             int teamIndex = 0;
 
             foreach (PitCrew pitCrew in pitCrewList)

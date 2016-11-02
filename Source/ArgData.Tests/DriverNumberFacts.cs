@@ -69,9 +69,9 @@ namespace ArgData.Tests
                 }
                 var driverNumberWriter = DriverNumberWriter.For(context.ExeFile);
 
-                Action act = () => driverNumberWriter.WriteDriverNumbers(driverNumbers);
+                Action action = () => driverNumberWriter.WriteDriverNumbers(driverNumbers);
 
-                act.ShouldThrow<Exception>();
+                action.ShouldThrow<ArgumentException>();
             }
         }
 
@@ -86,26 +86,26 @@ namespace ArgData.Tests
                 var driverNumberWriter = DriverNumberWriter.For(context.ExeFile);
 
                 driverNumbers[10] = 41;
-                Action act = () => driverNumberWriter.WriteDriverNumbers(driverNumbers);
+                Action action = () => driverNumberWriter.WriteDriverNumbers(driverNumbers);
 
-                act.ShouldThrow<Exception>();
+                action.ShouldThrow<ArgumentException>();
             }
         }
 
         [Fact]
         public void DriverNumberReaderFor_WithNull_ThrowsArgumentNullException()
         {
-            Action act = () => DriverNumberReader.For(null);
+            Action action = () => DriverNumberReader.For(null);
 
-            act.ShouldThrow<ArgumentNullException>();
+            action.ShouldThrow<ArgumentNullException>();
         }
 
         [Fact]
         public void DriverNumberWriterFor_WithNull_ThrowsArgumentNullException()
         {
-            Action act = () => DriverNumberWriter.For(null);
+            Action action = () => DriverNumberWriter.For(null);
 
-            act.ShouldThrow<ArgumentNullException>();
+            action.ShouldThrow<ArgumentNullException>();
         }
 
         [Fact]
@@ -115,9 +115,9 @@ namespace ArgData.Tests
             {
                 var driverNumberWriter = DriverNumberWriter.For(context.ExeFile);
 
-                Action act = () => driverNumberWriter.WriteDriverNumbers(null);
+                Action action = () => driverNumberWriter.WriteDriverNumbers(null);
 
-                act.ShouldThrow<ArgumentNullException>();
+                action.ShouldThrow<ArgumentNullException>();
             }
         }
     }

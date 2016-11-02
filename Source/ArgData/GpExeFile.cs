@@ -51,15 +51,54 @@ namespace ArgData
         /// </summary>
         public string ExePath { get; }
 
+        /// <summary>
+        /// Position of player horsepower value in the file.
+        /// </summary>
         protected abstract int PlayerHorsepowerPosition { get; }
+
+        /// <summary>
+        /// Start position of team horsepower values in the file.
+        /// </summary>
         protected abstract int TeamHorsepowerPosition { get; }
+
+        /// <summary>
+        /// Start position of car colors in the file.
+        /// </summary>
         protected abstract int CarColorsPosition { get; }
+
+        /// <summary>
+        /// Start position of driver race grip level values in the file.
+        /// </summary>
         protected abstract int RaceGripLevelsPosition { get; }
+
+        /// <summary>
+        /// Start position of driver qualifying grip level values in the file.
+        /// </summary>
         protected abstract int QualifyingGripLevelsPosition { get; }
+
+        /// <summary>
+        /// Start position of driver numbers in the file.
+        /// </summary>
         protected abstract int DriverNumbersPosition { get; }
+
+        /// <summary>
+        /// Start position of pit crew colors in the file.
+        /// </summary>
         protected abstract int PitCrewColorsPosition { get; }
+
+        /// <summary>
+        /// Start position of helmet colors in the file.
+        /// </summary>
         protected abstract int HelmetColorsPosition { get; }
+
+        /// <summary>
+        /// Position of the value indicating the change of rain in the first race.
+        /// </summary>
         protected abstract int RainAtFirstTrackPosition { get; }
+
+        /// <summary>
+        /// Position of the value indicating the overall chance of rain at a race.
+        /// </summary>
         protected abstract int ChanceOfRainPosition { get; }
 
         internal int GetPlayerHorsepowerPosition()
@@ -79,9 +118,11 @@ namespace ArgData
             return CarColorsPosition;
         }
 
+        internal const int ColorsPerPitCrew = 16;
+
         internal int GetPitCrewColorsPosition(int teamIndex)
         {
-            return PitCrewColorsPosition + (teamIndex * ColorsPerTeam);
+            return PitCrewColorsPosition + (teamIndex * ColorsPerPitCrew);
         }
 
         internal int GetPitCrewColorsPosition()
@@ -166,7 +207,7 @@ namespace ArgData
                     return new Us105GpExeFile(exePath);
                 default:
                     string msg = $"The specified file is of type {exeInfo}. ArgData currently supports European105 and Us105.";
-                    throw new Exception(msg);
+                    throw new ArgumentException(msg);
             }
         }
     }

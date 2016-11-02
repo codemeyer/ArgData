@@ -85,7 +85,7 @@ namespace ArgData
 
             if (fileInfo.Length != 14)
             {
-                throw new Exception($"The file '{path}' does not appear to be a setup file.");
+                throw new ArgumentException($"The file '{path}' does not appear to be a setup file.");
             }
         }
 
@@ -98,7 +98,7 @@ namespace ArgData
 
             if (fileInfo.Length != 326)
             {
-                throw new Exception($"The file '{path}' does not appear to be a multi-setup file.");
+                throw new ArgumentException($"The file '{path}' does not appear to be a multi-setup file.");
             }
         }
 
@@ -206,12 +206,18 @@ namespace ArgData
 
         private static void Validate(Setup setup)
         {
+            if (setup == null)
+                throw new ArgumentNullException(nameof(setup));
+
             if (!setup.IsValid)
                 throw new ArgumentOutOfRangeException(nameof(setup), "One or more setups is invalid.");
         }
 
         private static void Validate(SetupList setups)
         {
+            if (setups == null)
+                throw new ArgumentNullException(nameof(setups));
+
             foreach (var setup in setups.QualifyingSetups)
             {
                 if (!setup.IsValid)

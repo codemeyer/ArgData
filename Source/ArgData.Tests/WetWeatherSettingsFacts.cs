@@ -123,5 +123,18 @@ namespace ArgData.Tests
 
             action.ShouldThrow<ArgumentNullException>();
         }
+
+        [Fact]
+        public void WriteSettings_NullSettings_ThrowsArgumentNullException()
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var writer = WetWeatherSettingsWriter.For(context.ExeFile);
+
+                Action action = () => writer.WriteSettings(null);
+
+                action.ShouldThrow<ArgumentNullException>();
+            }
+        }
     }
 }

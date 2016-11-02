@@ -36,7 +36,7 @@ namespace ArgData
 
             if (fileInfo.Length != 1484)
             {
-                throw new Exception($"The file '{path}' does not appear to be a name file.");
+                throw new ArgumentException($"The file '{path}' does not appear to be a name file.");
             }
         }
 

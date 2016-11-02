@@ -88,6 +88,9 @@ namespace ArgData
         /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void WriteSettings(WetWeatherSettings settings)
         {
+            if (settings == null)
+                throw new ArgumentNullException(nameof(settings));
+
             if (settings.ChanceOfRain > 100)
             {
                 throw new ArgumentOutOfRangeException(nameof(settings), settings.ChanceOfRain, "ChanceOfRain cannot be greater than 100%");

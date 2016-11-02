@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
@@ -47,7 +48,7 @@ namespace ArgData.Tests
 
             foreach (var driver in savedGame.Drivers)
             {
-                driver.Results.Count.Should().Be(3);
+                driver.Results.Count().Should().Be(3);
             }
         }
 
@@ -89,7 +90,7 @@ namespace ArgData.Tests
 
             foreach (var driver in savedGame.Drivers)
             {
-                driver.Results.Count.Should().Be(8);
+                driver.Results.Count().Should().Be(8);
             }
         }
 

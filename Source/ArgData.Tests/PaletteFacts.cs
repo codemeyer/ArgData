@@ -80,7 +80,7 @@ namespace ArgData.Tests
         {
             for (int i = 0; i <= 255; i++)
             {
-                List<int> range = Palette.GetRangeForColor(i);
+                IList<int> range = Palette.GetRangeForColor(i);
 
                 range.Should().NotBeNull($"Color {i} not found in range.");
             }

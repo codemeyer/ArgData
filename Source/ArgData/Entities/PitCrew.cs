@@ -21,9 +21,9 @@ namespace ArgData.Entities
         /// <param name="pitCrewColorBytes">The colors to set. Must be exactly 16.</param>
         public PitCrew(byte[] pitCrewColorBytes)
         {
-            if (pitCrewColorBytes.Length != GpExeFile.ColorsPerTeam)
+            if (pitCrewColorBytes.Length != GpExeFile.ColorsPerPitCrew)
             {
-                throw new Exception($"PitCrew must be created with {GpExeFile.ColorsPerTeam} colors");
+                throw new ArgumentException($"PitCrew must be created with {GpExeFile.ColorsPerTeam} colors");
             }
 
             SetColors(pitCrewColorBytes);

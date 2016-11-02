@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ArgData
 {
@@ -371,7 +373,8 @@ namespace ArgData
         {
             Validate(index);
 
-            List<int> range = GetRangeForColor(index);
+            IList<int> range = GetRangeForColor(index);
+
             int indexInRange = range.IndexOf(index);
 
             if (indexInRange < range.Count - 1)
@@ -391,7 +394,7 @@ namespace ArgData
         {
             Validate(index);
 
-            List<int> range = GetRangeForColor(index);
+            IList<int> range = GetRangeForColor(index);
             int indexInRange = range.IndexOf(index);
 
             if (indexInRange > 0)
@@ -416,7 +419,7 @@ namespace ArgData
         /// </summary>
         /// <param name="index">Index of color to get range for.</param>
         /// <returns>The color range as a list of indexes.</returns>
-        public static List<int> GetRangeForColor(int index)
+        public static IList<int> GetRangeForColor(int index)
         {
             return _ranges.FirstOrDefault(r => r.Contains(index));
         }

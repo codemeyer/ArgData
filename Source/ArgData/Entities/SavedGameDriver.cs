@@ -18,6 +18,6 @@ namespace ArgData.Entities
         /// <summary>
         /// Gets the results of the driver in the saved game.
         /// </summary>
-        public List<int> Results { get; set; }
+        public IEnumerable<int> Results { get; internal set; }
     }
 }

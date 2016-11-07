@@ -1,0 +1,9 @@
+site_name: ArgData
+site_description: F1GP Data Library
+site_favicon: favicon.ico
+copyright: Copyright &copy; 2014-2016 Fredrik Meyer
+repo_url: https://github.com/codemeyer/ArgData
+theme: yeti
+pages:
+- Home: index.md
+- API: api.md

@@ -81,6 +81,21 @@ namespace ArgData.Tests
         }
 
         [Fact]
+        public void Write_DisableAutoLoadedNames_SetsValueToNull()
+        {
+            using (var context = ExampleDataContext.PreferencesCopy())
+            {
+                var preferencesWriter = PreferencesWriter.For(PreferencesFile.At(context.FilePath));
+                preferencesWriter.DisableAutoLoadedNameFile();
+
+                var preferencesReader = PreferencesReader.For(PreferencesFile.At(context.FilePath));
+                string nameFile = preferencesReader.GetAutoLoadedNameFile();
+
+                nameFile.Should().BeNull();
+            }
+        }
+
+        [Fact]
         public void CreateReaderFor_Null_ThrowsArgumentNullException()
         {
             Action action = () => PreferencesReader.For(null);

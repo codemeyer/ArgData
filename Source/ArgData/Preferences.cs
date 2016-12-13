@@ -104,6 +104,22 @@ namespace ArgData
 
             ChecksumCalculator.UpdateChecksum(_preferencesFile.Path);
         }
+
+        /// <summary>
+        /// Disables auto-loading of any name file in the game.
+        /// </summary>
+        public void DisableAutoLoadedNameFile()
+        {
+            var writer = new FileWriter(_preferencesFile.Path);
+
+            string pathToWrite = "".PadRight(PreferencesContants.AutoLoadNameFileLength, '\0');
+            byte[] pathBytes = Encoding.ASCII.GetBytes(pathToWrite);
+
+            writer.WriteByte(0, PreferencesContants.AutoLoadNameFileActivatedPosition);
+            writer.WriteBytes(pathBytes, PreferencesContants.AutoLoadNameFilePathPosition);
+
+            ChecksumCalculator.UpdateChecksum(_preferencesFile.Path);
+        }
     }
 
     internal static class PreferencesContants

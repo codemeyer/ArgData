@@ -3,9 +3,6 @@
     <AdditionalFilesToIncludeForProject>
       <Value>..\..\TestData\**.*</Value>
     </AdditionalFilesToIncludeForProject>
-    <IgnoredTests>
-      <AllTestsSelector />
-    </IgnoredTests>
     <PreviouslyBuiltSuccessfully>True</PreviouslyBuiltSuccessfully>
   </Settings>
 </ProjectConfiguration>

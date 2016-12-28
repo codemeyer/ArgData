@@ -67,14 +67,14 @@ namespace ArgData
         protected abstract int CarColorsPosition { get; }
 
         /// <summary>
-        /// Start position of driver race grip level values in the file.
+        /// Start position of driver race performance level values in the file.
         /// </summary>
-        protected abstract int RaceGripLevelsPosition { get; }
+        protected abstract int DriverRacePerformanceLevelsPosition { get; }
 
         /// <summary>
-        /// Start position of driver qualifying grip level values in the file.
+        /// Start position of driver qualifying performance level values in the file.
         /// </summary>
-        protected abstract int QualifyingGripLevelsPosition { get; }
+        protected abstract int DriverQualifyingPerformanceLevelsPosition { get; }
 
         /// <summary>
         /// Start position of driver numbers in the file.
@@ -145,24 +145,24 @@ namespace ArgData
             return TeamHorsepowerPosition + (teamIndex * 2);
         }
 
-        internal int GetRaceGripLevelPosition()
+        internal int GetDriverRacePerformanceLevelPosition()
         {
-            return RaceGripLevelsPosition;
+            return DriverRacePerformanceLevelsPosition;
         }
 
-        internal int GetRaceGripLevelPositions(int driverNumber)
+        internal int GetDriverRacePerformanceLevelPositions(int driverNumber)
         {
-            return RaceGripLevelsPosition + driverNumber - 1;
+            return DriverRacePerformanceLevelsPosition + driverNumber - 1;
         }
 
-        internal int GetQualifyingGripLevelPosition()
+        internal int GetDriverPerformanceQualifyingPosition()
         {
-            return QualifyingGripLevelsPosition;
+            return DriverQualifyingPerformanceLevelsPosition;
         }
 
-        internal int GetQualifyingGripLevelPositions(int driverNumber)
+        internal int GetDriverQualifyingPerformanceLevelPositions(int driverNumber)
         {
-            return QualifyingGripLevelsPosition + driverNumber - 1;
+            return DriverQualifyingPerformanceLevelsPosition + driverNumber - 1;
         }
 
         internal int GetHelmetColorsPosition(int helmetIndex)
@@ -217,8 +217,8 @@ namespace ArgData
         protected override int PlayerHorsepowerPosition => 19848;
         protected override int TeamHorsepowerPosition => 158336;
         protected override int CarColorsPosition => 158456;
-        protected override int RaceGripLevelsPosition => 158416;
-        protected override int QualifyingGripLevelsPosition => 158376;
+        protected override int DriverRacePerformanceLevelsPosition => 158416;
+        protected override int DriverQualifyingPerformanceLevelsPosition => 158376;
         protected override int DriverNumbersPosition => 154892;
         protected override int PitCrewColorsPosition => 159377;
         protected override int HelmetColorsPosition => 158751;
@@ -235,8 +235,8 @@ namespace ArgData
         protected override int PlayerHorsepowerPosition => 19848;
         protected override int TeamHorsepowerPosition => 158380;
         protected override int CarColorsPosition => 158500;
-        protected override int RaceGripLevelsPosition => 158460;
-        protected override int QualifyingGripLevelsPosition => 158420;
+        protected override int DriverRacePerformanceLevelsPosition => 158460;
+        protected override int DriverQualifyingPerformanceLevelsPosition => 158420;
         protected override int DriverNumbersPosition => 154936;
         protected override int PitCrewColorsPosition => 159421;
         protected override int HelmetColorsPosition => 158795;

@@ -56,9 +56,9 @@ namespace ArgData.Tests
             return DriverNumberReader.For(GpExeFile.At(GpExePath(exeVersionInfo)));
         }
 
-        internal static GripLevelReader GripLevelReaderForDefault(GpExeVersionInfo exeVersionInfo)
+        internal static DriverPerformanceReader DriverPerformanceLevelReaderForDefault(GpExeVersionInfo exeVersionInfo)
         {
-            return GripLevelReader.For(GpExeFile.At(GpExePath(exeVersionInfo)));
+            return DriverPerformanceReader.For(GpExeFile.At(GpExePath(exeVersionInfo)));
         }
 
         internal static string GpExePath(GpExeVersionInfo exeVersion)

@@ -47,7 +47,7 @@
     <Compile Include="Entities\Car.cs" />
     <Compile Include="CarColors.cs" />
     <Compile Include="Entities\Driver.cs" />
-    <Compile Include="Entities\GripLevelList.cs" />
+    <Compile Include="Entities\DriverPerformanceList.cs" />
     <Compile Include="Entities\Helmet.cs" />
     <Compile Include="Entities\HelmetList.cs" />
     <Compile Include="Entities\NameFileDriverList.cs" />
@@ -60,7 +60,7 @@
     <Compile Include="Entities\WetWeatherSettings.cs" />
     <Compile Include="GpChecksum.cs" />
     <Compile Include="GpExeVersionInfo.cs" />
-    <Compile Include="GripLevels.cs" />
+    <Compile Include="DriverPerformance.cs" />
     <Compile Include="HelmetColors.cs" />
     <Compile Include="IO\FileReader.cs" />
     <Compile Include="IO\FileWriter.cs" />

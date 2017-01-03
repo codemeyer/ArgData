@@ -77,6 +77,11 @@ namespace ArgData
         protected abstract int DriverQualifyingPerformanceLevelsPosition { get; }
 
         /// <summary>
+        /// Position of the general AI grip level.
+        /// </summary>
+        protected abstract int GeneralGripLevelPosition { get; }
+
+        /// <summary>
         /// Start position of driver numbers in the file.
         /// </summary>
         protected abstract int DriverNumbersPosition { get; }
@@ -165,6 +170,11 @@ namespace ArgData
             return DriverQualifyingPerformanceLevelsPosition + driverNumber - 1;
         }
 
+        internal int GetGeneralGripLevelPosition()
+        {
+            return GeneralGripLevelPosition;
+        }
+
         internal int GetHelmetColorsPosition(int helmetIndex)
         {
             int bytesForPreviousHelmets = _bytesPerHelmet.Take(helmetIndex).Sum(b => b);
@@ -219,6 +229,7 @@ namespace ArgData
         protected override int CarColorsPosition => 158456;
         protected override int DriverRacePerformanceLevelsPosition => 158416;
         protected override int DriverQualifyingPerformanceLevelsPosition => 158376;
+        protected override int GeneralGripLevelPosition => 20183;
         protected override int DriverNumbersPosition => 154892;
         protected override int PitCrewColorsPosition => 159377;
         protected override int HelmetColorsPosition => 158751;
@@ -237,6 +248,7 @@ namespace ArgData
         protected override int CarColorsPosition => 158500;
         protected override int DriverRacePerformanceLevelsPosition => 158460;
         protected override int DriverQualifyingPerformanceLevelsPosition => 158420;
+        protected override int GeneralGripLevelPosition => 20183;
         protected override int DriverNumbersPosition => 154936;
         protected override int PitCrewColorsPosition => 159421;
         protected override int HelmetColorsPosition => 158795;

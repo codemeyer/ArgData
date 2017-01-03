@@ -67,7 +67,7 @@
     <Compile Include="Entities\PitCrewFacts.cs" />
     <Compile Include="Entities\SetupFacts.cs" />
     <Compile Include="GpExeFileFacts.cs" />
-    <Compile Include="DriverPerformanceLevelFacts.cs" />
+    <Compile Include="DriverPerformanceFacts.cs" />
     <Compile Include="HelmetColorFacts.cs" />
     <Compile Include="Meta\EnvironmentSetupFacts.cs" />
     <Compile Include="NameFileFacts.cs" />

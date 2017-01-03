@@ -17,7 +17,8 @@ The ArgData API currently supports the following:
 - Changing driver numbers/which drivers are enabled in-game
 - Changing computer car horsepower levels
 - Changing player car horsepower level
-- Updating computer car grip levels for race and qualifying
+- Updating computer car performance for race and qualifying
+- Updating the general computer car grip level
 - Reading and creating new name files
 - Reading and creating new single-setup and multiple-setup files
 - Changing the likelihood of wet races

@@ -5,7 +5,7 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class DriverPerformanceLevelFacts
+    public class DriverPerformanceFacts
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
@@ -353,6 +353,87 @@ namespace ArgData.Tests
             Action action = () => DriverPerformanceWriter.For(null);
 
             action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void ReadGeneralGripLevel_DefaultFile_Returns1()
+        {
+            var reader = ExampleDataHelper.DriverPerformanceLevelReaderForDefault(GpExeVersionInfo.European105);
+
+            int generalGrip = reader.ReadGeneralGripLevel();
+
+            generalGrip.Should().Be(1);
+        }
+
+        [Fact]
+        public void ReadGeneralGripLevel_FileWithValue50_Returns50()
+        {
+            var path = ExampleDataHelper.GetExampleDataPath("GP-EU-AI-50.EXE", TestDataFileType.Exe);
+            var reader = DriverPerformanceReader.For(GpExeFile.At(path));
+
+            int generalGrip = reader.ReadGeneralGripLevel();
+
+            generalGrip.Should().Be(50);
+        }
+
+        [Fact]
+        public void WriteGeneralGripLevel_StoreDefaultValue1_ValueIsStored()
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var writer = DriverPerformanceWriter.For(context.ExeFile);
+
+                writer.WriteGeneralGripLevel(1);
+
+                var reader = DriverPerformanceReader.For(context.ExeFile);
+                var value = reader.ReadGeneralGripLevel();
+
+                value.Should().Be(1);
+                // TODO: check signature?
+            }
+        }
+
+        [Fact]
+        public void WriteGeneralGripLevel_StoreNonDefaultValue25_ValueIsStored()
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var writer = DriverPerformanceWriter.For(context.ExeFile);
+
+                writer.WriteGeneralGripLevel(25);
+
+                var reader = DriverPerformanceReader.For(context.ExeFile);
+                var value = reader.ReadGeneralGripLevel();
+
+                value.Should().Be(25);
+                // TODO: check signature?
+            }
+        }
+
+        [Fact]
+        public void WriteGeneralGripLevel_ValueLessThan1_ThrowsException()
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var performanceLevelWriter = DriverPerformanceWriter.For(context.ExeFile);
+
+                Action action = () => performanceLevelWriter.WriteGeneralGripLevel(0);
+
+                action.ShouldThrow<ArgumentOutOfRangeException>();
+            }
+        }
+
+        [Fact]
+        public void WriteGeneralGripLevel_ValueGreaterThan100_ThrowsException()
+        {
+            using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
+            {
+                var performanceLevelWriter = DriverPerformanceWriter.For(context.ExeFile);
+
+                Action action = () => performanceLevelWriter.WriteGeneralGripLevel(101);
+
+                action.ShouldThrow<ArgumentOutOfRangeException>();
+            }
         }
     }
 }

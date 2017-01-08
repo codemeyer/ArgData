@@ -70,7 +70,9 @@ where _list_ is a [CarList](#carlist) object containing a list of 18 [Car](#car)
 
 ### DriverNumberReader
 
-A **DriverNumberReader** is used to read the list of driver numbers.
+A **DriverNumberReader** is used to read the list of driver numbers. The [DriverNumberList](#drivernumberlist) contains
+a list of 40 "slots", where each slot represents the number of the driver in that slot. To disable a driver slot, set
+the number to 0. See more details and restrictions in the [DriverNumberList](#drivernumberlist) section.
 
 To construct a **DriverNumberReader**, use the static **For** method, supplying a reference to a [GpExe](#gpexe) object:
 
@@ -92,7 +94,9 @@ This will return a [DriverNumberList](#drivernumberlist).
 
 ### DriverNumberWriter
 
-A **DriverNumberWriter** is used to write the list of driver numbers.
+A **DriverNumberWriter** is used to write the list of driver numbers. The [DriverNumberList](#drivernumberlist) contains
+a list of 40 "slots", where each slot represents the number of the driver in that slot. To disable a driver slot, set
+the number to 0. See more details and restrictions in the [DriverNumberList](#drivernumberlist) section.
 
 To construct a **DriverNumberWriter**, use the static **For** method, supplying a reference to a [GpExe](#gpexe) object:
 
@@ -112,75 +116,93 @@ where _list_ is a [DriverNumberList](#drivernumberlist).
 
 
 
-### GripLevelReader
+### DriverPerformanceReader
 
-A **GripLevelReader** is used to read the grip levels of the computer car drivers.
+A **DriverPerformanceReader** is used to read the performance levels of the computer car drivers and the general AI grip.
 
-The grip level is a byte value between 1 and 255 that represents the grip level for the driver,
-where a lower value means more grip. Think of it as a grip "penalty".
+The performance level is a byte value between 1 and 255 that represents the performance level for the driver,
+where a lower value means better performance and faster lap times. Think of the value as a performance "penalty".
 
-To construct a **GripLevelReader**, use the static **For** method, supplying a reference to a [GpExe](#gpexe) object:
+The general AI grip represents a level of grip that affects all computer cars.
+
+To construct a **DriverPerformanceReader**, use the static **For** method, supplying a reference to a [GpExe](#gpexe) object:
 
 ```csharp
-var gripLevelReader = GripLevelReader.For(GpExeFile.At(@"C:\Games\GPRIX\GP.EXE"));
+var performanceReader = DriverPerformanceReader.For(GpExeFile.At(@"C:\Games\GPRIX\GP.EXE"));
 ```
 
-There are two different grip levels for drivers, the qualifying levels and the race levels. Reading a whole list of all driver's
-grip levels can be done with these methods:
+There are two different performance levels for drivers, the qualifying levels and the race levels. Reading a whole list of all driver's
+performance levels can be done with these methods:
 
 ```
-var qualGripLevels = gripLevelReader.ReadQualifyingGripLevels();
-var raceGripLevels = gripLevelReader.ReadRaceGripLevels();
+var qualLevels = performanceReader.ReadQualifyingPerformanceLevels();
+var raceLevels = performanceReader.ReadRacePerformanceLevels();
 ```
 
-These will return [GripLevelList](#griplevellist) 
+These will return [DriverPerformanceList](#driverperformancelist) 
 
 
-It is also possible to read individual drivers' grip levels using:
+It is also possible to read individual drivers' performance levels using:
 
 ```
-var qualGripLevel = gripLevelReader.ReadQualifyingGripLevel(driverIndex);
-var raceGripLevel = gripLevelReader.ReadRaceGripLevel(driverIndex);
+var qualLevel = performanceReader.ReadQualifyingPerformanceLevel(driverNumber);
+var raceLevel = performanceReader.ReadRacePerformanceLevel(driverNumber);
 ```
 
-where _driverIndex_ is the zero-based index of the driver.
+where _driverNumber_ is the number of the driver.
+
+
+To read the general AI grip level, use:
+
+```
+var gripLevel = performanceReader.ReadGeneralGripLevel();
+```
 
 <br />
 
 
 
-### GripLevelWriter
+### DriverPerformanceWriter
 
-A **GripLevelWriter** is used to write the grip levels of the computer car drivers.
+A **DriverPerformanceWriter** is used to write the performance levels of the computer car drivers.
 
-The grip level is a byte value between 1 and 255 that represents the grip level for the driver,
-where a lower value means more grip. Think of it as a grip "penalty".
+The performance level is a byte value between 1 and 255 that represents the performance of the driver,
+where a lower value means better performance and faster lap times. Think of the value as a performance "penalty".
 
-To construct a **GripLevelWriter**, use the static **For** method, supplying a reference to a [GpExe](#gpexe) object:
+To construct a **DriverPerformanceWriter**, use the static **For** method, supplying a reference to a [GpExe](#gpexe) object:
 
 ```csharp
-var gripLevelWriter = GripLevelWriter.For(GpExeFile.At(@"C:\Games\GPRIX\GP.EXE"));
+var performanceWriter = DriverPerformanceWriter.For(GpExeFile.At(@"C:\Games\GPRIX\GP.EXE"));
 ```
 
-There are two different grip levels for drivers, the qualifying levels and the race levels. Writing a whole list of all driver's
-grip levels can be done with these methods:
+There are two different performance levels for drivers, the qualifying levels and the race levels. Writing a whole list of all driver's
+performance levels can be done with these methods:
 
 ```
-gripLevelWriter.WriteQualifyingGripLevels(gripLevels);
-gripLevelWriter.WriteRaceGripLevels(gripLevels);
+performanceWriter.WriteQualifyingPerformanceLevels(performanceLevels);
+performanceWriter.WriteRacePerformanceLevels(performanceLevels);
 ```
 
-where _gripLevels_ is a [GripLevelList](#griplevellist). 
+where _performanceLevels_ is a [DriverPerformanceList](#driverperformancelist). 
 
 
-It is also possible to write individual drivers' grip levels using:
+It is also possible to write individual drivers' performance levels using:
 
 ```
-gripLevelWriter.WriteQualifyingGripLevel(driverIndex, gripLevel);
-gripLevelWriter.WriteRaceGripLevel(driverIndex, gripLevel);
+performanceWriter.WriteQualifyingPerformanceLevels(driverNumber, performanceLevel);
+performanceWriter.WriteRacePerformanceLevels(driverNumber, performanceLevel);
 ```
 
-where _driverIndex_ is the zero-based index of the driver and _gripLevel_ is the byte value representing the grip level.
+where _driverNumber_ is the number of the driver and _performanceLevel_ is the byte value representing the performance level.
+
+
+To write the general AI grip level, use:
+
+```
+performanceWriter.WriteGeneralGripLevel(gripLevel);
+```
+
+Where _gripLevel_ is a value between 1 and 100. The default value is 1.
 
 <br />
 
@@ -433,7 +455,7 @@ setup.RearWing = 34;
 SetupWriter.WriteSingle(setup, @"C:\Games\GPRIX\gpsaves\setups\silverst.set");
 ```
 
-**ReadMultiple** takes a path and a [SetupList](#setuplist) containing setups for all tracks.
+**WriteMultiple** takes a path and a [SetupList](#setuplist) containing setups for all tracks.
 
 ```csharp
 var setups = new SetupList();
@@ -442,6 +464,7 @@ SetupWriter.WriteMultiple(setupList, @"C:\Games\GPRIX\gpsaves\setups\all.set");
 ```
 
 <br />
+
 
 
 ### TeamHorsepowerReader
@@ -485,6 +508,7 @@ writer.WriteTeamHorsepower(index, hp);
 Where _index_ is the zero-based index of the team to read the value for, and _hp_ is the horsepower value.
 
 <br />
+
 
 
 ### WetWeatherSettingsReader
@@ -556,10 +580,34 @@ Has methods for working with the F1GP palette.
 Entities that are used when editing data.
 
 ### Car
+
+A **Car** represents each team's car in the game. There are 13 panels
+that can be painted.
+
+<br />
+
+
 ### CarList
 ### Driver
 ### DriverNumberList
-### GripLevelList
+
+A **DriverNumberList** is a list of 40 driver "slots", where each slot contains
+the number that the driver will have in-game.
+
+To disable a "slot", set the number to 0.
+
+Some restrictions apply:
+- There must be at least 26 enabled drivers or the game will crash
+- Two drivers cannot share numbers
+- The available numbers range from 1 to 40
+
+It is not recommended to use the last four slots, since these cannot be properly
+accessed in the menu. Therefore, the actual maximum number of drivers is 36.
+
+<br />
+
+
+### DriverPerformanceList
 ### Helmet
 ### HelmetList
 ### NameFile
@@ -573,4 +621,19 @@ Entities that are used when editing data.
 ### Setup
 ### SetupList
 ### Team
+
+<br />
+
+
 ### WetWeatherSettings
+
+Represents the settings that concern wet weather racing.
+
+**RainAtFirstTrack** is a bool that specifies
+if wet weather is possible for races that take place on the first track (i.e. Phoenix). The default value
+is false.
+
+**ChanceOfRain** states the risk of wet weather races in percent. Values are slightly rounded to adhere
+to a 0-100% range. The default value is 6% (which is actually 6.25%)
+
+<br />

@@ -11,29 +11,33 @@ It is used in the new F1GP editor [ArgEditor](http://manicomio.se/argeditor).
 
 The ArgData API currently supports the following:
 
-- Updating car colors
-- Updating helmet colors (in-game, not menu)
-- Updating pit crew colors
-- Changing driver numbers/which drivers are enabled in-game
-- Changing computer car horsepower levels
-- Changing player car horsepower level
-- Updating computer car performance for race and qualifying
-- Updating the general computer car grip level
-- Reading and creating new name files
-- Reading and creating new single-setup and multiple-setup files
-- Changing the likelihood of wet races
-- Enabling/disabling the possibility of rain at the US GP
-- Reading race results from a saved season game
-- Set a name file to be read automatically when the game starts
-- Updating the checksum of existing files (names, tracks, setups)
+* Updating car colors
+* Updating helmet colors (in-game, not menu)
+* Updating pit crew colors
+* Changing driver numbers/which drivers are enabled in-game
+* Changing computer car horsepower levels
+* Changing player car horsepower level
+* Updating computer car performance levels for races and qualifying sessions
+* Updating the general computer car grip level
+* Reading and creating new name files
+* Reading and creating new single-setup and multiple-setup files
+* Changing the likelihood of wet races
+* Enabling/disabling the possibility of rain at the US GP
+* Reading race results from a saved season game
+* Set a name file to be read automatically when the game starts
+* Updating the checksum of existing files (names, tracks, setups)
 
-For full API documentation, including examples of how to use the library,
-see the [full API documentation](http://manicomio.se/argdata).
+For an introduction to how to use the API, including simple examples and a full reference section,
+see the [API documentation](http://manicomio.se/argdata).
+
+The API is continuously (albeit slowly) being improved and extended. To see what is in the pipeline,
+have a look at the [roadmap](ROADMAP.md).
 
 
 ### Contributing
 
-Contributions are always welcome and much appreciated. If you want to contribute to ArgData, see the [guidelines for contributing](CONTRIBUTING.MD).
+Contributions are always welcome and much appreciated. If you want to contribute research data or actual code
+to ArgData, see the [guidelines for contributing](CONTRIBUTING.md).
 
 
 ### Acknowledgements

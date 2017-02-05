@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using ArgData.Validation;
 
 namespace ArgData
 {
@@ -157,6 +158,7 @@ namespace ArgData
 
         internal int GetDriverRacePerformanceLevelPositions(int driverNumber)
         {
+            DriverNumberValidator.Validate(driverNumber);
             return DriverRacePerformanceLevelsPosition + driverNumber - 1;
         }
 
@@ -167,6 +169,7 @@ namespace ArgData
 
         internal int GetDriverQualifyingPerformanceLevelPositions(int driverNumber)
         {
+            DriverNumberValidator.Validate(driverNumber);
             return DriverQualifyingPerformanceLevelsPosition + driverNumber - 1;
         }
 

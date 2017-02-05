@@ -162,7 +162,7 @@ namespace ArgData
         {
             Validate(driverPerformances);
 
-            int position = _exeFile.GetDriverRacePerformanceLevelPositions(0);
+            int position = _exeFile.GetDriverRacePerformanceLevelPositions(1);
             new FileWriter(_exeFile.ExePath).WriteBytes(driverPerformances.ToArray(), position);
         }
 
@@ -193,7 +193,7 @@ namespace ArgData
         {
             Validate(driverPerformances);
 
-            int position = _exeFile.GetDriverQualifyingPerformanceLevelPositions(0);
+            int position = _exeFile.GetDriverQualifyingPerformanceLevelPositions(1);
             new FileWriter(_exeFile.ExePath).WriteBytes(driverPerformances.ToArray(), position);
         }
 

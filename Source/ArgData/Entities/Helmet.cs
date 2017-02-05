@@ -155,5 +155,22 @@ namespace ArgData.Entities
 
             return helmetBytes.ToArray();
         }
+
+        /// <summary>
+        /// Copies all colors from the source into this Helmet.
+        /// </summary>
+        /// <param name="source">Source Helmet to copy colors from.</param>
+        public void Copy(Helmet source)
+        {
+            if (source == null) { throw new ArgumentNullException(nameof(source)); }
+
+            Visor = source.Visor;
+            VisorSurround = source.VisorSurround;
+
+            for (int i = 0; i <= Stripes.Length - 1; i++)
+            {
+                Stripes[i] = source.Stripes[i];
+            }
+        }
     }
 }

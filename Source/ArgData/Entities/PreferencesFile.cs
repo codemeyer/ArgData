@@ -36,5 +36,15 @@ namespace ArgData.Entities
                 throw new ArgumentException($"The file '{path}' does not appear to be a preferences file.");
             }
         }
+
+        internal string GetFullPath(string relative)
+        {
+            var prefsPath = System.IO.Path.GetDirectoryName(Path);
+            var targetDirectory = System.IO.Path.GetDirectoryName(relative);
+            var targetFullPath = System.IO.Path.Combine(prefsPath, targetDirectory);
+            var fullPath = System.IO.Path.Combine(targetFullPath, System.IO.Path.GetFileName(relative));
+
+            return fullPath;
+        }
     }
 }

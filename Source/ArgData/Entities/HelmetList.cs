@@ -27,7 +27,7 @@ namespace ArgData.Entities
         /// <param name="helmet"></param>
         public void SetByDriverNumber(byte driverNumber, Helmet helmet)
         {
-            _list[driverNumber - 1] = helmet;
+            _list[driverNumber - 1].Copy(helmet);
         }
 
         /// <summary>

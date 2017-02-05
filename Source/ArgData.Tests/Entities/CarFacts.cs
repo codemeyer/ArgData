@@ -24,5 +24,35 @@ namespace ArgData.Tests.Entities
 
             action.ShouldThrow<ArgumentOutOfRangeException>();
         }
+
+        [Fact]
+        public void Copy_TransfersAllColors()
+        {
+            var sourceCar = new Car
+            {
+                CockpitSide = 55,
+                FrontWingEndplate = 66,
+                NoseSide = 77,
+                Sidepod = 88
+            };
+            var targetCar = new Car();
+
+            targetCar.Copy(sourceCar);
+
+            targetCar.CockpitSide.Should().Be(55);
+            targetCar.FrontWingEndplate.Should().Be(66);
+            targetCar.NoseSide.Should().Be(77);
+            targetCar.Sidepod.Should().Be(88);
+        }
+
+        [Fact]
+        public void Copy_NullCar_ThrowsArgumentNullException()
+        {
+            var car = new Car();
+
+            Action action = () => car.Copy(null);
+
+            action.ShouldThrow<ArgumentNullException>();
+        }
     }
 }

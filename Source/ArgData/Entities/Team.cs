@@ -8,11 +8,11 @@ namespace ArgData.Entities
         /// <summary>
         /// Gets or sets the name of the team.
         /// </summary>
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         /// <summary>
         /// Gets or sets the name of the engine manufacturer.
         /// </summary>
-        public string Engine { get; set; }
+        public string Engine { get; set; } = string.Empty;
     }
 }

@@ -140,5 +140,29 @@ namespace ArgData.Entities
 
             return carBytes;
         }
+
+        /// <summary>
+        /// Copies all colors from the source into this Car.
+        /// </summary>
+        /// <param name="source">Source Car to copy colors from.</param>
+        public void Copy(Car source)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            CockpitFront = source.CockpitFront;
+            CockpitSide = source.CockpitSide;
+            EngineCover = source.EngineCover;
+            EngineCoverRear = source.EngineCoverRear;
+            EngineCoverSide = source.EngineCoverSide;
+            FrontAndRearWing = source.FrontAndRearWing;
+            FrontWingEndplate = source.FrontWingEndplate;
+            NoseAngle = source.NoseAngle;
+            NoseSide = source.NoseSide;
+            NoseTop = source.NoseTop;
+            RearWingSide = source.RearWingSide;
+            Sidepod = source.Sidepod;
+            SidepodTop = source.SidepodTop;
+        }
     }
 }

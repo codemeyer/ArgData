@@ -33,6 +33,16 @@ namespace ArgData.Entities
         }
 
         /// <summary>
+        /// Gets or sets the driver number at the specified index.
+        /// </summary>
+        /// <param name="index"></param>
+        public int this[int index]
+        {
+            get { return _driverNumbers[index]; }
+            set { _driverNumbers[index] = (byte)value; }
+        }
+
+        /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>
         /// <returns>

@@ -61,6 +61,7 @@
     <Compile Include="DriverNumberFacts.cs" />
     <Compile Include="Entities\CarFacts.cs" />
     <Compile Include="DefaultData\DefaultCarColors.cs" />
+    <Compile Include="Entities\CarSetFacts.cs" />
     <Compile Include="Entities\HelmetFacts.cs" />
     <Compile Include="Entities\NameFileDriverListFacts.cs" />
     <Compile Include="Entities\NameFileTeamListFacts.cs" />

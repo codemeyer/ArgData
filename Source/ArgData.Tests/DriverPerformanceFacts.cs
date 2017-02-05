@@ -212,11 +212,11 @@ namespace ArgData.Tests
 
                 var performanceLevelReader = DriverPerformanceReader.For(context.ExeFile);
 
-                for (byte i = 0; i < 2; i++)
+                for (byte i = 1; i < 3; i++)
                 {
                     var performance = performanceLevelReader.ReadRacePerformanceLevel(i);
 
-                    performance.Should().Be((byte)(i + 1));
+                    performance.Should().Be(i);
                 }
             }
         }
@@ -263,11 +263,11 @@ namespace ArgData.Tests
 
                 var performanceLevelReader = DriverPerformanceReader.For(context.ExeFile);
 
-                for (byte i = 0; i < 2; i++)
+                for (byte i = 1; i < 3; i++)
                 {
                     var performance = performanceLevelReader.ReadQualifyingPerformanceLevel(i);
 
-                    performance.Should().Be((byte)(i + 1));
+                    performance.Should().Be(i);
                 }
             }
         }

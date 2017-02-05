@@ -100,5 +100,21 @@ namespace ArgData.Entities
 
             return carBytes;
         }
+
+        /// <summary>
+        /// Copies all colors from the source into this PitCrew.
+        /// </summary>
+        /// <param name="source">Source PitCrew to copy colors from.</param>
+        public void Copy(PitCrew source)
+        {
+            if (source == null)
+                throw new ArgumentNullException(nameof(source));
+
+            ShirtPrimary = source.ShirtPrimary;
+            ShirtSecondary = source.ShirtSecondary;
+            PantsPrimary = source.PantsPrimary;
+            PantsSecondary = source.PantsSecondary;
+            Socks = source.Socks;
+        }
     }
 }

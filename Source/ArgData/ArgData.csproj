@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="ChecksumCalculator.cs" />
+    <Compile Include="Entities\CarSet.cs" />
     <Compile Include="Entities\DriverNumberList.cs" />
     <Compile Include="Entities\CarList.cs" />
     <Compile Include="DriverNumbers.cs" />

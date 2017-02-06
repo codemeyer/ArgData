@@ -7,7 +7,7 @@ namespace ArgData.Entities
     /// <summary>
     /// Represents a list of 40 drivers to be saved to a name file.
     /// </summary>
-    public class NameFileDriverList : IReadOnlyList<Driver>
+    public class NameFileDriverList : IEnumerable<Driver>
     {
         private readonly List<Driver> _drivers;
 
@@ -37,9 +37,12 @@ namespace ArgData.Entities
             return _drivers.GetEnumerator();
         }
 
+        /// <summary>
+        /// Returns an enumerator that iterates through the collection.
+        /// </summary>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetEnumerator();
+            return _drivers.GetEnumerator();
         }
 
         /// <summary>

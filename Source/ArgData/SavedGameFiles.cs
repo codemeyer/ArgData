@@ -25,7 +25,7 @@ namespace ArgData
             byte[] bytes = File.ReadAllBytes(path);
 
             int numberOfRacesCompleted = GetNumberOfRacesCompleted(bytes);
-            List<SavedGameDriver> drivers = ParseDrivers(bytes, numberOfRacesCompleted);
+            SavedGameDriverList drivers = ParseDrivers(bytes, numberOfRacesCompleted);
 
             var savedGame = new SavedGame(drivers, numberOfRacesCompleted);
 
@@ -38,7 +38,7 @@ namespace ArgData
             return races;
         }
 
-        private static List<SavedGameDriver> ParseDrivers(byte[] bytes, int racesCompleted)
+        private static SavedGameDriverList ParseDrivers(byte[] bytes, int racesCompleted)
         {
             var drivers = new List<SavedGameDriver>();
 
@@ -61,7 +61,7 @@ namespace ArgData
                 drivers.Add(driver);
             }
 
-            return drivers;
+            return new SavedGameDriverList(drivers);
         }
 
         private static string GetNameAtPosition(byte[] nameData, int position)

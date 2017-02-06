@@ -7,7 +7,7 @@ namespace ArgData.Entities
     /// <summary>
     /// Represents a list of 20 teams to be saved to a name file.
     /// </summary>
-    public class NameFileTeamList : IReadOnlyList<Team>
+    public class NameFileTeamList : IEnumerable<Team>
     {
         private readonly List<Team> _teams;
 

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ArgData.Entities
+﻿namespace ArgData.Entities
 {
     /// <summary>
     /// A saved game containing a list of drivers and their results.
@@ -12,7 +10,7 @@ namespace ArgData.Entities
         /// </summary>
         /// <param name="drivers">Drivers who have competed.</param>
         /// <param name="numberOfRacesCompleted">Number of races completed.</param>
-        internal SavedGame(List<SavedGameDriver> drivers, int numberOfRacesCompleted)
+        internal SavedGame(SavedGameDriverList drivers, int numberOfRacesCompleted)
         {
             Drivers = drivers;
             NumberOfRacesCompleted = numberOfRacesCompleted;
@@ -26,6 +24,6 @@ namespace ArgData.Entities
         /// <summary>
         /// The drivers and their results.
         /// </summary>
-        public IReadOnlyList<SavedGameDriver> Drivers { get; private set; }
+        public SavedGameDriverList Drivers { get; private set; }
     }
 }

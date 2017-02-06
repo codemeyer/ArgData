@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
 
@@ -80,7 +81,7 @@ namespace ArgData.Tests
         {
             for (int i = 0; i <= 255; i++)
             {
-                IList<int> range = Palette.GetRangeForColor(i);
+                ReadOnlyList<int> range = Palette.GetRangeForColor(i);
 
                 range.Should().NotBeNull($"Color {i} not found in range.");
             }

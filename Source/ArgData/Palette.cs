@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
+using ArgData.Entities;
 
 namespace ArgData
 {
@@ -373,9 +372,8 @@ namespace ArgData
         {
             Validate(index);
 
-            IList<int> range = GetRangeForColor(index);
-
-            int indexInRange = range.IndexOf(index);
+            ReadOnlyList<int> range = GetRangeForColor(index);
+            int indexInRange = range.List.IndexOf(index);
 
             if (indexInRange < range.Count - 1)
             {
@@ -394,8 +392,8 @@ namespace ArgData
         {
             Validate(index);
 
-            IList<int> range = GetRangeForColor(index);
-            int indexInRange = range.IndexOf(index);
+            ReadOnlyList<int> range = GetRangeForColor(index);
+            int indexInRange = range.List.IndexOf(index);
 
             if (indexInRange > 0)
             {
@@ -419,9 +417,9 @@ namespace ArgData
         /// </summary>
         /// <param name="index">Index of color to get range for.</param>
         /// <returns>The color range as a list of indexes.</returns>
-        public static IList<int> GetRangeForColor(int index)
+        public static ReadOnlyList<int> GetRangeForColor(int index)
         {
-            return _ranges.FirstOrDefault(r => r.Contains(index));
+            return new ReadOnlyList<int>(_ranges.FirstOrDefault(r => r.Contains(index)));
         }
     }
 }

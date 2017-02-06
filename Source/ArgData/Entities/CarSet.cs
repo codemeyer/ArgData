@@ -15,18 +15,20 @@ namespace ArgData.Entities
         /// </summary>
         public CarSet()
         {
+            var list = new List<CarSetTeam>();
+
             for (int i = 0; i <= 17; i++)
             {
-                _teams.Add(new CarSetTeam());
+                list.Add(new CarSetTeam());
             }
-        }
 
-        private readonly List<CarSetTeam> _teams = new List<CarSetTeam>();
+            Teams = new CarSetTeamList(list);
+        }
 
         /// <summary>
         /// List of 18 teams.
         /// </summary>
-        public IReadOnlyList<CarSetTeam> Teams => _teams;
+        public CarSetTeamList Teams { get; }
 
         /// <summary>
         /// Exports the CarSet to the specified GP.EXE file.
@@ -85,7 +87,7 @@ namespace ArgData.Entities
             var horsepowerWriter = TeamHorsepowerWriter.For(exeFile);
             var teamNameList = new NameFileTeamList();
 
-            foreach (var team in _teams)
+            foreach (var team in Teams)
             {
                 carList[teamIndex].Copy(team.Car);
                 pitCrewList[teamIndex].Copy(team.PitCrew);
@@ -357,12 +359,20 @@ namespace ArgData.Entities
     }
 
     /// <summary>
+    /// A list of CarSetTeam items.
+    /// </summary>
+    public class CarSetTeamList : ReadOnlyList<CarSetTeam>
+    {
+        internal CarSetTeamList(IList<CarSetTeam> items) : base(items)
+        {
+        }
+    }
+
+    /// <summary>
     /// Defines a team as it appears in a CarSet.
     /// </summary>
     public class CarSetTeam : Team
     {
-        private readonly List<CarSetDriver> _drivers;
-
         /// <summary>
         /// Initializes a new CarSetTeam.
         /// </summary>
@@ -370,11 +380,12 @@ namespace ArgData.Entities
         {
             Car = new Car();
             PitCrew = new PitCrew();
-            _drivers = new List<CarSetDriver>
+            var drivers = new List<CarSetDriver>
             {
                 new CarSetDriver(),
                 new CarSetDriver()
             };
+            Drivers = new ReadOnlyList<CarSetDriver>(drivers);
         }
 
         /// <summary>
@@ -385,7 +396,7 @@ namespace ArgData.Entities
         /// <summary>
         /// Drivers in the team.
         /// </summary>
-        public IReadOnlyList<CarSetDriver> Drivers => _drivers;
+        public ReadOnlyList<CarSetDriver> Drivers { get; }
 
         /// <summary>
         /// Car with colors.

@@ -101,6 +101,26 @@ namespace ArgData.Entities
                 return true;
             }
         }
+
+        /// <summary>
+        /// Copies all setup values from the source into this Setup.
+        /// </summary>
+        /// <param name="source"></param>
+        public void Copy(Setup source)
+        {
+            if (source == null) { throw new ArgumentNullException(nameof(source)); }
+
+            FrontWing = source.FrontWing;
+            RearWing = source.RearWing;
+            BrakeBalance = source.BrakeBalance;
+            GearRatio1 = source.GearRatio1;
+            GearRatio2 = source.GearRatio2;
+            GearRatio3 = source.GearRatio3;
+            GearRatio4 = source.GearRatio4;
+            GearRatio5 = source.GearRatio5;
+            GearRatio6 = source.GearRatio6;
+            TyreCompound = source.TyreCompound;
+        }
     }
 
     /// <summary>

@@ -45,14 +45,14 @@ namespace ArgData
             for (int qi = 0; qi <= 15; qi++)
             {
                 byte[] setupBytes = allSetupBytes.Skip(position).Take(10).ToArray();
-                list.QualifyingSetups[qi] = CreateSetupFromByteArray(setupBytes);
+                list.QualifyingSetups[qi].Copy(CreateSetupFromByteArray(setupBytes));
                 position += 10;
             }
 
             for (int ri = 0; ri <= 15; ri++)
             {
                 byte[] setupBytes = allSetupBytes.Skip(position).Take(10).ToArray();
-                list.RaceSetups[ri] = CreateSetupFromByteArray(setupBytes);
+                list.RaceSetups[ri].Copy(CreateSetupFromByteArray(setupBytes));
                 position += 10;
             }
 

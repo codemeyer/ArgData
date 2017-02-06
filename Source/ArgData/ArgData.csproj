@@ -9,9 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ArgData</RootNamespace>
     <AssemblyName>ArgData</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="ChecksumCalculator.cs" />
+    <Compile Include="Entities\ReadOnlyList.cs" />
     <Compile Include="Entities\CarSet.cs" />
     <Compile Include="Entities\DriverNumberList.cs" />
     <Compile Include="Entities\CarList.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Entities\PitCrew.cs" />
     <Compile Include="Entities\PreferencesFile.cs" />
     <Compile Include="Entities\SavedGameDriver.cs" />
+    <Compile Include="Entities\SavedGameDriverList.cs" />
     <Compile Include="Entities\Setup.cs" />
     <Compile Include="Entities\SetupList.cs" />
     <Compile Include="Entities\WetWeatherSettings.cs" />

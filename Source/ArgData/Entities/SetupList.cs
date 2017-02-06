@@ -24,21 +24,21 @@ namespace ArgData.Entities
         /// <summary>
         /// List of the 16 qualifying setups.
         /// </summary>
-        public IList<Setup> QualifyingSetups { get; private set; }
+        public ReadOnlyList<Setup> QualifyingSetups { get; private set; }
 
         /// <summary>
         /// List of the 16 race setups.
         /// </summary>
-        public IList<Setup> RaceSetups { get; private set; }
+        public ReadOnlyList<Setup> RaceSetups { get; private set; }
 
-        private List<Setup> SetupDefaultSetups()
+        private static ReadOnlyList<Setup> SetupDefaultSetups()
         {
             var setups = new List<Setup>();
             for (int i = 0; i <= 15; i++)
             {
                 setups.Add(new Setup());
             }
-            return setups;
+            return new ReadOnlyList<Setup>(setups);
         }
     }
 }

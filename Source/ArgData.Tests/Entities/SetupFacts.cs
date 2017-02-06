@@ -1,4 +1,5 @@
-﻿using ArgData.Entities;
+﻿using System;
+using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
 
@@ -138,6 +139,40 @@ namespace ArgData.Tests.Entities
             };
 
             setup.IsValid.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Copy_CopiesAllValues()
+        {
+            var source = new Setup
+            {
+                FrontWing = 1,
+                RearWing = 2,
+                GearRatio1 = 10,
+                GearRatio2 = 20,
+                GearRatio3 = 30,
+                GearRatio4 = 40,
+                GearRatio5 = 50,
+                GearRatio6 = 60,
+                TyreCompound = SetupTyreCompound.D
+            };
+            var target = new Setup();
+
+            target.Copy(source);
+
+            target.FrontWing.Should().Be(1);
+            target.GearRatio1.Should().Be(10);
+            target.TyreCompound.Should().Be(SetupTyreCompound.D);
+        }
+
+        [Fact]
+        public void Copy_NullSourceThrowsArgumentNullException()
+        {
+            var target = new Setup();
+
+            Action action = () => target.Copy(null);
+
+            action.ShouldThrow<ArgumentNullException>();
         }
     }
 }

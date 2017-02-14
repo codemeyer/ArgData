@@ -37,6 +37,12 @@ namespace ArgData
                 case 321716:
                     return GpExeVersionInfo.Us105;
 
+                case 332890:
+                    return GpExeVersionInfo.European103;
+
+                case 332840:
+                    return GpExeVersionInfo.Us103;
+
                 default:
                     return GpExeVersionInfo.Unknown;
             }

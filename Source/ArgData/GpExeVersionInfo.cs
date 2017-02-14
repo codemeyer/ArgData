@@ -11,9 +11,19 @@
         Unknown,
 
         /// <summary>
+        /// European 1.03. Not supported by ArgData.
+        /// </summary>
+        European103,
+
+        /// <summary>
         /// European 1.05.
         /// </summary>
         European105,
+
+        /// <summary>
+        /// US 1.03, World Circuit. Not supported by ArgData.
+        /// </summary>
+        Us103,
 
         /// <summary>
         /// US 1.05, World Circuit.

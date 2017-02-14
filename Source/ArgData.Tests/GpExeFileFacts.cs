@@ -57,5 +57,45 @@ namespace ArgData.Tests
 
             exeInfo.Should().Be(GpExeVersionInfo.Unknown);
         }
+
+        [Fact]
+        public void DetectsOldEuropeanGpExe()
+        {
+            string path = ExampleDataHelper.GetExampleDataPath("GP-EU103.EXE", TestDataFileType.Exe);
+
+            var exeInfo = GpExeFile.GetFileInfo(path);
+
+            exeInfo.Should().Be(GpExeVersionInfo.European103);
+        }
+
+        [Fact]
+        public void OldEuropeanGpExeCannotBeReferenced()
+        {
+            string path = ExampleDataHelper.GetExampleDataPath("GP-EU103.EXE", TestDataFileType.Exe);
+
+            Action action = () => GpExeFile.At(path);
+
+            action.ShouldThrow<ArgumentException>();
+        }
+
+        [Fact]
+        public void DetectsOldWorldCircuitGpExe()
+        {
+            string path = ExampleDataHelper.GetExampleDataPath("GP-US103.EXE", TestDataFileType.Exe);
+
+            var exeInfo = GpExeFile.GetFileInfo(path);
+
+            exeInfo.Should().Be(GpExeVersionInfo.Us103);
+        }
+
+        [Fact]
+        public void OldWorldCircuitGpExeCannotBeReferenced()
+        {
+            string path = ExampleDataHelper.GetExampleDataPath("GP-US103.EXE", TestDataFileType.Exe);
+
+            Action action = () => GpExeFile.At(path);
+
+            action.ShouldThrow<ArgumentException>();
+        }
     }
 }

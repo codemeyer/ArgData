@@ -62,6 +62,7 @@
     <Compile Include="Entities\SetupList.cs" />
     <Compile Include="Entities\WetWeatherSettings.cs" />
     <Compile Include="GpChecksum.cs" />
+    <Compile Include="GpExeInfo.cs" />
     <Compile Include="GpExeVersionInfo.cs" />
     <Compile Include="DriverPerformance.cs" />
     <Compile Include="HelmetColors.cs" />

@@ -24,28 +24,47 @@ namespace ArgData
         /// Gets info about the specified F1GP executable.
         /// </summary>
         /// <param name="exePath">Path of the file to get info about.</param>
-        /// <returns>GpExeVersionInfo enum describing the file.</returns>
-        public static GpExeVersionInfo GetFileInfo(string exePath)
+        /// <returns>GpExeInfo describing the file.</returns>
+        public static GpExeInfo GetFileInfo(string exePath)
         {
             var fileInfo = new FileInfo(exePath);
+
+            var exeInfo = new GpExeInfo();
 
             switch (fileInfo.Length)
             {
                 case 321878:
-                    return GpExeVersionInfo.European105;
+                    exeInfo.Version = GpExeVersionInfo.European105;
+                    exeInfo.IsKnownExeVersion = true;
+                    exeInfo.IsEditingSupported = true;
+                    break;
 
                 case 321716:
-                    return GpExeVersionInfo.Us105;
+                    exeInfo.Version = GpExeVersionInfo.Us105;
+                    exeInfo.IsKnownExeVersion = true;
+                    exeInfo.IsEditingSupported = true;
+                    break;
 
                 case 332890:
-                    return GpExeVersionInfo.European103;
+                    exeInfo.Version = GpExeVersionInfo.European103;
+                    exeInfo.IsKnownExeVersion = true;
+                    exeInfo.IsEditingSupported = false;
+                    break;
 
                 case 332840:
-                    return GpExeVersionInfo.Us103;
+                    exeInfo.Version = GpExeVersionInfo.Us103;
+                    exeInfo.IsKnownExeVersion = true;
+                    exeInfo.IsEditingSupported = false;
+                    break;
 
                 default:
-                    return GpExeVersionInfo.Unknown;
+                    exeInfo.Version = GpExeVersionInfo.Unknown;
+                    exeInfo.IsKnownExeVersion = false;
+                    exeInfo.IsEditingSupported = false;
+                    break;
             }
+
+            return exeInfo;
         }
 
         internal GpExeFile(string exePath)
@@ -218,7 +237,7 @@ namespace ArgData
         {
             var exeInfo = GpExeFile.GetFileInfo(exePath);
 
-            switch (exeInfo)
+            switch (exeInfo.Version)
             {
                 case GpExeVersionInfo.European105:
                     return new European105GpExeFile(exePath);

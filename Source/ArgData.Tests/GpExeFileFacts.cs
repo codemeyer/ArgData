@@ -29,23 +29,27 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void EuropeanGpExeReturnsExpectedResult()
+        public void EuropeanGpExe105ReturnsExpectedResult()
         {
             string path = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
 
             var exeInfo = GpExeFile.GetFileInfo(path);
 
-            exeInfo.Should().Be(GpExeVersionInfo.European105);
+            exeInfo.Version.Should().Be(GpExeVersionInfo.European105);
+            exeInfo.IsKnownExeVersion.Should().BeTrue();
+            exeInfo.IsEditingSupported.Should().BeTrue();
         }
 
         [Fact]
-        public void WorldCircuitUsGpExeReturnsExpectedResult()
+        public void WorldCircuitUsGpExe105ReturnsExpectedResult()
         {
             string path = ExampleDataHelper.GpExePath(GpExeVersionInfo.Us105);
 
             var exeInfo = GpExeFile.GetFileInfo(path);
 
-            exeInfo.Should().Be(GpExeVersionInfo.Us105);
+            exeInfo.Version.Should().Be(GpExeVersionInfo.Us105);
+            exeInfo.IsKnownExeVersion.Should().BeTrue();
+            exeInfo.IsEditingSupported.Should().BeTrue();
         }
 
         [Fact]
@@ -55,7 +59,9 @@ namespace ArgData.Tests
 
             var exeInfo = GpExeFile.GetFileInfo(path);
 
-            exeInfo.Should().Be(GpExeVersionInfo.Unknown);
+            exeInfo.Version.Should().Be(GpExeVersionInfo.Unknown);
+            exeInfo.IsKnownExeVersion.Should().BeFalse();
+            exeInfo.IsEditingSupported.Should().BeFalse();
         }
 
         [Fact]
@@ -65,7 +71,9 @@ namespace ArgData.Tests
 
             var exeInfo = GpExeFile.GetFileInfo(path);
 
-            exeInfo.Should().Be(GpExeVersionInfo.European103);
+            exeInfo.Version.Should().Be(GpExeVersionInfo.European103);
+            exeInfo.IsKnownExeVersion.Should().BeTrue();
+            exeInfo.IsEditingSupported.Should().BeFalse();
         }
 
         [Fact]
@@ -85,7 +93,9 @@ namespace ArgData.Tests
 
             var exeInfo = GpExeFile.GetFileInfo(path);
 
-            exeInfo.Should().Be(GpExeVersionInfo.Us103);
+            exeInfo.Version.Should().Be(GpExeVersionInfo.Us103);
+            exeInfo.IsKnownExeVersion.Should().BeTrue();
+            exeInfo.IsEditingSupported.Should().BeFalse();
         }
 
         [Fact]

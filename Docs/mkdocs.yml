@@ -4,7 +4,71 @@ site_favicon: favicon.ico
 copyright: Copyright &copy; 2014-2017 Fredrik Meyer
 repo_url: https://github.com/codemeyer/ArgData
 theme: yeti
+extra_css:
+- css/argdata.css
 pages:
 - Home: index.md
-- Overview: overview.md
-- API: api.md
+- Guides:
+  - Overview: overview.md
+  - Quick Start: quick-start.md
+- API:
+  - Reference: api/reference.md
+  - Palette Colors: api/palette-colors.md
+- Remove: 
+  - Car: api\car.md
+  - CarColorReader: api\carcolorreader.md
+  - CarColorWriter: api\carcolorwriter.md
+  - CarList: api\carlist.md
+  - CarSet: api\carset.md
+  - CarSetDriver: api\carsetdriver.md
+  - CarSetTeam: api\carsetteam.md
+  - CarSetTeamList: api\carsetteamlist.md
+  - ChecksumCalculator: api\checksumcalculator.md
+  - Constants: api\constants.md
+  - Driver: api\driver.md
+  - DriverNumberList: api\drivernumberlist.md
+  - DriverNumberReader: api\drivernumberreader.md
+  - DriverNumberWriter: api\drivernumberwriter.md
+  - DriverPerformanceList: api\driverperformancelist.md
+  - DriverPerformanceReader: api\driverperformancereader.md
+  - DriverPerformanceWriter: api\driverperformancewriter.md
+  - GpChecksum: api\gpchecksum.md
+  - GpExeFile: api\gpexefile.md
+  - GpExeInfo: api\gpexeinfo.md
+  - GpExeVersionInfo: api\gpexeversioninfo.md
+  - Helmet: api\helmet.md
+  - HelmetColorReader: api\helmetcolorreader.md
+  - HelmetColorWriter: api\helmetcolorwriter.md
+  - HelmetList: api\helmetlist.md
+  - ImportExportSettings: api\importexportsettings.md
+  - NameFile: api\namefile.md
+  - NameFileDriverList: api\namefiledriverlist.md
+  - NameFileReader: api\namefilereader.md
+  - NameFileTeamList: api\namefileteamlist.md
+  - NameFileWriter: api\namefilewriter.md
+  - Palette: api\palette.md
+  - PitCrew: api\pitcrew.md
+  - PitCrewColorReader: api\pitcrewcolorreader.md
+  - PitCrewColorWriter: api\pitcrewcolorwriter.md
+  - PitCrewList: api\pitcrewlist.md
+  - PlayerHorsepowerReader: api\playerhorsepowerreader.md
+  - PlayerHorsepowerWriter: api\playerhorsepowerwriter.md
+  - PreferencesFile: api\preferencesfile.md
+  - PreferencesReader: api\preferencesreader.md
+  - PreferencesWriter: api\preferenceswriter.md
+  - ReadOnlyList`1: api\readonlylist`1.md
+  - SavedGame: api\savedgame.md
+  - SavedGameDriver: api\savedgamedriver.md
+  - SavedGameDriverList: api\savedgamedriverlist.md
+  - SavedGameFileReader: api\savedgamefilereader.md
+  - Setup: api\setup.md
+  - SetupList: api\setuplist.md
+  - SetupReader: api\setupreader.md
+  - SetupTyreCompound: api\setuptyrecompound.md
+  - SetupWriter: api\setupwriter.md
+  - Team: api\team.md
+  - TeamHorsepowerReader: api\teamhorsepowerreader.md
+  - TeamHorsepowerWriter: api\teamhorsepowerwriter.md
+  - WetWeatherSettings: api\wetweathersettings.md
+  - WetWeatherSettingsReader: api\wetweathersettingsreader.md
+  - WetWeatherSettingsWriter: api\wetweathersettingswriter.md

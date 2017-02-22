@@ -27,13 +27,13 @@ The ArgData API currently supports the following:
 * Set a name file to be read automatically when the game starts
 * Updating the checksum of existing files (names, tracks, setups)
 
-Before you begin to code, you may want to have a look at the [overview](/overview.md).
+Before you begin to code, you may want to have a look at the [overview](./overview).
 The provides general information on which files in F1GP that you edit, and a guide to
 the basic way that the API provides interaction with these files.
 
-For a step-by-step guide to some simple editing, see the [Quick Start guide](/quick-start.md).
+For a step-by-step guide to some simple editing, see the [Quick Start guide](./quick-start).
 
-There is also a full [reference section](/api/reference.md).
+There is also a full [reference section](./api/reference.md).
 
 
 ### Acknowledgements

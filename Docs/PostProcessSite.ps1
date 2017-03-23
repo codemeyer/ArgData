@@ -28,7 +28,7 @@ foreach ($file in $items)
             $start = $i - 1
         }
 
-        if ($start -gt 0 -and $line.Contains("               </li>"))
+        if ($start -gt 0 -and $line.Contains("               </li>") -and $line.Contains("                  </li>") -ne $true)
         {
             $end = $i + 1
             break

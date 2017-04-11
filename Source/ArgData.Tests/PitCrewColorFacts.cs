@@ -66,10 +66,10 @@ namespace ArgData.Tests
 
                 pitCrewColorWriter.WritePitCrewColors(pitCrewList);
 
-                var pitCrewColorReader = PitCrewColorReader.For(context.ExeFile).ReadPitCrewColors();
+                var pitCrewColors = PitCrewColorReader.For(context.ExeFile).ReadPitCrewColors();
 
                 byte expectedColor = 1;
-                foreach (PitCrew pitCrew in pitCrewColorReader)
+                foreach (PitCrew pitCrew in pitCrewColors)
                 {
                     pitCrew.ShirtPrimary.Should().Be(expectedColor);
 

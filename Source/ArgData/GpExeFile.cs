@@ -10,7 +10,7 @@ namespace ArgData
     /// </summary>
     public abstract class GpExeFile
     {
-        internal GpExeInfo ExeInfo;
+        internal readonly GpExeInfo ExeInfo;
 
         /// <summary>
         /// Gets a reference to the GP.EXE file at the specified location.
@@ -154,6 +154,11 @@ namespace ArgData
         /// </summary>
         protected abstract int ChanceOfRainPosition { get; }
 
+        /// <summary>
+        /// Start position of the values that indicate points scored per finishing position.
+        /// </summary>
+        protected abstract int PointsSystemPosition { get; }
+
         internal int GetPlayerHorsepowerPosition()
         {
             return PlayerHorsepowerPosition;
@@ -261,6 +266,11 @@ namespace ArgData
         {
             return ChanceOfRainPosition;
         }
+
+        internal int GetPointsSystemPosition()
+        {
+            return PointsSystemPosition;
+        }
     }
 
     internal static class GpExeFileFactory
@@ -299,6 +309,7 @@ namespace ArgData
         protected override int HelmetColorsPosition => 158751;
         protected override int RainAtFirstTrackPosition => 106319;
         protected override int ChanceOfRainPosition => 58394;
+        protected override int PointsSystemPosition => 158297;
 
         internal Us105GpExeFile(string exePath) : base(exePath)
         {
@@ -318,6 +329,7 @@ namespace ArgData
         protected override int HelmetColorsPosition => 158795;
         protected override int RainAtFirstTrackPosition => 106319;
         protected override int ChanceOfRainPosition => 58394;
+        protected override int PointsSystemPosition => 158341;
 
         internal European105GpExeFile(string exePath) : base(exePath)
         {
@@ -337,6 +349,7 @@ namespace ArgData
         protected override int HelmetColorsPosition => 184436;
         protected override int RainAtFirstTrackPosition => 111746;
         protected override int ChanceOfRainPosition => 63146;
+        protected override int PointsSystemPosition => 183940;
 
         internal European105DecompressedGpExeFile(string exePath) : base(exePath)
         {
@@ -356,6 +369,7 @@ namespace ArgData
         protected override int HelmetColorsPosition => 184372;
         protected override int RainAtFirstTrackPosition => 111730;
         protected override int ChanceOfRainPosition => 63130;
+        protected override int PointsSystemPosition => 183876;
 
         internal Us105DecompressedGpExeFile(string exePath) : base(exePath)
         {

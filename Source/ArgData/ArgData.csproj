@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="ChecksumCalculator.cs" />
+    <Compile Include="Entities\PointsSystem.cs" />
     <Compile Include="Entities\ReadOnlyList.cs" />
     <Compile Include="Entities\CarSet.cs" />
     <Compile Include="Entities\DriverNumberList.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="PitCrewColors.cs" />
     <Compile Include="Entities\PitCrewList.cs" />
     <Compile Include="PlayerHorsepower.cs" />
+    <Compile Include="PointsSystems.cs" />
     <Compile Include="Preferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\SavedGame.cs" />

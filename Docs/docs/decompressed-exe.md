@@ -47,3 +47,10 @@ writing to file : GPDECOMP.EXE
 ```
 
 The GPDECOMP.EXE file is now ready to roll!
+
+
+## Limitations
+
+During testing with decompressed EXE files in DOSBox, I have noticed that the game occasionally slows down
+for a fraction of a second. I suspect that this behavior is because of decompressing the EXE, since it has
+never occurred when running "normal" EXE files.

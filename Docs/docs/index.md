@@ -21,6 +21,7 @@ The ArgData API currently supports the following:
 * Updating the general computer car grip level
 * Reading and creating new name files
 * Reading and creating new single-setup and multiple-setup files
+* Updating the points system
 * Changing the likelihood of wet races
 * Enabling/disabling the possibility of rain at the US GP
 * Reading race results from a saved season game

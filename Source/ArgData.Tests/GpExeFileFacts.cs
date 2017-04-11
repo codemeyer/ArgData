@@ -18,7 +18,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void CorrectGpExeFilesCanBeCreated(GpExeVersionInfo exeVersion)
         {
             string exePath = ExampleDataHelper.GpExePath(exeVersion);
@@ -38,6 +40,7 @@ namespace ArgData.Tests
             exeInfo.Version.Should().Be(GpExeVersionInfo.European105);
             exeInfo.IsKnownExeVersion.Should().BeTrue();
             exeInfo.IsEditingSupported.Should().BeTrue();
+            exeInfo.IsDecompressed.Should().BeFalse();
         }
 
         [Fact]
@@ -50,6 +53,33 @@ namespace ArgData.Tests
             exeInfo.Version.Should().Be(GpExeVersionInfo.Us105);
             exeInfo.IsKnownExeVersion.Should().BeTrue();
             exeInfo.IsEditingSupported.Should().BeTrue();
+            exeInfo.IsDecompressed.Should().BeFalse();
+        }
+
+        [Fact]
+        public void EuropeanDecompressedGpExe105ReturnsExpectedResult()
+        {
+            string path = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105Decompressed);
+
+            var exeInfo = GpExeFile.GetFileInfo(path);
+
+            exeInfo.Version.Should().Be(GpExeVersionInfo.European105Decompressed);
+            exeInfo.IsKnownExeVersion.Should().BeTrue();
+            exeInfo.IsEditingSupported.Should().BeTrue();
+            exeInfo.IsDecompressed.Should().BeTrue();
+        }
+
+        [Fact]
+        public void WorldCircuitDecompressedUsGpExe105ReturnsExpectedResult()
+        {
+            string path = ExampleDataHelper.GpExePath(GpExeVersionInfo.Us105Decompressed);
+
+            var exeInfo = GpExeFile.GetFileInfo(path);
+
+            exeInfo.Version.Should().Be(GpExeVersionInfo.Us105Decompressed);
+            exeInfo.IsKnownExeVersion.Should().BeTrue();
+            exeInfo.IsEditingSupported.Should().BeTrue();
+            exeInfo.IsDecompressed.Should().BeTrue();
         }
 
         [Fact]

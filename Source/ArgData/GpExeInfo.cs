@@ -19,5 +19,10 @@
         /// Gets whether editing this GP.EXE file is supported by ArgData.
         /// </summary>
         public bool IsEditingSupported { get; internal set; }
+
+        /// <summary>
+        /// Gets whether the GP.EXE is decompressed.
+        /// </summary>
+        public bool IsDecompressed { get; internal set; }
     }
 }

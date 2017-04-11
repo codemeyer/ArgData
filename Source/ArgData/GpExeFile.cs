@@ -10,6 +10,8 @@ namespace ArgData
     /// </summary>
     public abstract class GpExeFile
     {
+        internal GpExeInfo ExeInfo;
+
         /// <summary>
         /// Gets a reference to the GP.EXE file at the specified location.
         /// </summary>
@@ -37,30 +39,49 @@ namespace ArgData
                     exeInfo.Version = GpExeVersionInfo.European105;
                     exeInfo.IsKnownExeVersion = true;
                     exeInfo.IsEditingSupported = true;
+                    exeInfo.IsDecompressed = false;
+                    break;
+
+                case 600480:
+                    exeInfo.Version = GpExeVersionInfo.European105Decompressed;
+                    exeInfo.IsKnownExeVersion = true;
+                    exeInfo.IsEditingSupported = true;
+                    exeInfo.IsDecompressed = true;
                     break;
 
                 case 321716:
                     exeInfo.Version = GpExeVersionInfo.Us105;
                     exeInfo.IsKnownExeVersion = true;
                     exeInfo.IsEditingSupported = true;
+                    exeInfo.IsDecompressed = false;
+                    break;
+
+                case 600304:
+                    exeInfo.Version = GpExeVersionInfo.Us105Decompressed;
+                    exeInfo.IsKnownExeVersion = true;
+                    exeInfo.IsEditingSupported = true;
+                    exeInfo.IsDecompressed = true;
                     break;
 
                 case 332890:
                     exeInfo.Version = GpExeVersionInfo.European103;
                     exeInfo.IsKnownExeVersion = true;
                     exeInfo.IsEditingSupported = false;
+                    exeInfo.IsDecompressed = false;
                     break;
 
                 case 332840:
                     exeInfo.Version = GpExeVersionInfo.Us103;
                     exeInfo.IsKnownExeVersion = true;
                     exeInfo.IsEditingSupported = false;
+                    exeInfo.IsDecompressed = false;
                     break;
 
                 default:
                     exeInfo.Version = GpExeVersionInfo.Unknown;
                     exeInfo.IsKnownExeVersion = false;
                     exeInfo.IsEditingSupported = false;
+                    exeInfo.IsDecompressed = false;
                     break;
             }
 
@@ -70,6 +91,7 @@ namespace ArgData
         internal GpExeFile(string exePath)
         {
             ExePath = exePath;
+            ExeInfo = GpExeFile.GetFileInfo(exePath);
         }
 
         /// <summary>
@@ -205,19 +227,29 @@ namespace ArgData
 
         internal int GetHelmetColorsPosition(int helmetIndex)
         {
-            int bytesForPreviousHelmets = _bytesPerHelmet.Take(helmetIndex).Sum(b => b);
+            int bytesForPreviousHelmets =
+                ExeInfo.IsDecompressed
+                ? _bytesPerHelmetDecompressed.Take(helmetIndex).Sum(b => b)
+                : _bytesPerHelmet.Take(helmetIndex).Sum(b => b);
 
             return HelmetColorsPosition + bytesForPreviousHelmets;
         }
 
         internal int GetHelmetColorsPositionByteCountToRead(int helmetIndex)
         {
-            return _bytesPerHelmet[helmetIndex];
+            return ExeInfo.IsDecompressed
+                ? _bytesPerHelmetDecompressed[helmetIndex]
+                : _bytesPerHelmet[helmetIndex];
         }
 
         private readonly byte[] _bytesPerHelmet =
         {
             16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 14, 16, 14, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 14, 14, 14, 14, 14
+        };
+
+        private readonly byte[] _bytesPerHelmetDecompressed =
+        {
+            16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16
         };
 
         internal int GetRainAtFirstTrackPosition()
@@ -241,10 +273,14 @@ namespace ArgData
             {
                 case GpExeVersionInfo.European105:
                     return new European105GpExeFile(exePath);
+                case GpExeVersionInfo.European105Decompressed:
+                    return new European105DecompressedGpExeFile(exePath);
                 case GpExeVersionInfo.Us105:
                     return new Us105GpExeFile(exePath);
+                case GpExeVersionInfo.Us105Decompressed:
+                    return new Us105DecompressedGpExeFile(exePath);
                 default:
-                    string msg = $"The specified file is of type {exeInfo}. ArgData currently supports European105 and Us105.";
+                    string msg = $"The specified file is of type {exeInfo}. ArgData currently supports European105, European105Decompressed, Us105 and Us105Decompressed.";
                     throw new ArgumentException(msg);
             }
         }
@@ -284,6 +320,44 @@ namespace ArgData
         protected override int ChanceOfRainPosition => 58394;
 
         internal European105GpExeFile(string exePath) : base(exePath)
+        {
+        }
+    }
+
+    internal class European105DecompressedGpExeFile : GpExeFile
+    {
+        protected override int PlayerHorsepowerPosition => 24600;
+        protected override int TeamHorsepowerPosition => 183996;
+        protected override int CarColorsPosition => 184116;
+        protected override int DriverRacePerformanceLevelsPosition => 184076;
+        protected override int DriverQualifyingPerformanceLevelsPosition => 184036;
+        protected override int GeneralGripLevelPosition => 24935;
+        protected override int DriverNumbersPosition => 180210;
+        protected override int PitCrewColorsPosition => 185076;
+        protected override int HelmetColorsPosition => 184436;
+        protected override int RainAtFirstTrackPosition => 111746;
+        protected override int ChanceOfRainPosition => 63146;
+
+        internal European105DecompressedGpExeFile(string exePath) : base(exePath)
+        {
+        }
+    }
+
+    internal class Us105DecompressedGpExeFile : GpExeFile
+    {
+        protected override int PlayerHorsepowerPosition => 24584;
+        protected override int TeamHorsepowerPosition => 183932;
+        protected override int CarColorsPosition => 184052;
+        protected override int DriverRacePerformanceLevelsPosition => 184012;
+        protected override int DriverQualifyingPerformanceLevelsPosition => 183972;
+        protected override int GeneralGripLevelPosition => 24919;
+        protected override int DriverNumbersPosition => 180146;
+        protected override int PitCrewColorsPosition => 185012;
+        protected override int HelmetColorsPosition => 184372;
+        protected override int RainAtFirstTrackPosition => 111730;
+        protected override int ChanceOfRainPosition => 63130;
+
+        internal Us105DecompressedGpExeFile(string exePath) : base(exePath)
         {
         }
     }

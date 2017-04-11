@@ -1,7 +1,7 @@
 # Downloads the argdata-testdata.zip file and unpacks it in this folder
 
-$url = "http://manicomio.se/argdata-testdata/files-v3.zip"
-$file = "files-v3.zip"
+$url = "http://manicomio.se/argdata-testdata/files-v4.zip"
+$file = "files-v4.zip"
 $path = (Get-Location).Path + "\" + $file
 
 Write-Host "Downloading $file... " -NoNewLine

@@ -11,6 +11,7 @@ pages:
 - Guides:
   - Overview: overview.md
   - Quick Start: quick-start.md
+  - Decompressed EXEs: decompressed-exe.md
 - API:
   - Reference: api/reference.md
   - Palette Colors: api/palette-colors.md

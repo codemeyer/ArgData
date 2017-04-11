@@ -88,12 +88,47 @@ namespace ArgData.Entities
         /// <summary>
         /// Gets or sets the color of the 13 horizontal stripes of the helmet.
         /// </summary>
-        public byte[] Stripes { get; set; }
+        public byte[] Stripes { get; private set; }
 
 
         private const byte FixedValueForIndex1 = 1;
 
-        internal byte[] GetColorsToWriteToFile(int helmetIndex)
+        internal byte[] GetColorsToWriteToFile(int helmetIndex, bool decompressedExe)
+        {
+            if (decompressedExe)
+            {
+                return GetBytesForDecompressedExe();
+            }
+
+            return GetBytesForCompressedExe(helmetIndex);
+        }
+
+        private byte[] GetBytesForDecompressedExe()
+        {
+            var helmetBytes = new List<byte>
+            {
+                Visor,
+                FixedValueForIndex1,
+                Stripes[0],
+                Stripes[1],
+                Stripes[2],
+                Stripes[3],
+                VisorSurround,
+                Stripes[4],
+                Stripes[5],
+                Stripes[6],
+                Stripes[7],
+                Stripes[8],
+                Stripes[9],
+                Stripes[10],
+                Stripes[11],
+                Stripes[12]
+            };
+
+            return helmetBytes.ToArray();
+        }
+
+        private byte[] GetBytesForCompressedExe(int helmetIndex)
         {
             var helmetBytes = new List<byte>
             {

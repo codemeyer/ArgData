@@ -7,16 +7,21 @@ namespace ArgData.Tests
 {
     public class WetWeatherSettingsFacts
     {
-        [Fact]
-        public void ReadWetWeatherSettings_NoRainAtFirstTrack_ReturnsFalse()
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
+        public void ReadWetWeatherSettings_RainAtFirstTrack_ReturnsFalse(GpExeVersionInfo exeVersionInfo)
         {
-            string exampleDataPath = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
+            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var reader = WetWeatherSettingsReader.For(GpExeFile.At(exampleDataPath));
 
             var settings = reader.ReadSettings();
 
             settings.RainAtFirstTrack.Should().BeFalse();
         }
+
 
         [Fact]
         public void ReadWetWeatherSettings_RainAtFirstTrack_ReturnsTrue()
@@ -29,10 +34,14 @@ namespace ArgData.Tests
             settings.RainAtFirstTrack.Should().BeTrue();
         }
 
-        [Fact]
-        public void ReadWetWeatherSettings_ChanceOfRainDefault_Returns6()
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
+        public void ReadWetWeatherSettings_ChanceOfRainDefault_Returns6(GpExeVersionInfo exeVersionInfo)
         {
-            string exampleDataPath = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
+            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
             var reader = WetWeatherSettingsReader.For(GpExeFile.At(exampleDataPath));
 
             var settings = reader.ReadSettings();

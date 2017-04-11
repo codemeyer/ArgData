@@ -21,6 +21,11 @@
         European105,
 
         /// <summary>
+        /// European 1.05, decompressed.
+        /// </summary>
+        European105Decompressed,
+
+        /// <summary>
         /// US 1.03, World Circuit. Not supported by ArgData.
         /// </summary>
         Us103,
@@ -28,6 +33,11 @@
         /// <summary>
         /// US 1.05, World Circuit.
         /// </summary>
-        Us105
+        Us105,
+
+        /// <summary>
+        /// US 1.05, World Circuit, decompressed.
+        /// </summary>
+        Us105Decompressed
     }
 }

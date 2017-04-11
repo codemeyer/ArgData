@@ -88,7 +88,7 @@ namespace ArgData
 
             foreach (Helmet helmet in helmetList)
             {
-                byte[] helmetBytes = helmet.GetColorsToWriteToFile(helmetIndex);
+                byte[] helmetBytes = helmet.GetColorsToWriteToFile(helmetIndex, _exeFile.ExeInfo.IsDecompressed);
 
                 allHelmetBytes.AddRange(helmetBytes);
 

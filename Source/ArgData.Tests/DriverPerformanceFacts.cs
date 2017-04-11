@@ -9,7 +9,9 @@ namespace ArgData.Tests
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadRacePerformanceLevel_DefaultValuesPerDriver_ReturnsExpectedLevels(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 2, 3, 19, 21, 26, 31, 25, 27, 0, 28,
@@ -27,7 +29,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadRacePerformanceLevel_DefaultValuesArray_ReturnsExpectedLevels(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 2, 3, 19, 21, 26, 31, 25, 27, 0, 28,
@@ -41,7 +45,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadQualifyingPerformanceLevel_DefaultValuesPerDriver_ReturnsExpectedLevels(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 3, 2, 19, 21, 26, 31, 25, 27, 0, 28,
@@ -59,7 +65,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadQualifyingPerformanceLevel_DefaultValuesArray_ReturnsExpectedLevels(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new byte[] { 1, 4, 16, 9, 3, 2, 19, 21, 26, 31, 25, 27, 0, 28,
@@ -93,7 +101,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadRaceGroupLevels_GetSingleDriverPerformance_ReturnsExpectedValue(GpExeVersionInfo exeVersionInfo)
         {
             var performanceLevelReader = ExampleDataHelper.DriverPerformanceLevelReaderForDefault(exeVersionInfo);
@@ -105,7 +115,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadRacePerformanceLevel_DriverNumberLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             var performanceLevelReader = ExampleDataHelper.DriverPerformanceLevelReaderForDefault(exeVersionInfo);
@@ -117,7 +129,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadRacePerformanceLevel_DriverNumberGreaterThan_40_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             var performanceLevelReader = ExampleDataHelper.DriverPerformanceLevelReaderForDefault(exeVersionInfo);
@@ -129,7 +143,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteRacePerformanceLevel_DriverNumberLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -144,7 +160,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteRacePerformanceLevel_DriverNumberGreaterThan_40_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -172,7 +190,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteRacePerformanceLevel_KnownValues_StoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -197,7 +217,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteRacePerformanceLevel_UpdateKnownValues_StoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -223,7 +245,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteQualifyingPerformanceLevel_KnownValues_StoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -248,7 +272,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteQualifyingPerformanceLevel_UpdateKnownValues_StoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -274,7 +300,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadQualifyingPerformanceLevel_DriverNumberLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             var performanceLevelReader = ExampleDataHelper.DriverPerformanceLevelReaderForDefault(exeVersionInfo);
@@ -286,7 +314,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadQualifyingPerformanceLevel_DriverNumberGreaterThan_40_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             var performanceLevelReader = ExampleDataHelper.DriverPerformanceLevelReaderForDefault(exeVersionInfo);
@@ -298,7 +328,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteQualifyingPerformanceLevel_DriverIndexLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -326,7 +358,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteQualifyingPerformanceLevel_DriverNumberGreaterThan_40_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -355,10 +389,14 @@ namespace ArgData.Tests
             action.ShouldThrow<ArgumentNullException>();
         }
 
-        [Fact]
-        public void ReadGeneralGripLevel_DefaultFile_Returns1()
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
+        [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
+        public void ReadGeneralGripLevel_DefaultValue_Returns1(GpExeVersionInfo exeVersionInfo)
         {
-            var reader = ExampleDataHelper.DriverPerformanceLevelReaderForDefault(GpExeVersionInfo.European105);
+            var reader = ExampleDataHelper.DriverPerformanceLevelReaderForDefault(exeVersionInfo);
 
             int generalGrip = reader.ReadGeneralGripLevel();
 

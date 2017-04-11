@@ -10,7 +10,9 @@ namespace ArgData.Tests
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadCarColors_OriginalCarColors_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
@@ -26,7 +28,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadCarColors_SingleOriginalCarColor_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             var expectedCar = DefaultCarColors.GetByIndex(0);
@@ -52,7 +56,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteCarColors_KnownColors_ReadReturnsKnownColors(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -82,7 +88,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteCarColors_WriteSingleKnownCarColors_ReadSingleReturnsKnownColors(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -131,7 +139,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadCarColors_IndexLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
@@ -144,7 +154,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadCarColors_IndexGreaterThan_17_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
@@ -157,7 +169,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteCarColors_IndexLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -172,7 +186,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteCarColors_IndexGreaterThan_17_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -187,7 +203,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteCarColors_SingleCarNull_ThrowsArgumentNullException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -202,7 +220,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteCarColors_CarListNull_ThrowsArgumentNullException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))

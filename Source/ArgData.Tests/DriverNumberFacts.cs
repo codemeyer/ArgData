@@ -9,7 +9,9 @@ namespace ArgData.Tests
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadDriverNumbers_OriginalDrivers_HaveExpectedNumbers(GpExeVersionInfo exeVersionInfo)
         {
             var driverNumberReader = ExampleDataHelper.DriverNumberReaderForDefault(exeVersionInfo);
@@ -26,7 +28,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteDriverNumbers_WithKnownValues_StoresExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -57,7 +61,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteDriverNumbers_LessThan_26_ActiveDrivers_ThrowsException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -77,7 +83,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteDriverNumbers_AnyDriverNumberHigherThan40_ThrowsException(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))

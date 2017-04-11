@@ -10,7 +10,9 @@ namespace ArgData.Tests
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadPitCrewColors_OriginalColors_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
@@ -26,7 +28,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadPitCrewColors_SingleOriginalColor_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             var expectedPitCrew = DefaultPitCrewColors.GetByIndex(0);
@@ -44,7 +48,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WritePitCrewColors_KnownValues_StoresExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             var pitCrewList = new PitCrewList();
@@ -74,7 +80,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WritePitCrewColors_KnownSingleCrewValues_StoresExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))

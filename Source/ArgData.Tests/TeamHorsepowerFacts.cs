@@ -8,7 +8,9 @@ namespace ArgData.Tests
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadTeamHorsepower_OriginalValues_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
         {
             var expectedValues = new[] { 716, 676, 716, 650, 620, 625, 620, 665, 610, 680,
@@ -27,7 +29,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteTeamHorsepower_KnownValues_StoresCorrectValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))

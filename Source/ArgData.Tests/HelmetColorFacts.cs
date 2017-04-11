@@ -11,7 +11,9 @@ namespace ArgData.Tests
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadHelmetColors_OriginalColors_FirstHelmetReturnsSennaColors(GpExeVersionInfo exeVersionInfo)
         {
             var expectedHelmet = DefaultHelmetColors.GetByDriverNumber(1);
@@ -28,7 +30,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadHelmetColors_OriginalHelmetColors_LastHelmetReturnsVanDePoeleColors(GpExeVersionInfo exeVersionInfo)
         {
             var expectedHelmet = DefaultHelmetColors.GetByDriverNumber(35);
@@ -45,7 +49,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WriteHelmetColors_FirstHelmet_StoresWrittenValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
@@ -68,6 +74,27 @@ namespace ArgData.Tests
         [InlineData(GpExeVersionInfo.European105)]
         [InlineData(GpExeVersionInfo.Us105)]
         public void WriteHelmetColors_LastHelmet_StoresWrittenValues(GpExeVersionInfo exeVersionInfo)
+        {
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
+            {
+                var helmetWriter = HelmetColorWriter.For(context.ExeFile);
+
+                var helmetList = new HelmetList();
+                helmetList.SetByDriverNumber(35, new Helmet(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }));
+
+                helmetWriter.WriteHelmetColors(helmetList);
+
+                var helmet = ReadHelmetByNumber(35, context.ExeFile);
+                helmet.Visor.Should().Be(1);
+                helmet.VisorSurround.Should().Be(7); // zero-based index 6
+                helmet.Stripes[0].Should().Be(3);
+            }
+        }
+
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
+        public void WriteHelmetColors_LastHelmetDecompressedExe_StoresWrittenValues(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
             {
@@ -122,6 +149,28 @@ namespace ArgData.Tests
             specialBytes.Should().ContainInOrder(new byte[] { alteringValue1, alteringValue2, 178, /**/ 11 /**/, 9, 0, 176 });
         }
 
+        [Theory]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
+        public void WriteHelmetColors_ExtraHelmetsDecompressedExe_StoresWrittenValues(GpExeVersionInfo exeVersionInfo)
+        {
+            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
+            {
+                var helmetWriter = HelmetColorWriter.For(context.ExeFile);
+
+                var helmetList = new HelmetList();
+                helmetList.SetByDriverNumber(40, new Helmet(new byte[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 }));
+
+                helmetWriter.WriteHelmetColors(helmetList);
+
+                var helmet = ReadHelmetByNumber(40, context.ExeFile);
+                helmet.Visor.Should().Be(1);
+                helmet.VisorSurround.Should().Be(7); // zero-based index 6
+                helmet.Stripes[0].Should().Be(3);
+            }
+        }
+
+
         private Helmet ReadHelmetByNumber(byte driverNumber, GpExeFile exeFile)
         {
             var helmetColors = HelmetColorReader.For(exeFile).ReadHelmetColors();
@@ -172,6 +221,7 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
         public void WriteHelmetColors_HelmetListNull_ThrowsArgumentNullException(GpExeVersionInfo exeVersionInfo)
         {

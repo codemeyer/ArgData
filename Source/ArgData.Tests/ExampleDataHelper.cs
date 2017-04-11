@@ -82,8 +82,12 @@ namespace ArgData.Tests
             {
                 case GpExeVersionInfo.European105:
                     return "GP-EU105.EXE";
+                case GpExeVersionInfo.European105Decompressed:
+                    return "GP-EU105-UNP.EXE";
                 case GpExeVersionInfo.Us105:
                     return "GP-US105.EXE";
+                case GpExeVersionInfo.Us105Decompressed:
+                    return "GP-US105-UNP.EXE";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(exeVersionInfo), exeVersionInfo, null);
             }

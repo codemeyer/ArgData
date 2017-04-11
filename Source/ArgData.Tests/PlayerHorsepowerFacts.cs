@@ -8,7 +8,9 @@ namespace ArgData.Tests
     {
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void ReadPlayerHorsepower_DefaultValue_ReturnsExpectedValue(GpExeVersionInfo exeVersionInfo)
         {
             var horsepowerReader = ExampleDataHelper.PlayerHorsepowerReaderForDefault(exeVersionInfo);
@@ -20,7 +22,9 @@ namespace ArgData.Tests
 
         [Theory]
         [InlineData(GpExeVersionInfo.European105)]
+        [InlineData(GpExeVersionInfo.European105Decompressed)]
         [InlineData(GpExeVersionInfo.Us105)]
+        [InlineData(GpExeVersionInfo.Us105Decompressed)]
         public void WritePlayerHorsepower_KnownValue_StoresExpectedValue(GpExeVersionInfo exeVersionInfo)
         {
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))

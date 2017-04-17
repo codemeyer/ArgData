@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using ArgData.Entities;
 using FluentAssertions;
@@ -24,7 +23,7 @@ namespace ArgData.Tests
 
             color.R.Should().Be(color.G);
             color.G.Should().Be(color.B);
-            color.R.Should().Be(252);
+            color.R.Should().Be(255);
         }
 
         [Fact]

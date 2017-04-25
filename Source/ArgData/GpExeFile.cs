@@ -159,6 +159,37 @@ namespace ArgData
         /// </summary>
         protected abstract int PointsSystemPosition { get; }
 
+        /// <summary>
+        /// Position of value indicating amount of damage needed for retiring after hitting the wall.
+        /// </summary>
+        protected abstract int RetireAfterHittingWallPosition { get; }
+
+        /// <summary>
+        /// Position of value indicating amount of damage needed for retiring after hitting another car.
+        /// </summary>
+        protected abstract int RetireAfterHittingOtherCarPosition { get; }
+
+        /// <summary>
+        /// Position of value indicating amount of damage needed for breaking a wing after hitting the wall.
+        /// </summary>
+        protected abstract int DamageAfterHittingWallPosition { get; }
+
+        /// <summary>
+        /// Position of value indicating amount of damage needed for breaking a wing after hitting another car.
+        /// </summary>
+        protected abstract int DamageAfterHittingOtherCarPosition { get; }
+
+        /// <summary>
+        /// Position of value indicating the number of seconds before retired cars are removed.
+        /// </summary>
+        protected abstract int RetiredCarsRemovedAfterSecondsPosition { get; }
+
+        /// <summary>
+        /// Position of value indicating the number of seconds before yellow flags are shown for stationary cars.
+        /// </summary>
+        protected abstract int YellowFlagsForStationaryCarsAfterSecondsPosition { get; }
+
+
         internal int GetPlayerHorsepowerPosition()
         {
             return PlayerHorsepowerPosition;
@@ -271,6 +302,36 @@ namespace ArgData
         {
             return PointsSystemPosition;
         }
+
+        internal int GetRetireAfterHittingWallPosition()
+        {
+            return RetireAfterHittingWallPosition;
+        }
+
+        internal int GetRetireAfterHittingOtherCarPosition()
+        {
+            return RetireAfterHittingOtherCarPosition;
+        }
+
+        internal int GetDamageAfterHittingWallPosition()
+        {
+            return DamageAfterHittingWallPosition;
+        }
+
+        internal int GetDamageAfterHittingOtherCarPosition()
+        {
+            return DamageAfterHittingOtherCarPosition;
+        }
+
+        internal int GetRetiredCarsRemovedAfterSecondsPosition()
+        {
+            return RetiredCarsRemovedAfterSecondsPosition;
+        }
+
+        internal int GetYellowFlagsForStationaryCarsAfterSecondsPosition()
+        {
+            return YellowFlagsForStationaryCarsAfterSecondsPosition;
+        }
     }
 
     internal static class GpExeFileFactory
@@ -296,26 +357,6 @@ namespace ArgData
         }
     }
 
-    internal class Us105GpExeFile : GpExeFile
-    {
-        protected override int PlayerHorsepowerPosition => 19848;
-        protected override int TeamHorsepowerPosition => 158336;
-        protected override int CarColorsPosition => 158456;
-        protected override int DriverRacePerformanceLevelsPosition => 158416;
-        protected override int DriverQualifyingPerformanceLevelsPosition => 158376;
-        protected override int GeneralGripLevelPosition => 20183;
-        protected override int DriverNumbersPosition => 154892;
-        protected override int PitCrewColorsPosition => 159377;
-        protected override int HelmetColorsPosition => 158751;
-        protected override int RainAtFirstTrackPosition => 106319;
-        protected override int ChanceOfRainPosition => 58394;
-        protected override int PointsSystemPosition => 158297;
-
-        internal Us105GpExeFile(string exePath) : base(exePath)
-        {
-        }
-    }
-
     internal class European105GpExeFile : GpExeFile
     {
         protected override int PlayerHorsepowerPosition => 19848;
@@ -330,6 +371,12 @@ namespace ArgData
         protected override int RainAtFirstTrackPosition => 106319;
         protected override int ChanceOfRainPosition => 58394;
         protected override int PointsSystemPosition => 158341;
+        protected override int RetireAfterHittingWallPosition => 125420;
+        protected override int RetireAfterHittingOtherCarPosition => 125422;
+        protected override int DamageAfterHittingWallPosition => 125428;
+        protected override int DamageAfterHittingOtherCarPosition => 125426;
+        protected override int RetiredCarsRemovedAfterSecondsPosition => 23631;
+        protected override int YellowFlagsForStationaryCarsAfterSecondsPosition => 23517;
 
         internal European105GpExeFile(string exePath) : base(exePath)
         {
@@ -350,8 +397,40 @@ namespace ArgData
         protected override int RainAtFirstTrackPosition => 111746;
         protected override int ChanceOfRainPosition => 63146;
         protected override int PointsSystemPosition => 183940;
+        protected override int RetireAfterHittingWallPosition => 131948;
+        protected override int RetireAfterHittingOtherCarPosition => 131950;
+        protected override int DamageAfterHittingWallPosition => 131956;
+        protected override int DamageAfterHittingOtherCarPosition => 131954;
+        protected override int RetiredCarsRemovedAfterSecondsPosition => 28383;
+        protected override int YellowFlagsForStationaryCarsAfterSecondsPosition => 28269;
 
         internal European105DecompressedGpExeFile(string exePath) : base(exePath)
+        {
+        }
+    }
+
+    internal class Us105GpExeFile : GpExeFile
+    {
+        protected override int PlayerHorsepowerPosition => 19848;
+        protected override int TeamHorsepowerPosition => 158336;
+        protected override int CarColorsPosition => 158456;
+        protected override int DriverRacePerformanceLevelsPosition => 158416;
+        protected override int DriverQualifyingPerformanceLevelsPosition => 158376;
+        protected override int GeneralGripLevelPosition => 20183;
+        protected override int DriverNumbersPosition => 154892;
+        protected override int PitCrewColorsPosition => 159377;
+        protected override int HelmetColorsPosition => 158751;
+        protected override int RainAtFirstTrackPosition => 106319;
+        protected override int ChanceOfRainPosition => 58394;
+        protected override int PointsSystemPosition => 158297;
+        protected override int RetireAfterHittingWallPosition => 125376;
+        protected override int RetireAfterHittingOtherCarPosition => 125378;
+        protected override int DamageAfterHittingWallPosition => 125384;
+        protected override int DamageAfterHittingOtherCarPosition => 125382;
+        protected override int RetiredCarsRemovedAfterSecondsPosition => 23631;
+        protected override int YellowFlagsForStationaryCarsAfterSecondsPosition => 23517;
+
+        internal Us105GpExeFile(string exePath) : base(exePath)
         {
         }
     }
@@ -370,6 +449,12 @@ namespace ArgData
         protected override int RainAtFirstTrackPosition => 111730;
         protected override int ChanceOfRainPosition => 63130;
         protected override int PointsSystemPosition => 183876;
+        protected override int RetireAfterHittingWallPosition => 131884;
+        protected override int RetireAfterHittingOtherCarPosition => 131886;
+        protected override int DamageAfterHittingWallPosition => 131892;
+        protected override int DamageAfterHittingOtherCarPosition => 131890;
+        protected override int RetiredCarsRemovedAfterSecondsPosition => 28367;
+        protected override int YellowFlagsForStationaryCarsAfterSecondsPosition => 28253;
 
         internal Us105DecompressedGpExeFile(string exePath) : base(exePath)
         {

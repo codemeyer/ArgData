@@ -210,7 +210,7 @@ namespace ArgData
                 throw new ArgumentNullException(nameof(setup));
 
             if (!setup.IsValid)
-                throw new ArgumentOutOfRangeException(nameof(setup), "One or more setups is invalid.");
+                throw new ArgumentOutOfRangeException(nameof(setup), "One or more setups are invalid.");
         }
 
         private static void Validate(SetupList setups)
@@ -221,13 +221,13 @@ namespace ArgData
             foreach (var setup in setups.QualifyingSetups)
             {
                 if (!setup.IsValid)
-                    throw new ArgumentOutOfRangeException(nameof(setups), "One or more setups is invalid.");
+                    throw new ArgumentOutOfRangeException(nameof(setups), "One or more setups are invalid.");
             }
 
             foreach (var setup in setups.RaceSetups)
             {
                 if (!setup.IsValid)
-                    throw new ArgumentOutOfRangeException(nameof(setups), "One or more setups is invalid.");
+                    throw new ArgumentOutOfRangeException(nameof(setups), "One or more setups are invalid.");
             }
         }
 

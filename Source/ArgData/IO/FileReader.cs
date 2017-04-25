@@ -11,12 +11,23 @@ namespace ArgData.IO
 
         private readonly string _path;
 
-        internal ushort ReadUShort(int position)
+        internal ushort ReadUInt16(int position)
         {
             using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
             {
                 br.BaseStream.Position = position;
                 ushort value = br.ReadUInt16();
+
+                return value;
+            }
+        }
+
+        internal short ReadInt16(int position)
+        {
+            using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
+            {
+                br.BaseStream.Position = position;
+                short value = br.ReadInt16();
 
                 return value;
             }
@@ -41,17 +52,6 @@ namespace ArgData.IO
                 byte[] bytes = br.ReadBytes(count);
 
                 return bytes;
-            }
-        }
-
-        internal int ReadInt32(int position)
-        {
-            using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
-            {
-                br.BaseStream.Position = position;
-                var value = br.ReadInt32();
-
-                return value;
             }
         }
 

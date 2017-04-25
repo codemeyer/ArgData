@@ -169,7 +169,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void WritePitCrewColors_NullList_ThrowsArgumentNullException()
+        public void WritePointsSystem_NullList_ThrowsArgumentNullException()
         {
             using (var context = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
             {

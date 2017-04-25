@@ -32,7 +32,7 @@ namespace ArgData
         public int ReadPlayerHorsepower()
         {
             var fileReader = new FileReader(_exeFile.ExePath);
-            ushort rawHorsepower = fileReader.ReadUShort(_exeFile.GetPlayerHorsepowerPosition());
+            ushort rawHorsepower = fileReader.ReadUInt16(_exeFile.GetPlayerHorsepowerPosition());
 
             return (rawHorsepower - 632) / 22;
         }

@@ -41,6 +41,8 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="ChecksumCalculator.cs" />
+    <Compile Include="DamageSettings.cs" />
+    <Compile Include="Entities\DamageSettings.cs" />
     <Compile Include="Entities\PointsSystem.cs" />
     <Compile Include="Entities\ReadOnlyList.cs" />
     <Compile Include="Entities\CarSet.cs" />

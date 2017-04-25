@@ -46,7 +46,7 @@ namespace ArgData
             }
 
             int chanceOfRainPosition = _exeFile.GetChanceOfRainPosition();
-            ushort chance = fileReader.ReadUShort(chanceOfRainPosition);
+            ushort chance = fileReader.ReadUInt16(chanceOfRainPosition);
 
             decimal pctChance = 100 * (256m - chance) / 256m;
             byte roundedChance = Convert.ToByte(Math.Round(pctChance, 0));

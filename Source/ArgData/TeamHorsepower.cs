@@ -39,7 +39,7 @@ namespace ArgData
 
             int position = _exeFile.GetTeamHorsepowerPosition(teamIndex);
 
-            ushort horsepower = new FileReader(_exeFile.ExePath).ReadUShort(position);
+            ushort horsepower = new FileReader(_exeFile.ExePath).ReadUInt16(position);
 
             return horsepower;
         }

@@ -97,7 +97,7 @@ namespace ArgData
 
             if (signature == DriverPerformanceConstants.GripLevelDefaultSignature)
             {
-                int rawValue = fileReader.ReadUShort(position + 3);
+                int rawValue = fileReader.ReadUInt16(position + 3);
 
                 if (rawValue == 16384)
                     return 1;
@@ -107,7 +107,7 @@ namespace ArgData
 
             if (signature == DriverPerformanceConstants.GripLevelActivatedSignature)
             {
-                int rawValue = fileReader.ReadUShort(position + 3);
+                int rawValue = fileReader.ReadUInt16(position + 3);
 
                 return (rawValue + 100) / 100;
             }

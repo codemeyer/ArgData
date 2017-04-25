@@ -61,7 +61,7 @@ namespace ArgData
         /// Creates a PointsSystemWriter for the specified GP.EXE file.
         /// </summary>
         /// <param name="exeFile">GpExeFile to write to.</param>
-        /// <returns>PointsSystemReader.</returns>
+        /// <returns>PointsSystemWriter.</returns>
         public static PointsSystemWriter For(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }

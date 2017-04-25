@@ -11,6 +11,16 @@ namespace ArgData.IO
 
         private readonly string _path;
 
+        internal void WriteInt16(short value, int position)
+        {
+            using (var writer = new BinaryWriter(new FileStream(_path, FileMode.Open)))
+            {
+                writer.BaseStream.Position = position;
+
+                writer.Write(value);
+            }
+        }
+
         internal void WriteUInt16(int value, int position)
         {
             using (var writer = new BinaryWriter(new FileStream(_path, FileMode.Open)))

@@ -27,6 +27,9 @@ The ArgData API currently supports the following:
 * Reading race results from a saved season game
 * Set a name file to be read automatically when the game starts
 * Updating the checksum of existing files (names, tracks, setups)
+* Support for decompressed GP.EXE files
+* Changing probability of wing damage/out-of-race damage when crashing
+* Changing amount of time before retired cars are removed
 
 For an introduction to how to use the API, including simple examples and a full reference section,
 see the [API documentation](http://manicomio.se/argdata).

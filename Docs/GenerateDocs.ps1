@@ -162,7 +162,8 @@ function InsertClassReferencePagesInMkDocsYml
 
     $yml = [System.IO.File]::ReadAllText($mkdocsYmlPath)
     $yml = $yml.Replace("#RemovePagesBlock", $sb.ToString())
-    [System.IO.File]::WriteAllText($mkdocsYmlPath, $yml)
+    $newMkdocsYmlPath = $mkdocsYmlPath.Replace(".template", "")
+    [System.IO.File]::WriteAllText($newMkdocsYmlPath, $yml)
 }
 
 

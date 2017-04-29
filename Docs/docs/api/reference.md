@@ -53,6 +53,7 @@ The Writer classes update GP.EXE and other files.
 | [ChecksumCalculator](./checksumcalculator)  | Class used for calculating an F1GP checksum.  |
 | [Constants](./constants)  | Various constant values.  |
 | [DamageSettings](./damagesettings)  | Represents the various damage settings in the game.  |
+| [DefaultValues](./defaultvalues)  | Contains the default values for various data and settings in F1GP as constant values.  |
 | [Driver](./driver)  | Represents a driver with a name.  |
 | [DriverNumberList](./drivernumberlist)  | List of driver numbers for 40 drivers.  |
 | [DriverPerformanceList](./driverperformancelist)  | List of driver numbers for 40 drivers.  |

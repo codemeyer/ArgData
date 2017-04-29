@@ -79,7 +79,7 @@ namespace ArgData
         public DriverPerformanceList ReadQualifyingPerformanceLevels()
         {
             int position = _exeFile.GetDriverPerformanceQualifyingPosition();
-            byte[] values = new FileReader(_exeFile.ExePath).ReadBytes(position, 40);
+            byte[] values = new FileReader(_exeFile.ExePath).ReadBytes(position, Constants.NumberOfDrivers);
 
             return new DriverPerformanceList(values);
         }

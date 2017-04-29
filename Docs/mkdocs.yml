@@ -29,6 +29,7 @@ pages:
   - DamageSettings: api/damagesettings.md
   - DamageSettingsReader: api/damagesettingsreader.md
   - DamageSettingsWriter: api/damagesettingswriter.md
+  - DefaultValues: api/defaultvalues.md
   - Driver: api/driver.md
   - DriverNumberList: api/drivernumberlist.md
   - DriverNumberReader: api/drivernumberreader.md

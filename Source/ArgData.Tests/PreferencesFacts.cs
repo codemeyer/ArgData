@@ -30,6 +30,28 @@ namespace ArgData.Tests
         }
 
         [Fact]
+        public void Read_WithAutoloadSetupFile_ReturnsPathToFile()
+        {
+            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("f1prefs-3.dat", TestDataFileType.Prefs);
+            var preferencesReader = PreferencesReader.For(PreferencesFile.At(exampleDataPath));
+
+            string nameFile = preferencesReader.GetAutoLoadedSetupFile();
+
+            nameFile.Should().Be(@"gpsaves\ALLSETUPS");
+        }
+
+        [Fact]
+        public void Read_WithoutAutoloadSetupFile_ReturnsPathToFile()
+        {
+            string exampleDataPath = ExampleDataHelper.GetExampleDataPath("f1prefs-1.dat", TestDataFileType.Prefs);
+            var preferencesReader = PreferencesReader.For(PreferencesFile.At(exampleDataPath));
+
+            string nameFile = preferencesReader.GetAutoLoadedSetupFile();
+
+            nameFile.Should().BeNull();
+        }
+
+        [Fact]
         public void Read_NotPreferencesFile_ThrowsException()
         {
             string exampleDataPath = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE", TestDataFileType.Exe);
@@ -94,6 +116,64 @@ namespace ArgData.Tests
                 nameFile.Should().BeNull();
             }
         }
+
+        [Fact]
+        public void Write_SetAutoLoadedSetupWithTooLongPath_ThrowsException()
+        {
+            using (var context = ExampleDataContext.PreferencesCopy())
+            {
+                var preferencesWriter = PreferencesWriter.For(PreferencesFile.At(context.FilePath));
+
+                Action action = () => preferencesWriter.SetAutoLoadedSetupFile("123456789012345678901234567890123");
+
+                action.ShouldThrow<ArgumentOutOfRangeException>();
+            }
+        }
+
+        [Fact]
+        public void Write_SetAutoLoadedSetupWithNullPath_ThrowsException()
+        {
+            using (var context = ExampleDataContext.PreferencesCopy())
+            {
+                var preferencesWriter = PreferencesWriter.For(PreferencesFile.At(context.FilePath));
+
+                Action action = () => preferencesWriter.SetAutoLoadedSetupFile(null);
+
+                action.ShouldThrow<ArgumentNullException>();
+            }
+        }
+
+        [Fact]
+        public void Write_DisableAutoLoadedSetup_SetsValueToNull()
+        {
+            using (var context = ExampleDataContext.PreferencesCopy())
+            {
+                var preferencesWriter = PreferencesWriter.For(PreferencesFile.At(context.FilePath));
+                preferencesWriter.DisableAutoLoadedSetupFile();
+
+                var preferencesReader = PreferencesReader.For(PreferencesFile.At(context.FilePath));
+                string nameFile = preferencesReader.GetAutoLoadedSetupFile();
+
+                nameFile.Should().BeNull();
+            }
+        }
+
+
+        [Fact]
+        public void Write_SetAutoLoadedSetupFile_ReturnsPath()
+        {
+            using (var context = ExampleDataContext.PreferencesCopy())
+            {
+                var preferencesWriter = PreferencesWriter.For(PreferencesFile.At(context.FilePath));
+                preferencesWriter.SetAutoLoadedSetupFile("gpsvz\\setup.set");
+
+                var preferencesReader = PreferencesReader.For(PreferencesFile.At(context.FilePath));
+                string nameFile = preferencesReader.GetAutoLoadedSetupFile();
+
+                nameFile.Should().Be("gpsvz\\setup.set");
+            }
+        }
+
 
         [Fact]
         public void CreateReaderFor_Null_ThrowsArgumentNullException()

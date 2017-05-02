@@ -19,5 +19,5 @@ using System.Runtime.InteropServices;
 
 [assembly: InternalsVisibleTo("ArgData.Tests")]
 
-[assembly: AssemblyVersion("0.15.0.0")]
-[assembly: AssemblyFileVersion("0.15.0.0")]
+[assembly: AssemblyVersion("0.16.0.0")]
+[assembly: AssemblyFileVersion("0.16.0.0")]

@@ -49,6 +49,24 @@ namespace ArgData
             return GetTextFromBytes(data);
         }
 
+        /// <summary>
+        /// Gets the relative path and name of the setup file that is auto-loaded by the game.
+        /// </summary>
+        /// <returns>Relative path and name of the setup file. If no file is set to auto-load, returns null.</returns>
+        public string GetAutoLoadedSetupFile()
+        {
+            var fileReader = new FileReader(_preferencesFile.Path);
+
+            byte activated = fileReader.ReadByte(PreferencesContants.AutoLoadSetupFileActivatedPosition);
+
+            if (activated == 0)
+                return null;
+
+            byte[] data = fileReader.ReadBytes(PreferencesContants.AutoLoadSetupFilePathPosition, PreferencesContants.AutoLoadSetupFileLength);
+
+            return GetTextFromBytes(data);
+        }
+
         private static string GetTextFromBytes(IEnumerable<byte> nameData)
         {
             byte[] nameBytes = nameData.TakeWhile(b => b != 0).ToArray();
@@ -106,6 +124,29 @@ namespace ArgData
         }
 
         /// <summary>
+        /// Sets the auto-loaded setup file.
+        /// </summary>
+        /// <param name="setupFilePath">Relative path to F1GP installation. Max 31 chars.</param>
+        public void SetAutoLoadedSetupFile(string setupFilePath)
+        {
+            if (string.IsNullOrEmpty(setupFilePath))
+                throw new ArgumentNullException(nameof(setupFilePath));
+
+            if (setupFilePath.Length > 31)
+                throw new ArgumentOutOfRangeException($"The path '{setupFilePath}' exceeds the max length of 31 chars.");
+
+            var writer = new FileWriter(_preferencesFile.Path);
+
+            string pathToWrite = setupFilePath.PadRight(PreferencesContants.AutoLoadSetupFileLength, '\0');
+            byte[] pathBytes = Encoding.ASCII.GetBytes(pathToWrite);
+
+            writer.WriteByte(255, PreferencesContants.AutoLoadSetupFileActivatedPosition);
+            writer.WriteBytes(pathBytes, PreferencesContants.AutoLoadSetupFilePathPosition);
+
+            ChecksumCalculator.UpdateChecksum(_preferencesFile.Path);
+        }
+
+        /// <summary>
         /// Disables auto-loading of any name file in the game.
         /// </summary>
         public void DisableAutoLoadedNameFile()
@@ -120,6 +161,22 @@ namespace ArgData
 
             ChecksumCalculator.UpdateChecksum(_preferencesFile.Path);
         }
+
+        /// <summary>
+        /// Disables auto-loading of any setup file in the game.
+        /// </summary>
+        public void DisableAutoLoadedSetupFile()
+        {
+            var writer = new FileWriter(_preferencesFile.Path);
+
+            string pathToWrite = "".PadRight(PreferencesContants.AutoLoadSetupFileLength, '\0');
+            byte[] pathBytes = Encoding.ASCII.GetBytes(pathToWrite);
+
+            writer.WriteByte(0, PreferencesContants.AutoLoadSetupFileActivatedPosition);
+            writer.WriteBytes(pathBytes, PreferencesContants.AutoLoadSetupFilePathPosition);
+
+            ChecksumCalculator.UpdateChecksum(_preferencesFile.Path);
+        }
     }
 
     internal static class PreferencesContants
@@ -129,5 +186,9 @@ namespace ArgData
         internal const int AutoLoadNameFileActivatedPosition = 1130;
         internal const int AutoLoadNameFilePathPosition = 1034;
         internal const int AutoLoadNameFileLength = 30;
+
+        internal const int AutoLoadSetupFileActivatedPosition = 1131;
+        internal const int AutoLoadSetupFilePathPosition = 1066;
+        internal const int AutoLoadSetupFileLength = 30;
     }
 }

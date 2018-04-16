@@ -40,7 +40,7 @@ namespace ArgData.Tests
 
             var performanceLevels = performanceLevelReader.ReadRacePerformanceLevels().ToArray();
 
-            performanceLevels.ShouldBeEquivalentTo(expectedValues);
+            performanceLevels.Should().BeEquivalentTo(expectedValues);
         }
 
         [Theory]
@@ -76,7 +76,7 @@ namespace ArgData.Tests
 
             var performanceLevels = performanceLevelReader.ReadQualifyingPerformanceLevels().ToArray();
 
-            performanceLevels.ShouldBeEquivalentTo(expectedValues);
+            performanceLevels.Should().BeEquivalentTo(expectedValues);
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace ArgData.Tests
 
             Action action = () => performanceLevelReader.ReadRacePerformanceLevel(-1);
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -138,7 +138,7 @@ namespace ArgData.Tests
 
             Action action = () => performanceLevelReader.ReadRacePerformanceLevel(41);
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -154,7 +154,7 @@ namespace ArgData.Tests
 
                 Action action = () => performanceLevelWriter.WriteRacePerformanceLevel(-1, 1);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
 
@@ -171,7 +171,7 @@ namespace ArgData.Tests
 
                 Action action = () => performanceLevelWriter.WriteRacePerformanceLevel(41, 1);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
 
@@ -184,7 +184,7 @@ namespace ArgData.Tests
 
                 Action action = () => performanceLevelWriter.WriteRacePerformanceLevels(null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -309,7 +309,7 @@ namespace ArgData.Tests
 
             Action action = () => performanceLevelReader.ReadQualifyingPerformanceLevel(-1);
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -323,7 +323,7 @@ namespace ArgData.Tests
 
             Action action = () => performanceLevelReader.ReadQualifyingPerformanceLevel(41);
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -339,7 +339,7 @@ namespace ArgData.Tests
 
                 Action action = () => performanceLevelWriter.WriteQualifyingPerformanceLevel(-1, 1);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
 
@@ -352,7 +352,7 @@ namespace ArgData.Tests
 
                 Action action = () => performanceLevelWriter.WriteQualifyingPerformanceLevels(null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -369,7 +369,7 @@ namespace ArgData.Tests
 
                 Action action = () => performanceLevelWriter.WriteQualifyingPerformanceLevel(41, 1);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
 
@@ -378,7 +378,7 @@ namespace ArgData.Tests
         {
             Action action = () => DriverPerformanceReader.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -386,7 +386,7 @@ namespace ArgData.Tests
         {
             Action action = () => DriverPerformanceWriter.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Theory]
@@ -457,7 +457,7 @@ namespace ArgData.Tests
 
                 Action action = () => performanceLevelWriter.WriteGeneralGripLevel(0);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
 
@@ -470,7 +470,7 @@ namespace ArgData.Tests
 
                 Action action = () => performanceLevelWriter.WriteGeneralGripLevel(101);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
     }

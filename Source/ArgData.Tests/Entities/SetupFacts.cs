@@ -172,7 +172,7 @@ namespace ArgData.Tests.Entities
 
             Action action = () => target.Copy(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

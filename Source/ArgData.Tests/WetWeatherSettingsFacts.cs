@@ -113,7 +113,7 @@ namespace ArgData.Tests
                 var writer = WetWeatherSettingsWriter.For(context.ExeFile);
                 Action action = () => writer.WriteSettings(settings);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
 
@@ -122,7 +122,7 @@ namespace ArgData.Tests
         {
             Action action = () => WetWeatherSettingsReader.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -130,7 +130,7 @@ namespace ArgData.Tests
         {
             Action action = () => WetWeatherSettingsWriter.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -142,7 +142,7 @@ namespace ArgData.Tests
 
                 Action action = () => writer.WriteSettings(null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
     }

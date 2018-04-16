@@ -22,7 +22,7 @@ namespace ArgData.Tests
 
             for (int i = 0; i < 1; i++)
             {
-                carColors[i].ShouldBeEquivalentTo(DefaultCarColors.GetByIndex(i));
+                carColors[i].Should().BeEquivalentTo(DefaultCarColors.GetByIndex(i));
             }
         }
 
@@ -149,7 +149,7 @@ namespace ArgData.Tests
 
             Action action = () => carColorReader.ReadCarColors(-1);
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -164,7 +164,7 @@ namespace ArgData.Tests
 
             Action action = () => carColorReader.ReadCarColors(18);
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -180,7 +180,7 @@ namespace ArgData.Tests
 
                 Action action = () => carColorWriter.WriteCarColors(new Car(), -1);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
 
@@ -197,7 +197,7 @@ namespace ArgData.Tests
 
                 Action action = () => carColorWriter.WriteCarColors(new Car(), 18);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
 
@@ -214,7 +214,7 @@ namespace ArgData.Tests
 
                 Action action = () => carColorWriter.WriteCarColors(null, 4);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -231,7 +231,7 @@ namespace ArgData.Tests
 
                 Action action = () => carColorWriter.WriteCarColors(null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -240,7 +240,7 @@ namespace ArgData.Tests
         {
             Action action = () => CarColorReader.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -248,7 +248,7 @@ namespace ArgData.Tests
         {
             Action action = () => CarColorWriter.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

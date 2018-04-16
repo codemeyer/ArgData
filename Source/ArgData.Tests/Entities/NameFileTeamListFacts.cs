@@ -38,7 +38,7 @@ namespace ArgData.Tests.Entities
                 var any = teamList[index];
             };
 
-            action.ShouldNotThrow<ArgumentOutOfRangeException>();
+            action.Should().NotThrow<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -53,7 +53,7 @@ namespace ArgData.Tests.Entities
                 var any = teamList[index];
             };
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
     }
 }

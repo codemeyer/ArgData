@@ -91,7 +91,7 @@ namespace ArgData.Tests
 
             Action action = () => SetupReader.ReadSingle(path);
 
-            action.ShouldThrow<Exception>();
+            action.Should().Throw<Exception>();
         }
 
         [Fact]
@@ -145,7 +145,7 @@ namespace ArgData.Tests
 
             Action action = () => SetupReader.ReadMultiple(path);
 
-            action.ShouldThrow<Exception>();
+            action.Should().Throw<Exception>();
         }
 
         [Fact]
@@ -317,7 +317,7 @@ namespace ArgData.Tests
 
             Action action = () => SetupWriter.WriteSingle(setup, ExampleDataHelper.GetTempFileName(".set"));
 
-            action.ShouldThrow<Exception>();
+            action.Should().Throw<Exception>();
         }
 
         [Fact]
@@ -328,7 +328,7 @@ namespace ArgData.Tests
 
             Action action = () => SetupWriter.WriteMultiple(setups, ExampleDataHelper.GetTempFileName(".set"));
 
-            action.ShouldThrow<Exception>();
+            action.Should().Throw<Exception>();
         }
 
         [Fact]
@@ -339,7 +339,7 @@ namespace ArgData.Tests
 
             Action action = () => SetupWriter.WriteMultiple(setups, ExampleDataHelper.GetTempFileName(".set"));
 
-            action.ShouldThrow<Exception>();
+            action.Should().Throw<Exception>();
         }
 
         [Fact]
@@ -347,7 +347,7 @@ namespace ArgData.Tests
         {
             Action action = () => SetupReader.ReadSingle(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -357,7 +357,7 @@ namespace ArgData.Tests
 
             Action action = () => SetupReader.ReadSingle(nonExistingFile);
 
-            action.ShouldThrow<FileNotFoundException>();
+            action.Should().Throw<FileNotFoundException>();
         }
 
         [Fact]
@@ -365,7 +365,7 @@ namespace ArgData.Tests
         {
             Action action = () => SetupReader.ReadMultiple(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -375,7 +375,7 @@ namespace ArgData.Tests
 
             Action action = () => SetupReader.ReadMultiple(nonExistingFile);
 
-            action.ShouldThrow<FileNotFoundException>();
+            action.Should().Throw<FileNotFoundException>();
         }
 
         [Fact]
@@ -383,7 +383,7 @@ namespace ArgData.Tests
         {
             Action action = () => SetupWriter.WriteSingle(null, "any-path.set");
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -391,7 +391,7 @@ namespace ArgData.Tests
         {
             Action action = () => SetupWriter.WriteMultiple(null, "any-path.set");
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

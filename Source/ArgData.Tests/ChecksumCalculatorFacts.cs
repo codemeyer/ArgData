@@ -51,7 +51,7 @@ namespace ArgData.Tests
 
             Action action = () => ChecksumCalculator.UpdateChecksum(path);
 
-            action.ShouldThrow<FileNotFoundException>();
+            action.Should().Throw<FileNotFoundException>();
         }
     }
 }

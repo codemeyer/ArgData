@@ -204,7 +204,7 @@ namespace ArgData.Tests
 
             Action action = () => helmetList.GetByDriverNumber(value);
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -216,7 +216,7 @@ namespace ArgData.Tests
 
             Action action = () => helmetList.SetByDriverNumber(value, new Helmet());
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -231,7 +231,7 @@ namespace ArgData.Tests
 
                 Action action = () => helmetColorWriter.WriteHelmetColors(null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -240,7 +240,7 @@ namespace ArgData.Tests
         {
             Action action = () => HelmetColorReader.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -248,7 +248,7 @@ namespace ArgData.Tests
         {
             Action action = () => HelmetColorWriter.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

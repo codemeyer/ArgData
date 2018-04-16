@@ -22,7 +22,7 @@ namespace ArgData.Tests
 
             for (int i = 0; i < 14; i++)
             {
-                pitCrewColors[i].ShouldBeEquivalentTo(DefaultPitCrewColors.GetByIndex(i));
+                pitCrewColors[i].Should().BeEquivalentTo(DefaultPitCrewColors.GetByIndex(i));
             }
         }
 
@@ -118,7 +118,7 @@ namespace ArgData.Tests
         {
             Action action = () => PitCrewColorReader.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -126,7 +126,7 @@ namespace ArgData.Tests
         {
             Action action = () => PitCrewColorWriter.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -138,7 +138,7 @@ namespace ArgData.Tests
 
                 Action action = () => pitCrewColorWriter.WritePitCrewColors(null, 1);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -151,7 +151,7 @@ namespace ArgData.Tests
 
                 Action action = () => pitCrewColorWriter.WritePitCrewColors(null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
     }

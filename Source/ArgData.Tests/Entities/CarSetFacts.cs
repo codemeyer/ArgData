@@ -196,7 +196,7 @@ namespace ArgData.Tests.Entities
             {
                 Action action = () => carSet.Export(null, exeContext.ExeFile);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -209,7 +209,7 @@ namespace ArgData.Tests.Entities
             {
                 Action action = () => carSet.Export(new ImportExportSettings(), null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -222,7 +222,7 @@ namespace ArgData.Tests.Entities
             {
                 Action action = () => carSet.Export(new ImportExportSettings(), exeContext.ExeFile, null, "gpsaves/any");
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -238,7 +238,7 @@ namespace ArgData.Tests.Entities
 
                 Action action = () => carSet.Export(new ImportExportSettings(), exeContext.ExeFile, preferencesFile, null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -360,7 +360,7 @@ namespace ArgData.Tests.Entities
             {
                 Action action = () => CarSet.Import(null, new ImportExportSettings(), exeContext.ExeFile, nameFile);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -372,7 +372,7 @@ namespace ArgData.Tests.Entities
             {
                 Action action = () => CarSet.Import(new CarSet(), null, exeContext.ExeFile, nameFile);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -383,7 +383,7 @@ namespace ArgData.Tests.Entities
 
             Action action = () => CarSet.Import(new CarSet(), new ImportExportSettings(), null, nameFile);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -398,7 +398,7 @@ namespace ArgData.Tests.Entities
 
                 Action action = () => CarSet.Import(new CarSet(), settings, exeContext.ExeFile, null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 

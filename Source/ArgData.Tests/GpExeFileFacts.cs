@@ -13,7 +13,7 @@ namespace ArgData.Tests
 
             Action action = () => GpExeFile.At(exePath);
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Theory]
@@ -113,7 +113,7 @@ namespace ArgData.Tests
 
             Action action = () => GpExeFile.At(path);
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -135,7 +135,7 @@ namespace ArgData.Tests
 
             Action action = () => GpExeFile.At(path);
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
     }
 }

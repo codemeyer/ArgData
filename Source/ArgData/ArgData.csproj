@@ -1,108 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{84965AD5-70AC-4DDF-ACD1-040671510C1A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ArgData</RootNamespace>
-    <AssemblyName>ArgData</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworks>netstandard2.0;net45;net40</TargetFrameworks>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Authors>Fredrik Meyer</Authors>
+    <Description>API for editing most things related to Formula 1 Grand Prix by Microprose</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/codemeyer/ArgData</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/codemeyer/ArgData</RepositoryUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/codemeyer/ArgData/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright © 2014-2018 Fredrik Meyer</Copyright>
+    <PackageTags>F1GP</PackageTags>
+    <PackageIconUrl>http://manicomio.se/argdata/icon/argdata-64x64.png</PackageIconUrl>
+    <VersionPrefix>0.16.0</VersionPrefix>
+    <VersionSuffix></VersionSuffix>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\ArgData.XML</DocumentationFile>
-    <CodeAnalysisRuleSet>ExtendedDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\ArgData.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\ArgData.XML</DocumentationFile>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\ArgData.xml</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Constants.cs" />
-    <Compile Include="ChecksumCalculator.cs" />
-    <Compile Include="DamageSettings.cs" />
-    <Compile Include="DefaultValues.cs" />
-    <Compile Include="Entities\DamageSettings.cs" />
-    <Compile Include="Entities\PointsSystem.cs" />
-    <Compile Include="Entities\ReadOnlyList.cs" />
-    <Compile Include="Entities\CarSet.cs" />
-    <Compile Include="Entities\DriverNumberList.cs" />
-    <Compile Include="Entities\CarList.cs" />
-    <Compile Include="DriverNumbers.cs" />
-    <Compile Include="Entities\Car.cs" />
-    <Compile Include="CarColors.cs" />
-    <Compile Include="Entities\Driver.cs" />
-    <Compile Include="Entities\DriverPerformanceList.cs" />
-    <Compile Include="Entities\Helmet.cs" />
-    <Compile Include="Entities\HelmetList.cs" />
-    <Compile Include="Entities\NameFileDriverList.cs" />
-    <Compile Include="Entities\NameFileTeamList.cs" />
-    <Compile Include="Entities\PitCrew.cs" />
-    <Compile Include="Entities\PreferencesFile.cs" />
-    <Compile Include="Entities\SavedGameDriver.cs" />
-    <Compile Include="Entities\SavedGameDriverList.cs" />
-    <Compile Include="Entities\Setup.cs" />
-    <Compile Include="Entities\SetupList.cs" />
-    <Compile Include="Entities\WetWeatherSettings.cs" />
-    <Compile Include="GpChecksum.cs" />
-    <Compile Include="GpExeInfo.cs" />
-    <Compile Include="GpExeVersionInfo.cs" />
-    <Compile Include="DriverPerformance.cs" />
-    <Compile Include="HelmetColors.cs" />
-    <Compile Include="IO\FileReader.cs" />
-    <Compile Include="IO\FileWriter.cs" />
-    <Compile Include="GpExeFile.cs" />
-    <Compile Include="Entities\NameFile.cs" />
-    <Compile Include="NameFiles.cs" />
-    <Compile Include="Palette.cs" />
-    <Compile Include="PitCrewColors.cs" />
-    <Compile Include="Entities\PitCrewList.cs" />
-    <Compile Include="PlayerHorsepower.cs" />
-    <Compile Include="PointsSystems.cs" />
-    <Compile Include="Preferences.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Entities\SavedGame.cs" />
-    <Compile Include="SavedGameFiles.cs" />
-    <Compile Include="Entities\Team.cs" />
-    <Compile Include="Setups.cs" />
-    <Compile Include="TeamHorsepower.cs" />
-    <Compile Include="Validation\DriverNumberValidator.cs" />
-    <Compile Include="Validation\TeamIndexValidator.cs" />
-    <Compile Include="WetWeather.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ArgData.nuspec">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>bin\Release\net45\ArgData.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
+    <DocumentationFile>bin\Release\net40\ArgData.xml</DocumentationFile>
+  </PropertyGroup>
+
 </Project>

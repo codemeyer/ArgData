@@ -68,7 +68,7 @@ namespace ArgData.Tests
 
             Action action = () => NameFileReader.Read(nonExistingFile);
 
-            action.ShouldThrow<FileNotFoundException>();
+            action.Should().Throw<FileNotFoundException>();
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace ArgData.Tests
 
             Action action = () => NameFileReader.Read(notNameFilePath);
 
-            action.ShouldThrow<Exception>();
+            action.Should().Throw<Exception>();
         }
 
         [Fact]

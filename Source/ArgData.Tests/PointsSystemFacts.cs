@@ -36,7 +36,7 @@ namespace ArgData.Tests
         {
             Action action = () => PointsSystemReader.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Theory]
@@ -165,7 +165,7 @@ namespace ArgData.Tests
         {
             Action action = () => PointsSystemWriter.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -177,7 +177,7 @@ namespace ArgData.Tests
 
                 Action action = () => writer.Write(null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
     }

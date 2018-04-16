@@ -51,7 +51,7 @@ namespace ArgData.Tests
 
                 Action action = () => horsepowerWriter.WritePlayerHorsepower(horsepower);
 
-                action.ShouldNotThrow<ArgumentOutOfRangeException>();
+                action.Should().NotThrow<ArgumentOutOfRangeException>();
             }
         }
 
@@ -66,7 +66,7 @@ namespace ArgData.Tests
 
                 Action action = () => horsepowerWriter.WritePlayerHorsepower(horsepower);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
     }

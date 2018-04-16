@@ -77,7 +77,7 @@ namespace ArgData.Tests
 
                 Action action = () => driverNumberWriter.WriteDriverNumbers(driverNumbers);
 
-                action.ShouldThrow<ArgumentException>();
+                action.Should().Throw<ArgumentException>();
             }
         }
 
@@ -96,7 +96,7 @@ namespace ArgData.Tests
                 driverNumbers[10] = 41;
                 Action action = () => driverNumberWriter.WriteDriverNumbers(driverNumbers);
 
-                action.ShouldThrow<ArgumentException>();
+                action.Should().Throw<ArgumentException>();
             }
         }
 
@@ -105,7 +105,7 @@ namespace ArgData.Tests
         {
             Action action = () => DriverNumberReader.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace ArgData.Tests
         {
             Action action = () => DriverNumberWriter.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -125,7 +125,7 @@ namespace ArgData.Tests
 
                 Action action = () => driverNumberWriter.WriteDriverNumbers(null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
     }

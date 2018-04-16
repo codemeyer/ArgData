@@ -22,7 +22,7 @@ namespace ArgData.Tests.Entities
 
             Action action = () => new Car(tooFewColors);
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace ArgData.Tests.Entities
 
             Action action = () => car.Copy(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

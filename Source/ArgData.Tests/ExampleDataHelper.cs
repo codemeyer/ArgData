@@ -111,7 +111,7 @@ namespace ArgData.Tests
         {
             string directory = AppDomain.CurrentDomain.BaseDirectory;
 
-            return Path.Combine(directory, @"..\..\..\..\TestData\");
+            return Path.Combine(directory, @"..\..\..\..\..\TestData\");
         }
 
         internal static string GetTempFileName(string extFileName)

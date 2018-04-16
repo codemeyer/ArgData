@@ -106,7 +106,7 @@ namespace ArgData.Tests
         {
             Action action = () => SavedGameFileReader.ReadSavedGame(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -116,7 +116,7 @@ namespace ArgData.Tests
 
             Action action = () => SavedGameFileReader.ReadSavedGame(exampleDataPath);
 
-            action.ShouldThrow<FileNotFoundException>();
+            action.Should().Throw<FileNotFoundException>();
         }
     }
 }

@@ -58,7 +58,7 @@ namespace ArgData.Tests
 
             Action action = () => PreferencesReader.For(PreferencesFile.At(exampleDataPath));
 
-            action.ShouldThrow<ArgumentException>();
+            action.Should().Throw<ArgumentException>();
         }
 
         [Fact]
@@ -85,7 +85,7 @@ namespace ArgData.Tests
 
                 Action action = () => preferencesWriter.SetAutoLoadedNameFile("123456789012345678901234567890123");
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
 
@@ -98,7 +98,7 @@ namespace ArgData.Tests
 
                 Action action = () => preferencesWriter.SetAutoLoadedNameFile(null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -126,7 +126,7 @@ namespace ArgData.Tests
 
                 Action action = () => preferencesWriter.SetAutoLoadedSetupFile("123456789012345678901234567890123");
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
 
@@ -139,7 +139,7 @@ namespace ArgData.Tests
 
                 Action action = () => preferencesWriter.SetAutoLoadedSetupFile(null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -180,7 +180,7 @@ namespace ArgData.Tests
         {
             Action action = () => PreferencesReader.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -188,7 +188,7 @@ namespace ArgData.Tests
         {
             Action action = () => PreferencesWriter.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

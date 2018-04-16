@@ -93,7 +93,7 @@ namespace ArgData.Tests
         {
             Action action = () => Palette.GetColor(index);
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -103,7 +103,7 @@ namespace ArgData.Tests
         {
             Action action = () => Palette.GetDarkerColor(index);
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
 
         [Theory]
@@ -113,7 +113,7 @@ namespace ArgData.Tests
         {
             Action action = () => Palette.GetBrighterColor(index);
 
-            action.ShouldThrow<ArgumentOutOfRangeException>();
+            action.Should().Throw<ArgumentOutOfRangeException>();
         }
     }
 }

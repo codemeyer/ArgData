@@ -62,7 +62,7 @@ namespace ArgData.Tests
         {
             Action action = () => TeamHorsepowerReader.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -70,7 +70,7 @@ namespace ArgData.Tests
         {
             Action action = () => TeamHorsepowerWriter.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Theory]
@@ -84,7 +84,7 @@ namespace ArgData.Tests
 
                 Action action = () => horsepowerWriter.ReadTeamHorsepower(teamIndex);
 
-                action.ShouldNotThrow<ArgumentOutOfRangeException>();
+                action.Should().NotThrow<ArgumentOutOfRangeException>();
             }
 
         }
@@ -100,7 +100,7 @@ namespace ArgData.Tests
 
                 Action action = () => horsepowerWriter.ReadTeamHorsepower(teamIndex);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
 
         }
@@ -116,7 +116,7 @@ namespace ArgData.Tests
 
                 Action action = () => horsepowerWriter.WriteTeamHorsepower(teamIndex, 700);
 
-                action.ShouldNotThrow<ArgumentOutOfRangeException>();
+                action.Should().NotThrow<ArgumentOutOfRangeException>();
             }
         }
 
@@ -131,7 +131,7 @@ namespace ArgData.Tests
 
                 Action action = () => horsepowerWriter.WriteTeamHorsepower(teamIndex, 700);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
     }

@@ -1,8 +1,13 @@
 ﻿<SolutionConfiguration>
   <Settings>
+    <AdditionalFilesToIncludeForSolution>
+      <Value>..\TestData\**.*</Value>
+    </AdditionalFilesToIncludeForSolution>
     <AllowParallelTestExecution>False</AllowParallelTestExecution>
     <MetricsExclusionList>
       <Value>ArgData.Tests\ArgData.Tests.csproj</Value>
+      <Value>ArgData\ArgData.csproj:net45</Value>
+      <Value>ArgData\ArgData.csproj:net40</Value>
     </MetricsExclusionList>
     <SolutionConfigured>True</SolutionConfigured>
   </Settings>

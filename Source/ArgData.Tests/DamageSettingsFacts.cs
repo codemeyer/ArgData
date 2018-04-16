@@ -32,7 +32,7 @@ namespace ArgData.Tests
         {
             Action action = () => DamageSettingsReader.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Theory]
@@ -72,7 +72,7 @@ namespace ArgData.Tests
         {
             Action action = () => DamageSettingsWriter.For(null);
 
-            action.ShouldThrow<ArgumentNullException>();
+            action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
@@ -84,7 +84,7 @@ namespace ArgData.Tests
 
                 Action action = () => writer.Write(null);
 
-                action.ShouldThrow<ArgumentNullException>();
+                action.Should().Throw<ArgumentNullException>();
             }
         }
 
@@ -102,7 +102,7 @@ namespace ArgData.Tests
 
                 Action action = () => writer.Write(settings);
 
-                action.ShouldThrow<ArgumentOutOfRangeException>();
+                action.Should().Throw<ArgumentOutOfRangeException>();
             }
         }
     }

@@ -33,6 +33,17 @@ namespace ArgData.IO
             }
         }
 
+        internal int ReadInt32(int position)
+        {
+            using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
+            {
+                br.BaseStream.Position = position;
+                int value = br.ReadInt32();
+
+                return value;
+            }
+        }
+
         internal byte ReadByte(int position)
         {
             using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))

@@ -216,7 +216,7 @@ namespace ArgData
             if (gripLevel > 1)
             {
                 var gripValue = gripLevel * 100 - 100;
-                fileWriter.WriteUInt16(gripValue, position + 3);
+                fileWriter.WriteUInt16((ushort)gripValue, position + 3);
             }
         }
     }

@@ -80,7 +80,7 @@ namespace ArgData
 
             int position = _exeFile.GetTeamHorsepowerPosition(teamIndex);
 
-            new FileWriter(_exeFile.ExePath).WriteUInt16(horsepower, position);
+            new FileWriter(_exeFile.ExePath).WriteUInt16((ushort)horsepower, position);
         }
     }
 }

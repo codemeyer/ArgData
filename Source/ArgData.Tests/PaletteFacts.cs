@@ -1,5 +1,4 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using ArgData.Entities;
 using FluentAssertions;
 using Xunit;
@@ -30,7 +29,7 @@ namespace ArgData.Tests
         public void ColorRange_BrighterColorIsAvailable_ReturnBrighterColorInRange()
         {
             Color color = Palette.GetColor(85);
-            int brighterColorIndex = Palette.GetBrighterColor(85);
+            byte brighterColorIndex = Palette.GetBrighterColor(85);
             Color brighterColor = Palette.GetColor(brighterColorIndex);
 
             brighterColor.R.Should().BeGreaterOrEqualTo(color.R);
@@ -42,7 +41,7 @@ namespace ArgData.Tests
         [Fact]
         public void ColorRange_BrighterColorIsNotAvailable_ReturnsSameColor()
         {
-            int brighterColorIndex = Palette.GetBrighterColor(95);
+            byte brighterColorIndex = Palette.GetBrighterColor(95);
 
             brighterColorIndex.Should().Be(95);
         }
@@ -51,7 +50,7 @@ namespace ArgData.Tests
         public void ColorRange_DarkerColorIsAvailable_ReturnsNextDarkerColorInRange()
         {
             Color color = Palette.GetColor(84);
-            int darkerColorIndex = Palette.GetDarkerColor(84);
+            byte darkerColorIndex = Palette.GetDarkerColor(84);
             Color darkerColor = Palette.GetColor(darkerColorIndex);
 
             darkerColor.R.Should().BeLessOrEqualTo(color.R);
@@ -62,7 +61,7 @@ namespace ArgData.Tests
         [Fact]
         public void GetDarkerColor_DarkerColorIsNotAvailable_ReturnsSameColor()
         {
-            int darkerColorIndex = Palette.GetDarkerColor(80);
+            byte darkerColorIndex = Palette.GetDarkerColor(80);
 
             darkerColorIndex.Should().Be(80);
         }
@@ -70,7 +69,7 @@ namespace ArgData.Tests
         [Fact]
         public void GetBrighterColor_ReverseRange_ReturnsExpectedResults()
         {
-            int brighterColorIndex = Palette.GetBrighterColor(142);
+            byte brighterColorIndex = Palette.GetBrighterColor(142);
 
             brighterColorIndex.Should().Be(141);
         }
@@ -80,40 +79,10 @@ namespace ArgData.Tests
         {
             for (int i = 0; i <= 255; i++)
             {
-                ReadOnlyList<int> range = Palette.GetRangeForColor(i);
+                ReadOnlyList<byte> range = Palette.GetRangeForColor((byte)i);
 
                 range.Should().NotBeNull($"Color {i} not found in range.");
             }
-        }
-
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(256)]
-        public void GetColor_OutOfRange_ThrowsException(int index)
-        {
-            Action action = () => Palette.GetColor(index);
-
-            action.Should().Throw<ArgumentOutOfRangeException>();
-        }
-
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(256)]
-        public void GetDarkerColor_OutOfRange_ThrowsException(int index)
-        {
-            Action action = () => Palette.GetDarkerColor(index);
-
-            action.Should().Throw<ArgumentOutOfRangeException>();
-        }
-
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(256)]
-        public void GetBrighterColor_OutOfRange_ThrowsException(int index)
-        {
-            Action action = () => Palette.GetBrighterColor(index);
-
-            action.Should().Throw<ArgumentOutOfRangeException>();
         }
     }
 }

@@ -21,13 +21,13 @@ namespace ArgData.IO
             }
         }
 
-        internal void WriteUInt16(int value, int position)
+        internal void WriteUInt16(ushort value, int position)
         {
             using (var writer = new BinaryWriter(new FileStream(_path, FileMode.Open)))
             {
                 writer.BaseStream.Position = position;
 
-                writer.Write((ushort)value);
+                writer.Write(value);
             }
         }
 

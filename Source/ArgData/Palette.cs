@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -12,17 +11,15 @@ namespace ArgData
     public static class Palette
     {
         private static Dictionary<int, Color> _palette;
-        private static List<List<int>> _ranges;
+        private static List<List<byte>> _ranges;
 
         /// <summary>
         /// Get the color at the specified index in the palette.
         /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public static Color GetColor(int index)
+        /// <param name="index">Index of color to fetch.</param>
+        /// <returns>Color.</returns>
+        public static Color GetColor(byte index)
         {
-            Validate(index);
-
             return _palette[index];
         }
 
@@ -297,22 +294,22 @@ namespace ArgData
 
         private static void SetupRanges()
         {
-            _ranges = new List<List<int>>
+            _ranges = new List<List<byte>>
             {
-                new List<int> {0},
-                new List<int> {1},
-                new List<int> {2},
-                new List<int> {3},
-                new List<int> {4},
-                new List<int> {5},
-                new List<int> {6},
-                new List<int> {7},
-                new List<int> {8},
-                new List<int> {9},
-                new List<int> {10},
-                new List<int> {11},
-                new List<int> {12, 13, 14},
-                new List<int> {15},
+                new List<byte> {0},
+                new List<byte> {1},
+                new List<byte> {2},
+                new List<byte> {3},
+                new List<byte> {4},
+                new List<byte> {5},
+                new List<byte> {6},
+                new List<byte> {7},
+                new List<byte> {8},
+                new List<byte> {9},
+                new List<byte> {10},
+                new List<byte> {11},
+                new List<byte> {12, 13, 14},
+                new List<byte> {15},
                 CreateRange(16, 23),
                 CreateRange(24, 31),
                 CreateRange(32, 47),
@@ -339,25 +336,25 @@ namespace ArgData
             };
         }
 
-        private static List<int> CreateRange(int from, int to)
+        private static List<byte> CreateRange(int from, int to)
         {
-            var range = new List<int>();
+            var range = new List<byte>();
 
             for (int i = from; i <= to; i++)
             {
-                range.Add(i);
+                range.Add((byte)i);
             }
 
             return range;
         }
 
-        private static List<int> CreateReverseRange(int from, int to)
+        private static List<byte> CreateReverseRange(int from, int to)
         {
-            var range = new List<int>();
+            var range = new List<byte>();
 
             for (int i = to; i >= from; i--)
             {
-                range.Add(i);
+                range.Add((byte)i);
             }
 
             return range;
@@ -368,11 +365,9 @@ namespace ArgData
         /// </summary>
         /// <param name="index">Index of color to get brighter color for.</param>
         /// <returns>The next brightest color in the color range. If there is no brighter color, the specified color is returned.</returns>
-        public static int GetBrighterColor(int index)
+        public static byte GetBrighterColor(byte index)
         {
-            Validate(index);
-
-            ReadOnlyList<int> range = GetRangeForColor(index);
+            ReadOnlyList<byte> range = GetRangeForColor(index);
             int indexInRange = range.List.IndexOf(index);
 
             if (indexInRange < range.Count - 1)
@@ -388,11 +383,9 @@ namespace ArgData
         /// </summary>
         /// <param name="index">Index of color to get darker color for.</param>
         /// <returns>The next darkest color in the color range. If there is no darkest color, the specified color is returned.</returns>
-        public static int GetDarkerColor(int index)
+        public static byte GetDarkerColor(byte index)
         {
-            Validate(index);
-
-            ReadOnlyList<int> range = GetRangeForColor(index);
+            ReadOnlyList<byte> range = GetRangeForColor(index);
             int indexInRange = range.List.IndexOf(index);
 
             if (indexInRange > 0)
@@ -403,23 +396,14 @@ namespace ArgData
             return index;
         }
 
-        private static void Validate(int index)
-        {
-            if (index < 0)
-                throw new ArgumentOutOfRangeException(nameof(index));
-
-            if (index > 255)
-                throw new ArgumentOutOfRangeException(nameof(index));
-        }
-
         /// <summary>
         /// Gets the range of colors for the specified color.
         /// </summary>
         /// <param name="index">Index of color to get range for.</param>
         /// <returns>The color range as a list of indexes.</returns>
-        public static ReadOnlyList<int> GetRangeForColor(int index)
+        public static ReadOnlyList<byte> GetRangeForColor(byte index)
         {
-            return new ReadOnlyList<int>(_ranges.FirstOrDefault(r => r.Contains(index)));
+            return new ReadOnlyList<byte>(_ranges.FirstOrDefault(r => r.Contains(index)));
         }
     }
 }

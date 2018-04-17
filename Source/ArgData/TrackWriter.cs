@@ -80,9 +80,9 @@ namespace ArgData
 
             var fileWriter = new FileWriter(path);
 
-            fileWriter.WriteUInt16(checksumPosition, 4104);
-            fileWriter.WriteUInt16(objectListPosition, 4106);
-            fileWriter.WriteUInt16(trackHeaderPosition, 4108);
+            fileWriter.WriteUInt16((ushort)checksumPosition, 4104);
+            fileWriter.WriteUInt16((ushort)objectListPosition, 4106);
+            fileWriter.WriteUInt16((ushort)trackHeaderPosition, 4108);
 
             ChecksumCalculator.UpdateChecksum(path);
         }

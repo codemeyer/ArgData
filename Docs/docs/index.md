@@ -30,6 +30,7 @@ The ArgData API currently supports the following:
 * Support for decompressed GP.EXE files
 * Changing probability of wing damage/out-of-race damage when crashing
 * Changing amount of time before retired cars are removed
+* Editing tracks
 
 Before you begin to code, you may want to have a look at the [overview](./overview).
 The provides general information on which files in F1GP that you edit, and a guide to
@@ -46,6 +47,8 @@ This simple piece of software stands on the shoulders of giants. Huge gratitude 
 
 * Steve Smith - for the amazing F1Ed
 * Trevor Kellaway - for an endless number of F1GP utilities, including GPEditor
-* Paul Hoad - for the C++ code for calculating F1GP file checksums he sent me in 1998
+* Paul Hoad - for the C++ code for calculating F1GP file checksums he sent me in 1998, and for the GP2 Track Editor
+* Barrie Millar, Klaus Six and René Smit - for Chequered Flag
 * Hrvoje Štimac - additional research material
-* Barrie Millar - additional research material
+* Maxime Labelle - for "The Grand Prix 2 Track File Format (Beta 0.5)" web page
+* Adrian Walti, Martijn Keizer, et al

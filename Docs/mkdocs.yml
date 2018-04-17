@@ -46,6 +46,8 @@ pages:
   - HelmetColorWriter: api/helmetcolorwriter.md
   - HelmetList: api/helmetlist.md
   - ImportExportSettings: api/importexportsettings.md
+  - KerbHeight: api/kerbheight.md
+  - KerbType: api/kerbtype.md
   - NameFile: api/namefile.md
   - NameFileDriverList: api/namefiledriverlist.md
   - NameFileReader: api/namefilereader.md
@@ -73,9 +75,24 @@ pages:
   - SetupReader: api/setupreader.md
   - SetupTyreCompound: api/setuptyrecompound.md
   - SetupWriter: api/setupwriter.md
+  - SurroundingArea: api/surroundingarea.md
   - Team: api/team.md
   - TeamHorsepowerReader: api/teamhorsepowerreader.md
   - TeamHorsepowerWriter: api/teamhorsepowerwriter.md
+  - Track: api/track.md
+  - TrackBestLineSegment: api/trackbestlinesegment.md
+  - TrackBestLineSegmentType: api/trackbestlinesegmenttype.md
+  - TrackCommand: api/trackcommand.md
+  - TrackHorizon: api/trackhorizon.md
+  - TrackObjectSettings: api/trackobjectsettings.md
+  - TrackObjectShape: api/trackobjectshape.md
+  - TrackOffsets: api/trackoffsets.md
+  - TrackRawData: api/trackrawdata.md
+  - TrackReader: api/trackreader.md
+  - TrackSection: api/tracksection.md
+  - TrackSectionHeader: api/tracksectionheader.md
+  - TrackSide: api/trackside.md
+  - TrackWriter: api/trackwriter.md
   - WetWeatherSettings: api/wetweathersettings.md
   - WetWeatherSettingsReader: api/wetweathersettingsreader.md
   - WetWeatherSettingsWriter: api/wetweathersettingswriter.md

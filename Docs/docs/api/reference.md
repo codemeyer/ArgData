@@ -36,6 +36,8 @@ The Writer classes update GP.EXE and other files.
 | [SetupWriter](./setupwriter)  | Writes single or multiple setup files to disk.  |
 | [TeamHorsepowerReader](./teamhorsepowerreader)  | Edits horsepower values of teams.  |
 | [TeamHorsepowerWriter](./teamhorsepowerwriter)  | Writes horsepower values of teams.  |
+| [TrackReader](./trackreader)  | Reads track data into a Track object.  |
+| [TrackWriter](./trackwriter)  | Writes a Track object to a file.  |
 | [WetWeatherSettingsReader](./wetweathersettingsreader)  | Reads the wet weather settings.  |
 | [WetWeatherSettingsWriter](./wetweathersettingswriter)  | Writes wet weather settings.  |
 
@@ -64,6 +66,8 @@ The Writer classes update GP.EXE and other files.
 | [Helmet](./helmet)  | A Helmet represents a helmet with its various colors.  |
 | [HelmetList](./helmetlist)  | Represents a list of Helmet objects.  |
 | [ImportExportSettings](./importexportsettings)  | ImportExportSettings define what will be imported from or exported to the GP.EXE.  |
+| [KerbHeight](./kerbheight)  | Defines the type of kerb that exists in the track section.  |
+| [KerbType](./kerbtype)  | Type of kerb, either two colors or three colors.  |
 | [NameFile](./namefile)  | Represents a file containing the names of the teams, engines and drivers.  |
 | [NameFileDriverList](./namefiledriverlist)  | Represents a list of 40 drivers to be saved to a name file.  |
 | [NameFileTeamList](./namefileteamlist)  | Represents a list of 20 teams to be saved to a name file.  |
@@ -78,7 +82,20 @@ The Writer classes update GP.EXE and other files.
 | [Setup](./setup)  | Single car setup.  |
 | [SetupList](./setuplist)  | Represents a list of qualifying and race setups for all tracks.  |
 | [SetupTyreCompound](./setuptyrecompound)  | Tyre compound in setup file. Can be A, B, C or D.  |
+| [SurroundingArea](./surroundingarea)  | Represents the color of the surrounding area around the track.  |
 | [Team](./team)  | Represents a team with a name and engine manufacturer.  |
+| [Track](./track)  | Represents an F1GP track.  |
+| [TrackBestLineSegment](./trackbestlinesegment)  | Represents a segment of the best line/computer car line.  |
+| [TrackBestLineSegmentType](./trackbestlinesegmenttype)  | Type of best line segment.  |
+| [TrackCommand](./trackcommand)  | Track command that adds features to the track section it belongs to.  |
+| [TrackHorizon](./trackhorizon)  | Represents the horizon of a track.  |
+| [TrackObjectSettings](./trackobjectsettings)  | Represents an instance of a 3D object with related settings.  |
+| [TrackObjectShape](./trackobjectshape)  | Represents the shape of 3D track objects.  |
+| [TrackOffsets](./trackoffsets)  | Offsets into the track file. These are updated automatically when the track is saved.  |
+| [TrackRawData](./trackrawdata)  | Describes various data in the track file, the purpose of which is (currently) unknown.  |
+| [TrackSection](./tracksection)  | Represents a small section of a track.  |
+| [TrackSectionHeader](./tracksectionheader)  | Header before list of track sections.  |
+| [TrackSide](./trackside)  | Track side.  |
 | [WetWeatherSettings](./wetweathersettings)  | Wet weather settings.  |
 
 

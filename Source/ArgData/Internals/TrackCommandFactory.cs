@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ArgData.Entities;
 
@@ -5,15 +6,28 @@ namespace ArgData.Internals
 {
     internal static class TrackCommandFactory
     {
-        public static TrackCommand Get(byte command, short[] arguments)
+        public static TrackCommand Create(byte command)
         {
+            ValidateCommand(command);
+
+            int count = ArgumentCount[command];
+            short[] arguments = new short[count];
+
             return new TrackCommand(command, arguments);
         }
 
-        public static int GetArgumentCountForCommand(byte command)
+        private static void ValidateCommand(byte command)
         {
-            return ArgumentCount[command];
+            if (!ArgumentCount.ContainsKey(command))
+            {
+                var message = $"Invalid command, must be between {MinArgumentValue} and {MaxArgumentValue}";
+                throw new ArgumentOutOfRangeException(nameof(command), message);
+            }
         }
+
+        private const byte MinArgumentValue = 0x80;
+
+        private const byte MaxArgumentValue = 0xac;
 
         private static readonly Dictionary<byte, int> ArgumentCount = new Dictionary<byte, int>
         {

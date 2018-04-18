@@ -10,3 +10,10 @@ Track command that adds features to the track section it belongs to.
 | Arguments  | Gets the list of arguments.  |
 
 
+## Methods
+
+| Name  | Description  |
+|-------|--------------|
+| Create(Byte *command*)  | Initializes a new TrackCommand.<br />*command*: Command type.<br />  |
+
+

@@ -12,7 +12,7 @@
     <Copyright>Copyright © 2014-2018 Fredrik Meyer</Copyright>
     <PackageTags>F1GP</PackageTags>
     <PackageIconUrl>http://manicomio.se/argdata/icon/argdata-64x64.png</PackageIconUrl>
-    <VersionPrefix>0.16.0</VersionPrefix>
+    <VersionPrefix>0.16.1</VersionPrefix>
     <VersionSuffix></VersionSuffix>
   </PropertyGroup>
 

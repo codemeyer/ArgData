@@ -1,3 +1,5 @@
+using ArgData.Internals;
+
 namespace ArgData.Entities
 {
     /// <summary>
@@ -5,6 +7,15 @@ namespace ArgData.Entities
     /// </summary>
     public class TrackCommand
     {
+        /// <summary>
+        /// Initializes a new TrackCommand.
+        /// </summary>
+        /// <param name="command">Command type.</param>
+        public static TrackCommand Create(byte command)
+        {
+            return TrackCommandFactory.Create(command);
+        }
+
         internal TrackCommand(byte command, short[] arguments)
         {
             Command = command;

@@ -34,19 +34,18 @@ namespace ArgData.Internals
 
                 if (byte2 > 0)
                 {
-                    var argCount = TrackCommandFactory.GetArgumentCountForCommand(byte2);
+                    var command = TrackCommand.Create(byte2);
 
-                    short[] arguments = new short[argCount];
+                    command.Arguments[0] = byte1;
 
-                    arguments[0] = byte1;
-
-                    for (int i = 1; i < argCount; i++)
+                    for (int i = 1; i < command.Arguments.Length; i++)
                     {
                         currentPosition += 2;
-                        arguments[i] = trackFileReader.ReadInt16(currentPosition);
+
+                        command.Arguments[i] = trackFileReader.ReadInt16(currentPosition);
                     }
 
-                    currentSection.Commands.Add(TrackCommandFactory.Get(byte2, arguments));
+                    currentSection.Commands.Add(command);
 
                     currentPosition += 2;
 

@@ -8,7 +8,7 @@ namespace ArgData.Tests
     public class PaletteFacts
     {
         [Fact]
-        public void SelectColor_FirstColorIsBlack()
+        public void GetColor_FirstColorIsBlack()
         {
             Color color = Palette.GetColor(0);
 
@@ -16,13 +16,11 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void SelectColor_LastColorIsLightGrey()
+        public void GetColor_LastColorIsWhite()
         {
             Color color = Palette.GetColor(255);
 
-            color.R.Should().Be(color.G);
-            color.G.Should().Be(color.B);
-            color.R.Should().Be(255);
+            color.ToArgb().Should().Be(Color.White.ToArgb());
         }
 
         [Fact]
@@ -37,7 +35,6 @@ namespace ArgData.Tests
             brighterColor.B.Should().BeGreaterOrEqualTo(color.B);
         }
 
-        // !
         [Fact]
         public void ColorRange_BrighterColorIsNotAvailable_ReturnsSameColor()
         {

@@ -138,6 +138,7 @@ namespace ArgData.Tests
         Prefs,
         Saves,
         Tracks,
-        Setups
+        Setups,
+        Images
     }
 }

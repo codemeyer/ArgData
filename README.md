@@ -19,6 +19,7 @@ The ArgData API currently supports the following:
 * Changing player car horsepower level
 * Updating computer car performance levels for races and qualifying sessions
 * Updating the general computer car grip level
+* Editing track data such as track sections, object placements, computer car line
 * Reading and creating new name files
 * Reading and creating new single-setup and multiple-setup files
 * Updating the points system
@@ -30,7 +31,7 @@ The ArgData API currently supports the following:
 * Support for decompressed GP.EXE files
 * Changing probability of wing damage/out-of-race damage when crashing
 * Changing amount of time before retired cars are removed
-* Editing tracks
+* Editing menu helmet images and (to a certain extent) other background images
 
 For an introduction to how to use the API, including simple examples and a full reference section,
 see the [API documentation](http://manicomio.se/argdata).

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45;net40</TargetFrameworks>
@@ -11,8 +11,8 @@
     <PackageLicenseUrl>https://raw.githubusercontent.com/codemeyer/ArgData/master/LICENSE</PackageLicenseUrl>
     <Copyright>Copyright © 2014-2018 Fredrik Meyer</Copyright>
     <PackageTags>F1GP</PackageTags>
-    <PackageIconUrl>http://manicomio.se/argdata/icon/argdata-64x64.png</PackageIconUrl>
-    <VersionPrefix>0.16.1</VersionPrefix>
+    <PackageIconUrl>http://www.argtools.com/media/icons/argdata-64x64.png</PackageIconUrl>
+    <VersionPrefix>0.17</VersionPrefix>
     <VersionSuffix></VersionSuffix>
   </PropertyGroup>
 

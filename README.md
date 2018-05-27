@@ -40,12 +40,6 @@ The API is continuously (albeit slowly) being improved and extended. To see what
 have a look at the [roadmap](ROADMAP.md).
 
 
-### Contributing
-
-Contributions are always welcome and much appreciated. If you want to contribute research data or actual code
-to ArgData, see the [guidelines for contributing](CONTRIBUTING.md).
-
-
 ### Acknowledgements
 
 This simple piece of software stands on the shoulders of giants. Huge gratitude goes out to:
@@ -56,4 +50,5 @@ This simple piece of software stands on the shoulders of giants. Huge gratitude 
 * Barrie Millar, Klaus Six and René Smit - for Chequered Flag
 * Hrvoje Štimac - additional research material
 * Maxime Labelle - for "The Grand Prix 2 Track File Format (Beta 0.5)" web page
+* Craig Heath - for the F1GP Driver Selection Screen Helmet Editor
 * Adrian Walti, Martijn Keizer, et al

@@ -1,6 +1,8 @@
 # ArgData Roadmap
 
-Future functionality includes (but is not limited to):
+Future functionality may include (but is not limited to):
 
-- Updating menu helmets and background images
+- Updating menu background images
 - Updating other game settings and preferences
+- Editing camera settings
+- Editing the year level text

@@ -1,0 +1,35 @@
+f1prefs-1
+
+frames 25
+km/h
+load names  "gpsaves\F1-91.NAM"
+load setups NO
+load records NO
+practice 5min
+qual 15min
+race 10%
+separate setups NO
+oppo Ace
+spread 1991
+
+
+
+f1prefs-2
+
+identical to f1prefs-1 except
+load names NO
+
+
+f1prefs-3
+
+load names  "gpsaves\F1-91.NAM"
+load setups "gpsaves\ALLSETUPS"
+
+
+f1prefs-4
+
+practice 6m
+qual 16m
+race 11%
+sep setups Yes
+oppo Pro

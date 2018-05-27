@@ -1,7 +1,5 @@
 # ArgData TestData
 
-TestData/*
-!TestData/Download.ps1
 BuildScripts/Artifacts
 
 #################

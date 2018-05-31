@@ -109,9 +109,25 @@ namespace ArgData.Tests
         }
 
         [Fact]
+        public void DriverNumberReader_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => new DriverNumberReader(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void DriverNumberWriterFor_WithNull_ThrowsArgumentNullException()
         {
             Action action = () => DriverNumberWriter.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void DriverNumberWriter_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => new DriverNumberWriter(null);
 
             action.Should().Throw<ArgumentNullException>();
         }

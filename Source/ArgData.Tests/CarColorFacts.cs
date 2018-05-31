@@ -244,9 +244,25 @@ namespace ArgData.Tests
         }
 
         [Fact]
+        public void CreateReader_NullGpExe_ThrowsArgumentNullException()
+        {
+            Action action = () => new CarColorReader(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void CreateWriterFor_NullGpExe_ThrowsArgumentNullException()
         {
             Action action = () => CarColorWriter.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void CreateWriter_NullGpExe_ThrowsArgumentNullException()
+        {
+            Action action = () => new CarColorWriter(null);
 
             action.Should().Throw<ArgumentNullException>();
         }

@@ -28,9 +28,17 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void DamageSettingsReader_WithNullExe_ThrowsArgumentNullException()
+        public void DamageSettingsReaderFor_WithNullExe_ThrowsArgumentNullException()
         {
             Action action = () => DamageSettingsReader.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void DamageSettingsReader_WithNullExe_ThrowsArgumentNullException()
+        {
+            Action action = () => new DamageSettingsReader(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -68,9 +76,17 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void DamageSettingsWriter_WithNullExe_ThrowsArgumentNullException()
+        public void DamageSettingsWriterFor_WithNullExe_ThrowsArgumentNullException()
         {
             Action action = () => DamageSettingsWriter.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void DamageSettingsWriter_WithNullExe_ThrowsArgumentNullException()
+        {
+            Action action = () => new DamageSettingsWriter(null);
 
             action.Should().Throw<ArgumentNullException>();
         }

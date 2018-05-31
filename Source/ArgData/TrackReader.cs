@@ -4,16 +4,16 @@ using ArgData.Internals;
 namespace ArgData
 {
     /// <summary>
-    /// Reads track data into a Track object.
+    /// Reads track data from an F1GP track file into a Track object.
     /// </summary>
-    public static class TrackReader
+    public class TrackReader
     {
         /// <summary>
         /// Reads the specified track file and returns a Track object.
         /// </summary>
         /// <param name="path">Path to track file.</param>
         /// <returns>Track object.</returns>
-        public static Track Read(string path)
+        public Track Read(string path)
         {
             var track = new Track();
 

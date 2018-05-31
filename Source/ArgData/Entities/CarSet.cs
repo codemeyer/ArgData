@@ -163,7 +163,7 @@ namespace ArgData.Entities
                 var fullPath = preferencesFile.GetFullPath(nameFilePath);
                 Directory.CreateDirectory(Path.GetDirectoryName(fullPath));
 
-                NameFileWriter.Write(fullPath, driverNameList, teamNameList);
+                new NameFileWriter().Write(fullPath, driverNameList, teamNameList);
 
                 var preferencesWriter = PreferencesWriter.For(preferencesFile);
                 preferencesWriter.SetAutoLoadedNameFile(nameFilePath);

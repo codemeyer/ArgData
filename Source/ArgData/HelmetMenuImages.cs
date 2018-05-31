@@ -6,16 +6,16 @@ namespace ArgData
     /// <summary>
     /// Reads menu helmet images from an image file.
     /// </summary>
-    public static class HelmetMenuImagesReader
+    public class HelmetMenuImagesReader
     {
         /// <summary>
         /// Reads the helmet menu image file at the specified path.
         /// </summary>
         /// <param name="path">Path to the helmet menu image file.</param>
         /// <returns>HelmetMenuImages list.</returns>
-        public static HelmetMenuImages Read(string path)
+        public HelmetMenuImages Read(string path)
         {
-            var container = ItemContainerFileReader.Read(path);
+            var container = new ItemContainerFileReader().Read(path);
 
             foreach (var item in container.Items)
             {
@@ -44,14 +44,14 @@ namespace ArgData
     /// <summary>
     /// Writes helmet menu images to a file.
     /// </summary>
-    public static class HelmetMenuImagesWriter
+    public class HelmetMenuImagesWriter
     {
         /// <summary>
         /// Writes helmet menu images to the specified path.
         /// </summary>
         /// <param name="path">Path to the helmet menu image file to save.</param>
         /// <param name="helmetImages">HelmetMenuImages containing helmet menu image data.</param>
-        public static void Write(string path, HelmetMenuImages helmetImages)
+        public void Write(string path, HelmetMenuImages helmetImages)
         {
             ValidateHelmetImages(helmetImages);
 
@@ -69,7 +69,7 @@ namespace ArgData
                 container.Items.Add(item);
             }
 
-            ItemContainerFileWriter.Write(path, container);
+            new ItemContainerFileWriter().Write(path, container);
         }
 
         private static void ValidateHelmetImages(HelmetMenuImages helmetImages)

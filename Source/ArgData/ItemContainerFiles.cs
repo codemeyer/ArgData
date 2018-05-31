@@ -8,14 +8,14 @@ namespace ArgData
     /// <summary>
     /// Reads image container files.
     /// </summary>
-    public static class ItemContainerFileReader
+    public class ItemContainerFileReader
     {
         /// <summary>
         /// Reads the image container file at the specified path.
         /// </summary>
         /// <param name="path">Path to image container file.</param>
         /// <returns>ImageFileContainer.</returns>
-        public static ItemContainerFile Read(string path)
+        public ItemContainerFile Read(string path)
         {
             ValidateFile(path);
 
@@ -89,14 +89,14 @@ namespace ArgData
     /// <summary>
     /// Class for writing to container files, such as HELMETS.DAT.
     /// </summary>
-    public static class ItemContainerFileWriter
+    public class ItemContainerFileWriter
     {
         /// <summary>
         /// Writes the specified container item into the file at path.
         /// </summary>
         /// <param name="path">Path to file to create/update.</param>
         /// <param name="container">ItemContainerFile representing the data that should be written.</param>
-        public static void Write(string path, ItemContainerFile container)
+        public void Write(string path, ItemContainerFile container)
         {
             using (var writer = new BinaryWriter(File.Open(path, FileMode.Create)))
             {

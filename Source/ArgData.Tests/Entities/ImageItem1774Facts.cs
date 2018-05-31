@@ -11,7 +11,7 @@ namespace ArgData.Tests.Entities
         public void GetPixelData_HelmetFileFromHE_HasExpectedPixels()
         {
             var path = ExampleDataHelper.GetExampleDataPath("HELMETHE.DAT", TestDataFileType.Images);
-            var images = ItemContainerFileReader.Read(path);
+            var images = new ItemContainerFileReader().Read(path);
 
             var item = images.Items[1] as ImageItem1774;
             var pixelData = item.GetPixelData();
@@ -59,7 +59,7 @@ namespace ArgData.Tests.Entities
         private ItemContainerFile Read(string fileName)
         {
             var path = ExampleDataHelper.GetExampleDataPath(fileName, TestDataFileType.Images);
-            var images = ItemContainerFileReader.Read(path);
+            var images = new ItemContainerFileReader().Read(path);
 
             return images;
         }

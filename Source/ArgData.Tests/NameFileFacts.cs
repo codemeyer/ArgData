@@ -58,7 +58,7 @@ namespace ArgData.Tests
         {
             string exampleDataPath = ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names);
 
-            return NameFileReader.Read(exampleDataPath);
+            return new NameFileReader().Read(exampleDataPath);
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace ArgData.Tests
         {
             string nonExistingFile = ExampleDataHelper.GetExampleDataPath("names-not-exist.nam", TestDataFileType.Names);
 
-            Action action = () => NameFileReader.Read(nonExistingFile);
+            Action action = () => new NameFileReader().Read(nonExistingFile);
 
             action.Should().Throw<FileNotFoundException>();
         }
@@ -76,7 +76,7 @@ namespace ArgData.Tests
         {
             var notNameFilePath = ExampleDataHelper.GpExePath(GpExeVersionInfo.European105);
 
-            Action action = () => NameFileReader.Read(notNameFilePath);
+            Action action = () => new NameFileReader().Read(notNameFilePath);
 
             action.Should().Throw<Exception>();
         }
@@ -89,7 +89,7 @@ namespace ArgData.Tests
 
             using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                NameFileWriter.Write(context.FilePath, drivers, teams);
+                new NameFileWriter().Write(context.FilePath, drivers, teams);
 
                 var fileInfo = new FileInfo(context.FilePath);
 
@@ -105,8 +105,8 @@ namespace ArgData.Tests
 
             using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                NameFileWriter.Write(context.FilePath, drivers, teams);
-                var namesFile = NameFileReader.Read(context.FilePath);
+                new NameFileWriter().Write(context.FilePath, drivers, teams);
+                var namesFile = new NameFileReader().Read(context.FilePath);
 
                 namesFile.Drivers.Count.Should().Be(40);
                 namesFile.Teams.Count.Should().Be(20);
@@ -125,8 +125,8 @@ namespace ArgData.Tests
 
             using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                NameFileWriter.Write(context.FilePath, drivers, teams);
-                var namesFile = NameFileReader.Read(context.FilePath);
+                new NameFileWriter().Write(context.FilePath, drivers, teams);
+                var namesFile = new NameFileReader().Read(context.FilePath);
                 namesFile.Drivers[0].Name.Should().Be("12345678901234567890123");
                 namesFile.Drivers[1].Name.Should().Be("Driver 2");
             }
@@ -143,8 +143,8 @@ namespace ArgData.Tests
 
             using (var context = ExampleDataContext.GetTempFileName("names.nam"))
             {
-                NameFileWriter.Write(context.FilePath, drivers, teams);
-                var namesFile = NameFileReader.Read(context.FilePath);
+                new NameFileWriter().Write(context.FilePath, drivers, teams);
+                var namesFile = new NameFileReader().Read(context.FilePath);
                 namesFile.Teams[0].Name.Should().Be("123456789012");
                 namesFile.Teams[1].Name.Should().Be("Team 2");
                 namesFile.Teams[0].Engine.Should().Be("123456789012");

@@ -22,7 +22,6 @@ namespace ArgData.Tests
             settings.RainAtFirstTrack.Should().BeFalse();
         }
 
-
         [Fact]
         public void ReadWetWeatherSettings_RainAtFirstTrack_ReturnsTrue()
         {
@@ -126,10 +125,26 @@ namespace ArgData.Tests
         }
 
         [Fact]
+        public void CreateReader_NullGpExe_ThrowsArgumentNullException()
+        {
+            Action action = () => new WetWeatherSettingsReader(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void CreateWriterFor_NullGpExe_ThrowsArgumentNullException()
         {
             Action action = () => WetWeatherSettingsWriter.For(null);
 
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void CreateWriter_NullGpExe_ThrowsArgumentNullException()
+        {
+            Action action = () => new WetWeatherSettingsWriter(null);
+            
             action.Should().Throw<ArgumentNullException>();
         }
 

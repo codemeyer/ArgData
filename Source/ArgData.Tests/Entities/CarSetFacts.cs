@@ -108,7 +108,7 @@ namespace ArgData.Tests.Entities
             var prefsDir = Path.GetDirectoryName(preferencesFile.Path);
             var fullPath = Path.Combine(prefsDir, fileName);
 
-            var nameFile = NameFileReader.Read(fullPath);
+            var nameFile = new NameFileReader().Read(fullPath);
             nameFile.Drivers[0].Name.Should().Be("Drv 1");
             nameFile.Teams[0].Name.Should().Be("TeamTeam 1");
             nameFile.Teams[0].Engine.Should().Be("EngEng 1");
@@ -245,7 +245,7 @@ namespace ArgData.Tests.Entities
         [Fact]
         public void Import_ImportAllValues()
         {
-            var nameFile = NameFileReader.Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
+            var nameFile = new NameFileReader().Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
 
             using (var exeContext = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
             {
@@ -266,7 +266,7 @@ namespace ArgData.Tests.Entities
         [Fact]
         public void Import_ImportAllValuesWithSettings()
         {
-            var nameFile = NameFileReader.Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
+            var nameFile = new NameFileReader().Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
 
             using (var exeContext = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
             {
@@ -287,7 +287,7 @@ namespace ArgData.Tests.Entities
         [Fact]
         public void Import_ImportAllValuesExistingCarSet()
         {
-            var nameFile = NameFileReader.Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
+            var nameFile = new NameFileReader().Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
 
             using (var exeContext = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
             {
@@ -355,7 +355,7 @@ namespace ArgData.Tests.Entities
         [Fact]
         public void Import_NullCarSet_ThrowsArgumentNullException()
         {
-            var nameFile = NameFileReader.Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
+            var nameFile = new NameFileReader().Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
             using (var exeContext = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
             {
                 Action action = () => CarSet.Import(null, new ImportExportSettings(), exeContext.ExeFile, nameFile);
@@ -367,7 +367,7 @@ namespace ArgData.Tests.Entities
         [Fact]
         public void Import_NullImportExportSettings_ThrowsArgumentNullException()
         {
-            var nameFile = NameFileReader.Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
+            var nameFile = new NameFileReader().Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
             using (var exeContext = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
             {
                 Action action = () => CarSet.Import(new CarSet(), null, exeContext.ExeFile, nameFile);
@@ -379,7 +379,7 @@ namespace ArgData.Tests.Entities
         [Fact]
         public void Import_NullGpExeFile_ThrowsArgumentNullException()
         {
-            var nameFile = NameFileReader.Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
+            var nameFile = new NameFileReader().Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
 
             Action action = () => CarSet.Import(new CarSet(), new ImportExportSettings(), null, nameFile);
 
@@ -405,7 +405,7 @@ namespace ArgData.Tests.Entities
         [Fact]
         public void ImportNothing_DoesNothingToCarSet()
         {
-            var nameFile = NameFileReader.Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
+            var nameFile = new NameFileReader().Read(ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names));
 
             using (var exeContext = ExampleDataContext.ExeCopy(GpExeVersionInfo.European105))
             {

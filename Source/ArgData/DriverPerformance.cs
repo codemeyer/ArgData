@@ -18,16 +18,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>DriverPerformanceReader.</returns>
-        public static DriverPerformanceReader For(GpExeFile exeFile)
+        public DriverPerformanceReader(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new DriverPerformanceReader(exeFile);
+            _exeFile = exeFile;
         }
 
-        private DriverPerformanceReader(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a DriverPerformanceReader for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>DriverPerformanceReader.</returns>
+        public static DriverPerformanceReader For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new DriverPerformanceReader(exeFile);
         }
 
         /// <summary>
@@ -129,16 +134,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>DriverPerformanceWriter.</returns>
-        public static DriverPerformanceWriter For(GpExeFile exeFile)
+        public DriverPerformanceWriter(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new DriverPerformanceWriter(exeFile);
+            _exeFile = exeFile;
         }
 
-        private DriverPerformanceWriter(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a DriverPerformanceWriter for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>DriverPerformanceWriter.</returns>
+        public static DriverPerformanceWriter For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new DriverPerformanceWriter(exeFile);
         }
 
         /// <summary>

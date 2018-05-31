@@ -66,9 +66,25 @@ namespace ArgData.Tests
         }
 
         [Fact]
+        public void CreateReader_NullGpExe_ThrowsArgumentNullException()
+        {
+            Action action = () => new TeamHorsepowerReader(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void CreateWriterFor_NullGpExe_ThrowsArgumentNullException()
         {
             Action action = () => TeamHorsepowerWriter.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void CreateWriter_NullGpExe_ThrowsArgumentNullException()
+        {
+            Action action = () => new TeamHorsepowerWriter(null);
 
             action.Should().Throw<ArgumentNullException>();
         }

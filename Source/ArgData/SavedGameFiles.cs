@@ -10,14 +10,14 @@ namespace ArgData
     /// <summary>
     /// Reads saved game files.
     /// </summary>
-    public static class SavedGameFileReader
+    public class SavedGameFileReader
     {
         /// <summary>
         /// Reads a saved game file.
         /// </summary>
         /// <param name="path">Path to saved game.</param>
         /// <returns>SavedGame with drivers and results.</returns>
-        public static SavedGame ReadSavedGame(string path)
+        public SavedGame Read(string path)
         {
             if (path == null) { throw new ArgumentNullException(nameof(path)); }
             if (!File.Exists(path)) { throw new FileNotFoundException(@"Could not find saved game file '{path}'."); }

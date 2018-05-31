@@ -114,9 +114,17 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void PitCrewColorReader_WithNull_ThrowsArgumentNullException()
+        public void PitCrewColorReaderFor_WithNull_ThrowsArgumentNullException()
         {
             Action action = () => PitCrewColorReader.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void PitCrewColorReader_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => new PitCrewColorReader(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -125,6 +133,14 @@ namespace ArgData.Tests
         public void PitCrewColorWriterFor_WithNull_ThrowsArgumentNullException()
         {
             Action action = () => PitCrewColorWriter.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void PitCrewColorWriter_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => new PitCrewColorWriter(null);
 
             action.Should().Throw<ArgumentNullException>();
         }

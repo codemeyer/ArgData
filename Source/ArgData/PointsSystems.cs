@@ -16,16 +16,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>PointsSystemReader.</returns>
-        public static PointsSystemReader For(GpExeFile exeFile)
+        public PointsSystemReader(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new PointsSystemReader(exeFile);
+            _exeFile = exeFile;
         }
 
-        private PointsSystemReader(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a PointsSystemReader for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>PointsSystemReader.</returns>
+        public static PointsSystemReader For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new PointsSystemReader(exeFile);
         }
 
         /// <summary>
@@ -62,16 +67,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to write to.</param>
         /// <returns>PointsSystemWriter.</returns>
-        public static PointsSystemWriter For(GpExeFile exeFile)
+        public PointsSystemWriter(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new PointsSystemWriter(exeFile);
+            _exeFile = exeFile;
         }
 
-        private PointsSystemWriter(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a PointsSystemWriter for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to write to.</param>
+        /// <returns>PointsSystemWriter.</returns>
+        public static PointsSystemWriter For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new PointsSystemWriter(exeFile);
         }
 
         /// <summary>

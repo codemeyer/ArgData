@@ -64,7 +64,7 @@ namespace ArgData.Tests
         {
             string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_after_r3.gam", TestDataFileType.Saves);
 
-            return SavedGameFileReader.ReadSavedGame(exampleDataPath);
+            return new SavedGameFileReader().Read(exampleDataPath);
         }
 
         [Fact]
@@ -98,13 +98,13 @@ namespace ArgData.Tests
         {
             string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season_fewerdrv.gam", TestDataFileType.Saves);
 
-            return SavedGameFileReader.ReadSavedGame(exampleDataPath);
+            return new SavedGameFileReader().Read(exampleDataPath);
         }
 
         [Fact]
         public void ReadSavedGame_Null_ThrowsArgumentNullException()
         {
-            Action action = () => SavedGameFileReader.ReadSavedGame(null);
+            Action action = () => new SavedGameFileReader().Read(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -114,7 +114,7 @@ namespace ArgData.Tests
         {
             string exampleDataPath = ExampleDataHelper.GetExampleDataPath("season-does-not-exist.gam", TestDataFileType.Saves);
 
-            Action action = () => SavedGameFileReader.ReadSavedGame(exampleDataPath);
+            Action action = () => new SavedGameFileReader().Read(exampleDataPath);
 
             action.Should().Throw<FileNotFoundException>();
         }

@@ -18,16 +18,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>DriverNumberReader.</returns>
-        public static DriverNumberReader For(GpExeFile exeFile)
+        public DriverNumberReader(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new DriverNumberReader(exeFile);
+            _exeFile = exeFile;
         }
 
-        private DriverNumberReader(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a DriverNumberReader for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>DriverNumberReader.</returns>
+        public static DriverNumberReader For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new DriverNumberReader(exeFile);
         }
 
         /// <summary>
@@ -56,16 +61,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>DriverNumberWriter.</returns>
-        public static DriverNumberWriter For(GpExeFile exeFile)
+        public DriverNumberWriter(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new DriverNumberWriter(exeFile);
+            _exeFile = exeFile;
         }
 
-        private DriverNumberWriter(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a DriverNumberWriter for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>DriverNumberWriter.</returns>
+        public static DriverNumberWriter For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new DriverNumberWriter(exeFile);
         }
 
         /// <summary>

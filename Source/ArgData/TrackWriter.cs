@@ -8,9 +8,9 @@ using ArgData.IO;
 namespace ArgData
 {
     /// <summary>
-    /// Writes a Track object to a file.
+    /// Writes a Track object to an F1GP track file.
     /// </summary>
-    public static class TrackWriter
+    public class TrackWriter
     {
         private const int OffsetAdjustment = 4112;
 
@@ -19,7 +19,7 @@ namespace ArgData
         /// </summary>
         /// <param name="trackData">Track data.</param>
         /// <param name="path">Path to file to create.</param>
-        public static void Write(Track trackData, string path)
+        public void Write(Track trackData, string path)
         {
             var trackBytes = new ByteList();
 

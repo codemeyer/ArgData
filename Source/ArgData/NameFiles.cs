@@ -9,14 +9,14 @@ namespace ArgData
     /// <summary>
     /// Reads a name file from disk.
     /// </summary>
-    public static class NameFileReader
+    public class NameFileReader
     {
         /// <summary>
         /// Read a name file.
         /// </summary>
         /// <param name="path">Path to file.</param>
         /// <returns>NameFile with teams, engines and driver names.</returns>
-        public static NameFile Read(string path)
+        public NameFile Read(string path)
         {
             ValidateFile(path);
 
@@ -87,7 +87,7 @@ namespace ArgData
     /// <summary>
     /// Writes a name file to disk.
     /// </summary>
-    public static class NameFileWriter
+    public class NameFileWriter
     {
         /// <summary>
         /// Write name file.
@@ -95,7 +95,7 @@ namespace ArgData
         /// <param name="path"></param>
         /// <param name="drivers">List of drivers, where index indicates driver number.</param>
         /// <param name="teams">List of teams.</param>
-        public static void Write(string path, NameFileDriverList drivers, NameFileTeamList teams)
+        public void Write(string path, NameFileDriverList drivers, NameFileTeamList teams)
         {
             using (FileStream namesFile = File.Create(path))
             {

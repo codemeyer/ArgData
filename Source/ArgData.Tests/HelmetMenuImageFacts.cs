@@ -12,7 +12,7 @@ namespace ArgData.Tests
         public void Read_StandardHelmetFile_ReturnsImages()
         {
             var path = ExampleDataHelper.GetExampleDataPath("HELMETS.DAT", TestDataFileType.Images);
-            var helmets = HelmetMenuImagesReader.Read(path);
+            var helmets = new HelmetMenuImagesReader().Read(path);
 
             helmets.Images.Count.Should().Be(39);
             helmets.Images.Should().OnlyContain(x => x.Pixels.Length == 2304);
@@ -22,11 +22,11 @@ namespace ArgData.Tests
         public void ReadWrite_UsingAbstraction_SameData()
         {
             var path = ExampleDataHelper.GetExampleDataPath("HELMETS.DAT", TestDataFileType.Images);
-            var helmets = HelmetMenuImagesReader.Read(path);
+            var helmets = new HelmetMenuImagesReader().Read(path);
 
             using (var context = ExampleDataContext.GetTempFileName("HELM.DAT"))
             {
-                HelmetMenuImagesWriter.Write(context.FilePath, helmets);
+                new HelmetMenuImagesWriter().Write(context.FilePath, helmets);
 
                 var writtenData = File.ReadAllBytes(context.FilePath);
                 var originalData = File.ReadAllBytes(path);
@@ -40,7 +40,7 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("missing-file.DAT", TestDataFileType.Images);
             
-            Action action = () => HelmetMenuImagesReader.Read(path);
+            Action action = () => new HelmetMenuImagesReader().Read(path);
 
             action.Should().Throw<FileNotFoundException>();
         }
@@ -50,7 +50,7 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("BACKDROP.DAT", TestDataFileType.Images);
 
-            Action action = () => HelmetMenuImagesReader.Read(path);
+            Action action = () => new HelmetMenuImagesReader().Read(path);
 
             action.Should().Throw<ArgumentOutOfRangeException>();
         }
@@ -63,7 +63,7 @@ namespace ArgData.Tests
 
             using (var context = ExampleDataContext.GetTempFileName("HELM.DAT"))
             {
-                Action action = () => HelmetMenuImagesWriter.Write(context.FilePath, helmets);
+                Action action = () => new HelmetMenuImagesWriter().Write(context.FilePath, helmets);
 
                 action.Should().Throw<ArgumentOutOfRangeException>();
             }

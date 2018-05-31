@@ -62,6 +62,22 @@ namespace ArgData.Tests
         }
 
         [Fact]
+        public void PreferencesReaderFor_Null_ThrowsArgumentNullException()
+        {
+            Action action = () => PreferencesReader.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void PreferencesReader_Null_ThrowsArgumentNullException()
+        {
+            Action action = () => new PreferencesReader(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
         public void Write_SetAutoLoadedNames_ReturnsPath()
         {
             using (var context = ExampleDataContext.PreferencesCopy())
@@ -174,19 +190,18 @@ namespace ArgData.Tests
             }
         }
 
-
         [Fact]
-        public void CreateReaderFor_Null_ThrowsArgumentNullException()
+        public void PreferencesWriterFor_Null_ThrowsArgumentNullException()
         {
-            Action action = () => PreferencesReader.For(null);
+            Action action = () => PreferencesWriter.For(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
 
         [Fact]
-        public void CreateWriterFor_Null_ThrowsArgumentNullException()
+        public void PreferencesWriter_Null_ThrowsArgumentNullException()
         {
-            Action action = () => PreferencesWriter.For(null);
+            Action action = () => new PreferencesWriter(null);
 
             action.Should().Throw<ArgumentNullException>();
         }

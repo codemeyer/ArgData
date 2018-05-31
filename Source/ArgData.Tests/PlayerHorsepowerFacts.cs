@@ -40,6 +40,22 @@ namespace ArgData.Tests
             }
         }
 
+        [Fact]
+        public void PlayerHorsepowerReaderFor_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => PlayerHorsepowerReader.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void PlayerHorsepowerReader_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => new PlayerHorsepowerReader(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
         [Theory]
         [InlineData(1)]
         [InlineData(1460)]
@@ -68,6 +84,22 @@ namespace ArgData.Tests
 
                 action.Should().Throw<ArgumentOutOfRangeException>();
             }
+        }
+
+        [Fact]
+        public void PlayerHorsepowerWriterFor_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => PlayerHorsepowerWriter.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void PlayerHorsepowerWriter_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => new PlayerHorsepowerWriter(null);
+
+            action.Should().Throw<ArgumentNullException>();
         }
     }
 }

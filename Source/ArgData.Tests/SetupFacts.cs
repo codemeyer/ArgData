@@ -13,7 +13,7 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w40-39_bb0_tyC_ra24-32-39-46-53-61", TestDataFileType.Setups);
 
-            var setup = SetupReader.ReadSingle(path);
+            var setup = new SetupReader().ReadSingle(path);
 
             setup.FrontWing.Should().Be(40);
             setup.RearWing.Should().Be(39);
@@ -32,7 +32,7 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w0-15_bb32f_tyA_ra17-31-39-46-50-56", TestDataFileType.Setups);
 
-            var setup = SetupReader.ReadSingle(path);
+            var setup = new SetupReader().ReadSingle(path);
 
             setup.FrontWing.Should().Be(0);
             setup.RearWing.Should().Be(15);
@@ -51,7 +51,7 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w24-8_bb5f_tyB_ra25-34-42-50-57-64", TestDataFileType.Setups);
 
-            var setup = SetupReader.ReadSingle(path);
+            var setup = new SetupReader().ReadSingle(path);
 
             setup.FrontWing.Should().Be(24);
             setup.RearWing.Should().Be(8);
@@ -70,7 +70,7 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("setup-w64-60_bb6r_tyD_ra16-30-38-45-49-55", TestDataFileType.Setups);
 
-            var setup = SetupReader.ReadSingle(path);
+            var setup = new SetupReader().ReadSingle(path);
 
             setup.FrontWing.Should().Be(64);
             setup.RearWing.Should().Be(60);
@@ -89,7 +89,7 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE", TestDataFileType.Exe);
 
-            Action action = () => SetupReader.ReadSingle(path);
+            Action action = () => new SetupReader().ReadSingle(path);
 
             action.Should().Throw<Exception>();
         }
@@ -99,7 +99,7 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("multi-setups", TestDataFileType.Setups);
 
-            var list = SetupReader.ReadMultiple(path);
+            var list = new SetupReader().ReadMultiple(path);
 
             list.SeparateSetups.Should().BeFalse();
         }
@@ -109,7 +109,7 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("multi-setups-separate", TestDataFileType.Setups);
 
-            var list = SetupReader.ReadMultiple(path);
+            var list = new SetupReader().ReadMultiple(path);
 
             list.SeparateSetups.Should().BeTrue();
         }
@@ -119,7 +119,7 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("multi-setups", TestDataFileType.Setups);
 
-            var list = SetupReader.ReadMultiple(path);
+            var list = new SetupReader().ReadMultiple(path);
 
             byte index = 1;
 
@@ -143,7 +143,7 @@ namespace ArgData.Tests
         {
             var path = ExampleDataHelper.GetExampleDataPath("GP-EU105.EXE", TestDataFileType.Exe);
 
-            Action action = () => SetupReader.ReadMultiple(path);
+            Action action = () => new SetupReader().ReadMultiple(path);
 
             action.Should().Throw<Exception>();
         }
@@ -167,9 +167,9 @@ namespace ArgData.Tests
 
             using (var context = ExampleDataContext.GetTempFileName(".set"))
             {
-                SetupWriter.WriteSingle(setup, context.FilePath);
+                new SetupWriter().WriteSingle(setup, context.FilePath);
 
-                var setupOnDisk = SetupReader.ReadSingle(context.FilePath);
+                var setupOnDisk = new SetupReader().ReadSingle(context.FilePath);
 
                 setupOnDisk.FrontWing.Should().Be(setup.FrontWing);
                 setupOnDisk.RearWing.Should().Be(setup.RearWing);
@@ -190,13 +190,14 @@ namespace ArgData.Tests
         [InlineData("setup-w64-60_bb6r_tyD_ra16-30-38-45-49-55")]
         public void WriteSingle_KnownSetup_StoredCorrectly(string knownSetupFile)
         {
-            var setup = SetupReader.ReadSingle(ExampleDataHelper.GetExampleDataPath(knownSetupFile, TestDataFileType.Setups));
+            var reader = new SetupReader();
+            var setup = reader.ReadSingle(ExampleDataHelper.GetExampleDataPath(knownSetupFile, TestDataFileType.Setups));
 
             using (var context = ExampleDataContext.GetTempFileName(".set"))
             {
-                SetupWriter.WriteSingle(setup, context.FilePath);
+                new SetupWriter().WriteSingle(setup, context.FilePath);
 
-                var setupOnDisk = SetupReader.ReadSingle(context.FilePath);
+                var setupOnDisk = reader.ReadSingle(context.FilePath);
 
                 setupOnDisk.FrontWing.Should().Be(setup.FrontWing);
                 setupOnDisk.RearWing.Should().Be(setup.RearWing);
@@ -218,9 +219,9 @@ namespace ArgData.Tests
 
             using (var context = ExampleDataContext.GetTempFileName(".set"))
             {
-                SetupWriter.WriteMultiple(setups, context.FilePath);
+                new SetupWriter().WriteMultiple(setups, context.FilePath);
 
-                var setupsOnDisk = SetupReader.ReadMultiple(context.FilePath);
+                var setupsOnDisk = new SetupReader().ReadMultiple(context.FilePath);
 
                 setupsOnDisk.SeparateSetups.Should().BeTrue();
 
@@ -315,7 +316,7 @@ namespace ArgData.Tests
                 GearRatio1 = 1
             };
 
-            Action action = () => SetupWriter.WriteSingle(setup, ExampleDataHelper.GetTempFileName(".set"));
+            Action action = () => new SetupWriter().WriteSingle(setup, ExampleDataHelper.GetTempFileName(".set"));
 
             action.Should().Throw<Exception>();
         }
@@ -326,7 +327,7 @@ namespace ArgData.Tests
             var setups = new SetupList();
             setups.QualifyingSetups[10].GearRatio1 = 1;
 
-            Action action = () => SetupWriter.WriteMultiple(setups, ExampleDataHelper.GetTempFileName(".set"));
+            Action action = () => new SetupWriter().WriteMultiple(setups, ExampleDataHelper.GetTempFileName(".set"));
 
             action.Should().Throw<Exception>();
         }
@@ -337,7 +338,7 @@ namespace ArgData.Tests
             var setups = new SetupList();
             setups.RaceSetups[5].GearRatio1 = 1;
 
-            Action action = () => SetupWriter.WriteMultiple(setups, ExampleDataHelper.GetTempFileName(".set"));
+            Action action = () => new SetupWriter().WriteMultiple(setups, ExampleDataHelper.GetTempFileName(".set"));
 
             action.Should().Throw<Exception>();
         }
@@ -345,7 +346,7 @@ namespace ArgData.Tests
         [Fact]
         public void ReadSingle_FileNull_ThrowsArgumentNullException()
         {
-            Action action = () => SetupReader.ReadSingle(null);
+            Action action = () => new SetupReader().ReadSingle(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -355,7 +356,7 @@ namespace ArgData.Tests
         {
             var nonExistingFile = ExampleDataHelper.GetExampleDataPath("setup-does-not-exist.setup", TestDataFileType.Setups);
 
-            Action action = () => SetupReader.ReadSingle(nonExistingFile);
+            Action action = () => new SetupReader().ReadSingle(nonExistingFile);
 
             action.Should().Throw<FileNotFoundException>();
         }
@@ -363,7 +364,7 @@ namespace ArgData.Tests
         [Fact]
         public void ReadMultiple_FileNull_ThrowsArgumentNullException()
         {
-            Action action = () => SetupReader.ReadMultiple(null);
+            Action action = () => new SetupReader().ReadMultiple(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -373,7 +374,7 @@ namespace ArgData.Tests
         {
             var nonExistingFile = ExampleDataHelper.GetExampleDataPath("setup-does-not-exist.setup", TestDataFileType.Setups);
 
-            Action action = () => SetupReader.ReadMultiple(nonExistingFile);
+            Action action = () => new SetupReader().ReadMultiple(nonExistingFile);
 
             action.Should().Throw<FileNotFoundException>();
         }
@@ -381,7 +382,7 @@ namespace ArgData.Tests
         [Fact]
         public void WriteSingle_SetupNull_ThrowsArgumentNullException()
         {
-            Action action = () => SetupWriter.WriteSingle(null, "any-path.set");
+            Action action = () => new SetupWriter().WriteSingle(null, "any-path.set");
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -389,7 +390,7 @@ namespace ArgData.Tests
         [Fact]
         public void WriteMultiple_SetupNull_ThrowsArgumentNullException()
         {
-            Action action = () => SetupWriter.WriteMultiple(null, "any-path.set");
+            Action action = () => new SetupWriter().WriteMultiple(null, "any-path.set");
 
             action.Should().Throw<ArgumentNullException>();
         }

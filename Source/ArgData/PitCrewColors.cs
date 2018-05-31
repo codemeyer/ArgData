@@ -18,16 +18,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>PitCrewColorReader.</returns>
-        public static PitCrewColorReader For(GpExeFile exeFile)
+        public PitCrewColorReader(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new PitCrewColorReader(exeFile);
+            _exeFile = exeFile;
         }
 
-        private PitCrewColorReader(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a PitCrewColorReader for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>PitCrewColorReader.</returns>
+        public static PitCrewColorReader For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new PitCrewColorReader(exeFile);
         }
 
         /// <summary>
@@ -84,16 +89,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>PitCrewColorWriter.</returns>
-        public static PitCrewColorWriter For(GpExeFile exeFile)
+        public PitCrewColorWriter(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new PitCrewColorWriter(exeFile);
+            _exeFile = exeFile;
         }
 
-        private PitCrewColorWriter(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a PitCrewColorWriter for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>PitCrewColorWriter.</returns>
+        public static PitCrewColorWriter For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new PitCrewColorWriter(exeFile);
         }
 
         /// <summary>

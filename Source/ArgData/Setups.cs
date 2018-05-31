@@ -7,16 +7,16 @@ using ArgData.IO;
 namespace ArgData
 {
     /// <summary>
-    /// Reads setup files from disk.
+    /// Reads a single setup file or a multiple setups file from disk.
     /// </summary>
-    public static class SetupReader
+    public class SetupReader
     {
         /// <summary>
         /// Reads a single setup file.
         /// </summary>
         /// <param name="path">Path to the setup file.</param>
         /// <returns>Setup.</returns>
-        public static Setup ReadSingle(string path)
+        public Setup ReadSingle(string path)
         {
             ValidateSingleSetupFile(path);
 
@@ -30,7 +30,7 @@ namespace ArgData
         /// </summary>
         /// <param name="path">Path to the setups file.</param>
         /// <returns>List of setups.</returns>
-        public static SetupList ReadMultiple(string path)
+        public SetupList ReadMultiple(string path)
         {
             ValidateMultipleSetupFile(path);
 
@@ -117,14 +117,14 @@ namespace ArgData
     /// <summary>
     /// Writes single or multiple setup files to disk.
     /// </summary>
-    public static class SetupWriter
+    public class SetupWriter
     {
         /// <summary>
         /// Writes a single setup to disk.
         /// </summary>
         /// <param name="setup">Setup to save.</param>
         /// <param name="path">Path to file. Will be created or overwritten.</param>
-        public static void WriteSingle(Setup setup, string path)
+        public void WriteSingle(Setup setup, string path)
         {
             Validate(setup);
 
@@ -151,7 +151,7 @@ namespace ArgData
         /// </summary>
         /// <param name="setups">Setups to save.</param>
         /// <param name="path">Path to file. Will be created or overwritten.</param>
-        public static void WriteMultiple(SetupList setups, string path)
+        public void WriteMultiple(SetupList setups, string path)
         {
             Validate(setups);
 

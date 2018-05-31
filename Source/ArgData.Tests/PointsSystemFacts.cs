@@ -32,9 +32,17 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void PointsSystemReader_WithNullExe_ThrowsArgumentNullException()
+        public void PointsSystemReaderFor_WithNullExe_ThrowsArgumentNullException()
         {
             Action action = () => PointsSystemReader.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void PointsSystemReader_WithNullExe_ThrowsArgumentNullException()
+        {
+            Action action = () => new PointsSystemReader(null);
 
             action.Should().Throw<ArgumentNullException>();
         }
@@ -161,9 +169,17 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void PointsSystemWriter_WithNullExe_ThrowsArgumentNullException()
+        public void PointsSystemWriterFor_WithNullExe_ThrowsArgumentNullException()
         {
             Action action = () => PointsSystemWriter.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void PointsSystemWriter_WithNullExe_ThrowsArgumentNullException()
+        {
+            Action action = () => new PointsSystemWriter(null);
 
             action.Should().Throw<ArgumentNullException>();
         }

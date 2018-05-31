@@ -374,7 +374,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void PerformanceLevelReader_WithNull_ThrowsArgumentNullException()
+        public void DriverPerformanceReaderFor_WithNull_ThrowsArgumentNullException()
         {
             Action action = () => DriverPerformanceReader.For(null);
 
@@ -382,9 +382,25 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void PerformanceLevelWriterFor_WithNull_ThrowsArgumentNullException()
+        public void DriverPerformanceReader_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => new DriverPerformanceReader(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void DriverPerformanceWriterFor_WithNull_ThrowsArgumentNullException()
         {
             Action action = () => DriverPerformanceWriter.For(null);
+
+            action.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void DriverPerformanceWriter_WithNull_ThrowsArgumentNullException()
+        {
+            Action action = () => new DriverPerformanceWriter(null);
 
             action.Should().Throw<ArgumentNullException>();
         }

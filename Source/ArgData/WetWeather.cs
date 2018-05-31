@@ -15,17 +15,21 @@ namespace ArgData
         /// Creates a WetWeatherSettingsReader for the specified GP.EXE file.
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
-        /// <returns>WetWeatherSettingsReader.</returns>
-        public static WetWeatherSettingsReader For(GpExeFile exeFile)
+        public WetWeatherSettingsReader(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new WetWeatherSettingsReader(exeFile);
+            _exeFile = exeFile;
         }
 
-        private WetWeatherSettingsReader(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a WetWeatherSettingsReader for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>WetWeatherSettingsReader.</returns>
+        public static WetWeatherSettingsReader For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new WetWeatherSettingsReader(exeFile);
         }
 
         /// <summary>
@@ -69,16 +73,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>WetWeatherSettingsWriter.</returns>
-        public static WetWeatherSettingsWriter For(GpExeFile exeFile)
+        public WetWeatherSettingsWriter(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new WetWeatherSettingsWriter(exeFile);
+            _exeFile = exeFile;
         }
 
-        private WetWeatherSettingsWriter(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a WetWeatherSettingsWriter for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>WetWeatherSettingsWriter.</returns>
+        public static WetWeatherSettingsWriter For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new WetWeatherSettingsWriter(exeFile);
         }
 
         /// <summary>

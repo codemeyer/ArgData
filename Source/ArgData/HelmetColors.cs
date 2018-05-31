@@ -17,16 +17,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>HelmetColorReader.</returns>
-        public static HelmetColorReader For(GpExeFile exeFile)
+        public HelmetColorReader(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new HelmetColorReader(exeFile);
+            _exeFile = exeFile;
         }
 
-        private HelmetColorReader(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a HelmetColorReader for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>HelmetColorReader.</returns>
+        public static HelmetColorReader For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new HelmetColorReader(exeFile);
         }
 
         /// <summary>
@@ -62,16 +67,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>HelmetColorWriter.</returns>
-        public static HelmetColorWriter For(GpExeFile exeFile)
+        public HelmetColorWriter(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new HelmetColorWriter(exeFile);
+            _exeFile = exeFile;
         }
 
-        private HelmetColorWriter(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a HelmetColorWriter for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>HelmetColorWriter.</returns>
+        public static HelmetColorWriter For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new HelmetColorWriter(exeFile);
         }
 
         /// <summary>

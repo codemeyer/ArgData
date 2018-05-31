@@ -16,16 +16,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>DamageSettingsReader.</returns>
-        public static DamageSettingsReader For(GpExeFile exeFile)
+        public DamageSettingsReader(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new DamageSettingsReader(exeFile);
+            _exeFile = exeFile;
         }
 
-        private DamageSettingsReader(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a DamageSettingsReader for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>DamageSettingsReader.</returns>
+        public static DamageSettingsReader For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new DamageSettingsReader(exeFile);
         }
 
         /// <summary>
@@ -72,16 +77,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to write to.</param>
         /// <returns>DamageSettingsWriter.</returns>
-        public static DamageSettingsWriter For(GpExeFile exeFile)
+        public DamageSettingsWriter(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new DamageSettingsWriter(exeFile);
+            _exeFile = exeFile;
         }
 
-        private DamageSettingsWriter(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a DamageSettingsWriter for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to write to.</param>
+        /// <returns>DamageSettingsWriter.</returns>
+        public static DamageSettingsWriter For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new DamageSettingsWriter(exeFile);
         }
 
         /// <summary>

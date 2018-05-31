@@ -15,14 +15,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>PlayerHorsepowerReader.</returns>
+        public PlayerHorsepowerReader(GpExeFile exeFile)
+        {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
+            _exeFile = exeFile;
+        }
+
+        /// <summary>
+        /// Creates a PlayerHorsepowerReader for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>PlayerHorsepowerReader.</returns>
         public static PlayerHorsepowerReader For(GpExeFile exeFile)
         {
             return new PlayerHorsepowerReader(exeFile);
-        }
-
-        private PlayerHorsepowerReader(GpExeFile exeFile)
-        {
-            _exeFile = exeFile;
         }
 
         /// <summary>
@@ -51,14 +58,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>PlayerHorsepowerWriter.</returns>
+        public PlayerHorsepowerWriter(GpExeFile exeFile)
+        {
+            if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
+
+            _exeFile = exeFile;
+        }
+
+        /// <summary>
+        /// Creates a PlayerHorsepowerWriter for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>PlayerHorsepowerWriter.</returns>
         public static PlayerHorsepowerWriter For(GpExeFile exeFile)
         {
             return new PlayerHorsepowerWriter(exeFile);
-        }
-
-        private PlayerHorsepowerWriter(GpExeFile exeFile)
-        {
-            _exeFile = exeFile;
         }
 
         /// <summary>

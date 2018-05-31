@@ -19,16 +19,21 @@ namespace ArgData
         /// </summary>
         /// <param name="preferencesFile">PreferencesFile to read from.</param>
         /// <returns>PreferencesReader.</returns>
-        public static PreferencesReader For(PreferencesFile preferencesFile)
+        public PreferencesReader(PreferencesFile preferencesFile)
         {
             if (preferencesFile == null) { throw new ArgumentNullException(nameof(preferencesFile)); }
 
-            return new PreferencesReader(preferencesFile);
+            _preferencesFile = preferencesFile;
         }
 
-        private PreferencesReader(PreferencesFile preferencesFile)
+        /// <summary>
+        /// Creates a PreferencesReader for the specified F1PREFS.DAT file.
+        /// </summary>
+        /// <param name="preferencesFile">PreferencesFile to read from.</param>
+        /// <returns>PreferencesReader.</returns>
+        public static PreferencesReader For(PreferencesFile preferencesFile)
         {
-            _preferencesFile = preferencesFile;
+            return new PreferencesReader(preferencesFile);
         }
 
         /// <summary>
@@ -88,16 +93,21 @@ namespace ArgData
         /// </summary>
         /// <param name="preferencesFile">PreferencesFile to read from.</param>
         /// <returns>PreferencesWriter.</returns>
-        public static PreferencesWriter For(PreferencesFile preferencesFile)
+        public PreferencesWriter(PreferencesFile preferencesFile)
         {
             if (preferencesFile == null) { throw new ArgumentNullException(nameof(preferencesFile)); }
 
-            return new PreferencesWriter(preferencesFile);
+            _preferencesFile = preferencesFile;
         }
 
-        private PreferencesWriter(PreferencesFile preferencesFile)
+        /// <summary>
+        /// Creates a PreferencesWriter for the specified F1PREFS.DAT file.
+        /// </summary>
+        /// <param name="preferencesFile">PreferencesFile to read from.</param>
+        /// <returns>PreferencesWriter.</returns>
+        public static PreferencesWriter For(PreferencesFile preferencesFile)
         {
-            _preferencesFile = preferencesFile;
+            return new PreferencesWriter(preferencesFile);
         }
 
         /// <summary>

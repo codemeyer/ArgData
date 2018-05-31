@@ -18,16 +18,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>CarColorReader.</returns>
-        public static CarColorReader For(GpExeFile exeFile)
+        public CarColorReader(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new CarColorReader(exeFile);
+            _exeFile = exeFile;
         }
 
-        private CarColorReader(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a CarColorReader for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>CarColorReader.</returns>
+        public static CarColorReader For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new CarColorReader(exeFile);
         }
 
         /// <summary>
@@ -87,16 +92,21 @@ namespace ArgData
         /// </summary>
         /// <param name="exeFile">GpExeFile to read from.</param>
         /// <returns>CarColorWriter.</returns>
-        public static CarColorWriter For(GpExeFile exeFile)
+        public CarColorWriter(GpExeFile exeFile)
         {
             if (exeFile == null) { throw new ArgumentNullException(nameof(exeFile)); }
 
-            return new CarColorWriter(exeFile);
+            _exeFile = exeFile;
         }
 
-        private CarColorWriter(GpExeFile exeFile)
+        /// <summary>
+        /// Creates a CarColorWriter for the specified GP.EXE file.
+        /// </summary>
+        /// <param name="exeFile">GpExeFile to read from.</param>
+        /// <returns>CarColorWriter.</returns>
+        public static CarColorWriter For(GpExeFile exeFile)
         {
-            _exeFile = exeFile;
+            return new CarColorWriter(exeFile);
         }
 
         /// <summary>

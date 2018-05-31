@@ -31,9 +31,9 @@ namespace ArgData.Tests
                 var targetPath = context.FilePath;
 
                 var sourcePath = ExampleDataHelper.GetExampleDataPath(fileName, TestDataFileType.Tracks);
-                var track = TrackReader.Read(sourcePath);
+                var track = new TrackReader().Read(sourcePath);
 
-                TrackWriter.Write(track, targetPath);
+                new TrackWriter().Write(track, targetPath);
 
                 var originalBytes = File.ReadAllBytes(sourcePath);
                 var createdBytes = File.ReadAllBytes(targetPath);

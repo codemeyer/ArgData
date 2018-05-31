@@ -4,7 +4,7 @@ ArgData is a .NET library for working with [Microprose Formula One Grand Prix](h
 
 This library currently supports the European and US (World Circuit) version 1.05 of the game.
 
-It is used in the new F1GP editor [ArgEditor](http://manicomio.se/argeditor).
+It is used in the new F1GP editor [ArgEditor](http://www.argtools.com/argeditor).
 
 
 ### API functionality and usage
@@ -34,7 +34,7 @@ The ArgData API currently supports the following:
 * Editing menu helmet images and (to a certain extent) other background images
 
 For an introduction to how to use the API, including simple examples and a full reference section,
-see the [API documentation](http://manicomio.se/argdata).
+see the [API documentation](http://www.argtools.com/argdata).
 
 The API is continuously (albeit slowly) being improved and extended. To see what is in the pipeline,
 have a look at the [roadmap](ROADMAP.md).

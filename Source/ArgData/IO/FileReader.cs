@@ -13,7 +13,7 @@ namespace ArgData.IO
 
         internal ushort ReadUInt16(int position)
         {
-            using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
+            using (var br = new BinaryReader(File.Open(_path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 br.BaseStream.Position = position;
                 ushort value = br.ReadUInt16();
@@ -24,7 +24,7 @@ namespace ArgData.IO
 
         internal short ReadInt16(int position)
         {
-            using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
+            using (var br = new BinaryReader(File.Open(_path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 br.BaseStream.Position = position;
                 short value = br.ReadInt16();
@@ -35,7 +35,7 @@ namespace ArgData.IO
 
         internal int ReadInt32(int position)
         {
-            using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
+            using (var br = new BinaryReader(File.Open(_path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 br.BaseStream.Position = position;
                 int value = br.ReadInt32();
@@ -46,7 +46,7 @@ namespace ArgData.IO
 
         internal byte ReadByte(int position)
         {
-            using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
+            using (var br = new BinaryReader(File.Open(_path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 br.BaseStream.Position = position;
                 byte value = br.ReadByte();
@@ -57,7 +57,7 @@ namespace ArgData.IO
 
         internal byte[] ReadBytes(int position, int count)
         {
-            using (var br = new BinaryReader(new FileStream(_path, FileMode.Open)))
+            using (var br = new BinaryReader(File.Open(_path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 br.BaseStream.Position = position;
                 byte[] bytes = br.ReadBytes(count);

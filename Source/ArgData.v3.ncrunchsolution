@@ -3,7 +3,7 @@
     <AdditionalFilesToIncludeForSolution>
       <Value>..\TestData\**.*</Value>
     </AdditionalFilesToIncludeForSolution>
-    <AllowParallelTestExecution>False</AllowParallelTestExecution>
+    <AllowParallelTestExecution>True</AllowParallelTestExecution>
     <MetricsExclusionList>
       <Value>ArgData.Tests\ArgData.Tests.csproj</Value>
       <Value>ArgData\ArgData.csproj:net45</Value>

@@ -4,12 +4,12 @@ using ArgData.Internals;
 namespace ArgData.Entities
 {
     /// <summary>
-    /// Represents an item stored inside an item container file.
+    /// Represents a media item stored inside a media container file.
     /// </summary>
-    public abstract class ItemContainerFileItem
+    public abstract class MediaFileItem
     {
         /// <summary>
-        /// Gets the offset of the item inside the image file container. Only updated when a container file is read from or written to.
+        /// Gets the offset of the item inside the file container. Only updated when a container file is read from or written to.
         /// </summary>
         public int Offset { get; internal set; }
 
@@ -52,7 +52,7 @@ namespace ArgData.Entities
     /// <summary>
     /// Image item of type 1774, e.g. an image inside HELMETS.DAT or FLAGS.DAT.
     /// </summary>
-    public class ImageItem1774 : ItemContainerFileItem
+    public class ImageItem1774 : MediaFileItem
     {
         /// <inheritdoc />
         public override short Type => 1774;
@@ -99,7 +99,7 @@ namespace ArgData.Entities
     /// <summary>
     /// Palette item, e.g. an item inside BACKDROP.DAT or TRACKPIX.DAT.
     /// </summary>
-    public class PaletteItem : ItemContainerFileItem
+    public class PaletteItem : MediaFileItem
     {
         /// <inheritdoc />
         public override short Type => 1776;
@@ -109,16 +109,16 @@ namespace ArgData.Entities
     /// <summary>
     /// Image item of type 1769, e.g. an image inside BACKDROP.DAT or TRACKPIX.DAT.
     /// </summary>
-    public class ImageItem1769 : ItemContainerFileItem
+    public class ImageItem1769 : MediaFileItem
     {
         /// <inheritdoc />
         public override short Type => 1769;
     }
 
     /// <summary>
-    /// Container item of type 1768, possibly video/animation related. Occurs in e.g. TROPHY.DAT.
+    /// Media item of type 1768, possibly video/animation related. Occurs in e.g. TROPHY.DAT.
     /// </summary>
-    public class ContainerItem1768 : ItemContainerFileItem
+    public class MediaItem1768 : MediaFileItem
     {
         /// <inheritdoc />
         public override short Type => 1768;

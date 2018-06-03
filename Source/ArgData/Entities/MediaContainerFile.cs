@@ -5,11 +5,11 @@ namespace ArgData.Entities
     /// <summary>
     /// Represents a .DAT file containing a number of items, mostly images.
     /// </summary>
-    public class ItemContainerFile
+    public class MediaContainerFile
     {
         /// <summary>
         /// Gets the list of items.
         /// </summary>
-        public IList<ItemContainerFileItem> Items { get; } = new List<ItemContainerFileItem>();
+        public IList<MediaFileItem> Items { get; } = new List<MediaFileItem>();
     }
 }

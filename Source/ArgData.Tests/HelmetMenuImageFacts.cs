@@ -46,7 +46,7 @@ namespace ArgData.Tests
         }
 
         [Fact]
-        public void Read_NonHelmetItemContainerFile_ThrowsArgumentOutOfRangeException()
+        public void Read_NonHelmetMediaContainerFile_ThrowsArgumentOutOfRangeException()
         {
             var path = ExampleDataHelper.GetExampleDataPath("BACKDROP.DAT", TestDataFileType.Images);
 

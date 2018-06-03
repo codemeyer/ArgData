@@ -15,7 +15,7 @@ namespace ArgData
         /// <returns>HelmetMenuImages list.</returns>
         public HelmetMenuImages Read(string path)
         {
-            var container = new ItemContainerFileReader().Read(path);
+            var container = new MediaContainerFileReader().Read(path);
 
             foreach (var item in container.Items)
             {
@@ -55,7 +55,7 @@ namespace ArgData
         {
             ValidateHelmetImages(helmetImages);
 
-            var container  = new ItemContainerFile();
+            var container  = new MediaContainerFile();
 
             foreach (var helmet in helmetImages.Images)
             {
@@ -69,7 +69,7 @@ namespace ArgData
                 container.Items.Add(item);
             }
 
-            new ItemContainerFileWriter().Write(path, container);
+            new MediaContainerFileWriter().Write(path, container);
         }
 
         private static void ValidateHelmetImages(HelmetMenuImages helmetImages)

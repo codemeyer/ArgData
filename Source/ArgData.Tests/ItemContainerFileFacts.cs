@@ -7,7 +7,7 @@ using Xunit;
 
 namespace ArgData.Tests
 {
-    public class ItemContainerFileFacts
+    public class MediaContainerFileFacts
     {
         [Theory]
         [InlineData("HELMETS.DAT")]
@@ -16,7 +16,7 @@ namespace ArgData.Tests
         public void Read_HelmetFile_AllHelmetsAre48x48(string fileName)
         {
             var path = ExampleDataHelper.GetExampleDataPath(fileName, TestDataFileType.Images);
-            var images = new ItemContainerFileReader().Read(path);
+            var images = new MediaContainerFileReader().Read(path);
 
             images.Items.Should().OnlyContain(x => x.Width == 48);
             images.Items.Should().OnlyContain(x => x.Height == 48);
@@ -29,7 +29,7 @@ namespace ArgData.Tests
         public void Read_HelmetFileGetPixelData_PixelDataIsAlways2304(string fileName)
         {
             var path = ExampleDataHelper.GetExampleDataPath(fileName, TestDataFileType.Images);
-            var images = new ItemContainerFileReader().Read(path);
+            var images = new MediaContainerFileReader().Read(path);
 
             foreach (var item in images.Items)
             {
@@ -101,10 +101,10 @@ namespace ArgData.Tests
             container.Items.Count(i => i.Type == 1768).Should().Be(15);
         }
 
-        private ItemContainerFile Read(string fileName)
+        private MediaContainerFile Read(string fileName)
         {
             var path = ExampleDataHelper.GetExampleDataPath(fileName, TestDataFileType.Images);
-            var images = new ItemContainerFileReader().Read(path);
+            var images = new MediaContainerFileReader().Read(path);
 
             return images;
         }
@@ -130,7 +130,7 @@ namespace ArgData.Tests
             string nonExistingFile =
                 ExampleDataHelper.GetExampleDataPath("does-not-exist.DAT", TestDataFileType.Images);
 
-            Action action = () => new ItemContainerFileReader().Read(nonExistingFile);
+            Action action = () => new MediaContainerFileReader().Read(nonExistingFile);
 
             action.Should().Throw<FileNotFoundException>();
         }
@@ -140,7 +140,7 @@ namespace ArgData.Tests
         {
             string wrongFileType = ExampleDataHelper.GetExampleDataPath("names1991.nam", TestDataFileType.Names);
 
-            Action action = () => new ItemContainerFileReader().Read(wrongFileType);
+            Action action = () => new MediaContainerFileReader().Read(wrongFileType);
 
             action.Should().Throw<ArgumentException>();
         }
@@ -154,7 +154,7 @@ namespace ArgData.Tests
 
             using (var context = ExampleDataContext.GetTempFileName("HELM.DAT"))
             {
-                new ItemContainerFileWriter().Write(context.FilePath, container);
+                new MediaContainerFileWriter().Write(context.FilePath, container);
 
                 var expectedBytes = File.ReadAllBytes(ExampleDataHelper.GetExampleDataPath(fileName, TestDataFileType.Images));
                 var actualBytes = File.ReadAllBytes(context.FilePath);
@@ -178,9 +178,9 @@ namespace ArgData.Tests
                     container.Items[i + 1].Data = imageItem.Data;
                 }
 
-                new ItemContainerFileWriter().Write(context.FilePath, container);
+                new MediaContainerFileWriter().Write(context.FilePath, container);
 
-                var newContainer = new ItemContainerFileReader().Read(context.FilePath);
+                var newContainer = new MediaContainerFileReader().Read(context.FilePath);
 
                 newContainer.Items.Count.Should().Be(36);
                 newContainer.Items.Count(i => i.Type == 1769).Should().Be(18);

@@ -1,22 +1,20 @@
 using System;
+using System.IO;
 using ArgData.Entities;
-using ArgData.IO;
 
 namespace ArgData.Internals
 {
     internal static class OffsetReader
     {
-        public static TrackOffsets Read(string path)
+        public static TrackOffsets Read(BinaryReader reader)
         {
-            var trackFileReader = new FileReader(path);
-
             return new TrackOffsets
             {
-                UnknownLong1 = trackFileReader.ReadInt32(4096),
-                UnknownLong2 = trackFileReader.ReadInt32(4100),
-                ChecksumPosition = Convert.ToInt16(trackFileReader.ReadInt16(4104) + 4112),
-                ObjectData = Convert.ToInt16(trackFileReader.ReadInt16(4106) + 4112),
-                TrackData = Convert.ToInt16(trackFileReader.ReadInt16(4108) + 4112)
+                UnknownLong1 = reader.ReadInt32(),
+                UnknownLong2 = reader.ReadInt32(),
+                ChecksumPosition = Convert.ToInt16(reader.ReadInt16() + 4112),
+                ObjectData = Convert.ToInt16(reader.ReadInt16() + 4112),
+                TrackData = Convert.ToInt16(reader.ReadInt16() + 4112)
             };
         }
     }

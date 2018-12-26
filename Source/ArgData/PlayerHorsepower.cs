@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ArgData.IO;
 
 namespace ArgData
@@ -38,11 +39,19 @@ namespace ArgData
         /// <returns>Player horsepower value.</returns>
         public int ReadPlayerHorsepower()
         {
-            var fileReader = new FileReader(_exeFile.ExePath);
-            ushort rawHorsepower = fileReader.ReadUInt16(_exeFile.GetPlayerHorsepowerPosition());
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                reader.BaseStream.Position = _exeFile.GetPlayerHorsepowerPosition();
+                ushort rawHorsepower = reader.ReadUInt16();
 
-            return (rawHorsepower - 632) / 22;
+                return (rawHorsepower - 632) / 22;
+            }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
 
@@ -85,7 +94,11 @@ namespace ArgData
 
             ushort rawHorsepower = RawValueFromHorsepower(horsepower);
 
-            new FileWriter(_exeFile.ExePath).WriteUInt16(rawHorsepower, _exeFile.GetPlayerHorsepowerPosition());
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetPlayerHorsepowerPosition();
+                writer.Write(rawHorsepower);
+            }
         }
 
         private void Validate(int horsepower)
@@ -101,5 +114,10 @@ namespace ArgData
         {
             return (ushort)(horsepower * 22 + 632);
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 }

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using ArgData.Entities;
+using ArgData.IO;
 
 namespace ArgData
 {
@@ -19,7 +20,7 @@ namespace ArgData
         {
             ValidateFile(path);
 
-            using (var reader = new BinaryReader(File.Open(path, FileMode.Open)))
+            using (var reader = new BinaryReader(StreamProvider(path)))
             {
                 var signature = reader.ReadBytes(8);
                 ValidateSignature(signature, path);
@@ -84,6 +85,11 @@ namespace ArgData
 
             return null;
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
     /// <summary>
@@ -98,7 +104,7 @@ namespace ArgData
         /// <param name="container">MediaContainerFile representing the data that should be written.</param>
         public void Write(string path, MediaContainerFile container)
         {
-            using (var writer = new BinaryWriter(File.Open(path, FileMode.Create)))
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(path)))
             {
                 writer.Write(MediaContainerFileConstants.Signature);
 
@@ -125,6 +131,11 @@ namespace ArgData
                 }
             }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 
     internal static class MediaContainerFileConstants

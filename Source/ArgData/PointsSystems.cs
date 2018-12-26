@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ArgData.Entities;
 using ArgData.IO;
 
@@ -39,20 +40,28 @@ namespace ArgData
         /// <returns>PointsSystem.</returns>
         public PointsSystem Read()
         {
-            var pointsSystem = new PointsSystem();
-
-            int position = _exeFile.GetPointsSystemPosition();
-            int lengthToRead = _exeFile.ExeInfo.IsDecompressed ? 26 : 6;
-
-            byte[] pointsPerPosition = new FileReader(_exeFile.ExePath).ReadBytes(position, lengthToRead);
-
-            for (int i = 0; i < lengthToRead; i++)
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
             {
-                pointsSystem.Points[i] = pointsPerPosition[i];
-            }
+                var pointsSystem = new PointsSystem();
 
-            return pointsSystem;
+                reader.BaseStream.Position = _exeFile.GetPointsSystemPosition();
+                int lengthToRead = _exeFile.ExeInfo.IsDecompressed ? 26 : 6;
+
+                byte[] pointsPerPosition = reader.ReadBytes(lengthToRead);
+
+                for (int i = 0; i < lengthToRead; i++)
+                {
+                    pointsSystem.Points[i] = pointsPerPosition[i];
+                }
+
+                return pointsSystem;
+            }
         }
+        
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
     /// <summary>
@@ -96,9 +105,16 @@ namespace ArgData
             byte[] bytesToWrite = new byte[lengthToWrite];
             Array.Copy(pointsSystem.Points, bytesToWrite, lengthToWrite);
 
-            int position = _exeFile.GetPointsSystemPosition();
-
-            new FileWriter(_exeFile.ExePath).WriteBytes(bytesToWrite, position);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetPointsSystemPosition();
+                writer.Write(bytesToWrite);
+            }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 }

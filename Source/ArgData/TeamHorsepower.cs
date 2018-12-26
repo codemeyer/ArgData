@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ArgData.IO;
 using ArgData.Validation;
 
@@ -42,12 +43,20 @@ namespace ArgData
         {
             TeamIndexValidator.Validate(teamIndex);
 
-            int position = _exeFile.GetTeamHorsepowerPosition(teamIndex);
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                reader.BaseStream.Position = _exeFile.GetTeamHorsepowerPosition(teamIndex);
 
-            ushort horsepower = new FileReader(_exeFile.ExePath).ReadUInt16(position);
+                ushort horsepower = reader.ReadUInt16();
 
-            return horsepower;
+                return horsepower;
+            }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
     /// <summary>
@@ -88,9 +97,16 @@ namespace ArgData
         {
             TeamIndexValidator.Validate(teamIndex);
 
-            int position = _exeFile.GetTeamHorsepowerPosition(teamIndex);
-
-            new FileWriter(_exeFile.ExePath).WriteUInt16((ushort)horsepower, position);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetTeamHorsepowerPosition(teamIndex);
+                writer.Write((ushort)horsepower);
+            }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 }

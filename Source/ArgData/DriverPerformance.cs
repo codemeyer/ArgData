@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ArgData.Entities;
 using ArgData.IO;
 using ArgData.Validation;
@@ -44,10 +45,13 @@ namespace ArgData
         {
             DriverNumberValidator.Validate(driverNumber);
 
-            int position = _exeFile.GetDriverRacePerformanceLevelPositions(driverNumber);
-            byte value = new FileReader(_exeFile.ExePath).ReadByte(position);
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                reader.BaseStream.Position = _exeFile.GetDriverRacePerformanceLevelPositions(driverNumber);
+                byte value = reader.ReadByte();
 
-            return value;
+                return value;
+            }
         }
 
         /// <summary>
@@ -56,10 +60,13 @@ namespace ArgData
         /// <returns>DriverPerformanceList with performance levels.</returns>
         public DriverPerformanceList ReadRacePerformanceLevels()
         {
-            int position = _exeFile.GetDriverRacePerformanceLevelPosition();
-            byte[] values = new FileReader(_exeFile.ExePath).ReadBytes(position, 40);
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                reader.BaseStream.Position = _exeFile.GetDriverRacePerformanceLevelPosition();
+                byte[] values = reader.ReadBytes(Constants.NumberOfDrivers);
 
-            return new DriverPerformanceList(values);
+                return new DriverPerformanceList(values);
+            }
         }
 
         /// <summary>
@@ -71,10 +78,13 @@ namespace ArgData
         {
             DriverNumberValidator.Validate(driverNumber);
 
-            int position = _exeFile.GetDriverQualifyingPerformanceLevelPositions(driverNumber);
-            byte value = new FileReader(_exeFile.ExePath).ReadByte(position);
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                reader.BaseStream.Position = _exeFile.GetDriverQualifyingPerformanceLevelPositions(driverNumber);
+                byte value = reader.ReadByte();
 
-            return value;
+                return value;
+            }
         }
 
         /// <summary>
@@ -83,10 +93,13 @@ namespace ArgData
         /// <returns>DriverPerformanceList with performance levels.</returns>
         public DriverPerformanceList ReadQualifyingPerformanceLevels()
         {
-            int position = _exeFile.GetDriverPerformanceQualifyingPosition();
-            byte[] values = new FileReader(_exeFile.ExePath).ReadBytes(position, Constants.NumberOfDrivers);
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                reader.BaseStream.Position = _exeFile.GetDriverPerformanceQualifyingPosition();
+                byte[] values = reader.ReadBytes(Constants.NumberOfDrivers);
 
-            return new DriverPerformanceList(values);
+                return new DriverPerformanceList(values);
+            }
         }
 
         /// <summary>
@@ -96,29 +109,39 @@ namespace ArgData
         /// <returns>General grip level.</returns>
         public int ReadGeneralGripLevel()
         {
-            int position = _exeFile.GetGeneralGripLevelPosition();
-            var fileReader = new FileReader(_exeFile.ExePath);
-            int signature = DriverPerformanceGripLevelData.GetSignature(fileReader, position);
-
-            if (signature == DriverPerformanceConstants.GripLevelDefaultSignature)
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
             {
-                int rawValue = fileReader.ReadUInt16(position + 3);
+                reader.BaseStream.Position = _exeFile.GetGeneralGripLevelPosition();
+                int signature = DriverPerformanceGripLevelData.GetSignature(reader);
+                int rawValuePosition = _exeFile.GetGeneralGripLevelPosition() + 3;
 
-                if (rawValue == 16384)
-                    return 1;
+                if (signature == DriverPerformanceConstants.GripLevelDefaultSignature)
+                {
+                    reader.BaseStream.Position = rawValuePosition;
+                    int rawValue = reader.ReadInt16();
 
-                throw new Exception($"Unexpected value {rawValue} at position {position + 3}, expected 16384");
+                    if (rawValue == 16384)
+                        return 1;
+
+                    throw new Exception($"Unexpected value {rawValue} at position {rawValuePosition}, expected 16384");
+                }
+
+                if (signature == DriverPerformanceConstants.GripLevelActivatedSignature)
+                {
+                    reader.BaseStream.Position = rawValuePosition;
+                    int rawValue = reader.ReadInt16();
+
+                    return (rawValue + 100) / 100;
+                }
+
+                throw new Exception($"Unexpected data at position {rawValuePosition}!");
             }
-
-            if (signature == DriverPerformanceConstants.GripLevelActivatedSignature)
-            {
-                int rawValue = fileReader.ReadUInt16(position + 3);
-
-                return (rawValue + 100) / 100;
-            }
-
-            throw new Exception($"Unexpected data at position {position}!");
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
     /// <summary>
@@ -160,8 +183,11 @@ namespace ArgData
         {
             DriverNumberValidator.Validate(driverNumber);
 
-            int position = _exeFile.GetDriverRacePerformanceLevelPositions(driverNumber);
-            new FileWriter(_exeFile.ExePath).WriteByte(performanceLevel, position);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetDriverRacePerformanceLevelPositions(driverNumber);
+                writer.Write(performanceLevel);
+            }
         }
 
         /// <summary>
@@ -172,8 +198,11 @@ namespace ArgData
         {
             Validate(driverPerformances);
 
-            int position = _exeFile.GetDriverRacePerformanceLevelPositions(1);
-            new FileWriter(_exeFile.ExePath).WriteBytes(driverPerformances.ToArray(), position);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetDriverRacePerformanceLevelPositions(1);
+                writer.Write(driverPerformances.ToArray());
+            }
         }
 
         private static void Validate(DriverPerformanceList driverPerformances)
@@ -191,8 +220,11 @@ namespace ArgData
         {
             DriverNumberValidator.Validate(driverNumber);
 
-            int position = _exeFile.GetDriverQualifyingPerformanceLevelPositions(driverNumber);
-            new FileWriter(_exeFile.ExePath).WriteByte(performanceLevel, position);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetDriverQualifyingPerformanceLevelPositions(driverNumber);
+                writer.Write(performanceLevel);
+            }
         }
 
         /// <summary>
@@ -203,8 +235,11 @@ namespace ArgData
         {
             Validate(driverPerformances);
 
-            int position = _exeFile.GetDriverQualifyingPerformanceLevelPositions(1);
-            new FileWriter(_exeFile.ExePath).WriteBytes(driverPerformances.ToArray(), position);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetDriverQualifyingPerformanceLevelPositions(1);
+                writer.Write(driverPerformances.ToArray());
+            }
         }
 
         /// <summary>
@@ -217,25 +252,34 @@ namespace ArgData
             if (gripLevel < 1 || gripLevel > 100)
                 throw new ArgumentOutOfRangeException(nameof(gripLevel), $"{nameof(gripLevel)} must be between 1 and 100.");
 
-            var fileWriter = new FileWriter(_exeFile.ExePath);
-
-            var byteSignature = gripLevel == 1 ? new byte[] { 0x79, 0x03, 0xb8, 0x00, 0x40 } : new byte[] { 0x90, 0x81, 0xc0 };
-            int position = _exeFile.GetGeneralGripLevelPosition();
-            fileWriter.WriteBytes(byteSignature, position);
-
-            if (gripLevel > 1)
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
             {
-                var gripValue = gripLevel * 100 - 100;
-                fileWriter.WriteUInt16((ushort)gripValue, position + 3);
+                var byteSignature = gripLevel == 1
+                    ? new byte[] { 0x79, 0x03, 0xb8, 0x00, 0x40 }
+                    : new byte[] { 0x90, 0x81, 0xc0 };
+
+                writer.BaseStream.Position = _exeFile.GetGeneralGripLevelPosition();
+                writer.Write(byteSignature);
+
+                if (gripLevel > 1)
+                {
+                    var gripValue = gripLevel * 100 - 100;
+                    writer.Write((ushort)gripValue);
+                }
             }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 
     internal static class DriverPerformanceGripLevelData
     {
-        internal static int GetSignature(FileReader fileReader, int position)
+        internal static int GetSignature(BinaryReader reader)
         {
-            byte[] signatureBytes = fileReader.ReadBytes(position, 4);
+            byte[] signatureBytes = reader.ReadBytes(4);
             signatureBytes[3] = 0;
             return BitConverter.ToInt32(signatureBytes, 0);
         }

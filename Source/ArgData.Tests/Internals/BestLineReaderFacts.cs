@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using ArgData.Entities;
 using ArgData.Internals;
 using FluentAssertions;
@@ -7,17 +8,20 @@ using Xunit;
 namespace ArgData.Tests.Internals
 {
     public class BestLineReaderFacts
-    {
+    {     
         [Fact]
         public void Phoenix_FirstSegment_IsDisplacement()
         {
             var trackData = TrackFactsHelper.GetTrackPhoenix();
 
-            var result = BestLineReader.Read(trackData.Path, trackData.KnownBestLineSectionDataStart);
+            using (var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path)))
+            {
+                var result = BestLineReader.Read(reader, trackData.KnownBestLineSectionDataStart);
 
-            var firstSegment = result.BestLineSegments.First();
-            firstSegment.SegmentType.Should().Be(TrackBestLineSegmentType.Displacement);
-            firstSegment.Displacement.Should().Be(576);
+                var firstSegment = result.BestLineSegments.First();
+                firstSegment.SegmentType.Should().Be(TrackBestLineSegmentType.Displacement);
+                firstSegment.Displacement.Should().Be(576);
+            }
         }
 
         [Fact]
@@ -25,10 +29,13 @@ namespace ArgData.Tests.Internals
         {
             var trackData = TrackFactsHelper.GetTrackPhoenix();
 
-            var result = BestLineReader.Read(trackData.Path, trackData.KnownBestLineSectionDataStart);
+            using (var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path)))
+            {
+                var result = BestLineReader.Read(reader, trackData.KnownBestLineSectionDataStart);
 
-            result.BestLineSegments.Count.Should().Be(40);
-            result.PositionAfterReading.Should().Be(trackData.KnownComputerCarSetupDataStart); // 16586
+                result.BestLineSegments.Count.Should().Be(40);
+                result.PositionAfterReading.Should().Be(trackData.KnownComputerCarSetupDataStart); // 16586
+            }
         }
 
         [Fact]
@@ -36,11 +43,14 @@ namespace ArgData.Tests.Internals
         {
             var trackData = TrackFactsHelper.GetTrackPhoenix();
 
-            var result = BestLineReader.Read(trackData.Path, trackData.KnownBestLineSectionDataStart);
+            using (var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path)))
+            {
+                var result = BestLineReader.Read(reader, trackData.KnownBestLineSectionDataStart);
 
-            var firstSegment = result.BestLineSegments.First();
-            firstSegment.Length.Should().Be(48);
-            firstSegment.Displacement.Should().Be(576);
+                var firstSegment = result.BestLineSegments.First();
+                firstSegment.Length.Should().Be(48);
+                firstSegment.Displacement.Should().Be(576);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ArgData.Entities;
 using ArgData.IO;
 
@@ -39,30 +40,36 @@ namespace ArgData
         /// <returns>DamageSettings.</returns>
         public DamageSettings Read()
         {
-            var fileReader = new FileReader(_exeFile.ExePath);
+            var settings = new DamageSettings();
 
-            int retireWall = _exeFile.GetRetireAfterHittingWallPosition();
-            int retireCar =_exeFile.GetRetireAfterHittingOtherCarPosition();
-            int damageWall =_exeFile.GetDamageAfterHittingWallPosition();
-            int damageCar = _exeFile.GetDamageAfterHittingOtherCarPosition();
-            int yellow = _exeFile.GetYellowFlagsForStationaryCarsAfterSecondsPosition();
-            int removed =_exeFile.GetRetiredCarsRemovedAfterSecondsPosition();
-
-            byte yellowValue = Convert.ToByte(fileReader.ReadUInt16(yellow) / 1000);
-            byte removedValue = Convert.ToByte(fileReader.ReadUInt16(removed) / 1000);
-
-            var settings = new DamageSettings
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
             {
-                RetireAfterHittingWall = fileReader.ReadInt16(retireWall),
-                RetireAfterHittingOtherCar = fileReader.ReadInt16(retireCar),
-                DamageAfterHittingWall = fileReader.ReadInt16(damageWall),
-                DamageAfterHittingOtherCar = fileReader.ReadInt16(damageCar),
-                YellowFlagsForStationaryCarsAfterSeconds = yellowValue,
-                RetiredCarsRemovedAfterSeconds = removedValue
-            };
+                reader.BaseStream.Position = _exeFile.GetRetireAfterHittingWallPosition();
+                settings.RetireAfterHittingWall = reader.ReadInt16();
+
+                reader.BaseStream.Position = _exeFile.GetRetireAfterHittingOtherCarPosition();
+                settings.RetireAfterHittingOtherCar = reader.ReadInt16();
+
+                reader.BaseStream.Position = _exeFile.GetDamageAfterHittingWallPosition();
+                settings.DamageAfterHittingWall = reader.ReadInt16();
+
+                reader.BaseStream.Position = _exeFile.GetDamageAfterHittingOtherCarPosition();
+                settings.DamageAfterHittingOtherCar = reader.ReadInt16();
+
+                reader.BaseStream.Position = _exeFile.GetYellowFlagsForStationaryCarsAfterSecondsPosition();
+                settings.YellowFlagsForStationaryCarsAfterSeconds = Convert.ToByte(reader.ReadUInt16() / 1000);
+
+                reader.BaseStream.Position = _exeFile.GetRetiredCarsRemovedAfterSecondsPosition();
+                settings.RetiredCarsRemovedAfterSeconds = Convert.ToByte(reader.ReadUInt16() / 1000);
+            }
 
             return settings;
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
     /// <summary>
@@ -105,24 +112,33 @@ namespace ArgData
             if (!settings.IsValid)
                 throw new ArgumentOutOfRangeException(nameof(settings), "One or more damage settings are invalid.");
 
-            var fileWriter = new FileWriter(_exeFile.ExePath);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetRetireAfterHittingWallPosition();
+                writer.Write(settings.RetireAfterHittingWall);
 
-            int retireWall = _exeFile.GetRetireAfterHittingWallPosition();
-            int retireCar = _exeFile.GetRetireAfterHittingOtherCarPosition();
-            int damageWall = _exeFile.GetDamageAfterHittingWallPosition();
-            int damageCar = _exeFile.GetDamageAfterHittingOtherCarPosition();
-            int yellow = _exeFile.GetYellowFlagsForStationaryCarsAfterSecondsPosition();
-            int removed = _exeFile.GetRetiredCarsRemovedAfterSecondsPosition();
+                writer.BaseStream.Position = _exeFile.GetRetireAfterHittingOtherCarPosition();
+                writer.Write(settings.RetireAfterHittingOtherCar);
 
-            ushort yellowValue = Convert.ToUInt16(settings.YellowFlagsForStationaryCarsAfterSeconds * 1000);
-            ushort removedValue = Convert.ToUInt16(settings.RetiredCarsRemovedAfterSeconds * 1000);
+                writer.BaseStream.Position = _exeFile.GetDamageAfterHittingWallPosition();
+                writer.Write(settings.DamageAfterHittingWall);
 
-            fileWriter.WriteInt16(settings.RetireAfterHittingWall, retireWall);
-            fileWriter.WriteInt16(settings.RetireAfterHittingOtherCar, retireCar);
-            fileWriter.WriteInt16(settings.DamageAfterHittingWall, damageWall);
-            fileWriter.WriteInt16(settings.DamageAfterHittingOtherCar, damageCar);
-            fileWriter.WriteUInt16(yellowValue, yellow);
-            fileWriter.WriteUInt16(removedValue, removed);
+                writer.BaseStream.Position = _exeFile.GetDamageAfterHittingOtherCarPosition();
+                writer.Write(settings.DamageAfterHittingOtherCar);
+
+                ushort yellowValue = Convert.ToUInt16(settings.YellowFlagsForStationaryCarsAfterSeconds * 1000);
+                writer.BaseStream.Position = _exeFile.GetYellowFlagsForStationaryCarsAfterSecondsPosition();
+                writer.Write(yellowValue);
+
+                ushort removedValue = Convert.ToUInt16(settings.RetiredCarsRemovedAfterSeconds * 1000);
+                writer.BaseStream.Position = _exeFile.GetRetiredCarsRemovedAfterSecondsPosition();
+                writer.Write(removedValue);
+            }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 }

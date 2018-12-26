@@ -1,24 +1,23 @@
 using System.Collections.Generic;
+using System.IO;
 using ArgData.Entities;
-using ArgData.IO;
 
 namespace ArgData.Internals
 {
     internal static class BestLineReader
     {
-        public static TrackBestLineReadResult Read(string path, int startPosition)
+        public static TrackBestLineReadResult Read(BinaryReader reader, int startPosition)
         {
             var list = new List<TrackBestLineSegment>();
 
-            int currentPosition = startPosition;
+            reader.BaseStream.Position = startPosition;
 
-            var trackFileReader = new FileReader(path);
+            byte firstLength = reader.ReadByte();
+            reader.BaseStream.Position++;
 
-            byte firstLength = trackFileReader.ReadByte(currentPosition);
-
-            short displacement = trackFileReader.ReadInt16(currentPosition + 2);
-            short correction = trackFileReader.ReadInt16(currentPosition + 4);
-            short radius = trackFileReader.ReadInt16(currentPosition + 6);
+            short displacement = reader.ReadInt16();
+            short correction = reader.ReadInt16();
+            short radius = reader.ReadInt16();
 
             list.Add(new TrackBestLineSegment
             {
@@ -28,20 +27,18 @@ namespace ArgData.Internals
                 Radius = radius
             });
 
-            currentPosition += 8;
-
             while (true)
             {
-                byte byte1 = trackFileReader.ReadByte(currentPosition);
-                byte byte2 = trackFileReader.ReadByte(currentPosition + 1);
+                byte byte1 = reader.ReadByte();
+                byte byte2 = reader.ReadByte();
 
                 if (byte2 == 0x40)
                 {
                     // wide-radius
                     short length = byte1;
-                    correction = trackFileReader.ReadInt16(currentPosition + 2);
-                    short highRadius = trackFileReader.ReadInt16(currentPosition + 4);
-                    short lowRadius = trackFileReader.ReadInt16(currentPosition + 6);
+                    correction = reader.ReadInt16();
+                    short highRadius = reader.ReadInt16();
+                    short lowRadius = reader.ReadInt16();
 
                     list.Add(new TrackBestLineSegment
                     {
@@ -51,14 +48,12 @@ namespace ArgData.Internals
                         HighRadius = highRadius,
                         LowRadius = lowRadius
                     });
-
-                    currentPosition += 8;
                 }
                 else
                 {
-                    short length = trackFileReader.ReadInt16(currentPosition);
-                    correction = trackFileReader.ReadInt16(currentPosition + 2);
-                    radius = trackFileReader.ReadInt16(currentPosition + 4);
+                    short length = byte1;
+                    correction = reader.ReadInt16();
+                    radius = reader.ReadInt16();
 
                     list.Add(new TrackBestLineSegment
                     {
@@ -67,19 +62,19 @@ namespace ArgData.Internals
                         Correction = correction,
                         Radius = radius
                     });
-
-                    currentPosition += 6;
                 }
 
-                short nextShort = trackFileReader.ReadInt16(currentPosition);
+                short nextShort = reader.ReadInt16();
                 if (nextShort == 0)
                 {
                     break;
                 }
+
+                reader.BaseStream.Position -= 2;
             }
 
-            return new TrackBestLineReadResult(currentPosition + 2, list);
+            int positoin = (int)reader.BaseStream.Position;
+            return new TrackBestLineReadResult(positoin, list);
         }
-
     }
 }

@@ -1,33 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using ArgData.Entities;
-using ArgData.IO;
 
 namespace ArgData.Internals
 {
     internal static class ObjectShapesReader
     {
-        public static List<TrackObjectShape> Read(string path, short trackOffset)
+        public static List<TrackObjectShape> Read(BinaryReader reader, short trackOffset)
         {
-            var trackFileReader = new FileReader(path);
-
-            const short startPosition = 4110;
-            int pos = startPosition;
-
-            short count = trackFileReader.ReadInt16(pos);
-
-            pos += 2;
+            short count = reader.ReadInt16();
 
             var offsets = new List<int>();
 
             // list of offsets
             for (int i = 0; i < count; i++)
             {
-                int offset = trackFileReader.ReadInt32(pos);
+                int offset = reader.ReadInt32();
                 offsets.Add(offset);
-
-                pos += 4;
             }
 
             var objects = new List<TrackObjectShape>();
@@ -39,6 +30,7 @@ namespace ArgData.Internals
             {
                 sortedOffsets.Add(offset);
             }
+
             sortedOffsets.Sort();
 
             // foreach offset, read data between offset location and next offset location
@@ -60,7 +52,9 @@ namespace ArgData.Internals
                 var readFrom = startPos + loopOffset;
                 var lengthToRead = nextOffset - loopOffset;
 
-                byte[] data = trackFileReader.ReadBytes(readFrom, lengthToRead);
+                reader.BaseStream.Position = readFrom;
+                //byte[] data = trackFileReader.ReadBytes(readFrom, lengthToRead);
+                byte[] data = reader.ReadBytes(lengthToRead);
 
                 var dataIndex = sortedOffsets.IndexOf(loopOffset);
 

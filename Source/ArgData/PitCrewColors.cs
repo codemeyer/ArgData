@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.IO;
 using ArgData.Entities;
 using ArgData.IO;
 using ArgData.Validation;
@@ -42,11 +42,13 @@ namespace ArgData
         /// <returns>PitCrew object with the colors of the pit crew.</returns>
         public PitCrew ReadPitCrewColors(int pitCrewIndex)
         {
-            int position = _exeFile.GetPitCrewColorsPosition(pitCrewIndex);
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                reader.BaseStream.Position = _exeFile.GetPitCrewColorsPosition(pitCrewIndex);
+                byte[] colors = reader.ReadBytes(GpExeFile.ColorsPerTeam);
 
-            byte[] colors = new FileReader(_exeFile.ExePath).ReadBytes(position, GpExeFile.ColorsPerTeam);
-
-            return new PitCrew(colors);
+                return new PitCrew(colors);
+            }
         }
 
         /// <summary>
@@ -55,26 +57,26 @@ namespace ArgData
         /// <returns>PitCrewList object with the colors of all the teams.</returns>
         public PitCrewList ReadPitCrewColors()
         {
-            byte[] allPitCrewBytes = ReadAllPitCrewColors();
-
-            var list = new PitCrewList();
-
-            for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
             {
-                byte[] pitCrewBytes = allPitCrewBytes.Skip(i * GpExeFile.ColorsPerTeam)
-                    .Take(GpExeFile.ColorsPerTeam).ToArray();
-                list[i].SetColors(pitCrewBytes);
+                var list = new PitCrewList();
+
+                reader.BaseStream.Position = _exeFile.GetPitCrewColorsPosition();
+
+                for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
+                {
+                    byte[] colors = reader.ReadBytes(GpExeFile.ColorsPerTeam);
+                    list[i].SetColors(colors);
+                }
+
+                return list;
             }
-
-            return list;
         }
 
-        private byte[] ReadAllPitCrewColors()
-        {
-            return new FileReader(_exeFile.ExePath).ReadBytes(
-                _exeFile.GetPitCrewColorsPosition(),
-                GpExeFile.ColorsPerTeam * Constants.NumberOfSupportedTeams);
-        }
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
     /// <summary>
@@ -117,9 +119,12 @@ namespace ArgData
             TeamIndexValidator.Validate(teamIndex);
 
             byte[] pitCrewBytes = pitCrew.GetColorsToWriteToFile();
-            int position = _exeFile.GetPitCrewColorsPosition(teamIndex);
 
-            new FileWriter(_exeFile.ExePath).WriteBytes(pitCrewBytes, position);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetPitCrewColorsPosition(teamIndex);
+                writer.Write(pitCrewBytes);
+            }
         }
 
         /// <summary>
@@ -130,17 +135,21 @@ namespace ArgData
         {
             if (pitCrewList == null) throw new ArgumentNullException(nameof(pitCrewList));
 
-            int teamIndex = 0;
-
-            foreach (PitCrew pitCrew in pitCrewList)
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
             {
-                byte[] pitCrewBytes = pitCrew.GetColorsToWriteToFile();
-                int position = _exeFile.GetPitCrewColorsPosition(teamIndex);
+                writer.BaseStream.Position = _exeFile.GetPitCrewColorsPosition(0);
 
-                new FileWriter(_exeFile.ExePath).WriteBytes(pitCrewBytes, position);
-
-                teamIndex++;
+                foreach (PitCrew pitCrew in pitCrewList)
+                {
+                    byte[] pitCrewBytes = pitCrew.GetColorsToWriteToFile();
+                    writer.Write(pitCrewBytes);
+                }
             }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 }

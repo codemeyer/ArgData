@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using ArgData.Entities;
@@ -42,16 +43,10 @@ namespace ArgData
         /// <returns>Relative path and name of name file. If no file is set to auto-load, returns null.</returns>
         public string GetAutoLoadedNameFile()
         {
-            var fileReader = new FileReader(_preferencesFile.Path);
-
-            byte activated = fileReader.ReadByte(PreferencesContants.AutoLoadNameFileActivatedPosition);
-
-            if (activated == 0)
-                return null;
-
-            byte[] data = fileReader.ReadBytes(PreferencesContants.AutoLoadNameFilePathPosition, PreferencesContants.AutoLoadNameFileLength);
-
-            return GetTextFromBytes(data);
+            return ReadPathPropertyWithActivation(
+                PreferencesContants.AutoLoadNameFileActivatedPosition,
+                PreferencesContants.AutoLoadNameFilePathPosition,
+                PreferencesContants.AutoLoadNameFileLength);
         }
 
         /// <summary>
@@ -60,16 +55,28 @@ namespace ArgData
         /// <returns>Relative path and name of the setup file. If no file is set to auto-load, returns null.</returns>
         public string GetAutoLoadedSetupFile()
         {
-            var fileReader = new FileReader(_preferencesFile.Path);
+            return ReadPathPropertyWithActivation(
+                PreferencesContants.AutoLoadSetupFileActivatedPosition,
+                PreferencesContants.AutoLoadSetupFilePathPosition,
+                PreferencesContants.AutoLoadSetupFileLength);
+        }
 
-            byte activated = fileReader.ReadByte(PreferencesContants.AutoLoadSetupFileActivatedPosition);
+        private string ReadPathPropertyWithActivation(int activatedPosition, int pathPosition, int length)
+        {
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_preferencesFile.Path)))
+            {
+                reader.BaseStream.Position = activatedPosition;
 
-            if (activated == 0)
-                return null;
+                byte activated = reader.ReadByte();
 
-            byte[] data = fileReader.ReadBytes(PreferencesContants.AutoLoadSetupFilePathPosition, PreferencesContants.AutoLoadSetupFileLength);
+                if (activated == 0)
+                    return null;
 
-            return GetTextFromBytes(data);
+                reader.BaseStream.Position = pathPosition;
+                byte[] data = reader.ReadBytes(length);
+
+                return GetTextFromBytes(data);
+            }
         }
 
         private static string GetTextFromBytes(IEnumerable<byte> nameData)
@@ -79,6 +86,11 @@ namespace ArgData
 
             return name;
         }
+        
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
     /// <summary>
@@ -122,13 +134,17 @@ namespace ArgData
             if (nameFilePath.Length > 31)
                 throw new ArgumentOutOfRangeException($"The path '{nameFilePath}' exceeds the max length of 31 chars.");
 
-            var writer = new FileWriter(_preferencesFile.Path);
-
             string pathToWrite = nameFilePath.PadRight(PreferencesContants.AutoLoadNameFileLength, '\0');
             byte[] pathBytes = Encoding.ASCII.GetBytes(pathToWrite);
 
-            writer.WriteByte(255, PreferencesContants.AutoLoadNameFileActivatedPosition);
-            writer.WriteBytes(pathBytes, PreferencesContants.AutoLoadNameFilePathPosition);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_preferencesFile.Path)))
+            {
+                writer.BaseStream.Position = PreferencesContants.AutoLoadNameFileActivatedPosition;
+                writer.Write((byte)255);
+
+                writer.BaseStream.Position = PreferencesContants.AutoLoadNameFilePathPosition;
+                writer.Write(pathBytes);
+            }
 
             ChecksumCalculator.UpdateChecksum(_preferencesFile.Path);
         }
@@ -145,13 +161,17 @@ namespace ArgData
             if (setupFilePath.Length > 31)
                 throw new ArgumentOutOfRangeException($"The path '{setupFilePath}' exceeds the max length of 31 chars.");
 
-            var writer = new FileWriter(_preferencesFile.Path);
-
             string pathToWrite = setupFilePath.PadRight(PreferencesContants.AutoLoadSetupFileLength, '\0');
             byte[] pathBytes = Encoding.ASCII.GetBytes(pathToWrite);
 
-            writer.WriteByte(255, PreferencesContants.AutoLoadSetupFileActivatedPosition);
-            writer.WriteBytes(pathBytes, PreferencesContants.AutoLoadSetupFilePathPosition);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_preferencesFile.Path)))
+            {
+                writer.BaseStream.Position = PreferencesContants.AutoLoadSetupFileActivatedPosition;
+                writer.Write((byte)255);
+
+                writer.BaseStream.Position = PreferencesContants.AutoLoadSetupFilePathPosition;
+                writer.Write(pathBytes);
+            }
 
             ChecksumCalculator.UpdateChecksum(_preferencesFile.Path);
         }
@@ -161,13 +181,17 @@ namespace ArgData
         /// </summary>
         public void DisableAutoLoadedNameFile()
         {
-            var writer = new FileWriter(_preferencesFile.Path);
-
             string pathToWrite = "".PadRight(PreferencesContants.AutoLoadNameFileLength, '\0');
             byte[] pathBytes = Encoding.ASCII.GetBytes(pathToWrite);
 
-            writer.WriteByte(0, PreferencesContants.AutoLoadNameFileActivatedPosition);
-            writer.WriteBytes(pathBytes, PreferencesContants.AutoLoadNameFilePathPosition);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_preferencesFile.Path)))
+            {
+                writer.BaseStream.Position = PreferencesContants.AutoLoadNameFileActivatedPosition;
+                writer.Write((byte)0);
+
+                writer.BaseStream.Position = PreferencesContants.AutoLoadNameFilePathPosition;
+                writer.Write(pathBytes);
+            }
 
             ChecksumCalculator.UpdateChecksum(_preferencesFile.Path);
         }
@@ -177,16 +201,25 @@ namespace ArgData
         /// </summary>
         public void DisableAutoLoadedSetupFile()
         {
-            var writer = new FileWriter(_preferencesFile.Path);
-
             string pathToWrite = "".PadRight(PreferencesContants.AutoLoadSetupFileLength, '\0');
             byte[] pathBytes = Encoding.ASCII.GetBytes(pathToWrite);
 
-            writer.WriteByte(0, PreferencesContants.AutoLoadSetupFileActivatedPosition);
-            writer.WriteBytes(pathBytes, PreferencesContants.AutoLoadSetupFilePathPosition);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_preferencesFile.Path)))
+            {
+                writer.BaseStream.Position = PreferencesContants.AutoLoadSetupFileActivatedPosition;
+                writer.Write((byte)0);
+
+                writer.BaseStream.Position = PreferencesContants.AutoLoadSetupFilePathPosition;
+                writer.Write(pathBytes);
+            }
 
             ChecksumCalculator.UpdateChecksum(_preferencesFile.Path);
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 
     internal static class PreferencesContants

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Linq;
+using System.IO;
 using ArgData.Entities;
 using ArgData.IO;
 using ArgData.Validation;
@@ -44,11 +44,14 @@ namespace ArgData
         {
             TeamIndexValidator.Validate(teamIndex);
 
-            int position = _exeFile.GetCarColorsPosition(teamIndex);
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                reader.BaseStream.Position = _exeFile.GetCarColorsPosition(teamIndex);
 
-            byte[] colors = new FileReader(_exeFile.ExePath).ReadBytes(position, GpExeFile.ColorsPerTeam);
+                byte[] colors = reader.ReadBytes(GpExeFile.ColorsPerTeam);
 
-            return new Car(colors);
+                return new Car(colors);
+            }
         }
 
         /// <summary>
@@ -57,26 +60,26 @@ namespace ArgData
         /// <returns>CarList object with the colors of all the teams.</returns>
         public CarList ReadCarColors()
         {
-            byte[] allCarBytes = ReadAllCarColors();
-
-            var list = new CarList();
-
-            for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
             {
-                byte[] carBytes = allCarBytes.Skip(i * GpExeFile.ColorsPerTeam)
-                    .Take(GpExeFile.ColorsPerTeam).ToArray();
-                list[i].SetColors(carBytes);
+                reader.BaseStream.Position = _exeFile.GetCarColorsPosition();
+
+                var list = new CarList();
+
+                for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
+                {
+                    byte[] carBytes = reader.ReadBytes(GpExeFile.ColorsPerTeam);
+                    list[i].SetColors(carBytes);
+                }
+
+                return list;
             }
-
-            return list;
         }
 
-        private byte[] ReadAllCarColors()
-        {
-            return new FileReader(_exeFile.ExePath).ReadBytes(
-                _exeFile.GetCarColorsPosition(),
-                GpExeFile.ColorsPerTeam * Constants.NumberOfSupportedTeams);
-        }
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
 
@@ -119,10 +122,12 @@ namespace ArgData
             TeamIndexValidator.Validate(teamIndex);
             if (car == null) { throw new ArgumentNullException(nameof(car)); }
 
-            byte[] carBytes = car.GetColorsToWriteToFile();
-            int position = _exeFile.GetCarColorsPosition(teamIndex);
-
-            new FileWriter(_exeFile.ExePath).WriteBytes(carBytes, position);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                byte[] carBytes = car.GetColorsToWriteToFile();
+                writer.BaseStream.Position = _exeFile.GetCarColorsPosition(teamIndex);
+                writer.Write(carBytes);
+            }
         }
 
         /// <summary>
@@ -133,17 +138,22 @@ namespace ArgData
         {
             if (carList == null) { throw new ArgumentNullException(nameof(carList)); }
 
-            int teamIndex = 0;
-
-            foreach (Car car in carList)
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
             {
-                byte[] carBytes = car.GetColorsToWriteToFile();
-                int position = _exeFile.GetCarColorsPosition(teamIndex);
+                writer.BaseStream.Position = _exeFile.GetCarColorsPosition();
 
-                new FileWriter(_exeFile.ExePath).WriteBytes(carBytes, position);
+                foreach (Car car in carList)
+                {
+                    byte[] carBytes = car.GetColorsToWriteToFile();
 
-                teamIndex++;
+                    writer.Write(carBytes);
+                }
             }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 }

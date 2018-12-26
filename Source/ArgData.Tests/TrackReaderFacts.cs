@@ -11,7 +11,7 @@ namespace ArgData.Tests
         public void PhoenixDataIntegration()
         {
             var trackData = TrackFactsHelper.GetTrackPhoenix();
-            var track = new TrackReader().Read(trackData.Path);
+            var track = new TestableTrackReader().Read(trackData.Path);
 
             track.TrackSections.Count.Should().Be(67);
             track.PitLaneSections.Count.Should().Be(13);
@@ -23,7 +23,7 @@ namespace ArgData.Tests
         public void MexicoIntegration()
         {
             var trackData = TrackFactsHelper.GetTrackMexico();
-            var track = new TrackReader().Read(trackData.Path);
+            var track = new TestableTrackReader().Read(trackData.Path);
 
             track.LapCount.Should().Be(69);
         }

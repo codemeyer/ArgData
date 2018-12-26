@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using ArgData.Entities;
 using ArgData.IO;
@@ -41,12 +41,20 @@ namespace ArgData
         /// <returns>DriverNumberList containing all driver numbers.</returns>
         public DriverNumberList ReadDriverNumbers()
         {
-            int position = _exeFile.GetDriverNumbersPosition();
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                reader.BaseStream.Position = _exeFile.GetDriverNumbersPosition();
 
-            byte[] driverNumbers = new FileReader(_exeFile.ExePath).ReadBytes(position, Constants.NumberOfDrivers);
+                byte[] driverNumbers = reader.ReadBytes(Constants.NumberOfDrivers);
 
-            return new DriverNumberList(driverNumbers);
+                return new DriverNumberList(driverNumbers);
+            }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
     /// <summary>
@@ -87,15 +95,18 @@ namespace ArgData
             if (driverNumbers == null) { throw new ArgumentNullException(nameof(driverNumbers)); }
             CheckDriverNumbers(driverNumbers);
 
-            var allDriverNumberBytes = new List<byte>();
+            var allDriverNumberBytes = new ByteList();
 
             for (byte b = 0; b < Constants.NumberOfDrivers; b++)
             {
                 allDriverNumberBytes.Add(driverNumbers[b]);
             }
 
-            var fileWriter = new FileWriter(_exeFile.ExePath);
-            fileWriter.WriteBytes(allDriverNumberBytes.ToArray(), _exeFile.GetDriverNumbersPosition(0));
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetDriverNumbersPosition(0);
+                writer.Write(allDriverNumberBytes.GetBytes());
+            }
         }
 
         private static void CheckDriverNumbers(DriverNumberList driverNumbers)
@@ -114,5 +125,10 @@ namespace ArgData
                 throw new ArgumentException("Too high driver number specified. A driver number cannot be higher than 40.");
             }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 }

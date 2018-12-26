@@ -20,9 +20,12 @@ namespace ArgData
         {
             ValidateSingleSetupFile(path);
 
-            byte[] setupBytes = new FileReader(path).ReadBytes(0, 10);
+            using (var reader = new BinaryReader(StreamProvider.Invoke(path)))
+            {
+                byte[] setupBytes = reader.ReadBytes(10);
 
-            return CreateSetupFromByteArray(setupBytes);
+                return CreateSetupFromByteArray(setupBytes);
+            }
         }
 
         /// <summary>
@@ -34,29 +37,32 @@ namespace ArgData
         {
             ValidateMultipleSetupFile(path);
 
-            var list = new SetupList();
-
-            byte[] allSetupBytes = new FileReader(path).ReadAll();
-
-            list.SeparateSetups = allSetupBytes[0] == 255 && allSetupBytes[1] == 255;
-
-            int position = 2;
-
-            for (int qi = 0; qi <= 15; qi++)
+            using (var reader = new BinaryReader(StreamProvider.Invoke(path)))
             {
-                byte[] setupBytes = allSetupBytes.Skip(position).Take(10).ToArray();
-                list.QualifyingSetups[qi].Copy(CreateSetupFromByteArray(setupBytes));
-                position += 10;
-            }
+                var list = new SetupList();
 
-            for (int ri = 0; ri <= 15; ri++)
-            {
-                byte[] setupBytes = allSetupBytes.Skip(position).Take(10).ToArray();
-                list.RaceSetups[ri].Copy(CreateSetupFromByteArray(setupBytes));
-                position += 10;
-            }
+                byte[] allSetupBytes = reader.ReadAllBytes();
 
-            return list;
+                list.SeparateSetups = allSetupBytes[0] == 255 && allSetupBytes[1] == 255;
+
+                int position = 2;
+
+                for (int qi = 0; qi <= 15; qi++)
+                {
+                    byte[] setupBytes = allSetupBytes.Skip(position).Take(10).ToArray();
+                    list.QualifyingSetups[qi].Copy(CreateSetupFromByteArray(setupBytes));
+                    position += 10;
+                }
+
+                for (int ri = 0; ri <= 15; ri++)
+                {
+                    byte[] setupBytes = allSetupBytes.Skip(position).Take(10).ToArray();
+                    list.RaceSetups[ri].Copy(CreateSetupFromByteArray(setupBytes));
+                    position += 10;
+                }
+
+                return list;
+            }
         }
 
         private static Setup CreateSetupFromByteArray(byte[] setupBytes)
@@ -111,6 +117,11 @@ namespace ArgData
         {
             return (SetupTyreCompound)Enum.Parse(typeof(SetupTyreCompound), value.ToString());
         }
+        
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
 
@@ -128,22 +139,27 @@ namespace ArgData
         {
             Validate(setup);
 
-            byte[] setupBytes = new byte[14];
+            var byteList = new ByteList();
 
-            setupBytes[0] = setup.FrontWing;
-            setupBytes[1] = setup.RearWing;
-            setupBytes[2] = setup.GearRatio1;
-            setupBytes[3] = setup.GearRatio2;
-            setupBytes[4] = setup.GearRatio3;
-            setupBytes[5] = setup.GearRatio4;
-            setupBytes[6] = setup.GearRatio5;
-            setupBytes[7] = setup.GearRatio6;
-            setupBytes[8] = GetTyreCompound(setup.TyreCompound);
-            setupBytes[9] = GetBrakeBalance(setup.BrakeBalance);
+            byteList.Add(setup.FrontWing);
+            byteList.Add(setup.RearWing);
+            byteList.Add(setup.GearRatio1);
+            byteList.Add(setup.GearRatio2);
+            byteList.Add(setup.GearRatio3);
+            byteList.Add(setup.GearRatio4);
+            byteList.Add(setup.GearRatio5);
+            byteList.Add(setup.GearRatio6);
+            byteList.Add(GetTyreCompound(setup.TyreCompound));
+            byteList.Add(GetBrakeBalance(setup.BrakeBalance));
 
-            new FileWriter(path).CreateFile().WriteBytes(setupBytes, 0);
+            var checksum = new ChecksumCalculator().Calculate(byteList.GetBytes());
+            byteList.Add((ushort)checksum.Checksum1);
+            byteList.Add((ushort)checksum.Checksum2);
 
-            ChecksumCalculator.UpdateChecksum(path);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(path)))
+            {
+                writer.Write(byteList.GetBytes());
+            }
         }
 
         /// <summary>
@@ -155,53 +171,48 @@ namespace ArgData
         {
             Validate(setups);
 
-            byte[] setupBytes = new byte[326];
+            var byteList = new ByteList();
+            var value = Convert.ToByte(setups.SeparateSetups ? 255 : 0);
+            byteList.Add(value);
+            byteList.Add(value);
 
-            if (setups.SeparateSetups)
+            foreach (var setup in setups.QualifyingSetups)
             {
-                setupBytes[0] = 255;
-                setupBytes[1] = 255;
+                byteList.Add(setup.FrontWing);
+                byteList.Add(setup.RearWing);
+                byteList.Add(setup.GearRatio1);
+                byteList.Add(setup.GearRatio2);
+                byteList.Add(setup.GearRatio3);
+                byteList.Add(setup.GearRatio4);
+                byteList.Add(setup.GearRatio5);
+                byteList.Add(setup.GearRatio6);
+                byteList.Add(GetTyreCompound(setup.TyreCompound));
+                byteList.Add(GetBrakeBalance(setup.BrakeBalance));
             }
 
-            int offset = 2;
-
-            for (int qi = 0; qi <= 15; qi++)
+            foreach (var setup in setups.RaceSetups)
             {
-                var setup = setups.QualifyingSetups[qi];
-                setupBytes[offset + 0] = setup.FrontWing;
-                setupBytes[offset + 1] = setup.RearWing;
-                setupBytes[offset + 2] = setup.GearRatio1;
-                setupBytes[offset + 3] = setup.GearRatio2;
-                setupBytes[offset + 4] = setup.GearRatio3;
-                setupBytes[offset + 5] = setup.GearRatio4;
-                setupBytes[offset + 6] = setup.GearRatio5;
-                setupBytes[offset + 7] = setup.GearRatio6;
-                setupBytes[offset + 8] = GetTyreCompound(setup.TyreCompound);
-                setupBytes[offset + 9] = GetBrakeBalance(setup.BrakeBalance);
-
-                offset += 10;
+                byteList.Add(setup.FrontWing);
+                byteList.Add(setup.RearWing);
+                byteList.Add(setup.GearRatio1);
+                byteList.Add(setup.GearRatio2);
+                byteList.Add(setup.GearRatio3);
+                byteList.Add(setup.GearRatio4);
+                byteList.Add(setup.GearRatio5);
+                byteList.Add(setup.GearRatio6);
+                byteList.Add(GetTyreCompound(setup.TyreCompound));
+                byteList.Add(GetBrakeBalance(setup.BrakeBalance));
             }
 
-            for (int ri = 0; ri <= 15; ri++)
+            var checksum = new ChecksumCalculator().Calculate(byteList.GetBytes());
+
+            byteList.Add((ushort)checksum.Checksum1);
+            byteList.Add((ushort)checksum.Checksum2);
+
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(path)))
             {
-                var setup = setups.RaceSetups[ri];
-                setupBytes[offset + 0] = setup.FrontWing;
-                setupBytes[offset + 1] = setup.RearWing;
-                setupBytes[offset + 2] = setup.GearRatio1;
-                setupBytes[offset + 3] = setup.GearRatio2;
-                setupBytes[offset + 4] = setup.GearRatio3;
-                setupBytes[offset + 5] = setup.GearRatio4;
-                setupBytes[offset + 6] = setup.GearRatio5;
-                setupBytes[offset + 7] = setup.GearRatio6;
-                setupBytes[offset + 8] = GetTyreCompound(setup.TyreCompound);
-                setupBytes[offset + 9] = GetBrakeBalance(setup.BrakeBalance);
-
-                offset += 10;
+                writer.Write(byteList.GetBytes());
             }
-
-            new FileWriter(path).CreateFile().WriteBytes(setupBytes, 0);
-
-            ChecksumCalculator.UpdateChecksum(path);
         }
 
         private static void Validate(Setup setup)
@@ -240,5 +251,10 @@ namespace ArgData
         {
             return (byte)value;
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 }

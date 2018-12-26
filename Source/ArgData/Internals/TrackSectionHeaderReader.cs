@@ -1,39 +1,45 @@
 using System;
+using System.IO;
 using ArgData.Entities;
-using ArgData.IO;
 
 namespace ArgData.Internals
 {
     internal static class TrackSectionHeaderReader
     {
-        public static TrackSectionHeader Read(string path, int offset)
+        public static TrackSectionHeader Read(BinaryReader reader, int offset)
         {
-            var trackFileReader = new FileReader(path);
+            reader.BaseStream.Position = offset + 18;
+            byte kerbTypeByte = reader.ReadByte();
 
-            byte kerbTypeByte = trackFileReader.ReadByte(offset + 18);
+            reader.BaseStream.Position = offset;
 
             var header = new TrackSectionHeader
             {
-                FirstSectionAngle = trackFileReader.ReadUInt16(offset),
-                FirstSectionHeight = trackFileReader.ReadInt16(offset + 2),
-                TrackCenterX = trackFileReader.ReadInt16(offset + 4),
-                TrackCenterZ = trackFileReader.ReadInt16(offset + 6),
-                TrackCenterY = trackFileReader.ReadInt16(offset + 8),
-                StartWidth = trackFileReader.ReadInt16(offset + 10),
-                PoleSide = trackFileReader.ReadInt16(offset + 12) == -768 ? TrackSide.Left : TrackSide.Right,
-                PitsSide = trackFileReader.ReadByte(offset + 14) == 0 ? TrackSide.Right : TrackSide.Left,
-                SurroundingArea = (SurroundingArea)Enum.Parse(typeof(SurroundingArea), trackFileReader.ReadByte(offset + 15).ToString()),
-                RightVergeStartWidth = trackFileReader.ReadByte(offset + 16),
-                LeftVergeStartWidth = trackFileReader.ReadByte(offset + 17),
-                KerbType = GetKerbType(kerbTypeByte),
-                KerbUpperColor = trackFileReader.ReadByte(offset + 22),
-                KerbLowerColor = trackFileReader.ReadByte(offset + 24)
+                FirstSectionAngle = reader.ReadUInt16(),
+                FirstSectionHeight = reader.ReadInt16(),
+                TrackCenterX = reader.ReadInt16(),
+                TrackCenterZ = reader.ReadInt16(),
+                TrackCenterY = reader.ReadInt16(),
+                StartWidth = reader.ReadInt16(),
+                PoleSide = reader.ReadInt16() == -768 ? TrackSide.Left : TrackSide.Right,
+                PitsSide = reader.ReadByte() == 0 ? TrackSide.Right : TrackSide.Left,
+                SurroundingArea = (SurroundingArea)Enum.Parse(typeof(SurroundingArea), reader.ReadByte().ToString()),
+                RightVergeStartWidth = reader.ReadByte(),
+                LeftVergeStartWidth = reader.ReadByte()
             };
+
+            header.KerbType = GetKerbType(kerbTypeByte);
+            reader.BaseStream.Position = offset + 22;
+            header.KerbUpperColor = reader.ReadByte();
+            reader.BaseStream.Position = offset + 24;
+            header.KerbLowerColor = reader.ReadByte();
 
             if (header.KerbType == KerbType.TripleColor)
             {
-                header.KerbUpperColor2 = trackFileReader.ReadByte(offset + 28);
-                header.KerbLowerColor2 = trackFileReader.ReadByte(offset + 30);
+                reader.BaseStream.Position = offset + 28;
+                header.KerbUpperColor2 = reader.ReadByte();
+                reader.BaseStream.Position = offset + 30;
+                header.KerbLowerColor2 = reader.ReadByte();
             }
 
             return header;

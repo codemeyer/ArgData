@@ -71,20 +71,27 @@ namespace ArgData
 
             int checksumPosition = trackBytes.Count - OffsetAdjustment;
 
-            trackBytes.Add((byte)0);
-            trackBytes.Add((byte)0);
-            trackBytes.Add((byte)0);
-            trackBytes.Add((byte)0);
+            var bytesToWrite = trackBytes.GetBytes();
+            var checksumPositionBytes = BitConverter.GetBytes(checksumPosition);
+            var objectListPositionBytes = BitConverter.GetBytes(objectListPosition);
+            var trackHeaderPositionBytes = BitConverter.GetBytes(trackHeaderPosition);
 
-            File.WriteAllBytes(path, trackBytes.GetBytes());
+            bytesToWrite[4104] = checksumPositionBytes[0];
+            bytesToWrite[4105] = checksumPositionBytes[1];
+            bytesToWrite[4106] = objectListPositionBytes[0];
+            bytesToWrite[4107] = objectListPositionBytes[1];
+            bytesToWrite[4108] = trackHeaderPositionBytes[0];
+            bytesToWrite[4109] = trackHeaderPositionBytes[1];
 
-            var fileWriter = new FileWriter(path);
+            var checksum = new ChecksumCalculator().Calculate(bytesToWrite);
 
-            fileWriter.WriteUInt16((ushort)checksumPosition, 4104);
-            fileWriter.WriteUInt16((ushort)objectListPosition, 4106);
-            fileWriter.WriteUInt16((ushort)trackHeaderPosition, 4108);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(path)))
+            {
+                writer.Write(bytesToWrite);
 
-            ChecksumCalculator.UpdateChecksum(path);
+                writer.Write((ushort)checksum.Checksum1);
+                writer.Write((ushort)checksum.Checksum2);
+            }
         }
 
         private static byte[] GetInternalObjectBytes(IList<TrackObjectShape> objectShapes)
@@ -314,5 +321,10 @@ namespace ArgData
 
             return bestLineBytes.GetBytes();
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 }

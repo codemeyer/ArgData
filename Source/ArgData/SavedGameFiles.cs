@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ArgData.Entities;
+using ArgData.IO;
 
 namespace ArgData
 {
@@ -22,14 +23,17 @@ namespace ArgData
             if (path == null) { throw new ArgumentNullException(nameof(path)); }
             if (!File.Exists(path)) { throw new FileNotFoundException(@"Could not find saved game file '{path}'."); }
 
-            byte[] bytes = File.ReadAllBytes(path);
+            using (var reader = new BinaryReader(StreamProvider.Invoke(path)))
+            {
+                byte[] bytes = reader.ReadAllBytes();
 
-            int numberOfRacesCompleted = GetNumberOfRacesCompleted(bytes);
-            SavedGameDriverList drivers = ParseDrivers(bytes, numberOfRacesCompleted);
+                int numberOfRacesCompleted = GetNumberOfRacesCompleted(bytes);
+                SavedGameDriverList drivers = ParseDrivers(bytes, numberOfRacesCompleted);
 
-            var savedGame = new SavedGame(drivers, numberOfRacesCompleted);
+                var savedGame = new SavedGame(drivers, numberOfRacesCompleted);
 
-            return savedGame;
+                return savedGame;
+            }
         }
 
         private static int GetNumberOfRacesCompleted(byte[] bytes)
@@ -86,6 +90,11 @@ namespace ArgData
 
             return results;
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
     internal static class SavedGameFileConstants

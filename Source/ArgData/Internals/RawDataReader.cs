@@ -1,25 +1,27 @@
+using System.IO;
 using System.Linq;
 using ArgData.Entities;
-using ArgData.IO;
 
 namespace ArgData.Internals
 {
     internal static class RawDataReader
     {
-        public static TrackRawData Read(string path, TrackOffsets offsets, int positionAfterBestLine, int positionAfterPitLane)
+        public static TrackRawData Read(BinaryReader reader, TrackOffsets offsets, int positionAfterBestLine, int positionAfterPitLane)
         {
-            var trackFileReader = new FileReader(path);
+            reader.BaseStream.Position = positionAfterBestLine + 8;
 
             // the setup is the first 8 bytes
-            byte[] dataAfterSetup = trackFileReader.ReadBytes(positionAfterBestLine + 8, 30);
+            byte[] dataAfterSetup = reader.ReadBytes(30);
 
             int bytesToRead = offsets.ChecksumPosition - positionAfterPitLane;
 
             // TODO: cleanup!
 
-            byte[] final = trackFileReader.ReadBytes(positionAfterPitLane, bytesToRead);
+            reader.BaseStream.Position = positionAfterPitLane;
 
-            byte[] final1 = {}; // = new byte[];
+            byte[] final = reader.ReadBytes(bytesToRead);
+
+            byte[] final1 = {};
 
             int final1EndAt = 0;
 

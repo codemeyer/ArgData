@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using ArgData.Entities;
 using ArgData.IO;
 
@@ -40,19 +41,27 @@ namespace ArgData
         /// <returns>HelmetList object with the colors of all the helmets.</returns>
         public HelmetList ReadHelmetColors()
         {
-            var list = new HelmetList();
-
-            for (int i = 0; i < Constants.NumberOfDrivers; i++)
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
             {
-                byte[] helmetBytes = new FileReader(_exeFile.ExePath)
-                    .ReadBytes(_exeFile.GetHelmetColorsPosition(i),
-                        _exeFile.GetHelmetColorsPositionByteCountToRead(i));
+                var list = new HelmetList();
 
-                list.GetByDriverNumber(Convert.ToByte(i + 1)).SetColors(helmetBytes);
+                for (int i = 0; i < Constants.NumberOfDrivers; i++)
+                {
+                    reader.BaseStream.Position = _exeFile.GetHelmetColorsPosition(i);
+                    int bytesToRead = _exeFile.GetHelmetColorsPositionByteCountToRead(i);
+                    byte[] helmetBytes = reader.ReadBytes(bytesToRead);
+
+                    list.GetByDriverNumber(Convert.ToByte(i + 1)).SetColors(helmetBytes);
+                }
+
+                return list;
             }
-
-            return list;
         }
+        
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
     /// <summary>
@@ -105,7 +114,16 @@ namespace ArgData
                 helmetIndex++;
             }
 
-            new FileWriter(_exeFile.ExePath).WriteBytes(allHelmetBytes.ToArray(), _exeFile.GetHelmetColorsPosition(0));
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetHelmetColorsPosition(0);
+                writer.Write(allHelmetBytes.ToArray());
+            }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 }

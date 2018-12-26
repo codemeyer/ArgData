@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ArgData.Entities;
+using ArgData.IO;
 
 namespace ArgData
 {
@@ -20,12 +21,15 @@ namespace ArgData
         {
             ValidateFile(path);
 
-            byte[] nameData = File.ReadAllBytes(path);
+            using (var reader = new BinaryReader(StreamProvider.Invoke(path)))
+            {
+                byte[] nameData = reader.ReadAllBytes();
 
-            var drivers = ParseDrivers(nameData);
-            var teams = ParseTeams(nameData);
+                var drivers = ParseDrivers(nameData);
+                var teams = ParseTeams(nameData);
 
-            return new NameFile(drivers, teams);
+                return new NameFile(drivers, teams);
+            }
         }
 
         private static void ValidateFile(string path)
@@ -81,6 +85,11 @@ namespace ArgData
 
             return name;
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
 
@@ -97,45 +106,38 @@ namespace ArgData
         /// <param name="teams">List of teams.</param>
         public void Write(string path, NameFileDriverList drivers, NameFileTeamList teams)
         {
-            using (FileStream namesFile = File.Create(path))
-            {
-                WriteDrivers(namesFile, drivers);
-                WriteTeams(namesFile, teams);
-                WriteEngines(namesFile, teams);
+            var byteList = new ByteList();
 
-                namesFile.Write(new byte[4] { 0, 0, 0, 0 }, 0, 4);
-            }
-
-            ChecksumCalculator.UpdateChecksum(path);
-        }
-
-        private static void WriteDrivers(FileStream namesFile, NameFileDriverList drivers)
-        {
             foreach (var driver in drivers)
             {
                 string driverName = PadTruncate(driver.Name, NameFileConstants.DriverNameLength);
                 byte[] nameBytes = Encoding.ASCII.GetBytes(driverName);
-                namesFile.Write(nameBytes, 0, NameFileConstants.DriverNameLength);
-            }
-        }
 
-        private static void WriteTeams(FileStream namesFile, NameFileTeamList teams)
-        {
+                byteList.Add(nameBytes);
+            }
+
             foreach (var team in teams)
             {
                 string teamName = PadTruncate(team.Name, NameFileConstants.TeamNameLength);
                 byte[] teamNameBytes = Encoding.ASCII.GetBytes(teamName);
-                namesFile.Write(teamNameBytes, 0, NameFileConstants.TeamNameLength);
-            }
-        }
 
-        private static void WriteEngines(FileStream namesFile, NameFileTeamList teams)
-        {
+                byteList.Add(teamNameBytes);
+            }
+
             foreach (var team in teams)
             {
                 string engineName = PadTruncate(team.Engine, NameFileConstants.TeamNameLength);
                 byte[] engineNameBytes = Encoding.ASCII.GetBytes(engineName);
-                namesFile.Write(engineNameBytes, 0, NameFileConstants.TeamNameLength);
+                byteList.Add(engineNameBytes);
+            }
+
+            var checksum = new ChecksumCalculator().Calculate(byteList.GetBytes());
+
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(path)))
+            {
+                writer.Write(byteList.GetBytes());
+                writer.Write((ushort)checksum.Checksum1);
+                writer.Write((ushort)checksum.Checksum2);
             }
         }
 
@@ -147,6 +149,11 @@ namespace ArgData
 
             return trimmedValue.PadRight(wantedLength, '\0');
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 
     internal static class NameFileConstants

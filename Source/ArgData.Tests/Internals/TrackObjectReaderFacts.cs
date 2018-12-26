@@ -1,4 +1,5 @@
-﻿using ArgData.Internals;
+﻿using System.IO;
+using ArgData.Internals;
 using FluentAssertions;
 using Xunit;
 
@@ -11,9 +12,12 @@ namespace ArgData.Tests.Internals
         {
             var trackData = TrackFactsHelper.GetTrackPhoenix();
 
-            var objects = TrackObjectSettingsReader.Read(trackData.Path, trackData.KnownOffsets.ObjectData, trackData.KnownOffsets.TrackData);
+            using (var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path)))
+            {
+                var objects = TrackObjectSettingsReader.Read(reader, trackData.KnownOffsets.ObjectData, trackData.KnownOffsets.TrackData);
 
-            objects.Count.Should().Be(128);
+                objects.Count.Should().Be(128);
+            }
         }
     }
 }

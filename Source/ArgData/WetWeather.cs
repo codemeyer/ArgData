@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using ArgData.Entities;
 using ArgData.IO;
 
@@ -39,26 +40,33 @@ namespace ArgData
         public WetWeatherSettings ReadSettings()
         {
             var settings = new WetWeatherSettings();
-            var fileReader = new FileReader(_exeFile.ExePath);
 
-            int position = _exeFile.GetRainAtFirstTrackPosition();
-            byte rainingInPhoenix = fileReader.ReadByte(position);
-
-            if (rainingInPhoenix == 0)
+            using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
             {
-                settings.RainAtFirstTrack = true;
+                reader.BaseStream.Position = _exeFile.GetRainAtFirstTrackPosition();
+                byte rainingInPhoenix = reader.ReadByte();
+
+                if (rainingInPhoenix == 0)
+                {
+                    settings.RainAtFirstTrack = true;
+                }
+
+                reader.BaseStream.Position = _exeFile.GetChanceOfRainPosition();
+                ushort chance = reader.ReadUInt16();
+
+                decimal pctChance = 100 * (256m - chance) / 256m;
+                byte roundedChance = Convert.ToByte(Math.Round(pctChance, 0));
+
+                settings.ChanceOfRain = roundedChance;
+
+                return settings;
             }
-
-            int chanceOfRainPosition = _exeFile.GetChanceOfRainPosition();
-            ushort chance = fileReader.ReadUInt16(chanceOfRainPosition);
-
-            decimal pctChance = 100 * (256m - chance) / 256m;
-            byte roundedChance = Convert.ToByte(Math.Round(pctChance, 0));
-
-            settings.ChanceOfRain = roundedChance;
-
-            return settings;
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.Open;
     }
 
     /// <summary>
@@ -105,16 +113,22 @@ namespace ArgData
                 throw new ArgumentOutOfRangeException(nameof(settings), settings.ChanceOfRain, "ChanceOfRain cannot be greater than 100%");
             }
 
-            var fileWriter = new FileWriter(_exeFile.ExePath);
-
-            int position = _exeFile.GetRainAtFirstTrackPosition();
             byte rainAtFirstTrack = Convert.ToByte(settings.RainAtFirstTrack ? 0 : 64);
-            fileWriter.WriteByte(rainAtFirstTrack, position);
+            ushort rainChance = Convert.ToUInt16((100 - settings.ChanceOfRain) * 2.56m);
 
-            var val = Convert.ToUInt16((100 - settings.ChanceOfRain) * 2.56m);
+            using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))
+            {
+                writer.BaseStream.Position = _exeFile.GetRainAtFirstTrackPosition();
+                writer.Write(rainAtFirstTrack);
 
-            int chanceOfRainPosition = _exeFile.GetChanceOfRainPosition();
-            fileWriter.WriteUInt16(val, chanceOfRainPosition);
+                writer.BaseStream.Position = _exeFile.GetChanceOfRainPosition();
+                writer.Write(rainChance);
+            }
         }
+
+        /// <summary>
+        /// Default FileStream provider. Can be overridden in tests.
+        /// </summary>
+        internal Func<string, Stream> StreamProvider = FileStreamProvider.OpenWriter;
     }
 }

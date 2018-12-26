@@ -16,7 +16,7 @@ namespace ArgData.Tests
         public void Read_HelmetFile_AllHelmetsAre48x48(string fileName)
         {
             var path = ExampleDataHelper.GetExampleDataPath(fileName, TestDataFileType.Images);
-            var images = new MediaContainerFileReader().Read(path);
+            var images = new TestableMediaContainerFileReader().Read(path);
 
             images.Items.Should().OnlyContain(x => x.Width == 48);
             images.Items.Should().OnlyContain(x => x.Height == 48);
@@ -29,7 +29,7 @@ namespace ArgData.Tests
         public void Read_HelmetFileGetPixelData_PixelDataIsAlways2304(string fileName)
         {
             var path = ExampleDataHelper.GetExampleDataPath(fileName, TestDataFileType.Images);
-            var images = new MediaContainerFileReader().Read(path);
+            var images = new TestableMediaContainerFileReader().Read(path);
 
             foreach (var item in images.Items)
             {
@@ -104,7 +104,7 @@ namespace ArgData.Tests
         private MediaContainerFile Read(string fileName)
         {
             var path = ExampleDataHelper.GetExampleDataPath(fileName, TestDataFileType.Images);
-            var images = new MediaContainerFileReader().Read(path);
+            var images = new TestableMediaContainerFileReader().Read(path);
 
             return images;
         }
@@ -180,7 +180,7 @@ namespace ArgData.Tests
 
                 new MediaContainerFileWriter().Write(context.FilePath, container);
 
-                var newContainer = new MediaContainerFileReader().Read(context.FilePath);
+                var newContainer = new TestableMediaContainerFileReader().Read(context.FilePath);
 
                 newContainer.Items.Count.Should().Be(36);
                 newContainer.Items.Count(i => i.Type == 1769).Should().Be(18);

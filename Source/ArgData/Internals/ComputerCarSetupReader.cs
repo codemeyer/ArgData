@@ -1,7 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using ArgData.Entities;
-using ArgData.IO;
 
 namespace ArgData.Internals
 {
@@ -13,10 +13,10 @@ namespace ArgData.Internals
 
     internal static class ComputerCarSetupReader
     {
-        public static ComputerCarSetupReaderResult Read(string path, int position)
+        public static ComputerCarSetupReaderResult Read(BinaryReader reader, int position)
         {
-            var trackFileReader = new FileReader(path);
-            byte[] setupBytes = trackFileReader.ReadBytes(position, 38);
+            reader.BaseStream.Position = position;
+            byte[] setupBytes = reader.ReadBytes(38);
 
             var setup = new Setup
             {

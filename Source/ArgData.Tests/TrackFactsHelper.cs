@@ -37,7 +37,8 @@ namespace ArgData.Tests
                     ChecksumPosition = 9425 + 4112,
                     ObjectData = 5377 + 4112,
                     TrackData = 7281 + 4112
-                }
+                },
+                KnownComputerCarSetupDataStart = 13065
             };
         }
 

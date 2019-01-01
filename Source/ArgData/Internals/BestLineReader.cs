@@ -6,7 +6,7 @@ namespace ArgData.Internals
 {
     internal static class BestLineReader
     {
-        public static TrackBestLineReadResult Read(BinaryReader reader, int startPosition)
+        public static TrackBestLineReadingResult Read(BinaryReader reader, int startPosition)
         {
             var list = new List<TrackBestLineSegment>();
 
@@ -73,8 +73,8 @@ namespace ArgData.Internals
                 reader.BaseStream.Position -= 2;
             }
 
-            int positoin = (int)reader.BaseStream.Position;
-            return new TrackBestLineReadResult(positoin, list);
+            int position = (int)reader.BaseStream.Position;
+            return new TrackBestLineReadingResult(list, position);
         }
     }
 }

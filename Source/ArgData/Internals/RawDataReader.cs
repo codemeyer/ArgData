@@ -6,13 +6,8 @@ namespace ArgData.Internals
 {
     internal static class RawDataReader
     {
-        public static TrackRawData Read(BinaryReader reader, TrackOffsets offsets, int positionAfterBestLine, int positionAfterPitLane)
+        public static TrackRawData Read(BinaryReader reader, TrackOffsets offsets, int positionAfterPitLane)
         {
-            reader.BaseStream.Position = positionAfterBestLine + 8;
-
-            // the setup is the first 8 bytes
-            byte[] dataAfterSetup = reader.ReadBytes(30);
-
             int bytesToRead = offsets.ChecksumPosition - positionAfterPitLane;
 
             // TODO: cleanup!
@@ -42,8 +37,7 @@ namespace ArgData.Internals
             return new TrackRawData
             {
                 FinalData1 = final1,
-                FinalData2 = final2,
-                DataAfterSetup = dataAfterSetup
+                FinalData2 = final2
             };
         }
     }

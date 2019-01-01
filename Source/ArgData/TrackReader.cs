@@ -34,16 +34,16 @@ namespace ArgData
                 var bestLines = BestLineReader.Read(reader, sectionReading.Position);
                 track.BestLineSegments = bestLines.BestLineSegments;
 
-                int posAfterBestLine = bestLines.PositionAfterReading;
+                int positionAfterReadingBestLine = bestLines.PositionAfterReading;
 
-                var setup = ComputerCarSetupReader.Read(reader, posAfterBestLine);
-                track.ComputerCarSetup = setup.Setup;
+                var computerCarData = ComputerCarDataReader.Read(reader, positionAfterReadingBestLine);
+                track.ComputerCarSetup = computerCarData.Setup;
+                track.ComputerCarData = computerCarData.ComputerCarData;
 
-                // +38 skips entire CC setup, remaining setup data goes into RawData.DataAfterSetup
-                var pitLane = TrackSectionReader.Read(reader, bestLines.PositionAfterReading + 8 + 30);
+                var pitLane = TrackSectionReader.Read(reader, computerCarData.PositionAfterReading);
                 track.PitLaneSections = pitLane.TrackSections;
 
-                track.RawData = RawDataReader.Read(reader, track.Offsets, posAfterBestLine, pitLane.Position);
+                track.RawData = RawDataReader.Read(reader, track.Offsets, pitLane.Position);
 
                 int lapCountLocation = track.RawData.FinalData2.Length - 6;
                 track.LapCount = track.RawData.FinalData2[lapCountLocation];

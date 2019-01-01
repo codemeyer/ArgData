@@ -54,7 +54,9 @@ namespace ArgData
 
             var computerCarSetupBytes = GetComputerCarSetupBytes(trackData.ComputerCarSetup);
             trackBytes.Add(computerCarSetupBytes);
-            trackBytes.Add(trackData.RawData.DataAfterSetup);
+
+            var computerCarDataBytes = GetComputerCarDataBytes(trackData.ComputerCarData);
+            trackBytes.Add(computerCarDataBytes);
 
             var pitLaneSectionBytes = GetTrackSectionBytes(trackData.PitLaneSections);
             trackBytes.Add(pitLaneSectionBytes);
@@ -193,7 +195,7 @@ namespace ArgData
 
         private static byte[] GetComputerCarSetupBytes(Setup setup)
         {
-            byte[] setupBytes = new byte[8];
+            byte[] setupBytes = new byte[10];
             setupBytes[0] = (byte)(setup.FrontWing + 151);
             setupBytes[1] = (byte)(setup.RearWing + 151);
             setupBytes[2] = (byte)(setup.GearRatio1 + 151);
@@ -202,8 +204,32 @@ namespace ArgData
             setupBytes[5] = (byte)(setup.GearRatio4 + 151);
             setupBytes[6] = (byte)(setup.GearRatio5 + 151);
             setupBytes[7] = (byte)(setup.GearRatio6 + 151);
+            setupBytes[8] = (byte)((byte)setup.TyreCompound + 52);
+            setupBytes[9] = (byte)setup.BrakeBalance;
 
             return setupBytes;
+        }
+
+        private static byte[] GetComputerCarDataBytes(ComputerCarData data)
+        {
+            var dataBytes = new ByteList();
+
+            dataBytes.Add(data.GripFactor);
+            dataBytes.Add(data.ComputerCarLateBrakingFactorNonRace);
+            dataBytes.Add(data.ComputerCarLateBrakingFactorRace);
+            dataBytes.Add(data.TimeFactorNonRace);
+            dataBytes.Add(data.Acceleration);
+            dataBytes.Add(data.AirResistance);
+            dataBytes.Add(data.TyreWearQualifying);
+            dataBytes.Add(data.TyreWearNonQualifying);
+            dataBytes.Add(data.FuelLoad);
+            dataBytes.Add(data.TimeFactorRace);
+            dataBytes.Add(data.ComputerCarPowerFactor);
+            dataBytes.Add(data.ComputerCarLateBrakingFactorWetRace);
+            dataBytes.Add(data.UnknownTrackDistance);
+            dataBytes.Add(data.DefaultPitLaneViewDistance);
+
+            return dataBytes.GetBytes();
         }
 
         private static byte[] GetTrackDataHeaderBytes(TrackSectionHeader trackDataHeader)

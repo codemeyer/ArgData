@@ -22,6 +22,7 @@ namespace ArgData.Entities
             ObjectShapes = new List<TrackObjectShape>();
             ObjectSettings = new List<TrackObjectSettings>();
             ComputerCarSetup = new Setup();
+            ComputerCarData = new ComputerCarData();
         }
 
         /// <summary>
@@ -63,6 +64,11 @@ namespace ArgData.Entities
         /// Gets the computer car setup.
         /// </summary>
         public Setup ComputerCarSetup { get; internal set; }
+
+        /// <summary>
+        /// Gets the additional computer and player car data.
+        /// </summary>
+        public ComputerCarData ComputerCarData { get; internal set; }
 
         /// <summary>
         /// Gets the list of pit lane sections.

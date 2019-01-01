@@ -14,12 +14,5 @@ namespace ArgData.Entities
         /// Gets or sets the FinalData2 bytes.
         /// </summary>
         public byte[] FinalData2 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the data that appears after the computer car setup.
-        /// 
-        /// Possibly describes some of the computer car behavior.
-        /// </summary>
-        public byte[] DataAfterSetup { get; set; }
     }
 }

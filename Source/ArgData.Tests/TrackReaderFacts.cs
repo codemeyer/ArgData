@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using ArgData.Entities;
+using FluentAssertions;
 using Xunit;
 
 namespace ArgData.Tests
@@ -17,6 +18,9 @@ namespace ArgData.Tests
             track.PitLaneSections.Count.Should().Be(13);
             track.BestLineSegments.Count.Should().Be(40);
             track.LapCount.Should().Be(81);
+            track.ComputerCarSetup.FrontWing.Should().Be(48);
+            track.ComputerCarSetup.TyreCompound.Should().Be(SetupTyreCompound.C);
+            track.ComputerCarData.FuelLoad.Should().Be(358);
         }
 
         [Fact]
@@ -26,6 +30,9 @@ namespace ArgData.Tests
             var track = new TestableTrackReader().Read(trackData.Path);
 
             track.LapCount.Should().Be(69);
+            track.ComputerCarSetup.FrontWing.Should().Be(36);
+            track.ComputerCarSetup.TyreCompound.Should().Be(SetupTyreCompound.C);
+            track.ComputerCarData.FuelLoad.Should().Be(309);
         }
     }
 }

@@ -33,6 +33,7 @@ namespace ArgData.Tests
             track.ComputerCarSetup.FrontWing.Should().Be(36);
             track.ComputerCarSetup.TyreCompound.Should().Be(SetupTyreCompound.C);
             track.ComputerCarData.FuelLoad.Should().Be(309);
+            track.TrackCameraCommands.Count.Should().Be(20);
         }
     }
 }

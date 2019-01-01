@@ -61,9 +61,8 @@ namespace ArgData
             var pitLaneSectionBytes = GetTrackSectionBytes(trackData.PitLaneSections);
             trackBytes.Add(pitLaneSectionBytes);
 
-            trackBytes.Add(trackData.RawData.FinalData1);
-            trackBytes.Add((byte)255);
-            trackBytes.Add((byte)255);
+            var cameraBytes = GetTrackCameraBytes(trackData.TrackCameraCommands);
+            trackBytes.Add(cameraBytes);
 
             int lapCountPosition = trackData.RawData.FinalData2.Length - 6;
 
@@ -230,6 +229,47 @@ namespace ArgData
             dataBytes.Add(data.DefaultPitLaneViewDistance);
 
             return dataBytes.GetBytes();
+        }
+
+        private static byte[] GetTrackCameraBytes(TrackCameraCommandList cameraCommands)
+        {
+            var bytes = new ByteList();
+
+            foreach (var command in cameraCommands)
+            {
+                if (command is TrackCameraAdjustmentCommand adjustmentCommand)
+                {
+                    bytes.Add(adjustmentCommand.CameraIndex);
+
+                    if (adjustmentCommand.TrackSide == TrackSide.Left)
+                    {
+                        bytes.Add(adjustmentCommand.Adjustment);
+                    }
+                    else
+                    {
+                        var byte2 = adjustmentCommand.Adjustment + 0x80;
+                        bytes.Add((byte)byte2);
+                    }
+                }
+
+                if (command is TrackCameraRangeRightSideAdjustmentCommand rangeAdjustmentCommand)
+                {
+                    var byte1 = rangeAdjustmentCommand.CameraIndexFrom - 0x80;
+                    bytes.Add((byte)byte1);
+                    bytes.Add(rangeAdjustmentCommand.CameraIndexTo);
+                }
+
+                if (command is DeleteTrackCameraCommand deleteCommand)
+                {
+                    bytes.Add((byte)deleteCommand.CameraIndex);
+                    bytes.Add((byte)0);
+                }
+            }
+
+            bytes.Add((byte)255);
+            bytes.Add((byte)255);
+
+            return bytes.GetBytes();
         }
 
         private static byte[] GetTrackDataHeaderBytes(TrackSectionHeader trackDataHeader)

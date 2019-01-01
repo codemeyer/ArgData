@@ -76,6 +76,11 @@ namespace ArgData.Entities
         public IList<TrackSection> PitLaneSections { get; internal set; }
 
         /// <summary>
+        /// Gets the list of track-side camera commands.
+        /// </summary>
+        public TrackCameraCommandList TrackCameraCommands { get; internal set; }
+
+        /// <summary>
         /// Gets or sets the number of laps in a 100% race. This is part of the RawData.Final2 data.
         /// </summary>
         public byte LapCount { get; set; }

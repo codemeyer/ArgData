@@ -1,42 +1,18 @@
 using System.IO;
-using System.Linq;
 using ArgData.Entities;
 
 namespace ArgData.Internals
 {
     internal static class RawDataReader
     {
-        public static TrackRawData Read(BinaryReader reader, TrackOffsets offsets, int positionAfterPitLane)
+        public static TrackRawData Read(BinaryReader reader, int positionAfterCameras)
         {
-            int bytesToRead = offsets.ChecksumPosition - positionAfterPitLane;
+            reader.BaseStream.Position = positionAfterCameras;
 
-            // TODO: cleanup!
-
-            reader.BaseStream.Position = positionAfterPitLane;
-
-            byte[] final = reader.ReadBytes(bytesToRead);
-
-            byte[] final1 = {};
-
-            int final1EndAt = 0;
-
-            for (int i = 0; i < final.Length - 1; i++)
-            {
-                byte byte1 = final[i];
-                byte byte2 = final[i + 1];
-
-                if (byte1 == 0xFF && byte2 == 0xFF)
-                {
-                    final1 = final.Take(i).ToArray();
-                    final1EndAt = i;
-                }
-            }
-
-            byte[] final2 = final.Skip(2 + final1EndAt).ToArray();
+            byte[] final2 = reader.ReadBytes(28);
 
             return new TrackRawData
             {
-                FinalData1 = final1,
                 FinalData2 = final2
             };
         }

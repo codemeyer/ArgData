@@ -38,7 +38,8 @@ namespace ArgData.Tests
                     ObjectData = 5377 + 4112,
                     TrackData = 7281 + 4112
                 },
-                KnownComputerCarSetupDataStart = 13065
+                KnownComputerCarSetupDataStart = 13065,
+                KnownTrackCameraDataStart = 13467
             };
         }
 
@@ -61,5 +62,6 @@ namespace ArgData.Tests
         public int KnownBestLineSectionDataStart { get; set; }
         public int KnownComputerCarSetupDataStart { get; set; }
         public int KnownPitLaneSectionDataStart { get; set; }
+        public int KnownTrackCameraDataStart { get; set; }
     }
 }

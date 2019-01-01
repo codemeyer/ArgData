@@ -43,7 +43,10 @@ namespace ArgData
                 var pitLane = TrackSectionReader.Read(reader, computerCarData.PositionAfterReading);
                 track.PitLaneSections = pitLane.TrackSections;
 
-                track.RawData = RawDataReader.Read(reader, track.Offsets, pitLane.Position);
+                var cameras = TrackCameraReader.Read(reader, pitLane.Position);
+                track.TrackCameraCommands = cameras.CameraCommands;
+
+                track.RawData = RawDataReader.Read(reader, cameras.PositionAfterReading);
 
                 int lapCountLocation = track.RawData.FinalData2.Length - 6;
                 track.LapCount = track.RawData.FinalData2[lapCountLocation];

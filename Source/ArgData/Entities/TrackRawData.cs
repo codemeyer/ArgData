@@ -6,11 +6,6 @@ namespace ArgData.Entities
     public class TrackRawData
     {
         /// <summary>
-        /// Gets or sets the FinalData1 bytes.
-        /// </summary>
-        public byte[] FinalData1 { get; set; }
-
-        /// <summary>
         /// Gets or sets the FinalData2 bytes.
         /// </summary>
         public byte[] FinalData2 { get; set; }

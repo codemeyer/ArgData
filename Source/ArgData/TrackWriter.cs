@@ -34,12 +34,10 @@ namespace ArgData
             var trackInternalObjectBytes = GetInternalObjectBytes(trackData.ObjectShapes);
             trackBytes.Add(trackInternalObjectBytes);
 
-
             int objectListPosition = trackBytes.Count - OffsetAdjustment;
 
             var trackObjectBytes = GetTrackObjectBytes(trackData.ObjectSettings);
             trackBytes.Add(trackObjectBytes);
-
 
             int trackHeaderPosition = trackBytes.Count - OffsetAdjustment;
 
@@ -64,11 +62,8 @@ namespace ArgData
             var cameraBytes = GetTrackCameraBytes(trackData.TrackCameraCommands);
             trackBytes.Add(cameraBytes);
 
-            int lapCountPosition = trackData.RawData.FinalData2.Length - 6;
-
-            trackBytes.Add(trackData.RawData.FinalData2.Take(lapCountPosition).ToArray());
-            trackBytes.Add(trackData.LapCount);
-            trackBytes.Add(trackData.RawData.FinalData2.Skip(lapCountPosition + 1).ToArray());
+            var behaviorBytes = GetComputerCarBehaviorBytes(trackData.ComputerCarBehavior);
+            trackBytes.Add(behaviorBytes);
 
             int checksumPosition = trackBytes.Count - OffsetAdjustment;
 
@@ -268,6 +263,20 @@ namespace ArgData
 
             bytes.Add((byte)255);
             bytes.Add((byte)255);
+
+            return bytes.GetBytes();
+        }
+
+        private static byte[] GetComputerCarBehaviorBytes(ComputerCarBehavior behavior)
+        {
+            var bytes = new ByteList();
+
+            bytes.Add(behavior.UnknownData);
+            bytes.Add(behavior.FormationLength);
+            bytes.Add(behavior.LapTimeIndication);
+            bytes.Add(behavior.LapCount);
+            bytes.Add(behavior.StrategyFirstPitStopLap);
+            bytes.Add(behavior.StrategyChance);
 
             return bytes.GetBytes();
         }

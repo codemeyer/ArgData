@@ -14,7 +14,6 @@ namespace ArgData.Entities
         {
             Horizon = new TrackHorizon(new byte[4096]);
             Offsets = new TrackOffsets();
-            RawData = new TrackRawData();
             TrackDataHeader = new TrackSectionHeader();
             TrackSections = new List<TrackSection>();
             BestLineSegments = new List<TrackBestLineSegment>();
@@ -81,13 +80,8 @@ namespace ArgData.Entities
         public TrackCameraCommandList TrackCameraCommands { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the number of laps in a 100% race. This is part of the RawData.Final2 data.
+        /// Gets the various behaviors of the computer cars, plus lap count.
         /// </summary>
-        public byte LapCount { get; set; }
-
-        /// <summary>
-        /// Gets the "Raw" track data.
-        /// </summary>
-        public TrackRawData RawData { get; internal set; }
+        public ComputerCarBehavior ComputerCarBehavior { get; internal set; }
     }
 }

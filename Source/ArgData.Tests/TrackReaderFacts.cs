@@ -17,10 +17,11 @@ namespace ArgData.Tests
             track.TrackSections.Count.Should().Be(67);
             track.PitLaneSections.Count.Should().Be(13);
             track.BestLineSegments.Count.Should().Be(40);
-            track.LapCount.Should().Be(81);
             track.ComputerCarSetup.FrontWing.Should().Be(48);
             track.ComputerCarSetup.TyreCompound.Should().Be(SetupTyreCompound.C);
             track.ComputerCarData.FuelLoad.Should().Be(358);
+            track.ComputerCarBehavior.FormationLength.Should().Be(118);
+            track.ComputerCarBehavior.LapCount.Should().Be(81);
         }
 
         [Fact]
@@ -29,11 +30,12 @@ namespace ArgData.Tests
             var trackData = TrackFactsHelper.GetTrackMexico();
             var track = new TestableTrackReader().Read(trackData.Path);
 
-            track.LapCount.Should().Be(69);
             track.ComputerCarSetup.FrontWing.Should().Be(36);
             track.ComputerCarSetup.TyreCompound.Should().Be(SetupTyreCompound.C);
             track.ComputerCarData.FuelLoad.Should().Be(309);
             track.TrackCameraCommands.Count.Should().Be(20);
+            track.ComputerCarBehavior.FormationLength.Should().Be(203);
+            track.ComputerCarBehavior.LapCount.Should().Be(69);
         }
     }
 }

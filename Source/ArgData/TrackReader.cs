@@ -46,10 +46,8 @@ namespace ArgData
                 var cameras = TrackCameraReader.Read(reader, pitLane.Position);
                 track.TrackCameraCommands = cameras.CameraCommands;
 
-                track.RawData = RawDataReader.Read(reader, cameras.PositionAfterReading);
-
-                int lapCountLocation = track.RawData.FinalData2.Length - 6;
-                track.LapCount = track.RawData.FinalData2[lapCountLocation];
+                var behavior = ComputerCarBehaviorReader.Read(reader, cameras.PositionAfterReading);
+                track.ComputerCarBehavior = behavior;
 
                 return track;
             }

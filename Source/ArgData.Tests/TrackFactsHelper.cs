@@ -20,7 +20,8 @@ namespace ArgData.Tests
                 },
                 KnownBestLineSectionDataStart = 16342,
                 KnownComputerCarSetupDataStart = 16586,
-                KnownPitLaneSectionDataStart = 16624
+                KnownPitLaneSectionDataStart = 16624,
+                KnownComputerCarBehaviorStart = 16892
             };
         }
 
@@ -39,7 +40,8 @@ namespace ArgData.Tests
                     TrackData = 7281 + 4112
                 },
                 KnownComputerCarSetupDataStart = 13065,
-                KnownTrackCameraDataStart = 13467
+                KnownTrackCameraDataStart = 13467,
+                KnownComputerCarBehaviorStart = 13509
             };
         }
 
@@ -63,5 +65,6 @@ namespace ArgData.Tests
         public int KnownComputerCarSetupDataStart { get; set; }
         public int KnownPitLaneSectionDataStart { get; set; }
         public int KnownTrackCameraDataStart { get; set; }
+        public int KnownComputerCarBehaviorStart { get; set; }
     }
 }

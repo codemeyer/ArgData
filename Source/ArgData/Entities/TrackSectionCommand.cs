@@ -3,20 +3,20 @@ using ArgData.Internals;
 namespace ArgData.Entities
 {
     /// <summary>
-    /// Track command that adds features to the track section it belongs to.
+    /// Track section command that adds features to the track section it belongs to.
     /// </summary>
-    public class TrackCommand
+    public class TrackSectionCommand
     {
         /// <summary>
-        /// Initializes a new TrackCommand.
+        /// Initializes a new TrackSectionCommand.
         /// </summary>
         /// <param name="command">Command type.</param>
-        public static TrackCommand Create(byte command)
+        public static TrackSectionCommand Create(byte command)
         {
-            return TrackCommandFactory.Create(command);
+            return TrackSectionCommandFactory.Create(command);
         }
 
-        internal TrackCommand(byte command, short[] arguments)
+        internal TrackSectionCommand(byte command, short[] arguments)
         {
             Command = command;
             Arguments = arguments;

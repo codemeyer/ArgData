@@ -13,7 +13,7 @@ namespace ArgData.Entities
         /// </summary>
         public TrackSection()
         {
-            Commands = new List<TrackCommand>();
+            Commands = new List<TrackSectionCommand>();
         }
 
         /// <summary>
@@ -22,9 +22,9 @@ namespace ArgData.Entities
         public byte Length { get; set; }
 
         /// <summary>
-        /// Gets the list of TrackCommands.
+        /// Gets the list of TrackSectionCommands.
         /// </summary>
-        public List<TrackCommand> Commands { get; }
+        public List<TrackSectionCommand> Commands { get; }
 
         /// <summary>
         /// Gets or sets the curvature of the track. Positive numbers means a right turn, negative numbers means a left turn. Smaller numbers indicate a tighter turn.

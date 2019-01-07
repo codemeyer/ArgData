@@ -32,7 +32,7 @@ namespace ArgData.Internals
 
                 if (byte2 > 0)
                 {
-                    var command = TrackCommand.Create(byte2);
+                    var command = TrackSectionCommand.Create(byte2);
 
                     command.Arguments[0] = byte1;
 

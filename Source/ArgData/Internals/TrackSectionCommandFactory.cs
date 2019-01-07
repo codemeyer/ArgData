@@ -4,16 +4,16 @@ using ArgData.Entities;
 
 namespace ArgData.Internals
 {
-    internal static class TrackCommandFactory
+    internal static class TrackSectionCommandFactory
     {
-        public static TrackCommand Create(byte command)
+        public static TrackSectionCommand Create(byte command)
         {
             ValidateCommand(command);
 
             int count = ArgumentCount[command];
             short[] arguments = new short[count];
 
-            return new TrackCommand(command, arguments);
+            return new TrackSectionCommand(command, arguments);
         }
 
         private static void ValidateCommand(byte command)

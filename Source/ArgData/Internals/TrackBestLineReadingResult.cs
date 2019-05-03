@@ -5,11 +5,15 @@ namespace ArgData.Internals
 {
     internal class TrackBestLineReadingResult
     {
-        public TrackBestLineReadingResult(List<TrackBestLineSegment> bestLineSegments, int positionAfterReading)
+        public TrackBestLineReadingResult(short displacement,
+            List<TrackBestLineSegment> bestLineSegments, int positionAfterReading)
         {
+            Displacement = displacement;
             BestLineSegments = bestLineSegments;
             PositionAfterReading = positionAfterReading;
         }
+
+        public short Displacement { get; set; }
 
         public List<TrackBestLineSegment> BestLineSegments { get; set; }
 

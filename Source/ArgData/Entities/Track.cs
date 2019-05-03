@@ -55,6 +55,11 @@ namespace ArgData.Entities
         public IList<TrackSection> TrackSections { get; internal set; }
 
         /// <summary>
+        /// Gets or sets the displacement of the best line.
+        /// </summary>
+        public short BestLineDisplacement { get; set; }
+
+        /// <summary>
         /// Gets a list of the best line/computer car line segments.
         /// </summary>
         public IList<TrackBestLineSegment> BestLineSegments { get; internal set; }

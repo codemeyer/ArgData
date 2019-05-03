@@ -16,17 +16,12 @@ namespace ArgData.Entities
         public int Length { get; set; }
 
         /// <summary>
-        /// Gets or sets the displacement value. Only used when SegmentType is Displacement.
-        /// </summary>
-        public short Displacement { get; set; }
-
-        /// <summary>
         /// Gets or sets the correction value. Called Tighter/Wider in GP2 Track Editor.
         /// </summary>
         public short Correction { get; set; }
 
         /// <summary>
-        /// Gets or sets the corner radius.
+        /// Gets or sets the corner radius. Only used when SegmentType is Normal.
         /// </summary>
         public short Radius { get; set; }
 
@@ -46,11 +41,6 @@ namespace ArgData.Entities
     /// </summary>
     public enum TrackBestLineSegmentType
     {
-        /// <summary>
-        /// Displacement. Always the first one for a track.
-        /// </summary>
-        Displacement,
-
         /// <summary>
         /// Normal segment.
         /// </summary>

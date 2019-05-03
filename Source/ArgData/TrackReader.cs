@@ -32,6 +32,7 @@ namespace ArgData
                 track.TrackSections = sectionReading.TrackSections;
 
                 var bestLines = BestLineReader.Read(reader, sectionReading.Position);
+                track.BestLineDisplacement = bestLines.Displacement;
                 track.BestLineSegments = bestLines.BestLineSegments;
 
                 int positionAfterReadingBestLine = bestLines.PositionAfterReading;

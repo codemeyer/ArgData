@@ -22,7 +22,6 @@ namespace ArgData.Internals
             list.Add(new TrackBestLineSegment
             {
                 Length = firstLength,
-                Displacement = displacement,
                 Correction = correction,
                 Radius = radius
             });
@@ -74,7 +73,7 @@ namespace ArgData.Internals
             }
 
             int position = (int)reader.BaseStream.Position;
-            return new TrackBestLineReadingResult(list, position);
+            return new TrackBestLineReadingResult(displacement, list, position);
         }
     }
 }

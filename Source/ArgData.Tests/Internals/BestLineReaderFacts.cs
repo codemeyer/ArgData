@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Linq;
-using ArgData.Entities;
 using ArgData.Internals;
 using FluentAssertions;
 using Xunit;
@@ -8,9 +7,9 @@ using Xunit;
 namespace ArgData.Tests.Internals
 {
     public class BestLineReaderFacts
-    {     
+    {
         [Fact]
-        public void Phoenix_FirstSegment_IsDisplacement()
+        public void Phoenix_Displacement_576()
         {
             var trackData = TrackFactsHelper.GetTrackPhoenix();
 
@@ -18,9 +17,7 @@ namespace ArgData.Tests.Internals
             {
                 var result = BestLineReader.Read(reader, trackData.KnownBestLineSectionDataStart);
 
-                var firstSegment = result.BestLineSegments.First();
-                firstSegment.SegmentType.Should().Be(TrackBestLineSegmentType.Displacement);
-                firstSegment.Displacement.Should().Be(576);
+                result.Displacement.Should().Be(576);
             }
         }
 
@@ -39,7 +36,7 @@ namespace ArgData.Tests.Internals
         }
 
         [Fact]
-        public void PhoenixBestLineHasFirstSegmentWithLength40()
+        public void PhoenixBestLineHasFirstSegmentWithLength48()
         {
             var trackData = TrackFactsHelper.GetTrackPhoenix();
 
@@ -49,7 +46,6 @@ namespace ArgData.Tests.Internals
 
                 var firstSegment = result.BestLineSegments.First();
                 firstSegment.Length.Should().Be(48);
-                firstSegment.Displacement.Should().Be(576);
             }
         }
     }

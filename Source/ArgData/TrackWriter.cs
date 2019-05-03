@@ -47,7 +47,7 @@ namespace ArgData
             var trackSectionBytes = GetTrackSectionBytes(trackData.TrackSections);
             trackBytes.Add(trackSectionBytes);
 
-            var bestLineBytes = GetBestLineBytes(trackData.BestLineSegments);
+            var bestLineBytes = GetBestLineBytes(trackData.BestLineDisplacement, trackData.BestLineSegments);
             trackBytes.Add(bestLineBytes);
 
             var computerCarSetupBytes = GetComputerCarSetupBytes(trackData.ComputerCarSetup);
@@ -361,7 +361,7 @@ namespace ArgData
             return sectionBytes.GetBytes();
         }
 
-        private static byte[] GetBestLineBytes(IList<TrackBestLineSegment> bestLines)
+        private static byte[] GetBestLineBytes(short displacement, IList<TrackBestLineSegment> bestLines)
         {
             var bestLineBytes = new ByteList();
 
@@ -369,7 +369,7 @@ namespace ArgData
 
             bestLineBytes.Add((byte)first.Length);
             bestLineBytes.Add((byte)0x80);
-            bestLineBytes.Add(first.Displacement);
+            bestLineBytes.Add(displacement);
             bestLineBytes.Add(first.Correction);
             bestLineBytes.Add(first.Radius);
 

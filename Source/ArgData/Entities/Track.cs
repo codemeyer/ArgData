@@ -21,7 +21,9 @@ namespace ArgData.Entities
             ObjectShapes = new List<TrackObjectShape>();
             ObjectSettings = new List<TrackObjectSettings>();
             ComputerCarSetup = new Setup();
-            ComputerCarData = new ComputerCarData();
+            ComputerCarBehavior = new TrackComputerCarBehavior();
+            CarSettings = new TrackCarSettings();
+            TrackSettings = new TrackSettings();
         }
 
         /// <summary>
@@ -70,9 +72,14 @@ namespace ArgData.Entities
         public Setup ComputerCarSetup { get; internal set; }
 
         /// <summary>
-        /// Gets the additional computer and player car data.
+        /// Gets the various behaviors of the computer cars.
         /// </summary>
-        public ComputerCarData ComputerCarData { get; internal set; }
+        public TrackComputerCarBehavior ComputerCarBehavior { get; internal set; }
+
+        /// <summary>
+        /// Gets various settings that affect both the player car and the computer controlled cars.
+        /// </summary>
+        public TrackCarSettings CarSettings { get; internal set; }
 
         /// <summary>
         /// Gets the list of pit lane sections.
@@ -85,8 +92,8 @@ namespace ArgData.Entities
         public TrackCameraCommandList TrackCameraCommands { get; internal set; }
 
         /// <summary>
-        /// Gets the various behaviors of the computer cars, plus lap count.
+        /// Gets various track settings, e.g. the lap count.
         /// </summary>
-        public ComputerCarBehavior ComputerCarBehavior { get; internal set; }
+        public TrackSettings TrackSettings { get; set; }
     }
 }

@@ -4,9 +4,9 @@ using ArgData.Entities;
 
 namespace ArgData.Internals
 {
-    internal static class ComputerCarDataReader
+    internal static class ComputerCarAndTrackSettingsPart1DataReader
     {
-        public static ComputerCarDataReadingResult Read(BinaryReader reader, int position)
+        public static ComputerCarAndTrackSettingsPart1DataReadingResult Read(BinaryReader reader, int position)
         {
             reader.BaseStream.Position = position;
 
@@ -24,7 +24,7 @@ namespace ArgData.Internals
                 BrakeBalance = Convert.ToSByte(reader.ReadSByte())
             };
 
-            var data = new ComputerCarData
+            var data = new ComputerCarDataAndTrackSettingsPart1
             {
                 GripFactor = reader.ReadInt16(),
                 ComputerCarLateBrakingFactorNonRace = reader.ReadInt16(),
@@ -44,7 +44,7 @@ namespace ArgData.Internals
 
             var positionAfterReading = (int)reader.BaseStream.Position;
 
-            return new ComputerCarDataReadingResult(setup, data, positionAfterReading);
+            return new ComputerCarAndTrackSettingsPart1DataReadingResult(setup, data, positionAfterReading);
         }
 
         private static SetupTyreCompound GetTyreCompound(byte rawValue)

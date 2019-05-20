@@ -6,6 +6,7 @@ using Xunit;
 
 namespace ArgData.Tests.Internals
 {
+    [System.Obsolete("Replaced by TrackSectionHeaderFacts elsewhere")]
     public class TrackSectionHeaderFacts
     {
         [Fact]

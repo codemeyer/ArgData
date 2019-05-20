@@ -1,14 +1,16 @@
-﻿namespace ArgData.Entities
+﻿namespace ArgData.Internals
 {
     /// <summary>
-    /// Contains various properties that affect the computer car (and player car) in various ways.
+    /// Internal class that contains various properties that affect the computer car (and player car) in various ways.
+    ///
+    /// The data read here is exposed through the CarSettings, ComputerCarBehavior and TrackSettings properties.
     /// </summary>
-    public class ComputerCarData
+    internal class ComputerCarDataAndTrackSettingsPart1
     {
         /// <summary>
         /// Gets or sets the grip factor.
         /// </summary>
-        public short GripFactor { get; set; }
+        public short GripFactor { get; set; } // affects player car too
 
         /// <summary>
         /// Gets or sets the computer car late-braking factor in non-race sessions.
@@ -38,12 +40,12 @@
         /// <summary>
         /// Gets or sets the acceleration factor.
         /// </summary>
-        public short Acceleration { get; set; }
+        public short Acceleration { get; set; } // affects player car too
 
         /// <summary>
         /// Gets or sets the air resistance.
         /// </summary>
-        public short AirResistance { get; set; }
+        public short AirResistance { get; set; } // affects player car too
 
         /// <summary>
         /// Gets or sets the tyre wear in qualifying sessions.
@@ -63,7 +65,7 @@
         /// <summary>
         /// Gets or sets the computer car power factor.
         /// </summary>
-        public short ComputerCarPowerFactor { get; set; }
+        public short ComputerCarPowerFactor { get; set; } // little effect?
 
         /// <summary>
         /// Gets or sets the unknown track distance-related value.

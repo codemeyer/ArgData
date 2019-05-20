@@ -12,7 +12,7 @@
     <Copyright>Copyright © 2014-2019 Fredrik Meyer</Copyright>
     <PackageTags>F1GP</PackageTags>
     <PackageIconUrl>http://www.argtools.com/media/icons/argdata-64x64.png</PackageIconUrl>
-    <VersionPrefix>0.18</VersionPrefix>
+    <VersionPrefix>0.19</VersionPrefix>
     <VersionSuffix></VersionSuffix>
   </PropertyGroup>
 

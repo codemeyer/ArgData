@@ -3,13 +3,8 @@
     /// <summary>
     /// Class that represents various computer car behavior as well as lap count.
     /// </summary>
-    public class ComputerCarBehavior
+    public class TrackComputerCarBehavior
     {
-        /// <summary>
-        /// Gets or sets the unknown, possibly unused, data. Must be 16 bytes.
-        /// </summary>
-        public byte[] UnknownData { get; set; }
-
         /// <summary>
         /// Gets or sets the length (in track units) that computer cars will avoid steering left or right
         /// at the start of a race.
@@ -17,15 +12,24 @@
         public short FormationLength { get; set; }
 
         /// <summary>
-        /// Gets or sets an indication of lap time (in milliseconds) that is used to determine the
-        /// duration of hot-seat stints, as well as the number of simultaneous runners during a non-race sessions.
+        /// Gets or sets the computer car late-braking factor in non-race sessions.
         /// </summary>
-        public int LapTimeIndication { get; set; }
+        public short LateBrakingFactorNonRace { get; set; }
 
         /// <summary>
-        /// Gets or sets the number of laps in a 100% race.
+        /// Gets or sets the computer car late-braking factor in races.
         /// </summary>
-        public short LapCount { get; set; }
+        public short LateBrakingFactorRace { get; set; }
+
+        /// <summary>
+        /// Gets or sets the computer car late-braking factor in wet races.
+        /// </summary>
+        public short LateBrakingFactorWetRace { get; set; }
+
+        /// <summary>
+        /// Gets or sets the computer car power factor.
+        /// </summary>
+        public short PowerFactor { get; set; }
 
         /// <summary>
         /// Gets or sets the first lap that cars will start to pit.
@@ -36,5 +40,10 @@
         /// Gets or sets the chance that this strategy is applied.
         /// </summary>
         public short StrategyChance { get; set; }
+
+        /// <summary>
+        /// Gets or sets the unknown, possibly unused, data. Must be 16 bytes.
+        /// </summary>
+        public byte[] UnknownData { get; set; }
     }
 }

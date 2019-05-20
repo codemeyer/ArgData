@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ArgData.Entities;
+using ArgData.Internals;
 using ArgData.IO;
 
 namespace ArgData
@@ -41,7 +42,7 @@ namespace ArgData
 
             int trackHeaderPosition = trackBytes.Count - OffsetAdjustment;
 
-            var trackDataHeaderBytes = GetTrackDataHeaderBytes(trackData.TrackDataHeader);
+            var trackDataHeaderBytes = GetTrackDataHeaderBytes(trackData.TrackDataHeader, trackData.TrackSettings);
             trackBytes.Add(trackDataHeaderBytes);
 
             var trackSectionBytes = GetTrackSectionBytes(trackData.TrackSections);
@@ -53,8 +54,8 @@ namespace ArgData
             var computerCarSetupBytes = GetComputerCarSetupBytes(trackData.ComputerCarSetup);
             trackBytes.Add(computerCarSetupBytes);
 
-            var computerCarDataBytes = GetComputerCarDataBytes(trackData.ComputerCarData);
-            trackBytes.Add(computerCarDataBytes);
+            var carTrackSettingsPart1Bytes = GetComputerCarTrackSettingsPart1Bytes(trackData.CarSettings, trackData.ComputerCarBehavior, trackData.TrackSettings);
+            trackBytes.Add(carTrackSettingsPart1Bytes);
 
             var pitLaneSectionBytes = GetTrackSectionBytes(trackData.PitLaneSections);
             trackBytes.Add(pitLaneSectionBytes);
@@ -62,8 +63,8 @@ namespace ArgData
             var cameraBytes = GetTrackCameraBytes(trackData.TrackCameraCommands);
             trackBytes.Add(cameraBytes);
 
-            var behaviorBytes = GetComputerCarBehaviorBytes(trackData.ComputerCarBehavior);
-            trackBytes.Add(behaviorBytes);
+            var carTrackSettingsPart2Bytes = GetComputerCarTrackSettingsPart2Bytes(trackData.ComputerCarBehavior, trackData.TrackSettings);
+            trackBytes.Add(carTrackSettingsPart2Bytes);
 
             int checksumPosition = trackBytes.Count - OffsetAdjustment;
 
@@ -204,24 +205,24 @@ namespace ArgData
             return setupBytes;
         }
 
-        private static byte[] GetComputerCarDataBytes(ComputerCarData data)
+        private static byte[] GetComputerCarTrackSettingsPart1Bytes(TrackCarSettings carSettings, TrackComputerCarBehavior computerCarBehavior, TrackSettings trackSettings)
         {
             var dataBytes = new ByteList();
 
-            dataBytes.Add(data.GripFactor);
-            dataBytes.Add(data.ComputerCarLateBrakingFactorNonRace);
-            dataBytes.Add(data.ComputerCarLateBrakingFactorRace);
-            dataBytes.Add(data.TimeFactorNonRace);
-            dataBytes.Add(data.Acceleration);
-            dataBytes.Add(data.AirResistance);
-            dataBytes.Add(data.TyreWearQualifying);
-            dataBytes.Add(data.TyreWearNonQualifying);
-            dataBytes.Add(data.FuelLoad);
-            dataBytes.Add(data.TimeFactorRace);
-            dataBytes.Add(data.ComputerCarPowerFactor);
-            dataBytes.Add(data.ComputerCarLateBrakingFactorWetRace);
-            dataBytes.Add(data.UnknownTrackDistance);
-            dataBytes.Add(data.DefaultPitLaneViewDistance);
+            dataBytes.Add(carSettings.GripFactor);
+            dataBytes.Add(computerCarBehavior.LateBrakingFactorNonRace);
+            dataBytes.Add(computerCarBehavior.LateBrakingFactorRace);
+            dataBytes.Add(trackSettings.TimeFactorNonRace);
+            dataBytes.Add(carSettings.Acceleration);
+            dataBytes.Add(carSettings.AirResistance);
+            dataBytes.Add(carSettings.TyreWearQualifying);
+            dataBytes.Add(carSettings.TyreWearNonQualifying);
+            dataBytes.Add(carSettings.FuelLoad);
+            dataBytes.Add(trackSettings.TimeFactorRace);
+            dataBytes.Add(computerCarBehavior.PowerFactor);
+            dataBytes.Add(computerCarBehavior.LateBrakingFactorWetRace);
+            dataBytes.Add(trackSettings.UnknownTrackDistance);
+            dataBytes.Add(trackSettings.DefaultPitLaneViewDistance);
 
             return dataBytes.GetBytes();
         }
@@ -267,21 +268,21 @@ namespace ArgData
             return bytes.GetBytes();
         }
 
-        private static byte[] GetComputerCarBehaviorBytes(ComputerCarBehavior behavior)
+        private static byte[] GetComputerCarTrackSettingsPart2Bytes(TrackComputerCarBehavior computerCarBehavior, TrackSettings trackSettings)
         {
             var bytes = new ByteList();
 
-            bytes.Add(behavior.UnknownData);
-            bytes.Add(behavior.FormationLength);
-            bytes.Add(behavior.LapTimeIndication);
-            bytes.Add(behavior.LapCount);
-            bytes.Add(behavior.StrategyFirstPitStopLap);
-            bytes.Add(behavior.StrategyChance);
+            bytes.Add(computerCarBehavior.UnknownData);
+            bytes.Add(computerCarBehavior.FormationLength);
+            bytes.Add(trackSettings.LapTimeIndication);
+            bytes.Add(trackSettings.LapCount);
+            bytes.Add(computerCarBehavior.StrategyFirstPitStopLap);
+            bytes.Add(computerCarBehavior.StrategyChance);
 
             return bytes.GetBytes();
         }
 
-        private static byte[] GetTrackDataHeaderBytes(TrackSectionHeader trackDataHeader)
+        private static byte[] GetTrackDataHeaderBytes(TrackSectionHeader trackDataHeader, TrackSettings settings)
         {
             var header = new ByteList();
 
@@ -293,25 +294,25 @@ namespace ArgData
 
             header.Add(trackDataHeader.StartWidth);
 
-            short poleSideValue = trackDataHeader.PoleSide == TrackSide.Left ? (short)-768 : (short)768;
+            short poleSideValue = settings.PoleSide == TrackSide.Left ? (short)-768 : (short)768;
             header.Add(poleSideValue);
 
-            byte pitsSideValue = trackDataHeader.PitsSide == TrackSide.Left ? (byte)10 : (byte)0;
+            byte pitsSideValue = settings.PitsSide == TrackSide.Left ? (byte)10 : (byte)0;
             header.Add(pitsSideValue);
 
-            header.Add((byte)trackDataHeader.SurroundingArea);
+            header.Add((byte)settings.SurroundingArea);
 
             header.Add(trackDataHeader.RightVergeStartWidth);
             header.Add(trackDataHeader.LeftVergeStartWidth);
 
-            if (trackDataHeader.KerbType == KerbType.DualColor)
+            if (settings.KerbType == KerbType.DualColor)
             {
-                header.Add(new byte[] { 3, 0, 8, 0, trackDataHeader.KerbUpperColor, 0, trackDataHeader.KerbLowerColor, 0, 8, 0 });
+                header.Add(new byte[] { 3, 0, 8, 0, settings.KerbUpperColor, 0, settings.KerbLowerColor, 0, 8, 0 });
             }
             else
             {
-                header.Add(new byte[] { 4, 0, 8, 0, trackDataHeader.KerbUpperColor, 0, trackDataHeader.KerbLowerColor, 0, 8, 0,
-                    trackDataHeader.KerbUpperColor2, 0, trackDataHeader.KerbLowerColor2, 0 });
+                header.Add(new byte[] { 4, 0, 8, 0, settings.KerbUpperColor, 0, settings.KerbLowerColor, 0, 8, 0,
+                    settings.KerbUpperColor2, 0, settings.KerbLowerColor2, 0 });
             }
 
             return header.GetBytes();

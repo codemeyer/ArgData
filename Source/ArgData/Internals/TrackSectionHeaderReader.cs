@@ -6,14 +6,14 @@ namespace ArgData.Internals
 {
     internal static class TrackSectionHeaderReader
     {
-        public static TrackSectionHeader Read(BinaryReader reader, int offset)
+        public static InternalTrackSectionHeader Read(BinaryReader reader, int offset)
         {
             reader.BaseStream.Position = offset + 18;
             byte kerbTypeByte = reader.ReadByte();
 
             reader.BaseStream.Position = offset;
 
-            var header = new TrackSectionHeader
+            var header = new InternalTrackSectionHeader
             {
                 FirstSectionAngle = reader.ReadUInt16(),
                 FirstSectionHeight = reader.ReadInt16(),

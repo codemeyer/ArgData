@@ -20,9 +20,9 @@ namespace ArgData.Tests
             track.BestLineSegments.Count.Should().Be(40);
             track.ComputerCarSetup.FrontWing.Should().Be(48);
             track.ComputerCarSetup.TyreCompound.Should().Be(SetupTyreCompound.C);
-            track.ComputerCarData.FuelLoad.Should().Be(358);
+            track.CarSettings.FuelLoad.Should().Be(358);
             track.ComputerCarBehavior.FormationLength.Should().Be(118);
-            track.ComputerCarBehavior.LapCount.Should().Be(81);
+            track.TrackSettings.LapCount.Should().Be(81);
         }
 
         [Fact]
@@ -33,10 +33,10 @@ namespace ArgData.Tests
 
             track.ComputerCarSetup.FrontWing.Should().Be(36);
             track.ComputerCarSetup.TyreCompound.Should().Be(SetupTyreCompound.C);
-            track.ComputerCarData.FuelLoad.Should().Be(309);
+            track.CarSettings.FuelLoad.Should().Be(309);
             track.TrackCameraCommands.Count.Should().Be(20);
             track.ComputerCarBehavior.FormationLength.Should().Be(203);
-            track.ComputerCarBehavior.LapCount.Should().Be(69);
+            track.TrackSettings.LapCount.Should().Be(69);
         }
     }
 }

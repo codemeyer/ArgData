@@ -2,9 +2,9 @@
 
 namespace ArgData.Internals
 {
-    internal class ComputerCarDataReadingResult
+    internal class ComputerCarAndTrackSettingsPart1DataReadingResult
     {
-        public ComputerCarDataReadingResult(Setup setup, ComputerCarData computerCarData, int positionAfterReading)
+        public ComputerCarAndTrackSettingsPart1DataReadingResult(Setup setup, ComputerCarDataAndTrackSettingsPart1 computerCarData, int positionAfterReading)
         {
             Setup = setup;
             ComputerCarData = computerCarData;
@@ -13,7 +13,7 @@ namespace ArgData.Internals
 
         public Setup Setup { get; private set; }
 
-        public ComputerCarData ComputerCarData { get; private set; }
+        public ComputerCarDataAndTrackSettingsPart1 ComputerCarData { get; private set; }
 
         public int PositionAfterReading { get; private set; }
     }

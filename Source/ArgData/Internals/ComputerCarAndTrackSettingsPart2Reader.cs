@@ -1,15 +1,14 @@
 ﻿using System.IO;
-using ArgData.Entities;
 
 namespace ArgData.Internals
 {
-    internal static class ComputerCarBehaviorReader
+    internal static class ComputerCarAndTrackSettingsPart2Reader
     {
-        public static ComputerCarBehavior Read(BinaryReader reader, int position)
+        public static ComputerCarDataAndTrackSettingsPart2 Read(BinaryReader reader, int position)
         {
             reader.BaseStream.Position = position;
 
-            var behavior = new ComputerCarBehavior
+            var settings = new ComputerCarDataAndTrackSettingsPart2
             {
                 UnknownData = reader.ReadBytes(16),
                 FormationLength = reader.ReadInt16(),
@@ -19,7 +18,7 @@ namespace ArgData.Internals
                 StrategyChance = reader.ReadInt16()
             };
 
-            return behavior;
+            return settings;
         }
     }
 }

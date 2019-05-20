@@ -4,11 +4,11 @@ using ArgData.Entities;
 
 namespace ArgData.Internals
 {
-    internal static class BestLineReader
+    internal static class ComputerCarLineReader
     {
-        public static TrackBestLineReadingResult Read(BinaryReader reader, int startPosition)
+        public static TrackComputerCarLineReadingResult Read(BinaryReader reader, int startPosition)
         {
-            var list = new List<TrackBestLineSegment>();
+            var list = new List<TrackComputerCarLineSegment>();
 
             reader.BaseStream.Position = startPosition;
 
@@ -19,7 +19,7 @@ namespace ArgData.Internals
             short correction = reader.ReadInt16();
             short radius = reader.ReadInt16();
 
-            list.Add(new TrackBestLineSegment
+            list.Add(new TrackComputerCarLineSegment
             {
                 Length = firstLength,
                 Correction = correction,
@@ -39,9 +39,9 @@ namespace ArgData.Internals
                     short highRadius = reader.ReadInt16();
                     short lowRadius = reader.ReadInt16();
 
-                    list.Add(new TrackBestLineSegment
+                    list.Add(new TrackComputerCarLineSegment
                     {
-                        SegmentType = TrackBestLineSegmentType.WideRadius,
+                        SegmentType = TrackComputerCarLineSegmentType.WideRadius,
                         Length = length,
                         Correction = correction,
                         HighRadius = highRadius,
@@ -54,9 +54,9 @@ namespace ArgData.Internals
                     correction = reader.ReadInt16();
                     radius = reader.ReadInt16();
 
-                    list.Add(new TrackBestLineSegment
+                    list.Add(new TrackComputerCarLineSegment
                     {
-                        SegmentType = TrackBestLineSegmentType.Normal,
+                        SegmentType = TrackComputerCarLineSegmentType.Normal,
                         Length = length,
                         Correction = correction,
                         Radius = radius
@@ -73,7 +73,7 @@ namespace ArgData.Internals
             }
 
             int position = (int)reader.BaseStream.Position;
-            return new TrackBestLineReadingResult(displacement, list, position);
+            return new TrackComputerCarLineReadingResult(displacement, list, position);
         }
     }
 }

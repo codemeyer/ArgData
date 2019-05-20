@@ -1,14 +1,16 @@
 namespace ArgData.Entities
 {
     /// <summary>
-    /// Represents a segment of the best line/computer car line.
+    /// Represents a segment of the computer car line.
+    ///
+    /// This line around the track is also used to provide steering help.
     /// </summary>
-    public class TrackBestLineSegment
+    public class TrackComputerCarLineSegment
     {
         /// <summary>
         /// Gets or sets the type of segment.
         /// </summary>
-        public TrackBestLineSegmentType SegmentType { get; set; }
+        public TrackComputerCarLineSegmentType SegmentType { get; set; }
 
         /// <summary>
         /// Gets or sets the length of the segment.
@@ -37,9 +39,9 @@ namespace ArgData.Entities
     }
 
     /// <summary>
-    /// Type of best line segment.
+    /// Type of computer car line segment.
     /// </summary>
-    public enum TrackBestLineSegmentType
+    public enum TrackComputerCarLineSegmentType
     {
         /// <summary>
         /// Normal segment.

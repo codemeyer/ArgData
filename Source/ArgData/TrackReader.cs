@@ -44,13 +44,11 @@ namespace ArgData
                 var sectionReading = TrackSectionReader.Read(reader, track.Offsets.TrackData + internalHeader.GetHeaderLength());
                 track.TrackSections = sectionReading.TrackSections;
 
-                var bestLines = BestLineReader.Read(reader, sectionReading.Position);
-                track.BestLineDisplacement = bestLines.Displacement;
-                track.BestLineSegments = bestLines.BestLineSegments;
+                var lines = ComputerCarLineReader.Read(reader, sectionReading.Position);
+                track.ComputerCarLineDisplacement = lines.Displacement;
+                track.ComputerCarLineSegments = lines.ComputerCarLineSegments;
 
-                int positionAfterReadingBestLine = bestLines.PositionAfterReading;
-
-                var computerCarData = ComputerCarAndTrackSettingsPart1DataReader.Read(reader, positionAfterReadingBestLine);
+                var computerCarData = ComputerCarAndTrackSettingsPart1DataReader.Read(reader, lines.PositionAfterReading);
                 track.ComputerCarSetup = computerCarData.Setup;
 
                 var pitLane = TrackSectionReader.Read(reader, computerCarData.PositionAfterReading);

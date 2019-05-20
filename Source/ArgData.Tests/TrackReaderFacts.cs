@@ -16,8 +16,8 @@ namespace ArgData.Tests
 
             track.TrackSections.Count.Should().Be(67);
             track.PitLaneSections.Count.Should().Be(13);
-            track.BestLineDisplacement.Should().Be(576);
-            track.BestLineSegments.Count.Should().Be(40);
+            track.ComputerCarLineDisplacement.Should().Be(576);
+            track.ComputerCarLineSegments.Count.Should().Be(40);
             track.ComputerCarSetup.FrontWing.Should().Be(48);
             track.ComputerCarSetup.TyreCompound.Should().Be(SetupTyreCompound.C);
             track.CarSettings.FuelLoad.Should().Be(358);

@@ -16,7 +16,7 @@ namespace ArgData.Entities
             Offsets = new TrackOffsets();
             TrackDataHeader = new TrackSectionHeader();
             TrackSections = new List<TrackSection>();
-            BestLineSegments = new List<TrackBestLineSegment>();
+            ComputerCarLineSegments = new List<TrackComputerCarLineSegment>();
             PitLaneSections = new List<TrackSection>();
             ObjectShapes = new List<TrackObjectShape>();
             ObjectSettings = new List<TrackObjectSettings>();
@@ -57,14 +57,14 @@ namespace ArgData.Entities
         public IList<TrackSection> TrackSections { get; internal set; }
 
         /// <summary>
-        /// Gets or sets the displacement of the best line.
+        /// Gets or sets the displacement of the computer car line.
         /// </summary>
-        public short BestLineDisplacement { get; set; }
+        public short ComputerCarLineDisplacement { get; set; }
 
         /// <summary>
-        /// Gets a list of the best line/computer car line segments.
+        /// Gets a list of the computer car line segments.
         /// </summary>
-        public IList<TrackBestLineSegment> BestLineSegments { get; internal set; }
+        public IList<TrackComputerCarLineSegment> ComputerCarLineSegments { get; internal set; }
 
         /// <summary>
         /// Gets the computer car setup.

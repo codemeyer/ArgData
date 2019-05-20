@@ -18,7 +18,7 @@ namespace ArgData.Tests.Internals
                 var result = TrackSectionReader.Read(reader, trackData.KnownTrackSectionDataStart);
 
                 result.TrackSections.Count.Should().Be(67);
-                result.Position.Should().Be(trackData.KnownBestLineSectionDataStart); // 16342
+                result.Position.Should().Be(trackData.KnownComputerCarLineSectionDataStart); // 16342
             }
         }
 

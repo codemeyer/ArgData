@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ArgData.Entities;
-using ArgData.Internals;
 using ArgData.IO;
 
 namespace ArgData
@@ -48,8 +47,8 @@ namespace ArgData
             var trackSectionBytes = GetTrackSectionBytes(trackData.TrackSections);
             trackBytes.Add(trackSectionBytes);
 
-            var bestLineBytes = GetBestLineBytes(trackData.BestLineDisplacement, trackData.BestLineSegments);
-            trackBytes.Add(bestLineBytes);
+            var carLineBytes = GetComputerCarLineBytes(trackData.ComputerCarLineDisplacement, trackData.ComputerCarLineSegments);
+            trackBytes.Add(carLineBytes);
 
             var computerCarSetupBytes = GetComputerCarSetupBytes(trackData.ComputerCarSetup);
             trackBytes.Add(computerCarSetupBytes);
@@ -362,40 +361,40 @@ namespace ArgData
             return sectionBytes.GetBytes();
         }
 
-        private static byte[] GetBestLineBytes(short displacement, IList<TrackBestLineSegment> bestLines)
+        private static byte[] GetComputerCarLineBytes(short displacement, IList<TrackComputerCarLineSegment> computerCarLines)
         {
-            var bestLineBytes = new ByteList();
+            var bytes = new ByteList();
 
-            var first = bestLines.First();
+            var first = computerCarLines.First();
 
-            bestLineBytes.Add((byte)first.Length);
-            bestLineBytes.Add((byte)0x80);
-            bestLineBytes.Add(displacement);
-            bestLineBytes.Add(first.Correction);
-            bestLineBytes.Add(first.Radius);
+            bytes.Add((byte)first.Length);
+            bytes.Add((byte)0x80);
+            bytes.Add(displacement);
+            bytes.Add(first.Correction);
+            bytes.Add(first.Radius);
 
-            foreach (var bestLine in bestLines.Skip(1))
+            foreach (var line in computerCarLines.Skip(1))
             {
-                if (bestLine.SegmentType == TrackBestLineSegmentType.Normal)
+                if (line.SegmentType == TrackComputerCarLineSegmentType.Normal)
                 {
-                    bestLineBytes.Add((short)bestLine.Length);
-                    bestLineBytes.Add(bestLine.Correction);
-                    bestLineBytes.Add(bestLine.Radius);
+                    bytes.Add((short)line.Length);
+                    bytes.Add(line.Correction);
+                    bytes.Add(line.Radius);
                 }
-                else if (bestLine.SegmentType == TrackBestLineSegmentType.WideRadius)
+                else if (line.SegmentType == TrackComputerCarLineSegmentType.WideRadius)
                 {
-                    bestLineBytes.Add((byte)bestLine.Length);
-                    bestLineBytes.Add((byte)0x40);
-                    bestLineBytes.Add(bestLine.Correction);
-                    bestLineBytes.Add(bestLine.HighRadius);
-                    bestLineBytes.Add(bestLine.LowRadius);
+                    bytes.Add((byte)line.Length);
+                    bytes.Add((byte)0x40);
+                    bytes.Add(line.Correction);
+                    bytes.Add(line.HighRadius);
+                    bytes.Add(line.LowRadius);
                 }
             }
 
-            bestLineBytes.Add((byte)0);
-            bestLineBytes.Add((byte)0);
+            bytes.Add((byte)0);
+            bytes.Add((byte)0);
 
-            return bestLineBytes.GetBytes();
+            return bytes.GetBytes();
         }
 
         /// <summary>

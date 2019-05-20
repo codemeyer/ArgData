@@ -117,7 +117,7 @@ namespace ArgData
         {
             return (SetupTyreCompound)Enum.Parse(typeof(SetupTyreCompound), value.ToString());
         }
-        
+
         /// <summary>
         /// Default FileStream provider. Can be overridden in tests.
         /// </summary>
@@ -141,20 +141,20 @@ namespace ArgData
 
             var byteList = new ByteList();
 
-            byteList.Add(setup.FrontWing);
-            byteList.Add(setup.RearWing);
-            byteList.Add(setup.GearRatio1);
-            byteList.Add(setup.GearRatio2);
-            byteList.Add(setup.GearRatio3);
-            byteList.Add(setup.GearRatio4);
-            byteList.Add(setup.GearRatio5);
-            byteList.Add(setup.GearRatio6);
-            byteList.Add(GetTyreCompound(setup.TyreCompound));
-            byteList.Add(GetBrakeBalance(setup.BrakeBalance));
+            byteList.AddByte(setup.FrontWing);
+            byteList.AddByte(setup.RearWing);
+            byteList.AddByte(setup.GearRatio1);
+            byteList.AddByte(setup.GearRatio2);
+            byteList.AddByte(setup.GearRatio3);
+            byteList.AddByte(setup.GearRatio4);
+            byteList.AddByte(setup.GearRatio5);
+            byteList.AddByte(setup.GearRatio6);
+            byteList.AddByte(GetTyreCompound(setup.TyreCompound));
+            byteList.AddByte(GetBrakeBalance(setup.BrakeBalance));
 
             var checksum = new ChecksumCalculator().Calculate(byteList.GetBytes());
-            byteList.Add((ushort)checksum.Checksum1);
-            byteList.Add((ushort)checksum.Checksum2);
+            byteList.AddUInt16((ushort)checksum.Checksum1);
+            byteList.AddUInt16((ushort)checksum.Checksum2);
 
             using (var writer = new BinaryWriter(StreamProvider.Invoke(path)))
             {
@@ -173,41 +173,41 @@ namespace ArgData
 
             var byteList = new ByteList();
             var value = Convert.ToByte(setups.SeparateSetups ? 255 : 0);
-            byteList.Add(value);
-            byteList.Add(value);
+            byteList.AddByte(value);
+            byteList.AddByte(value);
 
             foreach (var setup in setups.QualifyingSetups)
             {
-                byteList.Add(setup.FrontWing);
-                byteList.Add(setup.RearWing);
-                byteList.Add(setup.GearRatio1);
-                byteList.Add(setup.GearRatio2);
-                byteList.Add(setup.GearRatio3);
-                byteList.Add(setup.GearRatio4);
-                byteList.Add(setup.GearRatio5);
-                byteList.Add(setup.GearRatio6);
-                byteList.Add(GetTyreCompound(setup.TyreCompound));
-                byteList.Add(GetBrakeBalance(setup.BrakeBalance));
+                byteList.AddByte(setup.FrontWing);
+                byteList.AddByte(setup.RearWing);
+                byteList.AddByte(setup.GearRatio1);
+                byteList.AddByte(setup.GearRatio2);
+                byteList.AddByte(setup.GearRatio3);
+                byteList.AddByte(setup.GearRatio4);
+                byteList.AddByte(setup.GearRatio5);
+                byteList.AddByte(setup.GearRatio6);
+                byteList.AddByte(GetTyreCompound(setup.TyreCompound));
+                byteList.AddByte(GetBrakeBalance(setup.BrakeBalance));
             }
 
             foreach (var setup in setups.RaceSetups)
             {
-                byteList.Add(setup.FrontWing);
-                byteList.Add(setup.RearWing);
-                byteList.Add(setup.GearRatio1);
-                byteList.Add(setup.GearRatio2);
-                byteList.Add(setup.GearRatio3);
-                byteList.Add(setup.GearRatio4);
-                byteList.Add(setup.GearRatio5);
-                byteList.Add(setup.GearRatio6);
-                byteList.Add(GetTyreCompound(setup.TyreCompound));
-                byteList.Add(GetBrakeBalance(setup.BrakeBalance));
+                byteList.AddByte(setup.FrontWing);
+                byteList.AddByte(setup.RearWing);
+                byteList.AddByte(setup.GearRatio1);
+                byteList.AddByte(setup.GearRatio2);
+                byteList.AddByte(setup.GearRatio3);
+                byteList.AddByte(setup.GearRatio4);
+                byteList.AddByte(setup.GearRatio5);
+                byteList.AddByte(setup.GearRatio6);
+                byteList.AddByte(GetTyreCompound(setup.TyreCompound));
+                byteList.AddByte(GetBrakeBalance(setup.BrakeBalance));
             }
 
             var checksum = new ChecksumCalculator().Calculate(byteList.GetBytes());
 
-            byteList.Add((ushort)checksum.Checksum1);
-            byteList.Add((ushort)checksum.Checksum2);
+            byteList.AddUInt16((ushort)checksum.Checksum1);
+            byteList.AddUInt16((ushort)checksum.Checksum2);
 
             using (var writer = new BinaryWriter(StreamProvider.Invoke(path)))
             {

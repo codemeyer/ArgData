@@ -28,7 +28,7 @@ namespace ArgData.Internals
 
                         for (int i = 0; i < runLength; i++)
                         {
-                            pixelBytes.Add(index);
+                            pixelBytes.AddByte(index);
                         }
                     }
                     else
@@ -37,7 +37,7 @@ namespace ArgData.Internals
                         for (int i = 0; i <= read; i++)
                         {
                             byte index = reader.ReadByte();
-                            pixelBytes.Add(index);
+                            pixelBytes.AddByte(index);
                         }
                     }
                 }
@@ -45,7 +45,7 @@ namespace ArgData.Internals
                 return pixelBytes.GetBytes();
             }
         }
-        
+
         public static List<IColorRun> ParsePixelsToRuns(byte[] data, int maxLength)
         {
             var list1 = ParseIntoUnlimitedLengths(data);
@@ -157,7 +157,7 @@ namespace ArgData.Internals
                         currentSingleRun = new SingleColorRun();
                     }
 
-                    currentSingleRun.ColorIndexes.Add(item.ColorIndex);
+                    currentSingleRun.ColorIndexes.AddByte(item.ColorIndex);
 
                     currentRunLength++;
 
@@ -177,7 +177,7 @@ namespace ArgData.Internals
             return list;
         }
     }
-    
+
     internal class ColorRun
     {
         public ColorRun(int repetitions, byte colorIndex)
@@ -216,8 +216,8 @@ namespace ArgData.Internals
         public byte[] GenerateBytesToWrite()
         {
             var list = new ByteList();
-            list.Add(Convert.ToByte(ColorIndexes.Count - 1));
-            list.Add(ColorIndexes.GetBytes());
+            list.AddByte(ColorIndexes.Count - 1);
+            list.AddBytes(ColorIndexes.GetBytes());
 
             return list.GetBytes();
         }

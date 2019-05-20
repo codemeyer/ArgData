@@ -12,7 +12,7 @@ namespace ArgData.Tests.Entities
             var byteList = new ByteList();
             int value = 1234567890;
 
-            byteList.Add(value);
+            byteList.AddInt32(value);
 
             byteList.Count.Should().Be(4);
         }
@@ -23,7 +23,7 @@ namespace ArgData.Tests.Entities
             var byteList = new ByteList();
             short value = 12345;
 
-            byteList.Add(value);
+            byteList.AddInt16(value);
 
             byteList.Count.Should().Be(2);
         }

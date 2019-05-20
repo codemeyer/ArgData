@@ -99,7 +99,7 @@ namespace ArgData
 
             for (byte b = 0; b < Constants.NumberOfDrivers; b++)
             {
-                allDriverNumberBytes.Add(driverNumbers[b]);
+                allDriverNumberBytes.AddByte(driverNumbers[b]);
             }
 
             using (var writer = new BinaryWriter(StreamProvider.Invoke(_exeFile.ExePath)))

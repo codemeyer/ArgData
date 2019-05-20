@@ -113,7 +113,7 @@ namespace ArgData
                 string driverName = PadTruncate(driver.Name, NameFileConstants.DriverNameLength);
                 byte[] nameBytes = Encoding.ASCII.GetBytes(driverName);
 
-                byteList.Add(nameBytes);
+                byteList.AddBytes(nameBytes);
             }
 
             foreach (var team in teams)
@@ -121,14 +121,14 @@ namespace ArgData
                 string teamName = PadTruncate(team.Name, NameFileConstants.TeamNameLength);
                 byte[] teamNameBytes = Encoding.ASCII.GetBytes(teamName);
 
-                byteList.Add(teamNameBytes);
+                byteList.AddBytes(teamNameBytes);
             }
 
             foreach (var team in teams)
             {
                 string engineName = PadTruncate(team.Engine, NameFileConstants.TeamNameLength);
                 byte[] engineNameBytes = Encoding.ASCII.GetBytes(engineName);
-                byteList.Add(engineNameBytes);
+                byteList.AddBytes(engineNameBytes);
             }
 
             var checksum = new ChecksumCalculator().Calculate(byteList.GetBytes());

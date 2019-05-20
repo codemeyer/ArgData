@@ -12,27 +12,32 @@ namespace ArgData.Entities
             _bytes = new List<byte>();
         }
 
-        public void Add(int value)
+        public void AddInt32(int value)
         {
             _bytes.AddRange(BitConverter.GetBytes(value));
         }
 
-        public void Add(short value)
+        public void AddInt16(short value)
         {
             _bytes.AddRange(BitConverter.GetBytes(value));
         }
 
-        public void Add(ushort value)
+        public void AddUInt16(ushort value)
         {
             _bytes.AddRange(BitConverter.GetBytes(value));
         }
 
-        public void Add(byte value)
+        public void AddByte(byte value)
         {
             _bytes.Add(value);
         }
 
-        public void Add(byte[] bytes)
+        public void AddByte(int value)
+        {
+            _bytes.Add((byte)value);
+        }
+
+        public void AddBytes(byte[] bytes)
         {
             _bytes.AddRange(bytes);
         }

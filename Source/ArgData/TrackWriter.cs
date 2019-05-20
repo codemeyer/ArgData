@@ -23,47 +23,47 @@ namespace ArgData
         {
             var trackBytes = new ByteList();
 
-            trackBytes.Add(trackData.Horizon.GetBytes());
+            trackBytes.AddBytes(trackData.Horizon.GetBytes());
 
-            trackBytes.Add(trackData.Offsets.UnknownLong1);
-            trackBytes.Add(trackData.Offsets.UnknownLong2);
-            trackBytes.Add(Convert.ToInt16(trackData.Offsets.ChecksumPosition - OffsetAdjustment));
-            trackBytes.Add(Convert.ToInt16(trackData.Offsets.ObjectData - OffsetAdjustment));
-            trackBytes.Add(Convert.ToInt16(trackData.Offsets.TrackData - OffsetAdjustment));
+            trackBytes.AddInt32(trackData.Offsets.UnknownLong1);
+            trackBytes.AddInt32(trackData.Offsets.UnknownLong2);
+            trackBytes.AddInt16(Convert.ToInt16(trackData.Offsets.ChecksumPosition - OffsetAdjustment));
+            trackBytes.AddInt16(Convert.ToInt16(trackData.Offsets.ObjectData - OffsetAdjustment));
+            trackBytes.AddInt16(Convert.ToInt16(trackData.Offsets.TrackData - OffsetAdjustment));
 
             var trackInternalObjectBytes = GetInternalObjectBytes(trackData.ObjectShapes);
-            trackBytes.Add(trackInternalObjectBytes);
+            trackBytes.AddBytes(trackInternalObjectBytes);
 
             int objectListPosition = trackBytes.Count - OffsetAdjustment;
 
             var trackObjectBytes = GetTrackObjectBytes(trackData.ObjectSettings);
-            trackBytes.Add(trackObjectBytes);
+            trackBytes.AddBytes(trackObjectBytes);
 
             int trackHeaderPosition = trackBytes.Count - OffsetAdjustment;
 
             var trackDataHeaderBytes = GetTrackDataHeaderBytes(trackData.TrackDataHeader, trackData.TrackSettings);
-            trackBytes.Add(trackDataHeaderBytes);
+            trackBytes.AddBytes(trackDataHeaderBytes);
 
             var trackSectionBytes = GetTrackSectionBytes(trackData.TrackSections);
-            trackBytes.Add(trackSectionBytes);
+            trackBytes.AddBytes(trackSectionBytes);
 
             var carLineBytes = GetComputerCarLineBytes(trackData.ComputerCarLineDisplacement, trackData.ComputerCarLineSegments);
-            trackBytes.Add(carLineBytes);
+            trackBytes.AddBytes(carLineBytes);
 
             var computerCarSetupBytes = GetComputerCarSetupBytes(trackData.ComputerCarSetup);
-            trackBytes.Add(computerCarSetupBytes);
+            trackBytes.AddBytes(computerCarSetupBytes);
 
             var carTrackSettingsPart1Bytes = GetComputerCarTrackSettingsPart1Bytes(trackData.CarSettings, trackData.ComputerCarBehavior, trackData.TrackSettings);
-            trackBytes.Add(carTrackSettingsPart1Bytes);
+            trackBytes.AddBytes(carTrackSettingsPart1Bytes);
 
             var pitLaneSectionBytes = GetTrackSectionBytes(trackData.PitLaneSections);
-            trackBytes.Add(pitLaneSectionBytes);
+            trackBytes.AddBytes(pitLaneSectionBytes);
 
             var cameraBytes = GetTrackCameraBytes(trackData.TrackCameraCommands);
-            trackBytes.Add(cameraBytes);
+            trackBytes.AddBytes(cameraBytes);
 
             var carTrackSettingsPart2Bytes = GetComputerCarTrackSettingsPart2Bytes(trackData.ComputerCarBehavior, trackData.TrackSettings);
-            trackBytes.Add(carTrackSettingsPart2Bytes);
+            trackBytes.AddBytes(carTrackSettingsPart2Bytes);
 
             int checksumPosition = trackBytes.Count - OffsetAdjustment;
 
@@ -112,18 +112,18 @@ namespace ArgData
 
             var bytes = new ByteList();
 
-            bytes.Add((short)objectShapes.Count);
+            bytes.AddInt16((short)objectShapes.Count);
 
             foreach (var of in offsets)
             {
-                bytes.Add(of);
+                bytes.AddInt32(of);
             }
 
             foreach (var shape in objectShapes.OrderBy(o => o.DataIndex))
             {
                 var shapeData = GetObjectShapeData(shape);
 
-                bytes.Add(shapeData);
+                bytes.AddBytes(shapeData);
             }
 
             return bytes.GetBytes();
@@ -147,22 +147,22 @@ namespace ArgData
         private static byte[] GetObjectShapeData(TrackObjectShape shapeData)
         {
             var bytes = new ByteList();
-            bytes.Add(shapeData.HeaderValue1);
-            bytes.Add(shapeData.Offset1);
-            bytes.Add(shapeData.HeaderValue2);
-            bytes.Add(shapeData.Offset2);
-            bytes.Add(shapeData.HeaderValue3);
-            bytes.Add(shapeData.Offset3);
-            bytes.Add(shapeData.HeaderValue4);
-            bytes.Add(shapeData.Offset4);
-            bytes.Add(shapeData.HeaderValue5);
-            bytes.Add(shapeData.Offset5);
-            bytes.Add(shapeData.HeaderValue6);
-            bytes.Add(shapeData.OffsetData1);
-            bytes.Add(shapeData.OffsetData2);
-            bytes.Add(shapeData.OffsetData3);
-            bytes.Add(shapeData.OffsetData4);
-            bytes.Add(shapeData.OffsetData5);
+            bytes.AddInt16(shapeData.HeaderValue1);
+            bytes.AddInt16(shapeData.Offset1);
+            bytes.AddInt16(shapeData.HeaderValue2);
+            bytes.AddInt16(shapeData.Offset2);
+            bytes.AddInt16(shapeData.HeaderValue3);
+            bytes.AddInt16(shapeData.Offset3);
+            bytes.AddInt16(shapeData.HeaderValue4);
+            bytes.AddInt16(shapeData.Offset4);
+            bytes.AddBytes(shapeData.HeaderValue5);
+            bytes.AddInt16(shapeData.Offset5);
+            bytes.AddBytes(shapeData.HeaderValue6);
+            bytes.AddBytes(shapeData.OffsetData1);
+            bytes.AddBytes(shapeData.OffsetData2);
+            bytes.AddBytes(shapeData.OffsetData3);
+            bytes.AddBytes(shapeData.OffsetData4);
+            bytes.AddBytes(shapeData.OffsetData5);
 
             return bytes.GetBytes();
         }
@@ -173,15 +173,15 @@ namespace ArgData
 
             foreach (var trackObject in trackObjects)
             {
-                bytes.Add(trackObject.Id);
-                bytes.Add(trackObject.DetailLevel);
-                bytes.Add(trackObject.Unknown);
-                bytes.Add(trackObject.DistanceFromTrack);
-                bytes.Add(trackObject.AngleX);
-                bytes.Add(trackObject.AngleY);
-                bytes.Add(trackObject.Unknown2);
-                bytes.Add(trackObject.Height);
-                bytes.Add(trackObject.Id2);
+                bytes.AddByte(trackObject.Id);
+                bytes.AddByte(trackObject.DetailLevel);
+                bytes.AddInt16(trackObject.Unknown);
+                bytes.AddInt16(trackObject.DistanceFromTrack);
+                bytes.AddInt16(trackObject.AngleX);
+                bytes.AddInt16(trackObject.AngleY);
+                bytes.AddInt16(trackObject.Unknown2);
+                bytes.AddInt16(trackObject.Height);
+                bytes.AddInt16(trackObject.Id2);
             }
 
             return bytes.GetBytes();
@@ -208,20 +208,20 @@ namespace ArgData
         {
             var dataBytes = new ByteList();
 
-            dataBytes.Add(carSettings.GripFactor);
-            dataBytes.Add(computerCarBehavior.LateBrakingFactorNonRace);
-            dataBytes.Add(computerCarBehavior.LateBrakingFactorRace);
-            dataBytes.Add(trackSettings.TimeFactorNonRace);
-            dataBytes.Add(carSettings.Acceleration);
-            dataBytes.Add(carSettings.AirResistance);
-            dataBytes.Add(carSettings.TyreWearQualifying);
-            dataBytes.Add(carSettings.TyreWearNonQualifying);
-            dataBytes.Add(carSettings.FuelLoad);
-            dataBytes.Add(trackSettings.TimeFactorRace);
-            dataBytes.Add(computerCarBehavior.PowerFactor);
-            dataBytes.Add(computerCarBehavior.LateBrakingFactorWetRace);
-            dataBytes.Add(trackSettings.UnknownTrackDistance);
-            dataBytes.Add(trackSettings.DefaultPitLaneViewDistance);
+            dataBytes.AddInt16(carSettings.GripFactor);
+            dataBytes.AddInt16(computerCarBehavior.LateBrakingFactorNonRace);
+            dataBytes.AddInt16(computerCarBehavior.LateBrakingFactorRace);
+            dataBytes.AddInt16(trackSettings.TimeFactorNonRace);
+            dataBytes.AddInt16(carSettings.Acceleration);
+            dataBytes.AddInt16(carSettings.AirResistance);
+            dataBytes.AddInt16(carSettings.TyreWearQualifying);
+            dataBytes.AddInt16(carSettings.TyreWearNonQualifying);
+            dataBytes.AddInt16(carSettings.FuelLoad);
+            dataBytes.AddInt16(trackSettings.TimeFactorRace);
+            dataBytes.AddInt16(computerCarBehavior.PowerFactor);
+            dataBytes.AddInt16(computerCarBehavior.LateBrakingFactorWetRace);
+            dataBytes.AddInt16(trackSettings.UnknownTrackDistance);
+            dataBytes.AddInt16(trackSettings.DefaultPitLaneViewDistance);
 
             return dataBytes.GetBytes();
         }
@@ -234,35 +234,35 @@ namespace ArgData
             {
                 if (command is TrackCameraAdjustmentCommand adjustmentCommand)
                 {
-                    bytes.Add(adjustmentCommand.CameraIndex);
+                    bytes.AddByte(adjustmentCommand.CameraIndex);
 
                     if (adjustmentCommand.TrackSide == TrackSide.Left)
                     {
-                        bytes.Add(adjustmentCommand.Adjustment);
+                        bytes.AddByte(adjustmentCommand.Adjustment);
                     }
                     else
                     {
                         var byte2 = adjustmentCommand.Adjustment + 0x80;
-                        bytes.Add((byte)byte2);
+                        bytes.AddByte(byte2);
                     }
                 }
 
                 if (command is TrackCameraRangeRightSideAdjustmentCommand rangeAdjustmentCommand)
                 {
                     var byte1 = rangeAdjustmentCommand.CameraIndexFrom - 0x80;
-                    bytes.Add((byte)byte1);
-                    bytes.Add(rangeAdjustmentCommand.CameraIndexTo);
+                    bytes.AddByte(byte1);
+                    bytes.AddByte(rangeAdjustmentCommand.CameraIndexTo);
                 }
 
                 if (command is DeleteTrackCameraCommand deleteCommand)
                 {
-                    bytes.Add((byte)deleteCommand.CameraIndex);
-                    bytes.Add((byte)0);
+                    bytes.AddByte(deleteCommand.CameraIndex);
+                    bytes.AddByte(0);
                 }
             }
 
-            bytes.Add((byte)255);
-            bytes.Add((byte)255);
+            bytes.AddByte(255);
+            bytes.AddByte(255);
 
             return bytes.GetBytes();
         }
@@ -271,12 +271,12 @@ namespace ArgData
         {
             var bytes = new ByteList();
 
-            bytes.Add(computerCarBehavior.UnknownData);
-            bytes.Add(computerCarBehavior.FormationLength);
-            bytes.Add(trackSettings.LapTimeIndication);
-            bytes.Add(trackSettings.LapCount);
-            bytes.Add(computerCarBehavior.StrategyFirstPitStopLap);
-            bytes.Add(computerCarBehavior.StrategyChance);
+            bytes.AddBytes(computerCarBehavior.UnknownData);
+            bytes.AddInt16(computerCarBehavior.FormationLength);
+            bytes.AddInt32(trackSettings.LapTimeIndication);
+            bytes.AddInt16(trackSettings.LapCount);
+            bytes.AddInt16(computerCarBehavior.StrategyFirstPitStopLap);
+            bytes.AddInt16(computerCarBehavior.StrategyChance);
 
             return bytes.GetBytes();
         }
@@ -285,32 +285,32 @@ namespace ArgData
         {
             var header = new ByteList();
 
-            header.Add(trackDataHeader.FirstSectionAngle);
-            header.Add(trackDataHeader.FirstSectionHeight);
-            header.Add(trackDataHeader.TrackCenterX);
-            header.Add(trackDataHeader.TrackCenterZ);
-            header.Add(trackDataHeader.TrackCenterY);
+            header.AddUInt16(trackDataHeader.FirstSectionAngle);
+            header.AddInt16(trackDataHeader.FirstSectionHeight);
+            header.AddInt16(trackDataHeader.TrackCenterX);
+            header.AddInt16(trackDataHeader.TrackCenterZ);
+            header.AddInt16(trackDataHeader.TrackCenterY);
 
-            header.Add(trackDataHeader.StartWidth);
+            header.AddInt16(trackDataHeader.StartWidth);
 
             short poleSideValue = settings.PoleSide == TrackSide.Left ? (short)-768 : (short)768;
-            header.Add(poleSideValue);
+            header.AddInt16(poleSideValue);
 
             byte pitsSideValue = settings.PitsSide == TrackSide.Left ? (byte)10 : (byte)0;
-            header.Add(pitsSideValue);
+            header.AddByte(pitsSideValue);
 
-            header.Add((byte)settings.SurroundingArea);
+            header.AddByte((byte)settings.SurroundingArea);
 
-            header.Add(trackDataHeader.RightVergeStartWidth);
-            header.Add(trackDataHeader.LeftVergeStartWidth);
+            header.AddByte(trackDataHeader.RightVergeStartWidth);
+            header.AddByte(trackDataHeader.LeftVergeStartWidth);
 
             if (settings.KerbType == KerbType.DualColor)
             {
-                header.Add(new byte[] { 3, 0, 8, 0, settings.KerbUpperColor, 0, settings.KerbLowerColor, 0, 8, 0 });
+                header.AddBytes(new byte[] { 3, 0, 8, 0, settings.KerbUpperColor, 0, settings.KerbLowerColor, 0, 8, 0 });
             }
             else
             {
-                header.Add(new byte[] { 4, 0, 8, 0, settings.KerbUpperColor, 0, settings.KerbLowerColor, 0, 8, 0,
+                header.AddBytes(new byte[] { 4, 0, 8, 0, settings.KerbUpperColor, 0, settings.KerbLowerColor, 0, 8, 0,
                     settings.KerbUpperColor2, 0, settings.KerbLowerColor2, 0 });
             }
 
@@ -327,36 +327,36 @@ namespace ArgData
                 {
                     if (command.Arguments.Length == 0)
                     {
-                        sectionBytes.Add(0);
-                        sectionBytes.Add(command.Command);
+                        sectionBytes.AddByte(0);
+                        sectionBytes.AddByte(command.Command);
                         continue;
                     }
 
                     if (command.Arguments.Length > 0)
                     {
-                        sectionBytes.Add(Convert.ToByte(command.Arguments[0]));
-                        sectionBytes.Add(command.Command);
+                        sectionBytes.AddByte(command.Arguments[0]);
+                        sectionBytes.AddByte(command.Command);
 
                         for (int i = 1; i < command.Arguments.Length; i++)
                         {
-                            sectionBytes.Add(command.Arguments[i]);
+                            sectionBytes.AddInt16(command.Arguments[i]);
                         }
                     }
                 }
 
                 if (section.Length > 0)
                 {
-                    sectionBytes.Add((short)section.Length);
-                    sectionBytes.Add(section.Curvature);
-                    sectionBytes.Add(section.Height);
-                    sectionBytes.Add(section.Flags);
-                    sectionBytes.Add(section.RightVergeWidth);
-                    sectionBytes.Add(section.LeftVergeWidth);
+                    sectionBytes.AddInt16(section.Length);
+                    sectionBytes.AddInt16(section.Curvature);
+                    sectionBytes.AddInt16(section.Height);
+                    sectionBytes.AddInt16(section.Flags);
+                    sectionBytes.AddByte(section.RightVergeWidth);
+                    sectionBytes.AddByte(section.LeftVergeWidth);
                 }
             }
 
-            sectionBytes.Add((byte)255);
-            sectionBytes.Add((byte)255);
+            sectionBytes.AddByte(255);
+            sectionBytes.AddByte(255);
 
             return sectionBytes.GetBytes();
         }
@@ -367,32 +367,32 @@ namespace ArgData
 
             var first = computerCarLines.First();
 
-            bytes.Add((byte)first.Length);
-            bytes.Add((byte)0x80);
-            bytes.Add(displacement);
-            bytes.Add(first.Correction);
-            bytes.Add(first.Radius);
+            bytes.AddByte(first.Length);
+            bytes.AddByte(0x80);
+            bytes.AddInt16(displacement);
+            bytes.AddInt16(first.Correction);
+            bytes.AddInt16(first.Radius);
 
             foreach (var line in computerCarLines.Skip(1))
             {
                 if (line.SegmentType == TrackComputerCarLineSegmentType.Normal)
                 {
-                    bytes.Add((short)line.Length);
-                    bytes.Add(line.Correction);
-                    bytes.Add(line.Radius);
+                    bytes.AddInt16((short)line.Length);
+                    bytes.AddInt16(line.Correction);
+                    bytes.AddInt16(line.Radius);
                 }
                 else if (line.SegmentType == TrackComputerCarLineSegmentType.WideRadius)
                 {
-                    bytes.Add((byte)line.Length);
-                    bytes.Add((byte)0x40);
-                    bytes.Add(line.Correction);
-                    bytes.Add(line.HighRadius);
-                    bytes.Add(line.LowRadius);
+                    bytes.AddByte(line.Length);
+                    bytes.AddByte(0x40);
+                    bytes.AddInt16(line.Correction);
+                    bytes.AddInt16(line.HighRadius);
+                    bytes.AddInt16(line.LowRadius);
                 }
             }
 
-            bytes.Add((byte)0);
-            bytes.Add((byte)0);
+            bytes.AddByte(0);
+            bytes.AddByte(0);
 
             return bytes.GetBytes();
         }

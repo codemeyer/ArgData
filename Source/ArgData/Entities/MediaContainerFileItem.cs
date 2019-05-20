@@ -88,7 +88,7 @@ namespace ArgData.Entities
 
             foreach (var colorRun in runs)
             {
-                bytes.Add(colorRun.GenerateBytesToWrite());
+                bytes.AddBytes(colorRun.GenerateBytesToWrite());
             }
 
             Data = bytes.GetBytes();

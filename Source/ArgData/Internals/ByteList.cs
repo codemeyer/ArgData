@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ArgData.Entities
+namespace ArgData.Internals
 {
     internal class ByteList
     {

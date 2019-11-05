@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ArgData.Entities;
+using ArgData.Internals;
 using ArgData.IO;
 
 namespace ArgData

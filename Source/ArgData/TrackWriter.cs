@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ArgData.Entities;
+using ArgData.Internals;
 using ArgData.IO;
 
 namespace ArgData

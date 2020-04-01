@@ -1,4 +1,6 @@
-# ArgData
+---
+title: "ArgData"
+---
 
 {{< partial "latest-version-sidebar.html" >}}
 

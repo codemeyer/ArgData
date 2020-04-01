@@ -1,0 +1,16 @@
+// import additional product/tool specific .scss files here
+@import "./prism.scss";
+
+.latest-version-sidebar {
+  position: relative;
+  float: right;
+  width: 220px;
+  padding: 10px;
+  border: solid 1px rgb(221, 221, 221);
+}
+
+.palette-color {
+  width: 120px;
+  height: 18px;
+  border: solid 1px #ccc;
+}

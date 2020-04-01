@@ -1,0 +1,54 @@
+// use navbar-breakpoint instead of breakpoint-small to handle different sized/number of menus ?
+
+.navbar {
+  background-color: $background-color-accent;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  padding-left: 16px;
+
+  @media (min-width: $breakpoint-small) {
+    padding-left: 32px;
+    flex-flow: row nowrap;
+    justify-content: center;
+    height: $nav-height;
+  }
+}
+
+.navbar-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin: 0;
+  list-style: none;
+
+  @media (min-width: $breakpoint-small) {
+    flex-direction: row;
+  }
+}
+
+
+.navbar .navbar-nav .nav-link {
+  color: $text-color-light;
+  font-size: 18px;
+  padding-right: 0;
+  padding-left: 0;
+
+  @media (min-width: $breakpoint-small) {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+}
+
+
+.navbar .navbar-nav .nav-link:hover,
+.navbar .navbar-nav .nav-link:focus {
+  color: #fff;
+}

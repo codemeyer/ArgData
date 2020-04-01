@@ -1,0 +1,26 @@
+.product-header {
+  background-color: $background-color-primary;
+  height: 60px;
+  vertical-align: middle;
+  color: $text-color-light;
+}
+
+.product-header a {
+  color: $text-color-light;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+.product-header-text {
+  line-height: 60px;
+  text-align: left;
+  padding-left: 16px;
+
+  @media (min-width: $breakpoint-small) {
+    padding-left: 0;
+    text-align: center;
+    padding-left: 0;
+  }
+}

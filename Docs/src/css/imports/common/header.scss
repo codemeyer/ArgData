@@ -1,0 +1,12 @@
+.header {
+  background-color: $background-color-primary;
+  height: $header-height;
+  vertical-align: middle;
+  color: $text-color-light;
+  //border-bottom: solid 4px $background-color-accent;
+}
+
+.header-text {
+  line-height: $header-height;
+  text-align: center;
+}

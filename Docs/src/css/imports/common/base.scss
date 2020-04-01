@@ -1,0 +1,140 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: sans-serif;
+  line-height: 1.15;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -ms-overflow-style: scrollbar;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  line-height: 1.5;
+  color: $text-color-main;
+  margin-top: -16px;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: $base-font-size;
+}
+
+.body-content {
+  max-width: 1140px;
+  min-height: calc(100% - #{$header-height} - #{$nav-height} - #{$footer-height});
+}
+
+.container {
+  width: 100%;
+  padding: 16px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media (min-width: $breakpoint-small) {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  & p {
+      margin: 12px 0 12px 0;
+  }
+
+  & ul {
+    margin-top: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-left: 24px;
+  }
+
+  code {
+    font-size: 0.95em;  // to match prism css
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-bottom: 0.5rem;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: 1.2;
+  color: inherit;
+}
+
+h1 {
+  font-size: 2.1875rem;
+  margin-top: 1rem;
+}
+
+h2 {
+  font-size: 1.75rem;
+  margin-top: 2rem;
+}
+
+h3 {
+  font-size: 1.53125rem;
+  margin-top: 2rem;
+}
+
+h4 {
+  font-size: 1.3125rem;
+}
+
+h5 {
+  font-size: 1.09375rem;
+}
+
+h6 {
+  font-size: 0.875rem;
+}
+
+a {
+  color: #008cba;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #009dcb;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+
+// maybe?
+.btn.btn-primary {
+  display: inline-block;
+  background-color: $background-color-primary;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 200px;
+  color: $text-color-light;
+  text-align: center;
+  padding: 0 8px 0 8px;
+  height: 40px;
+  line-height: 40px;
+}

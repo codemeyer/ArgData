@@ -163,7 +163,8 @@ namespace ArgData.Entities
         }
 
         /// <summary>
-        /// Gets or sets whether the right fence should be bridged with the fence of the previous?next? section.
+        /// Gets or sets whether the right fence should be bridged from the starting point of
+        /// the current section to the starting point of the next non-bridged section.
         /// </summary>
         public bool BridgedRightFence
         {
@@ -175,7 +176,8 @@ namespace ArgData.Entities
         }
 
         /// <summary>
-        /// Gets or sets whether the left fence should be bridged with the fence of the previous?next? section.
+        /// Gets or sets whether the left fence should be bridged from the starting point of
+        /// the current section to the starting point of the next non-bridged section.
         /// </summary>
         public bool BridgedLeftFence
         {
@@ -257,7 +259,6 @@ namespace ArgData.Entities
                 SetFlag(value, TrackSectionFlags.Unknown4);
             }
         }
-
 
         private void SetFlag(bool value, TrackSectionFlags flag)
         {

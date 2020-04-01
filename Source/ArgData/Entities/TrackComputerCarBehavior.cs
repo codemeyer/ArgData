@@ -1,7 +1,7 @@
 ﻿namespace ArgData.Entities
 {
     /// <summary>
-    /// Class that represents various computer car behavior as well as lap count.
+    /// Represents various properties related to computer car behavior.
     /// </summary>
     public class TrackComputerCarBehavior
     {
@@ -44,6 +44,6 @@
         /// <summary>
         /// Gets or sets the unknown, possibly unused, data. Must be 16 bytes.
         /// </summary>
-        public byte[] UnknownData { get; set; }
+        public byte[] UnknownData { get; set; } = new byte[16];
     }
 }

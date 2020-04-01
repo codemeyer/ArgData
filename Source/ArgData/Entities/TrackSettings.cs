@@ -1,7 +1,7 @@
 ﻿namespace ArgData.Entities
 {
     /// <summary>
-    /// Various track settings.
+    /// Represents various track settings.
     /// </summary>
     public class TrackSettings
     {
@@ -35,7 +35,6 @@
         /// Gets or sets the default pit lane view distance.
         /// </summary>
         public short DefaultPitLaneViewDistance { get; set; }
-
 
         /// <summary>
         /// Gets or sets the type of surrounding area for the track.

@@ -14,15 +14,16 @@ namespace ArgData.Entities
         {
             Horizon = new TrackHorizon(new byte[4096]);
             Offsets = new TrackOffsets();
+            ObjectShapes = new List<TrackObjectShape>();
+            ObjectSettings = new List<TrackObjectSettings>();
             TrackDataHeader = new TrackSectionHeader();
             TrackSections = new List<TrackSection>();
             ComputerCarLineSegments = new List<TrackComputerCarLineSegment>();
             PitLaneSections = new List<TrackSection>();
-            ObjectShapes = new List<TrackObjectShape>();
-            ObjectSettings = new List<TrackObjectSettings>();
             ComputerCarSetup = new Setup();
             ComputerCarBehavior = new TrackComputerCarBehavior();
             CarSettings = new TrackCarSettings();
+            TrackCameraCommands = new TrackCameraCommandList();
             TrackSettings = new TrackSettings();
         }
 

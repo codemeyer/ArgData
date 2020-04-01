@@ -8,12 +8,17 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/codemeyer/ArgData</PackageProjectUrl>
     <RepositoryUrl>https://github.com/codemeyer/ArgData</RepositoryUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/codemeyer/ArgData/master/LICENSE</PackageLicenseUrl>
-    <Copyright>Copyright © 2014-2019 Fredrik Meyer</Copyright>
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <Copyright>Copyright © 2014-2020 Fredrik Meyer</Copyright>
     <PackageTags>F1GP</PackageTags>
-    <PackageIconUrl>http://www.argtools.com/media/icons/argdata-64x64.png</PackageIconUrl>
+    <PackageIconUrl></PackageIconUrl>
     <VersionPrefix>0.19</VersionPrefix>
     <VersionSuffix></VersionSuffix>
+    <AssemblyVersion>0.19.1.0</AssemblyVersion>
+    <Version>0.19.1</Version>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>argdata-64x64.png</PackageIcon>
+    <PackageLicenseFile></PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
@@ -31,5 +36,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net40|AnyCPU'">
     <DocumentationFile>bin\Release\net40\ArgData.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Properties\argdata-64x64.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

@@ -33,9 +33,9 @@ The `TrackReader` class is used for reading F1GP track files.
 
 We use its `Read` method and pass in the path to the track file.
 
-The value that is returned is the track, as a [`Track`](/argdata/api/0.19/track) object.
+The value that is returned is the track, as a [`Track`](/argdata/api/0.19.1/track) object.
 
-We need to manipulate some properties under [`ComputerCarBehavior`](/argdata/api/0.19/trackcomputercarbehavior/).
+We need to manipulate some properties under [`ComputerCarBehavior`](/argdata/api/0.19.1/trackcomputercarbehavior/).
 
 
 ### Step 3: Update the late-braking value
@@ -65,7 +65,7 @@ are working in a completely different folder than the original F1GP one_
 $trackWriter.Write($track, "C:\Games\GPRIX\F1CT01.DAT")
 </code></pre>
 
-To update a track file we need a [`TrackWriter`](/argdata/api/0.19/trackwriter) object.
+To update a track file we need a [`TrackWriter`](/argdata/api/0.19.1/trackwriter/) object.
 We then use its `Write` method, passing in the track data in `$track` and the
 path to the file that we wish to save.
 

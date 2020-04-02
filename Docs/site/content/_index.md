@@ -2,7 +2,9 @@
 title: "ArgData"
 ---
 
+<!---
 {{< partial "latest-version-sidebar.html" >}}
+--->
 
 ArgData is a .NET library for working with
 [Microprose Formula One Grand Prix](https://en.wikipedia.org/wiki/Formula_One_Grand_Prix_(video_game))
@@ -10,10 +12,10 @@ ArgData is a .NET library for working with
 various other game files, such as reading/writing name files and car setups.
 
 This library currently supports the European and US (World Circuit) version 1.05 of the game,
-including [decompressed](/argdata/decompressed-exe) versions.
+including [decompressed](/argdata/decompressed-exe/) versions.
 
-The ArgData API is used in the F1GP editor [ArgEditor](/argeditor)
-as well as the track editor [ArgTrack](/argtrack).
+The ArgData API is used in the F1GP editor [ArgEditor](/argeditor/)
+as well as the track editor [ArgTrack](/argtrack/).
 
 
 ## Example
@@ -42,16 +44,16 @@ The API allows you to edit car colors, driver numbers, horsepower levels,
 computer car performance, track layouts, car setups, and much more.
 
 For a full list of API functionality, and to get a general orientation
-of how things fit together, have a look at the [Overview](/argdata/overview).
+of how things fit together, have a look at the [Overview](/argdata/overview/).
 
-There are also a number of [tutorials](/argdata/tutorials) available for
+There are also a number of [tutorials](/argdata/tutorials/) available for
 both C# and PowerShell,
-as well as a full [API reference](/argdata/api) section.
+as well as a full [API reference](/argdata/api/) section.
 
 
 ## Acknowledgements
 
 ArgData would not have been possible without previous work and contributions by
 the wider F1GP community, both past and present. Please visit
-the [Acknowledgements](/acknowledgements) page for more details.
+the [Acknowledgements](/acknowledgements/) page for more details.
 

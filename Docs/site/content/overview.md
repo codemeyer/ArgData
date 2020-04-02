@@ -36,9 +36,9 @@ First of all, the API has support for the following functionality:
 * Editing menu helmet images and (to a certain extent) other background images
 
 This functionality is covered both in the
-[tutorials](/argdata/tutorials) available for
+[tutorials](/argdata/tutorials/) available for
 both C# and PowerShell, as well as the
-full [API reference](/argdata/api) section.
+full [API reference](/argdata/api/) section.
 
 
 ## Readers and Writers
@@ -71,7 +71,7 @@ With apologies to anyone who hates fluent APIs... and for those who do,
 there are more traditional ways to use, e.g.
 
 <pre>
-<code class="language-csharp">var exeFile = new GpExeFile(&#64;&quot;C:\Games\GPRIX\GP.EXE&quot;));
+<code class="language-csharp">var exeFile = new GpExeFile(&#64;&quot;C:\Games\GPRIX\GP.EXE&quot;);
 var reader = new CarColorReader(exeFile);
 </code></pre>
 
@@ -85,8 +85,8 @@ These can be exported into the game EXE file or imported from the game EXE.
 A simple example would be:
 
 <pre>
-<code class="language-csharp">var exeFile = GpExeFile.At(&#64;&quot;C:\Games\GPRIX\GP.EXE&quot;));
-var nameFile = NameFileReader.Read(&#64;&quot;C:\Games\GPRIX\gpsaves\F1-1991.NAM&quot;));
+<code class="language-csharp">var exeFile = GpExeFile.At(&#64;&quot;C:\Games\GPRIX\GP.EXE&quot;);
+var nameFile = new NameFileReader().Read(&#64;&quot;C:\Games\GPRIX\gpsaves\F1-1991.NAM&quot;);
 var carSet = new CarSet();
 carSet.Import(exeFile, nameFile);</code>
 </pre>
@@ -97,5 +97,5 @@ provided name file.
 
 ## What next?
 
-Have a look at the [tutorials](/argdata/tutorials) or dive into
-the full [API reference](/argdata/api).
+Have a look at the [tutorials](/argdata/tutorials/) or dive into
+the full [API reference](/argdata/api/).

@@ -2,7 +2,7 @@
 title: "ArgData API: CarColorWriter Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; CarColorWriter
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; CarColorWriter
 
 # CarColorWriter Class
 

@@ -2,7 +2,7 @@
 title: "ArgData API: SetupWriter Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; SetupWriter
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; SetupWriter
 
 # SetupWriter Class
 

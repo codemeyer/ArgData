@@ -2,7 +2,7 @@
 title: "ArgData API: DeleteTrackCameraCommand Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; DeleteTrackCameraCommand
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; DeleteTrackCameraCommand
 
 # DeleteTrackCameraCommand Class
 

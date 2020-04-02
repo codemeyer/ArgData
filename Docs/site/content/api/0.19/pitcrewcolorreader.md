@@ -2,7 +2,7 @@
 title: "ArgData API: PitCrewColorReader Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; PitCrewColorReader
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; PitCrewColorReader
 
 # PitCrewColorReader Class
 

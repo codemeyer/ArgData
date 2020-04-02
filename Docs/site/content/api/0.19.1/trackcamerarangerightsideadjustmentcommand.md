@@ -2,7 +2,7 @@
 title: "ArgData API: TrackCameraRangeRightSideAdjustmentCommand Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; TrackCameraRangeRightSideAdjustmentCommand
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; TrackCameraRangeRightSideAdjustmentCommand
 
 # TrackCameraRangeRightSideAdjustmentCommand Class
 

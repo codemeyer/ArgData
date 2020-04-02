@@ -2,7 +2,7 @@
 title: "ArgData API: TeamHorsepowerReader Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; TeamHorsepowerReader
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; TeamHorsepowerReader
 
 # TeamHorsepowerReader Class
 

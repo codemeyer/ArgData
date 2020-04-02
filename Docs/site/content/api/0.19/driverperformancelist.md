@@ -2,7 +2,7 @@
 title: "ArgData API: DriverPerformanceList Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; DriverPerformanceList
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; DriverPerformanceList
 
 # DriverPerformanceList Class
 

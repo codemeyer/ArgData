@@ -2,7 +2,7 @@
 title: "ArgData API: HelmetMenuImage Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; HelmetMenuImage
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; HelmetMenuImage
 
 # HelmetMenuImage Class
 

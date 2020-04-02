@@ -2,7 +2,7 @@
 title: "ArgData API: SetupTyreCompound Enumeration"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; SetupTyreCompound
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; SetupTyreCompound
 
 # SetupTyreCompound Enumeration
 

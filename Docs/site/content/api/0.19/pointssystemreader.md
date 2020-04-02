@@ -2,7 +2,7 @@
 title: "ArgData API: PointsSystemReader Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; PointsSystemReader
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; PointsSystemReader
 
 # PointsSystemReader Class
 

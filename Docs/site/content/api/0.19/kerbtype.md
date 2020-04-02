@@ -2,7 +2,7 @@
 title: "ArgData API: KerbType Enumeration"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; KerbType
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; KerbType
 
 # KerbType Enumeration
 

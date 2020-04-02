@@ -2,7 +2,7 @@
 title: "ArgData API: PaletteWithRanges Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; PaletteWithRanges
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; PaletteWithRanges
 
 # PaletteWithRanges Class
 

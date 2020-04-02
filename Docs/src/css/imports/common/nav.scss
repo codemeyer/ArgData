@@ -34,19 +34,18 @@
   }
 }
 
-
 .navbar .navbar-nav .nav-link {
   color: $text-color-light;
   font-size: 18px;
   padding-right: 0;
   padding-left: 0;
+  line-height: 30px;
 
   @media (min-width: $breakpoint-small) {
     padding-left: 12px;
     padding-right: 12px;
   }
 }
-
 
 .navbar .navbar-nav .nav-link:hover,
 .navbar .navbar-nav .nav-link:focus {

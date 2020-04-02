@@ -2,7 +2,7 @@
 title: "ArgData API: GpExeFile Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; GpExeFile
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; GpExeFile
 
 # GpExeFile Class
 

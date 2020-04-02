@@ -2,7 +2,7 @@
 title: "ArgData API: PreferencesFile Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; PreferencesFile
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; PreferencesFile
 
 # PreferencesFile Class
 

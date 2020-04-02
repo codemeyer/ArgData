@@ -2,7 +2,7 @@
 title: "ArgData API: SavedGame Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; SavedGame
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; SavedGame
 
 # SavedGame Class
 

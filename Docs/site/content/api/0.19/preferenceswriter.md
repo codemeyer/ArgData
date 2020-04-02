@@ -2,7 +2,7 @@
 title: "ArgData API: PreferencesWriter Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; PreferencesWriter
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; PreferencesWriter
 
 # PreferencesWriter Class
 

@@ -2,7 +2,7 @@
 title: "ArgData API: HelmetColorWriter Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; HelmetColorWriter
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; HelmetColorWriter
 
 # HelmetColorWriter Class
 

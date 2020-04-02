@@ -2,7 +2,7 @@
 title: "ArgData API: PitCrew Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; PitCrew
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; PitCrew
 
 # PitCrew Class
 

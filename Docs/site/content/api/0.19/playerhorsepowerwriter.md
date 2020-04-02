@@ -2,7 +2,7 @@
 title: "ArgData API: PlayerHorsepowerWriter Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; PlayerHorsepowerWriter
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; PlayerHorsepowerWriter
 
 # PlayerHorsepowerWriter Class
 

@@ -2,7 +2,7 @@
 title: "ArgData API: TrackSettings Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; TrackSettings
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; TrackSettings
 
 # TrackSettings Class
 

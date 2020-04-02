@@ -2,7 +2,7 @@
 title: "ArgData API: TrackObjectSettings Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; TrackObjectSettings
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; TrackObjectSettings
 
 # TrackObjectSettings Class
 

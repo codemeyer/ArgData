@@ -2,7 +2,7 @@
 title: "ArgData API: SavedGameFileReader Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; SavedGameFileReader
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; SavedGameFileReader
 
 # SavedGameFileReader Class
 

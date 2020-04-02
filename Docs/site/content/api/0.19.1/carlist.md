@@ -2,7 +2,7 @@
 title: "ArgData API: CarList Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; CarList
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; CarList
 
 # CarList Class
 

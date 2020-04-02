@@ -2,7 +2,7 @@
 title: "ArgData API: ChecksumCalculator Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; ChecksumCalculator
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; ChecksumCalculator
 
 # ChecksumCalculator Class
 

@@ -2,7 +2,7 @@
 title: "ArgData API: PaletteItem Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; PaletteItem
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; PaletteItem
 
 # PaletteItem Class
 

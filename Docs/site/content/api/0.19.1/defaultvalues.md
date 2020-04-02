@@ -2,7 +2,7 @@
 title: "ArgData API: DefaultValues Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; DefaultValues
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; DefaultValues
 
 # DefaultValues Class
 

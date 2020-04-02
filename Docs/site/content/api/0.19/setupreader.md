@@ -2,7 +2,7 @@
 title: "ArgData API: SetupReader Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; SetupReader
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; SetupReader
 
 # SetupReader Class
 

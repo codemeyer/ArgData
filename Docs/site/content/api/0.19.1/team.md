@@ -2,7 +2,7 @@
 title: "ArgData API: Team Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; Team
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; Team
 
 # Team Class
 

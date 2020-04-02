@@ -2,7 +2,7 @@
 title: "ArgData API: DamageSettings Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; DamageSettings
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; DamageSettings
 
 # DamageSettings Class
 

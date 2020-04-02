@@ -2,7 +2,7 @@
 title: "ArgData API: Constants Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; Constants
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; Constants
 
 # Constants Class
 

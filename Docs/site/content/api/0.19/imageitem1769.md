@@ -2,7 +2,7 @@
 title: "ArgData API: ImageItem1769 Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; ImageItem1769
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; ImageItem1769
 
 # ImageItem1769 Class
 

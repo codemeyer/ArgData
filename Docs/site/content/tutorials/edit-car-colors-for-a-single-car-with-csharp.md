@@ -61,7 +61,7 @@ the game has. Now we just need to decide on a color.
 
 ### Step 4: Setting a new color for the top of the sidepods
 
-But how do we know which color index to use? We will look at the [Palette Colors](/argdata/api/palette-colors) page
+But how do we know which color index to use? We will look at the [Palette Colors](/argdata/api/palette-colors/) page
 here and decide. Ready? Let's go...
 
 ...which color did you choose? Perhaps none of them perfectly matches the bright green of the top of the 1991 Jordan's

@@ -2,7 +2,7 @@
 title: "ArgData API: TrackComputerCarLineSegment Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19](/argdata/api/0.19) &gt; TrackComputerCarLineSegment
+[API Reference](/argdata/api/) &gt; [0.19](/argdata/api/0.19/) &gt; TrackComputerCarLineSegment
 
 # TrackComputerCarLineSegment Class
 

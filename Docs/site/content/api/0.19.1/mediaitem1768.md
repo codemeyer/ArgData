@@ -2,7 +2,7 @@
 title: "ArgData API: MediaItem1768 Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; MediaItem1768
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; MediaItem1768
 
 # MediaItem1768 Class
 

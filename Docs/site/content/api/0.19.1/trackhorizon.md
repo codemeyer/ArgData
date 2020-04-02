@@ -2,7 +2,7 @@
 title: "ArgData API: TrackHorizon Class"
 ---
 
-[API Reference](/argdata/api) &gt; [0.19.1](/argdata/api/0.19.1) &gt; TrackHorizon
+[API Reference](/argdata/api/) &gt; [0.19.1](/argdata/api/0.19.1/) &gt; TrackHorizon
 
 # TrackHorizon Class
 

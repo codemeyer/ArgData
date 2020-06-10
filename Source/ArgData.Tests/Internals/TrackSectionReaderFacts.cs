@@ -32,7 +32,7 @@ namespace ArgData.Tests.Internals
                 var result = TrackSectionReader.Read(reader, trackData.KnownTrackSectionDataStart);
 
                 var firstSection = result.TrackSections.First();
-                firstSection.Length.Should().Be(24);    
+                firstSection.Length.Should().Be(24);
             }
         }
 
@@ -44,7 +44,7 @@ namespace ArgData.Tests.Internals
             using (var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path)))
             {
                 var result = TrackSectionReader.Read(reader, trackData.KnownTrackSectionDataStart);
-            
+
                 var firstSection = result.TrackSections.First();
                 firstSection.Commands.Count.Should().Be(14);
             }
@@ -86,6 +86,20 @@ namespace ArgData.Tests.Internals
                 lastCommand.Command.Should().Be(0x81);
                 lastCommand.Arguments.Length.Should().Be(2);
                 lastCommand.Arguments.Should().ContainInOrder(new short[] {0, 148});
+            }
+        }
+
+        [Fact]
+        public void MexicoTrackData_LastSection_ZeroLength()
+        {
+            var trackData = TrackFactsHelper.GetTrackMexico();
+
+            using (var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path)))
+            {
+                var result = TrackSectionReader.Read(reader, trackData.KnownTrackSectionDataStart);
+
+                var last = result.TrackSections.Last();
+                last.Length.Should().Be(0);
             }
         }
     }

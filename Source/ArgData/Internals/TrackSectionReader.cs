@@ -46,20 +46,17 @@ namespace ArgData.Internals
                     continue;
                 }
 
-                if (byte1 > 0)
-                {
-                    // section
-                    currentSection.Length = byte1;
-                    currentSection.Curvature = reader.ReadInt16();
-                    currentSection.Height = reader.ReadInt16();
-                    currentSection.Flags = reader.ReadInt16();
+                // section
+                currentSection.Length = byte1;
+                currentSection.Curvature = reader.ReadInt16();
+                currentSection.Height = reader.ReadInt16();
+                currentSection.Flags = reader.ReadInt16();
 
-                    currentSection.RightVergeWidth = reader.ReadByte();
-                    currentSection.LeftVergeWidth = reader.ReadByte();
-                    sections.Add(currentSection);
+                currentSection.RightVergeWidth = reader.ReadByte();
+                currentSection.LeftVergeWidth = reader.ReadByte();
+                sections.Add(currentSection);
 
-                    currentSection = new TrackSection();
-                }
+                currentSection = new TrackSection();
             }
 
             int position = (int)reader.BaseStream.Position;

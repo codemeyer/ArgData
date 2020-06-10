@@ -318,7 +318,7 @@ namespace ArgData
             return header.GetBytes();
         }
 
-        private static byte[] GetTrackSectionBytes(IEnumerable<TrackSection> sections)
+        private static byte[] GetTrackSectionBytes(IList<TrackSection> sections)
         {
             var sectionBytes = new ByteList();
 
@@ -345,7 +345,9 @@ namespace ArgData
                     }
                 }
 
-                if (section.Length > 0)
+                bool isLast = sections.IndexOf(section) == sections.Count - 1;
+
+                if (ShouldWriteTrackSection(section.Length, isLast))
                 {
                     sectionBytes.AddInt16(section.Length);
                     sectionBytes.AddInt16(section.Curvature);
@@ -361,6 +363,17 @@ namespace ArgData
 
             return sectionBytes.GetBytes();
         }
+
+        private static bool ShouldWriteTrackSection(byte length, bool isLast)
+        {
+            if (length > 0)
+            {
+                return true;
+            }
+
+            return !isLast;
+        }
+
 
         private static byte[] GetComputerCarLineBytes(short displacement, IList<TrackComputerCarLineSegment> computerCarLines)
         {

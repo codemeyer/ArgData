@@ -7,7 +7,7 @@ namespace ArgData.Entities
     {
         /// <summary>
         /// Gets the Id of the object.
-        /// 
+        ///
         /// When this is 17 or greater, it refers to the index in the track object shapes.
         /// </summary>
         public byte Id { get; set; }
@@ -29,13 +29,13 @@ namespace ArgData.Entities
 
         /// <summary>
         /// Gets the X angle of the object.
-        /// 
-        /// When Id is 5, 13 (and others) this refers to the Id of internal "billboard" objects.
         /// </summary>
         public short AngleX { get; set; }
 
         /// <summary>
         /// Gets the Y angle of the object.
+        ///
+        /// When Id is 5, 13 (and others) this refers to the Id of internal "billboard" objects.
         /// </summary>
         public short AngleY { get; set; }
 

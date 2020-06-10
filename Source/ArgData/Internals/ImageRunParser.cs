@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using ArgData.Entities;
 
 namespace ArgData.Internals
 {
@@ -205,7 +204,7 @@ namespace ArgData.Internals
         {
             byte runLength = Convert.ToByte(255 - Repetitions + 2);
 
-            return new [] {runLength, ColorIndex};
+            return new[] { runLength, ColorIndex };
         }
     }
 

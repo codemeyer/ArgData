@@ -86,7 +86,7 @@ namespace ArgData
 
             return name;
         }
-        
+
         /// <summary>
         /// Default FileStream provider. Can be overridden in tests.
         /// </summary>

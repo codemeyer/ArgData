@@ -145,7 +145,7 @@ namespace ArgData.Tests
             helmet.Stripes[0].Should().Be(3);
 
             var helmetPosition = GetHelmetColorsPosition(driverNumber - 1, exeVersionInfo);
-            var specialBytes = ExampleDataHelper.ReadBytes(context.FilePath, helmetPosition, _bytesPerHelmet[driverNumber-1]);
+            var specialBytes = ExampleDataHelper.ReadBytes(context.FilePath, helmetPosition, _bytesPerHelmet[driverNumber - 1]);
             specialBytes.Should().ContainInOrder(new byte[] { alteringValue1, alteringValue2, 178, /**/ 11 /**/, 9, 0, 176 });
         }
 

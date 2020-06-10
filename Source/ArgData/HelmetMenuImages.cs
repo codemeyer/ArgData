@@ -55,7 +55,7 @@ namespace ArgData
         {
             ValidateHelmetImages(helmetImages);
 
-            var container  = new MediaContainerFile();
+            var container = new MediaContainerFile();
 
             foreach (var helmet in helmetImages.Images)
             {

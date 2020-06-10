@@ -39,7 +39,7 @@ namespace ArgData.Tests
         public void Read_MissingFile_ThrowsFileNotFoundException()
         {
             var path = ExampleDataHelper.GetExampleDataPath("missing-file.DAT", TestDataFileType.Images);
-            
+
             Action action = () => new HelmetMenuImagesReader().Read(path);
 
             action.Should().Throw<FileNotFoundException>();

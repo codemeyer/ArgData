@@ -1,5 +1,4 @@
-﻿using ArgData.Entities;
-using ArgData.Internals;
+﻿using ArgData.Internals;
 using FluentAssertions;
 using Xunit;
 

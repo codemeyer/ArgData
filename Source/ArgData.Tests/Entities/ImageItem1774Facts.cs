@@ -1,6 +1,6 @@
-﻿using ArgData.Entities;
+﻿using System.IO;
+using ArgData.Entities;
 using FluentAssertions;
-using System.IO;
 using Xunit;
 
 namespace ArgData.Tests.Entities

@@ -57,7 +57,7 @@ namespace ArgData.Tests
             for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
             {
                 byte b = Convert.ToByte(i + 1);
-                pitCrewList[i] = new PitCrew(new[] {b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b});
+                pitCrewList[i] = new PitCrew(new[] { b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b });
             }
 
             using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))

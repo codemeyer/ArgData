@@ -67,7 +67,7 @@ namespace ArgData.Tests
                 for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
                 {
                     byte b = Convert.ToByte(i + 1);
-                    carList[i] = new Car(new[] {b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b});
+                    carList[i] = new Car(new[] { b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b });
                 }
 
                 var carColorWriter = CarColorWriter.For(context.ExeFile);

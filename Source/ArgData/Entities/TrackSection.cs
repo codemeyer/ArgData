@@ -60,7 +60,6 @@ namespace ArgData.Entities
             }
         }
 
-
         /// <summary>
         /// Get or sets whether the PitLaneEntrance flag should be set for the section.
         /// </summary>

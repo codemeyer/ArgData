@@ -80,12 +80,12 @@ namespace ArgData.Tests.Internals
                 var firstCommand = result.TrackSections.First().Commands.First();
                 firstCommand.Command.Should().Be(0xAC);
                 firstCommand.Arguments.Length.Should().Be(5);
-                firstCommand.Arguments.Should().ContainInOrder(new short[] {0, 26, 32, 32, 29});
+                firstCommand.Arguments.Should().ContainInOrder(new short[] { 0, 26, 32, 32, 29 });
 
                 var lastCommand = result.TrackSections.First().Commands.Last();
                 lastCommand.Command.Should().Be(0x81);
                 lastCommand.Arguments.Length.Should().Be(2);
-                lastCommand.Arguments.Should().ContainInOrder(new short[] {0, 148});
+                lastCommand.Arguments.Should().ContainInOrder(new short[] { 0, 148 });
             }
         }
 

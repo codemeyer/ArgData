@@ -59,28 +59,28 @@ namespace ArgData.Tests.Internals
                 shapeData.HeaderValue3.Should().Be(5621);
                 shapeData.HeaderValue4.Should().Be(5621);
                 shapeData.HeaderValue5.Should().BeEquivalentTo(
-                    new byte[] {0xF5, 0x15, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x7F, 0x00, 0xE0, 0x0D, 0x00});
+                    new byte[] { 0xF5, 0x15, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x7F, 0x00, 0xE0, 0x0D, 0x00 });
                 shapeData.HeaderValue6.Should().BeEquivalentTo(
-                    new byte[] {0xF5, 0x15});
+                    new byte[] { 0xF5, 0x15 });
 
                 shapeData.OffsetData1.Length.Should().Be(4);
-                shapeData.OffsetData1.Should().BeEquivalentTo(new byte[] {0x00, 0x0F, 0x00, 0x18});
+                shapeData.OffsetData1.Should().BeEquivalentTo(new byte[] { 0x00, 0x0F, 0x00, 0x18 });
 
                 shapeData.OffsetData2.Length.Should().Be(29);
-                shapeData.OffsetData2.Should().StartWith(new byte[] {0x02, 0x00, 0x01, 0x06});
-                shapeData.OffsetData2.Should().EndWith(new byte[] {0x09, 0xF4, 0xFA, 0x00});
+                shapeData.OffsetData2.Should().StartWith(new byte[] { 0x02, 0x00, 0x01, 0x06 });
+                shapeData.OffsetData2.Should().EndWith(new byte[] { 0x09, 0xF4, 0xFA, 0x00 });
 
                 shapeData.OffsetData3.Length.Should().Be(64);
-                shapeData.OffsetData3.Should().StartWith(new byte[] {0x00, 0x00, 0x00, 0x00});
-                shapeData.OffsetData3.Should().EndWith(new byte[] {0x00, 0x0F, 0x00, 0x00});
+                shapeData.OffsetData3.Should().StartWith(new byte[] { 0x00, 0x00, 0x00, 0x00 });
+                shapeData.OffsetData3.Should().EndWith(new byte[] { 0x00, 0x0F, 0x00, 0x00 });
 
                 shapeData.OffsetData4.Length.Should().Be(26);
-                shapeData.OffsetData4.Should().StartWith(new byte[] {0x00, 0x00, 0x00, 0x01});
-                shapeData.OffsetData4.Should().EndWith(new byte[] {0x02, 0x06, 0x03, 0x07});
+                shapeData.OffsetData4.Should().StartWith(new byte[] { 0x00, 0x00, 0x00, 0x01 });
+                shapeData.OffsetData4.Should().EndWith(new byte[] { 0x02, 0x06, 0x03, 0x07 });
 
                 shapeData.OffsetData5.Length.Should().Be(24);
-                shapeData.OffsetData5.Should().StartWith(new byte[] {0x08, 0x00, 0x10, 0x00});
-                shapeData.OffsetData5.Should().EndWith(new byte[] {0x12, 0x00, 0x00, 0x80});
+                shapeData.OffsetData5.Should().StartWith(new byte[] { 0x08, 0x00, 0x10, 0x00 });
+                shapeData.OffsetData5.Should().EndWith(new byte[] { 0x12, 0x00, 0x00, 0x80 });
             }
         }
     }

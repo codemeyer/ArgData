@@ -31,7 +31,7 @@ namespace ArgData.Tests.Internals
             list2.Should().OnlyContain(i => i.Repetitions == 48);
             list2.Should().OnlyContain(i => i.ColorIndex == 209);
         }
-        
+
         [Fact]
         public void ParseLengthsIntoSplitRuns_SameColorForTripleMaxLength_ShouldBeThreeLines()
         {
@@ -44,7 +44,7 @@ namespace ArgData.Tests.Internals
             list2.Should().OnlyContain(i => i.Repetitions == 48);
             list2.Should().OnlyContain(i => i.ColorIndex == 209);
         }
-        
+
         [Fact]
         public void ParseIntoUnlimitedLengths_SameColorEverywhereExceptSpecificPixel_Creates3Runs()
         {
@@ -90,7 +90,7 @@ namespace ArgData.Tests.Internals
             var list2 = ImageRunParser.ParseLengthsIntoSplitRuns(list, 48);
             list2.Count.Should().Be(10);
         }
-        
+
         [Fact]
         public void ParseConsolidateSingles_NoSingles_NoChange()
         {

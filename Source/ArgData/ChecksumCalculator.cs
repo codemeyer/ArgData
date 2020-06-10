@@ -47,8 +47,10 @@ namespace ArgData
         /// <param name="path">Path to file.</param>
         public static void UpdateChecksum(string path)
         {
-            if (!File.Exists(path)) { throw new FileNotFoundException(
-                "Could not find file to update checksum for", path); }
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException("Could not find file to update checksum for", path);
+            }
 
             byte[] fileBytes = File.ReadAllBytes(path);
             byte[] bytesToChecksum = new byte[fileBytes.Length - 4];

@@ -144,7 +144,7 @@ namespace ArgData.Tests
         public void CreateWriter_NullGpExe_ThrowsArgumentNullException()
         {
             Action action = () => new WetWeatherSettingsWriter(null);
-            
+
             action.Should().Throw<ArgumentNullException>();
         }
 

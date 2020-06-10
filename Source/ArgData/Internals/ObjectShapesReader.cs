@@ -53,7 +53,7 @@ namespace ArgData.Internals
                 var lengthToRead = nextOffset - loopOffset;
 
                 reader.BaseStream.Position = readFrom;
-                //byte[] data = trackFileReader.ReadBytes(readFrom, lengthToRead);
+
                 byte[] data = reader.ReadBytes(lengthToRead);
 
                 var dataIndex = sortedOffsets.IndexOf(loopOffset);
@@ -70,13 +70,13 @@ namespace ArgData.Internals
 
         private static void UpdateDataProperties(TrackObjectShape shapeData, byte[] data, int startPoint)
         {
-            shapeData.HeaderValue1 = BitConverter.ToInt16(new[] {data[0], data[1]}, 0);
+            shapeData.HeaderValue1 = BitConverter.ToInt16(new[] { data[0], data[1] }, 0);
             shapeData.Offset1 = BitConverter.ToInt16(new[] { data[2], data[3] }, 0);
-            shapeData.HeaderValue2 = BitConverter.ToInt16(new[] {data[4], data[5]}, 0);
+            shapeData.HeaderValue2 = BitConverter.ToInt16(new[] { data[4], data[5] }, 0);
             shapeData.Offset2 = BitConverter.ToInt16(new[] { data[6], data[7] }, 0);
-            shapeData.HeaderValue3 = BitConverter.ToInt16(new[] {data[8], data[9]}, 0);
+            shapeData.HeaderValue3 = BitConverter.ToInt16(new[] { data[8], data[9] }, 0);
             shapeData.Offset3 = BitConverter.ToInt16(new[] { data[10], data[11] }, 0);
-            shapeData.HeaderValue4 = BitConverter.ToInt16(new[] {data[12], data[13]}, 0);
+            shapeData.HeaderValue4 = BitConverter.ToInt16(new[] { data[12], data[13] }, 0);
             shapeData.Offset4 = BitConverter.ToInt16(new[] { data[14], data[15] }, 0);
             var header5 = new byte[12];
             Array.Copy(data, 16, header5, 0, 12);

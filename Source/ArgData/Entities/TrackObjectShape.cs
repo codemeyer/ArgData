@@ -56,27 +56,27 @@ namespace ArgData.Entities
         /// Gets or sets HeaderValue3. Purpose currently not fully known.
         /// </summary>
         public short HeaderValue3 { get; set; }
-        
+
         /// <summary>
         /// Gets or setse the Offset3 value. Purpose currently not fully known.
         /// </summary>
         public short Offset3 { get; set; }
-        
+
         /// <summary>
         /// Gets or sets HeaderValue4. Purpose currently not fully known.
         /// </summary>
         public short HeaderValue4 { get; set; }
-        
+
         /// <summary>
         /// Gets or setse the Offset4 value. Purpose currently not fully known.
         /// </summary>
         public short Offset4 { get; set; }
-        
+
         /// <summary>
         /// Gets or sets HeaderValue5. Purpose currently not fully known.
         /// </summary>
         public byte[] HeaderValue5 { get; set; }
-        
+
         /// <summary>
         /// Gets or setse the Offset5 value. Purpose currently not fully known.
         /// </summary>

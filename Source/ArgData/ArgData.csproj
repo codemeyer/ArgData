@@ -15,7 +15,7 @@
     <VersionPrefix>0.19</VersionPrefix>
     <VersionSuffix></VersionSuffix>
     <AssemblyVersion>0.19.2.0</AssemblyVersion>
-    <Version>0.19.2</Version>
+    <Version>0.19.3</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>argdata-64x64.png</PackageIcon>
     <PackageLicenseFile></PackageLicenseFile>

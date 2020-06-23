@@ -82,6 +82,11 @@ namespace ArgData
 
             var checksum = new ChecksumCalculator().Calculate(bytesToWrite);
 
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+
             using (var writer = new BinaryWriter(StreamProvider.Invoke(path)))
             {
                 writer.Write(bytesToWrite);

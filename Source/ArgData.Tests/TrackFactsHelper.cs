@@ -45,6 +45,18 @@ namespace ArgData.Tests
             };
         }
 
+        public static TestTrackKnownData GetTrackSilverstone()
+        {
+            return new TestTrackKnownData
+            {
+                Path = GetTrackPath("F1CT08.DAT"),
+                KnownOffsets = new TrackOffsets
+                {
+                    ObjectData = 11081
+                },
+            };
+        }
+
         private static string GetTrackPath(string fileName)
         {
             return ExampleDataHelper.GetExampleDataPath(fileName, TestDataFileType.Tracks);

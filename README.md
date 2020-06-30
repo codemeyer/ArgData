@@ -45,9 +45,11 @@ have a look at the [roadmap](ROADMAP.md).
 This simple piece of software stands on the shoulders of giants. Huge gratitude goes out to:
 
 * Steve Smith - for the amazing F1Ed
-* René Smit - additional research material and Chequered Flag
-* Barrie Millar and Klaus Six - for Chequered Flag
+* René Smit - Chequered Flag and additional research material
+* Barrie Millar - Chequered Flag and additional research material
+* Klaus Six - Chequered Flag and additional research material
 * Hrvoje Štimac - additional research material
+* Alejandro Caceres - object shape parsing and additional research material
 * Trevor Kellaway - for an endless number of F1GP utilities, including GPEditor
 * Paul Hoad - for the C++ code for calculating F1GP file checksums he sent me in 1998, and for the GP2 Track Editor
 * Maxime Labelle - for "The Grand Prix 2 Track File Format (Beta 0.5)" web page

@@ -12,10 +12,10 @@
     <Copyright>Copyright © 2014-2020 Fredrik Meyer</Copyright>
     <PackageTags>F1GP</PackageTags>
     <PackageIconUrl></PackageIconUrl>
-    <VersionPrefix>0.19</VersionPrefix>
+    <VersionPrefix>0.20</VersionPrefix>
     <VersionSuffix></VersionSuffix>
-    <AssemblyVersion>0.19.2.0</AssemblyVersion>
-    <Version>0.19.3</Version>
+    <AssemblyVersion>0.20.0.0</AssemblyVersion>
+    <Version>0.20.0</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>argdata-64x64.png</PackageIcon>
     <PackageLicenseFile></PackageLicenseFile>

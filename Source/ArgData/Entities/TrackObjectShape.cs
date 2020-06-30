@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace ArgData.Entities
 {
     /// <summary>
@@ -14,6 +17,11 @@ namespace ArgData.Entities
         {
             HeaderIndex = headerIndex;
             DataIndex = dataIndex;
+            ScaleValues = new List<short>();
+            RawPoints = new List<TrackObjectShapeRawPoint>();
+            Vectors = new List<TrackObjectShapeVector>();
+            Points = new List<ITrackObjectShapePoint>();
+            PointsAdditionalBytes = new byte[0];
         }
 
         /// <summary>
@@ -29,8 +37,14 @@ namespace ArgData.Entities
         /// <summary>
         /// Gets the length of the object data.
         /// </summary>
-        public int DataLength => 30 + HeaderValue6.Length + OffsetData1.Length + OffsetData2.Length +
-                                 OffsetData3.Length + OffsetData4.Length + OffsetData5.Length;
+        public int DataLength
+        {
+            get
+            {
+                return 30 + HeaderValue6.Length + (ScaleValues.Count * 2) + OffsetData2.Length +
+                       (Points.Count * 8) + PointsAdditionalBytes.Length + (Vectors.Count * 2) + OffsetData5.Length;
+            }
+        }
 
         /// <summary>
         /// Gets or sets HeaderValue1. Purpose currently not fully known.
@@ -38,9 +52,13 @@ namespace ArgData.Entities
         public short HeaderValue1 { get; set; }
 
         /// <summary>
-        /// Gets or setse the Offset1 value. Purpose currently not fully known.
+        /// Gets or sets the starting point for the ScaleValue data.
+        ///
+        /// This value is updated when the track is saved, and should not be manipulated directly.
+        ///
+        /// This was previously Offset1.
         /// </summary>
-        public short Offset1 { get; set; }
+        public short ScaleValueOffset { get; set; }
 
         /// <summary>
         /// Gets or sets HeaderValue2. Purpose currently not fully known.
@@ -48,19 +66,27 @@ namespace ArgData.Entities
         public short HeaderValue2 { get; set; }
 
         /// <summary>
-        /// Gets or setse the Offset2 value. Purpose currently not fully known.
+        /// Gets or sets the Offset2 value.
+        ///
+        /// This value is updated when the track is saved, and should not be manipulated directly.
         /// </summary>
         public short Offset2 { get; set; }
 
         /// <summary>
         /// Gets or sets HeaderValue3. Purpose currently not fully known.
+        ///
+        /// This value is updated when the track is saved, and should not be manipulated directly.
         /// </summary>
         public short HeaderValue3 { get; set; }
 
         /// <summary>
-        /// Gets or setse the Offset3 value. Purpose currently not fully known.
+        /// Gets or sets the starting point for the Point data.
+        ///
+        /// This value is updated when the track is saved, and should not be manipulated directly.
+        ///
+        /// This was previously Offset3.
         /// </summary>
-        public short Offset3 { get; set; }
+        public short PointDataOffset { get; set; }
 
         /// <summary>
         /// Gets or sets HeaderValue4. Purpose currently not fully known.
@@ -68,9 +94,13 @@ namespace ArgData.Entities
         public short HeaderValue4 { get; set; }
 
         /// <summary>
-        /// Gets or setse the Offset4 value. Purpose currently not fully known.
+        /// Gets or sets the starting point for the Vector data.
+        ///
+        /// This value is updated when the track is saved, and should not be manipulated directly.
+        ///
+        /// This was previously Offset4.
         /// </summary>
-        public short Offset4 { get; set; }
+        public short VectorDataOffset { get; set; }
 
         /// <summary>
         /// Gets or sets HeaderValue5. Purpose currently not fully known.
@@ -78,7 +108,9 @@ namespace ArgData.Entities
         public byte[] HeaderValue5 { get; set; }
 
         /// <summary>
-        /// Gets or setse the Offset5 value. Purpose currently not fully known.
+        /// Gets or sets the Offset5 value.
+        ///
+        /// This value is updated when the track is saved, and should not be manipulated directly.
         /// </summary>
         public short Offset5 { get; set; }
 
@@ -88,28 +120,110 @@ namespace ArgData.Entities
         public byte[] HeaderValue6 { get; set; }
 
         /// <summary>
-        /// Gets or sets the data at Offset1. Purpose currently not fully known.
-        /// </summary>
-        public byte[] OffsetData1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the data at Offset2. Purpose currently not fully known.
+        /// Gets or sets the raw byte data at Offset2, which represents GraphicElements.
         /// </summary>
         public byte[] OffsetData2 { get; set; }
 
         /// <summary>
-        /// Gets or sets the data at Offset3. Purpose currently not fully known.
-        /// </summary>
-        public byte[] OffsetData3 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the data at Offset4. Purpose currently not fully known.
-        /// </summary>
-        public byte[] OffsetData4 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the data at Offset5 Purpose currently not fully known.
+        /// Gets or sets the raw byte data at Offset5, which represents GraphicElementsLists.
         /// </summary>
         public byte[] OffsetData5 { get; set; }
+
+        /// <summary>
+        /// Gets the list of ScaleValues.
+        ///
+        /// This was previously OffsetData1.
+        /// </summary>
+        public List<short> ScaleValues { get; }
+
+        /// <summary>
+        /// Gets the list of Points.
+        ///
+        /// This was previously OffsetData3.
+        /// </summary>
+        internal List<TrackObjectShapeRawPoint> RawPoints { get; }
+
+        /// <summary>
+        /// Gets the list of Points in the 3D shape.
+        ///
+        /// This was previously OffsetData3.
+        /// </summary>
+        [CLSCompliant(false)]
+        public List<ITrackObjectShapePoint> Points { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the additional "stray" point bytes that occur in a single object in the Silverstone track.
+        /// </summary>
+        public byte[] PointsAdditionalBytes { get; set; }
+
+        /// <summary>
+        /// Uses the RawPoints to update the 3D points using scale values (ScaleValues) and the raw point data (RawPoints).
+        /// </summary>
+        public void UpdatePoints()
+        {
+            Points = new List<ITrackObjectShapePoint>();
+
+            foreach (var point in RawPoints)
+            {
+                if (point.ReferencePointFlag == 0)
+                {
+                    var currentPoint = new TrackObjectShapeScalePoint(this);
+
+                    if (point.XCoord >= 34)
+                    {
+                        short index = (short)((point.XCoord - 32 - 2) / 2);
+                        currentPoint.XScaleValueIndex = index;
+                        currentPoint.XIsNegative = true;
+                    }
+                    else if (point.XCoord != 0)
+                    {
+                        short index = (short)((point.XCoord - 2) / 2);
+                        currentPoint.XScaleValueIndex = index;
+                    }
+                    else
+                    {
+                        currentPoint.XScaleValueIndex = -1;
+                    }
+
+                    if (point.YCoord >= 34)
+                    {
+                        short index = (short)((point.YCoord - 32 - 2) / 2);
+                        currentPoint.YScaleValueIndex = index;
+                        currentPoint.YIsNegative = true;
+                    }
+                    else if (point.YCoord != 0)
+                    {
+                        short index = (short)((point.YCoord - 2) / 2);
+                        currentPoint.YScaleValueIndex = index;
+                    }
+                    else
+                    {
+                        currentPoint.YScaleValueIndex = -1;
+                    }
+
+                    currentPoint.Z = point.ZCoord;
+
+                    Points.Add(currentPoint);
+                }
+                else if (point.ReferencePointFlag == 0x80)
+                {
+                    var currentRefPoint = new TrackObjectShapeReferencePoint(this)
+                    {
+                        XPointIndex = point.XReferencePointValue,
+                        YPointIndex = point.XReferencePointValue,
+                        Z = point.ZCoord
+                    };
+
+                    Points.Add(currentRefPoint);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of Vectors.
+        ///
+        /// This was previously OffsetData4.
+        /// </summary>
+        public List<TrackObjectShapeVector> Vectors { get; }
     }
 }

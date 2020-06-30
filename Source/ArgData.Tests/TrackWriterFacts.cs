@@ -7,21 +7,99 @@ namespace ArgData.Tests
     public class TrackWriterFacts
     {
         [Fact]
-        public void ReadAndWrite_Phoenix_GeneratesIdenticalFiles()
+        public void ReadAndWrite_01_Phoenix_GeneratesIdenticalFiles()
         {
             ReadAndWrite("F1CT01.DAT");
         }
 
         [Fact]
-        public void ReadAndWrite_Montreal_GeneratesIdenticalFiles()
+        public void ReadAndWrite_02_Interlagos_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT02.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_03_Imola_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT03.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_04_Monaco_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT04.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_05_Montreal_GeneratesIdenticalFiles()
         {
             ReadAndWrite("F1CT05.DAT");
         }
 
         [Fact]
-        public void ReadAndWrite_Mexico_GeneratesIdenticalFiles()
+        public void ReadAndWrite_06_Mexico_GeneratesIdenticalFiles()
         {
             ReadAndWrite("F1CT06.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_07_MagnyCours_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT07.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_08_Silverstone_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT08.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_09_Hockenheim_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT09.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_10_Hungaroring_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT10.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_11_Spa_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT11.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_12_Monza_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT12.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_13_Estoril_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT13.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_14_Barcelona_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT14.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_15_Suzuka_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT15.DAT");
+        }
+
+        [Fact]
+        public void ReadAndWrite_16_Adelaide_GeneratesIdenticalFiles()
+        {
+            ReadAndWrite("F1CT16.DAT");
         }
 
         private void ReadAndWrite(string fileName)
@@ -38,7 +116,15 @@ namespace ArgData.Tests
                 var originalBytes = File.ReadAllBytes(sourcePath);
                 var createdBytes = File.ReadAllBytes(targetPath);
 
-                originalBytes.Should().StartWith(createdBytes);
+                originalBytes.Length.Should().Be(createdBytes.Length);
+
+                for (int i = 0; i < originalBytes.Length; i++)
+                {
+                    byte o = originalBytes[i];
+                    byte n = createdBytes[i];
+
+                    o.Should().Be(n, $"because data at index {i} should match");
+                }
             }
         }
 

@@ -120,9 +120,9 @@ namespace ArgData
 
             bytes.AddInt16((short)objectShapes.Count);
 
-            foreach (var of in offsets)
+            foreach (var offset in offsets)
             {
-                bytes.AddInt32(of);
+                bytes.AddInt32(offset);
             }
 
             foreach (var shape in objectShapes.OrderBy(o => o.DataIndex))
@@ -138,15 +138,15 @@ namespace ArgData
         private static void UpdateShapeDataOffsets(TrackObjectShape shapeData, int startPoint)
         {
             int offset1 = startPoint + 30 + shapeData.HeaderValue6.Length;
-            int offset2 = offset1 + shapeData.OffsetData1.Length;
+            int offset2 = offset1 + shapeData.ScaleValues.Count * 2;
             int offset3 = offset2 + shapeData.OffsetData2.Length;
-            int offset4 = offset3 + shapeData.OffsetData3.Length;
-            int offset5 = offset4 + shapeData.OffsetData4.Length;
+            int offset4 = offset3 + shapeData.Points.Count * 8 + shapeData.PointsAdditionalBytes.Length;
+            int offset5 = offset4 + shapeData.Vectors.Count * 2;
 
-            shapeData.Offset1 = (short)offset1;
+            shapeData.ScaleValueOffset = (short)offset1;
             shapeData.Offset2 = (short)offset2;
-            shapeData.Offset3 = (short)offset3;
-            shapeData.Offset4 = (short)offset4;
+            shapeData.PointDataOffset = (short)offset3;
+            shapeData.VectorDataOffset = (short)offset4;
             shapeData.Offset5 = (short)offset5;
         }
 
@@ -154,20 +154,42 @@ namespace ArgData
         {
             var bytes = new ByteList();
             bytes.AddInt16(shapeData.HeaderValue1);
-            bytes.AddInt16(shapeData.Offset1);
+            bytes.AddInt16(shapeData.ScaleValueOffset);
             bytes.AddInt16(shapeData.HeaderValue2);
             bytes.AddInt16(shapeData.Offset2);
             bytes.AddInt16(shapeData.HeaderValue3);
-            bytes.AddInt16(shapeData.Offset3);
+            bytes.AddInt16(shapeData.PointDataOffset);
             bytes.AddInt16(shapeData.HeaderValue4);
-            bytes.AddInt16(shapeData.Offset4);
+            bytes.AddInt16(shapeData.VectorDataOffset);
             bytes.AddBytes(shapeData.HeaderValue5);
             bytes.AddInt16(shapeData.Offset5);
             bytes.AddBytes(shapeData.HeaderValue6);
-            bytes.AddBytes(shapeData.OffsetData1);
+
+            // ScaleValues was previously OffsetData1
+            foreach (var scaleValue in shapeData.ScaleValues)
+            {
+                bytes.AddBytes(BitConverter.GetBytes(scaleValue));
+            }
+
             bytes.AddBytes(shapeData.OffsetData2);
-            bytes.AddBytes(shapeData.OffsetData3);
-            bytes.AddBytes(shapeData.OffsetData4);
+
+            // RawPoints/Points was previously OffsetData3
+            foreach (var point in shapeData.Points)
+            {
+                byte[] pointBytes = point.GetBytes();
+
+                bytes.AddBytes(pointBytes);
+            }
+
+            bytes.AddBytes(shapeData.PointsAdditionalBytes);
+
+            // Vectors was previously OffsetData4
+            foreach (var vector in shapeData.Vectors)
+            {
+                bytes.AddByte(vector.From);
+                bytes.AddByte(vector.To);
+            }
+
             bytes.AddBytes(shapeData.OffsetData5);
 
             return bytes.GetBytes();
@@ -378,7 +400,6 @@ namespace ArgData
 
             return !isLast;
         }
-
 
         private static byte[] GetComputerCarLineBytes(short displacement, IList<TrackComputerCarLineSegment> computerCarLines)
         {

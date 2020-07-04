@@ -474,8 +474,7 @@ namespace ArgData.Tests.Internals
 
                 var newPoint = new TrackObjectShapeReferencePoint(obj)
                 {
-                    XPointIndex = refOrig.XPointIndex,
-                    YPointIndex = refOrig.YPointIndex,
+                    PointIndex = refOrig.PointIndex,
                     Z = refOrig.Z
                 };
 

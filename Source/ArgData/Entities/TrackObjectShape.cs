@@ -159,7 +159,7 @@ namespace ArgData.Entities
         /// <summary>
         /// Uses the RawPoints to update the 3D points using scale values (ScaleValues) and the raw point data (RawPoints).
         /// </summary>
-        public void UpdatePoints()
+        internal void UpdatePoints()
         {
             Points = new List<ITrackObjectShapePoint>();
 
@@ -209,8 +209,7 @@ namespace ArgData.Entities
                 {
                     var currentRefPoint = new TrackObjectShapeReferencePoint(this)
                     {
-                        XPointIndex = point.XReferencePointValue,
-                        YPointIndex = point.XReferencePointValue,
+                        PointIndex = point.XReferencePointValue,
                         Z = point.ZCoord
                     };
 

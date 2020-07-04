@@ -4,7 +4,10 @@ title: "ArgData: API Reference"
 
 # API Reference
 
-The latest version is [0.19.1](/argdata/api/0.19.1/), released on 2020-04-01.
+The latest version is 0.20.1, released on 2020-07-04.
+
+Documentation has not yet been released for this version, the latest version
+documented is [0.19.1](/argdata/api/0.19.1/).
 
 The table below contains a list of all releases.
 
@@ -21,6 +24,26 @@ to access the full API reference for that specific version.
     </tr>
 </thead>
 <tbody>
+    <tr>
+        <td>0.20.1</td>
+        <td>2020-07-04</td>
+        <td><a href="https://github.com/codemeyer/ArgData/releases/tag/0.20.1">GitHub</a></td>
+    </tr>
+    <tr>
+        <td>0.20</td>
+        <td>2020-06-30</td>
+        <td><a href="https://github.com/codemeyer/ArgData/releases/tag/0.20">GitHub</a></td>
+    </tr>
+    <tr>
+        <td>0.19.3</td>
+        <td>2020-06-23</td>
+        <td><a href="https://github.com/codemeyer/ArgData/releases/tag/0.19.3">GitHub</a></td>
+    </tr>
+    <tr>
+        <td>0.19.2</td>
+        <td>2020-06-10</td>
+        <td><a href="https://github.com/codemeyer/ArgData/releases/tag/0.19.2">GitHub</a></td>
+    </tr>
     <tr>
         <td><a href="/argdata/api/0.19.1/">0.19.1</a></td>
         <td>2020-04-01</td>

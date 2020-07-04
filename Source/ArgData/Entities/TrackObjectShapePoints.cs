@@ -202,14 +202,9 @@ namespace ArgData.Entities
         }
 
         /// <summary>
-        /// Gets or sets the index of the other point that this X coordinate references.
+        /// Gets or sets the index of the other point that this point uses for X and Y coordinates.
         /// </summary>
-        public byte XPointIndex { get; set; }
-
-        /// <summary>
-        /// Gets or sets the index of the other point that this Y coordinate references.
-        /// </summary>
-        public byte YPointIndex { get; set; }
+        public byte PointIndex { get; set; }
 
         /// <summary>
         /// Gets the actual X point coordinate using the referenced value.
@@ -218,7 +213,7 @@ namespace ArgData.Entities
         {
             get
             {
-                return _shape.Points[XPointIndex].X;
+                return _shape.Points[PointIndex].X;
             }
         }
 
@@ -229,7 +224,7 @@ namespace ArgData.Entities
         {
             get
             {
-                return _shape.Points[XPointIndex].Y;
+                return _shape.Points[PointIndex].Y;
             }
         }
 
@@ -248,7 +243,7 @@ namespace ArgData.Entities
             var bytes = new ByteList();
 
             // Xr1
-            bytes.AddByte(XPointIndex);
+            bytes.AddByte(PointIndex);
 
             // Xr2
             bytes.AddByte(0x80);

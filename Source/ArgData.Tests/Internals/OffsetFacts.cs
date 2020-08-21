@@ -18,11 +18,15 @@ namespace ArgData.Tests.Internals
                 var readOffsets = OffsetReader.Read(reader);
                 var knownOffsets = knownTrackData.KnownOffsets;
 
-                readOffsets.UnknownLong1.Should().Be(knownOffsets.UnknownLong1);
-                readOffsets.UnknownLong2.Should().Be(knownOffsets.UnknownLong2);
+                readOffsets.BaseOffset.Should().Be(0x1010);
+                readOffsets.Unknown2.Should().Be(5621);
+                readOffsets.Unknown3.Should().Be(6188);
+                readOffsets.Unknown4.Should().Be(5621);
                 readOffsets.ChecksumPosition.Should().Be(knownOffsets.ChecksumPosition);
                 readOffsets.ObjectData.Should().Be(knownOffsets.ObjectData);
                 readOffsets.TrackData.Should().Be(knownOffsets.TrackData);
+
+                readOffsets.Unknown2.Should().Be(readOffsets.Unknown4);
             }
         }
 
@@ -37,11 +41,15 @@ namespace ArgData.Tests.Internals
                 var readOffsets = OffsetReader.Read(reader);
                 var knownOffsets = knownTrackData.KnownOffsets;
 
-                readOffsets.UnknownLong1.Should().Be(knownOffsets.UnknownLong1);
-                readOffsets.UnknownLong2.Should().Be(knownOffsets.UnknownLong2);
+                readOffsets.BaseOffset.Should().Be(0x1010);
+                readOffsets.Unknown2.Should().Be(10865);
+                readOffsets.Unknown3.Should().Be(7414);
+                readOffsets.Unknown4.Should().Be(10865);
                 readOffsets.ChecksumPosition.Should().Be(knownOffsets.ChecksumPosition);
                 readOffsets.ObjectData.Should().Be(knownOffsets.ObjectData);
                 readOffsets.TrackData.Should().Be(knownOffsets.TrackData);
+
+                readOffsets.Unknown2.Should().Be(readOffsets.Unknown4);
             }
         }
     }

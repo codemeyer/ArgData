@@ -14,8 +14,8 @@
     <PackageIconUrl></PackageIconUrl>
     <VersionPrefix>0.20</VersionPrefix>
     <VersionSuffix></VersionSuffix>
-    <AssemblyVersion>0.20.1.0</AssemblyVersion>
-    <Version>0.20.1</Version>
+    <AssemblyVersion>0.21.0.0</AssemblyVersion>
+    <Version>0.21</Version>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>argdata-64x64.png</PackageIcon>
     <PackageLicenseFile></PackageLicenseFile>

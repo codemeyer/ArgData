@@ -68,6 +68,8 @@ namespace ArgData.Internals
             return objects;
         }
 
+        private const int FixedObjectShapeHeaderLength = 32;
+
         private static void UpdateDataProperties(TrackObjectShape shapeData, byte[] data, int startPoint)
         {
             shapeData.HeaderValue1 = BitConverter.ToInt16(new[] { data[0], data[1] }, 0);
@@ -78,19 +80,18 @@ namespace ArgData.Internals
             shapeData.PointDataOffset = BitConverter.ToInt16(new[] { data[10], data[11] }, 0);
             shapeData.HeaderValue4 = BitConverter.ToInt16(new[] { data[12], data[13] }, 0);
             shapeData.VectorDataOffset = BitConverter.ToInt16(new[] { data[14], data[15] }, 0);
-            var header5 = new byte[12];
-            Array.Copy(data, 16, header5, 0, 12);
-            shapeData.HeaderValue5 = header5;
+
+            shapeData.HeaderValue5 = BitConverter.ToInt16(new [] { data[16], data[17] }, 0);
+            shapeData.HeaderData5 = GetHeaderData5(data);
+
             shapeData.Offset5 = BitConverter.ToInt16(new[] { data[28], data[29] }, 0);
 
-            // either 2 or (for some objects) 10
-            int header6Length = shapeData.ScaleValueOffset - startPoint - 30;
+            shapeData.HeaderValue6 = BitConverter.ToInt16(new[] { data[30], data[31] }, 0);
 
-            var header6 = new byte[header6Length];
-            Array.Copy(data, 30, header6, 0, header6Length);
-            shapeData.HeaderValue6 = header6;
+            int data6Length = CalculateData6Length(shapeData.ScaleValueOffset, startPoint);
+            shapeData.HeaderData6 = GetHeaderData6(data, data6Length);
 
-            int data1Start = 30 + header6Length;
+            int data1Start = FixedObjectShapeHeaderLength + data6Length;
 
             var offsetData1Length = shapeData.Offset2 - shapeData.ScaleValueOffset;
             var offsetData1 = new byte[offsetData1Length];
@@ -128,6 +129,31 @@ namespace ArgData.Internals
             var offsetData5 = new byte[offsetData5Length];
             Array.Copy(data, data5Start, offsetData5, 0, offsetData5Length);
             shapeData.OffsetData5 = offsetData5;
+        }
+
+        private static byte[] GetHeaderData5(byte[] data)
+        {
+            byte[] data5 = new byte[10];
+            Array.Copy(data, 18, data5, 0, 10);
+
+            return data5;
+        }
+
+        private static int CalculateData6Length(short scaleValueOffset, int startPoint)
+        {
+            return scaleValueOffset - startPoint - FixedObjectShapeHeaderLength;
+        }
+
+        private static byte[] GetHeaderData6(byte[] data, int data6Length)
+        {
+            byte[] data6 = new byte[data6Length];
+
+            if (data6Length > 0)
+            {
+                Array.Copy(data, FixedObjectShapeHeaderLength, data6, 0, data6Length);
+            }
+
+            return data6;
         }
 
         private static List<short> GetScaleValues(byte[] rawData)

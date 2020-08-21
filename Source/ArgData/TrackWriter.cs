@@ -26,8 +26,13 @@ namespace ArgData
 
             trackBytes.AddBytes(trackData.Horizon.GetBytes());
 
-            trackBytes.AddInt32(trackData.Offsets.UnknownLong1);
-            trackBytes.AddInt32(trackData.Offsets.UnknownLong2);
+            //trackBytes.AddInt32(trackData.Offsets.UnknownLong1);
+            //trackBytes.AddInt32(trackData.Offsets.UnknownLong2);
+            trackBytes.AddInt16(trackData.Offsets.BaseOffset);
+            trackBytes.AddInt16(trackData.Offsets.Unknown2);
+            trackBytes.AddInt16(trackData.Offsets.Unknown3);
+            trackBytes.AddInt16(trackData.Offsets.Unknown4);
+
             trackBytes.AddInt16(Convert.ToInt16(trackData.Offsets.ChecksumPosition - OffsetAdjustment));
             trackBytes.AddInt16(Convert.ToInt16(trackData.Offsets.ObjectData - OffsetAdjustment));
             trackBytes.AddInt16(Convert.ToInt16(trackData.Offsets.TrackData - OffsetAdjustment));
@@ -137,7 +142,7 @@ namespace ArgData
 
         private static void UpdateShapeDataOffsets(TrackObjectShape shapeData, int startPoint)
         {
-            int offset1 = startPoint + 30 + shapeData.HeaderValue6.Length;
+            int offset1 = startPoint + 32 + shapeData.HeaderData6.Length;
             int offset2 = offset1 + shapeData.ScaleValues.Count * 2;
             int offset3 = offset2 + shapeData.OffsetData2.Length;
             int offset4 = offset3 + shapeData.Points.Count * 8 + shapeData.PointsAdditionalBytes.Length;
@@ -161,9 +166,11 @@ namespace ArgData
             bytes.AddInt16(shapeData.PointDataOffset);
             bytes.AddInt16(shapeData.HeaderValue4);
             bytes.AddInt16(shapeData.VectorDataOffset);
-            bytes.AddBytes(shapeData.HeaderValue5);
+            bytes.AddInt16(shapeData.HeaderValue5);
+            bytes.AddBytes(shapeData.HeaderData5);
             bytes.AddInt16(shapeData.Offset5);
-            bytes.AddBytes(shapeData.HeaderValue6);
+            bytes.AddInt16(shapeData.HeaderValue6);
+            bytes.AddBytes(shapeData.HeaderData6);
 
             // ScaleValues was previously OffsetData1
             foreach (var scaleValue in shapeData.ScaleValues)

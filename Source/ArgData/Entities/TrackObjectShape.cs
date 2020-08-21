@@ -41,7 +41,12 @@ namespace ArgData.Entities
         {
             get
             {
-                return 30 + HeaderValue6.Length + (ScaleValues.Count * 2) + OffsetData2.Length +
+                if (HeaderData6.Length > 0)
+                {
+
+                }
+
+                return 32 + HeaderData6.Length + (ScaleValues.Count * 2) + OffsetData2.Length +
                        (Points.Count * 8) + PointsAdditionalBytes.Length + (Vectors.Count * 2) + OffsetData5.Length;
             }
         }
@@ -105,7 +110,12 @@ namespace ArgData.Entities
         /// <summary>
         /// Gets or sets HeaderValue5. Purpose currently not fully known.
         /// </summary>
-        public byte[] HeaderValue5 { get; set; }
+        public short HeaderValue5 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the HeaderData5 value. This must always be 10 bytes long. Purpose unknown.
+        /// </summary>
+        public byte[] HeaderData5 { get; set; }
 
         /// <summary>
         /// Gets or sets the Offset5 value.
@@ -117,7 +127,12 @@ namespace ArgData.Entities
         /// <summary>
         /// Gets or sets HeaderValue6. Purpose currently not fully known.
         /// </summary>
-        public byte[] HeaderValue6 { get; set; }
+        public short HeaderValue6 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the HeaderData6 value. This is always either 0 bytes or 10 bytes long. Purpose unknown.
+        /// </summary>
+        public byte[] HeaderData6 { get; set; }
 
         /// <summary>
         /// Gets or sets the raw byte data at Offset2, which represents GraphicElements.

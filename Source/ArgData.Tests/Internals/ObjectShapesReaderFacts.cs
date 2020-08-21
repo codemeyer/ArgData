@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using ArgData.Entities;
 using ArgData.Internals;
@@ -19,6 +20,18 @@ namespace ArgData.Tests.Internals
                 var objects = ObjectShapesReader.Read(reader, trackData.KnownOffsets.ObjectData);
 
                 objects.Count.Should().Be(35);
+            }
+        }
+
+        [Fact]
+        public void PhoenixFirstObjectIs141Bytes()
+        {
+            var trackData = TrackFactsHelper.GetTrackPhoenix();
+            using (var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path)))
+            {
+                reader.BaseStream.Position = 4110;
+                var objects = ObjectShapesReader.Read(reader, trackData.KnownOffsets.ObjectData);
+
                 objects.First().DataLength.Should().Be(141);
             }
         }
@@ -59,10 +72,16 @@ namespace ArgData.Tests.Internals
                 shapeData.HeaderValue2.Should().Be(5621);
                 shapeData.HeaderValue3.Should().Be(5621);
                 shapeData.HeaderValue4.Should().Be(5621);
-                shapeData.HeaderValue5.Should().BeEquivalentTo(
-                    new byte[] { 0xF5, 0x15, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x7F, 0x00, 0xE0, 0x0D, 0x00 });
-                shapeData.HeaderValue6.Should().BeEquivalentTo(
-                    new byte[] { 0xF5, 0x15 });
+                shapeData.HeaderValue5.Should().Be(5621);
+                shapeData.HeaderValue6.Should().Be(5621);
+
+                shapeData.HeaderData5.Should().BeEquivalentTo(
+                    new byte[] { 0x00, 0x00, 0x00, 0x00, 0xFF, 0x7F, 0x00, 0xE0, 0x0D, 0x00 });
+                //shapeData.HeaderValue5.Should().BeEquivalentTo(
+                //    new byte[] { 0xF5, 0x15, 0x00, 0x00, 0x00, 0x00, 0xFF, 0x7F, 0x00, 0xE0, 0x0D, 0x00 });
+                //shapeData.HeaderValue6.Should().BeEquivalentTo(
+                //    new byte[] { 0xF5, 0x15 });
+                shapeData.HeaderData6.Length.Should().Be(0);
 
                 shapeData.ScaleValues.Count.Should().Be(2);
                 shapeData.ScaleValues[0].Should().Be(3840);
@@ -497,6 +516,17 @@ namespace ArgData.Tests.Internals
                 byte n = updated[i];
 
                 o.Should().Be(n, $"because data at index {i} should match");
+            }
+        }
+
+        [Fact]
+        public void test()
+        {
+            for (int i = 1296; i <= 2300; i += 16)
+            {
+                int newI = i >> 4;
+
+                System.Diagnostics.Debug.WriteLine($"{i}  ==  {Convert.ToString(i, 2)},  {newI}");
             }
         }
     }

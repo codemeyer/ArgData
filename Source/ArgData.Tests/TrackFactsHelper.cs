@@ -12,8 +12,6 @@ namespace ArgData.Tests
                 KnownHeaderLength = 28,
                 KnownOffsets = new TrackOffsets
                 {
-                    UnknownLong1 = 368381968,
-                    UnknownLong2 = 368384044,
                     ChecksumPosition = 16920,
                     ObjectData = 12362,
                     TrackData = 14410
@@ -33,8 +31,6 @@ namespace ArgData.Tests
                 KnownHeaderLength = 32, // triple-colored kerbs
                 KnownOffsets = new TrackOffsets
                 {
-                    UnknownLong1 = 712052752,
-                    UnknownLong2 = 712056054,
                     ChecksumPosition = 9425 + 4112,
                     ObjectData = 5377 + 4112,
                     TrackData = 7281 + 4112
@@ -53,7 +49,7 @@ namespace ArgData.Tests
                 KnownOffsets = new TrackOffsets
                 {
                     ObjectData = 11081
-                },
+                }
             };
         }
 

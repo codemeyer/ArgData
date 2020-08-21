@@ -200,7 +200,7 @@ namespace ArgData.Internals
                 var point = new TrackObjectShapeRawPoint
                 {
                     XCoord = BitConverter.ToInt16(rawData, position),
-                    XReferencePointValue = rawData[position],
+                    ReferencePointValue = rawData[position],
                     ReferencePointFlag = rawData[position + 1],
                     YCoord = BitConverter.ToInt16(rawData, position + 2),
                     ZCoord = BitConverter.ToUInt16(rawData, position + 4),

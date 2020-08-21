@@ -267,7 +267,7 @@ namespace ArgData.Tests.Internals
                 var obj = objects.First();
                 obj.RawPoints.Count.Should().Be(4);
                 obj.RawPoints[0].XCoord.Should().Be(34);
-                obj.RawPoints[0].XReferencePointValue.Should().Be(34);
+                obj.RawPoints[0].ReferencePointValue.Should().Be(34);
                 obj.RawPoints[0].ReferencePointFlag.Should().Be(0);
                 obj.RawPoints[0].YCoord.Should().Be(0);
                 obj.RawPoints[0].ZCoord.Should().Be(0);

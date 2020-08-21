@@ -224,7 +224,7 @@ namespace ArgData.Entities
                 {
                     var currentRefPoint = new TrackObjectShapeReferencePoint(this)
                     {
-                        PointIndex = point.XReferencePointValue,
+                        PointIndex = point.ReferencePointValue,
                         Z = point.ZCoord
                     };
 

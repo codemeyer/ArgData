@@ -43,11 +43,11 @@ namespace ArgData.Entities
         public short XCoord { get; set; }
 
         /// <summary>
-        /// Gets or sets the X coordinate reference point value (for reference points).
+        /// Gets or sets the X and Y coordinate reference point value (for reference points).
         ///
         /// This is the first byte of the XCoord.
         /// </summary>
-        public byte XReferencePointValue { get; set; }
+        public byte ReferencePointValue { get; set; }
 
         /// <summary>
         /// Gets or sets the reference point flag (0x80).

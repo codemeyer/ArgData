@@ -144,12 +144,12 @@ namespace ArgData
         {
             int offset1 = startPoint + 32 + shapeData.HeaderData6.Length;
             int offset2 = offset1 + shapeData.ScaleValues.Count * 2;
-            int offset3 = offset2 + shapeData.OffsetData2.Length;
+            int offset3 = offset2 + shapeData.GraphicalElements.ToBytes().Length;
             int offset4 = offset3 + shapeData.Points.Count * 8 + shapeData.PointsAdditionalBytes.Length;
             int offset5 = offset4 + shapeData.Vectors.Count * 2;
 
             shapeData.ScaleValueOffset = (short)offset1;
-            shapeData.Offset2 = (short)offset2;
+            shapeData.GraphicalElementsOffset = (short)offset2;
             shapeData.PointDataOffset = (short)offset3;
             shapeData.VectorDataOffset = (short)offset4;
             shapeData.Offset5 = (short)offset5;
@@ -161,7 +161,7 @@ namespace ArgData
             bytes.AddInt16(shapeData.HeaderValue1);
             bytes.AddInt16(shapeData.ScaleValueOffset);
             bytes.AddInt16(shapeData.HeaderValue2);
-            bytes.AddInt16(shapeData.Offset2);
+            bytes.AddInt16(shapeData.GraphicalElementsOffset);
             bytes.AddInt16(shapeData.HeaderValue3);
             bytes.AddInt16(shapeData.PointDataOffset);
             bytes.AddInt16(shapeData.HeaderValue4);
@@ -178,7 +178,7 @@ namespace ArgData
                 bytes.AddBytes(BitConverter.GetBytes(scaleValue));
             }
 
-            bytes.AddBytes(shapeData.OffsetData2);
+            bytes.AddBytes(shapeData.GraphicalElements.ToBytes());
 
             // RawPoints/Points was previously OffsetData3
             foreach (var point in shapeData.Points)

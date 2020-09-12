@@ -75,13 +75,13 @@ namespace ArgData.Internals
             shapeData.HeaderValue1 = BitConverter.ToInt16(new[] { data[0], data[1] }, 0);
             shapeData.ScaleValueOffset = BitConverter.ToInt16(new[] { data[2], data[3] }, 0);
             shapeData.HeaderValue2 = BitConverter.ToInt16(new[] { data[4], data[5] }, 0);
-            shapeData.Offset2 = BitConverter.ToInt16(new[] { data[6], data[7] }, 0);
+            shapeData.GraphicalElementsOffset = BitConverter.ToInt16(new[] { data[6], data[7] }, 0);
             shapeData.HeaderValue3 = BitConverter.ToInt16(new[] { data[8], data[9] }, 0);
             shapeData.PointDataOffset = BitConverter.ToInt16(new[] { data[10], data[11] }, 0);
             shapeData.HeaderValue4 = BitConverter.ToInt16(new[] { data[12], data[13] }, 0);
             shapeData.VectorDataOffset = BitConverter.ToInt16(new[] { data[14], data[15] }, 0);
 
-            shapeData.HeaderValue5 = BitConverter.ToInt16(new [] { data[16], data[17] }, 0);
+            shapeData.HeaderValue5 = BitConverter.ToInt16(new[] { data[16], data[17] }, 0);
             shapeData.HeaderData5 = GetHeaderData5(data);
 
             shapeData.Offset5 = BitConverter.ToInt16(new[] { data[28], data[29] }, 0);
@@ -93,7 +93,7 @@ namespace ArgData.Internals
 
             int data1Start = FixedObjectShapeHeaderLength + data6Length;
 
-            var offsetData1Length = shapeData.Offset2 - shapeData.ScaleValueOffset;
+            var offsetData1Length = shapeData.GraphicalElementsOffset - shapeData.ScaleValueOffset;
             var offsetData1 = new byte[offsetData1Length];
             Array.Copy(data, data1Start, offsetData1, 0, offsetData1Length);
 
@@ -101,10 +101,13 @@ namespace ArgData.Internals
             shapeData.ScaleValues.AddRange(scaleValues);
 
             int data2Start = data1Start + offsetData1Length;
-            var offsetData2Length = shapeData.PointDataOffset - shapeData.Offset2;
+            var offsetData2Length = shapeData.PointDataOffset - shapeData.GraphicalElementsOffset;
             var offsetData2 = new byte[offsetData2Length];
             Array.Copy(data, data2Start, offsetData2, 0, offsetData2Length);
-            shapeData.OffsetData2 = offsetData2;
+
+            var graphicalElements = GetGraphicalElements(offsetData2);
+            shapeData.GraphicalElements.HeaderValues.AddRange(graphicalElements.HeaderValues);
+            shapeData.GraphicalElements.Elements.AddRange(graphicalElements.Elements);
 
             int data3Start = data2Start + offsetData2Length;
             var offsetData3Length = shapeData.VectorDataOffset - shapeData.PointDataOffset;
@@ -170,6 +173,118 @@ namespace ArgData.Internals
             }
 
             return list;
+        }
+
+        private static TrackObjectShapeGraphicalElements GetGraphicalElements(byte[] rawData)
+        {
+            var graphicalElements = new TrackObjectShapeGraphicalElements();
+
+            using (var data = new MemoryStream(rawData))
+            using (var reader = new BinaryReader(data))
+            {
+                reader.BaseStream.Position = 0;
+
+                byte readValue = 0;
+
+                while (readValue != 0xFF)
+                {
+                    readValue = reader.ReadByte();
+
+                    if (readValue < 0xFF)
+                    {
+                        graphicalElements.HeaderValues.Add(readValue);
+                    }
+                }
+
+                while (reader.BaseStream.Position < rawData.LongLength)
+                {
+                    byte indicator = reader.ReadByte();
+
+                    if (indicator == 0xA0)
+                    {
+                        // line
+                        byte value1 = reader.ReadByte();
+                        byte value2 = reader.ReadByte();
+
+                        var line = new TrackObjectShapeGraphicalElementLine
+                        {
+                            Value1 = value1,
+                            Value2 = value2
+                        };
+
+                        graphicalElements.Elements.Add(line);
+                    }
+                    else if (indicator == 0x80 ||
+                             indicator == 0x88 ||
+                             indicator == 0xD0  // or is this just 1 byte to read, and 0xb0 is also 1 byte?
+                             )
+                    {
+                        // bitmap
+                        byte point = reader.ReadByte();
+                        byte flag = reader.ReadByte();
+                        byte objectIndex = reader.ReadByte();
+
+                        var bitmap = new TrackObjectShapeGraphicalElementBitmap
+                        {
+                            Indicator = indicator,
+                            PointIndex = point,
+                            UnknownFlag = flag,
+                            ObjectIndex = objectIndex
+                        };
+
+                        graphicalElements.Elements.Add(bitmap);
+                    }
+                    else if (indicator == 0x82 || indicator == 0x86)
+                    {
+                        // bitmap with additional data
+                        byte point = reader.ReadByte();
+                        byte flag = reader.ReadByte();
+                        byte objectIndex = reader.ReadByte();
+                        byte additionalData1 = reader.ReadByte();
+                        byte additionalData2 = reader.ReadByte();
+
+                        var bitmap = new TrackObjectShapeGraphicalElementBitmapExtended
+                        {
+                            Indicator = indicator,
+                            PointIndex = point,
+                            UnknownFlag = flag,
+                            ObjectIndex = objectIndex,
+                            AdditionalData1 = additionalData1,
+                            AdditionalData2 = additionalData2
+                        };
+
+                        graphicalElements.Elements.Add(bitmap);
+                    }
+                    else
+                    {
+                        // polygon with color and vectors
+                        var polygon = new TrackObjectShapeGraphicalElementPolygon
+                        {
+                            Color = indicator
+                        };
+
+                        bool found00 = false;
+
+                        do
+                        {
+                            sbyte vector = reader.ReadSByte();
+
+                            if (vector == 0x00)
+                            {
+                                found00 = true;
+                            }
+                            else
+                            {
+                                polygon.Vectors.Add(vector);
+                            }
+                        } while (!found00);
+
+                        graphicalElements.Elements.Add(polygon);
+                    }
+                }
+            }
+
+            return graphicalElements;
         }
 
         /// <summary>

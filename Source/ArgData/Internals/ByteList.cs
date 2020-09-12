@@ -42,6 +42,14 @@ namespace ArgData.Internals
             _bytes.AddRange(bytes);
         }
 
+        public void AddSBytes(sbyte[] bytes)
+        {
+            foreach (sbyte sb in bytes)
+            {
+                _bytes.Add((byte)sb);
+            }
+        }
+
         public int Count => _bytes.Count;
 
         public byte[] GetBytes()

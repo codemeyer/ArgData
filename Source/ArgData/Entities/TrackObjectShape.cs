@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using ArgData.Internals;
 
 namespace ArgData.Entities
 {
@@ -46,7 +47,7 @@ namespace ArgData.Entities
 
                 }
 
-                return 32 + HeaderData6.Length + (ScaleValues.Count * 2) + OffsetData2.Length +
+                return 32 + HeaderData6.Length + (ScaleValues.Count * 2) + GraphicalElements.ToBytes().Length +
                        (Points.Count * 8) + PointsAdditionalBytes.Length + (Vectors.Count * 2) + OffsetData5.Length;
             }
         }
@@ -71,11 +72,13 @@ namespace ArgData.Entities
         public short HeaderValue2 { get; set; }
 
         /// <summary>
-        /// Gets or sets the Offset2 value.
+        /// Gets or sets the starting point for the GraphicalElements data.
         ///
         /// This value is updated when the track is saved, and should not be manipulated directly.
+        ///
+        /// This was previously Offset2.
         /// </summary>
-        public short Offset2 { get; set; }
+        public short GraphicalElementsOffset { get; set; }
 
         /// <summary>
         /// Gets or sets HeaderValue3. Purpose currently not fully known.
@@ -135,9 +138,11 @@ namespace ArgData.Entities
         public byte[] HeaderData6 { get; set; }
 
         /// <summary>
-        /// Gets or sets the raw byte data at Offset2, which represents GraphicElements.
+        /// Gets the list of GraphicalElements, e.g. polygons.
+        ///
+        /// This was previously OffsetData2.
         /// </summary>
-        public byte[] OffsetData2 { get; set; }
+        public TrackObjectShapeGraphicalElements GraphicalElements { get; } = new TrackObjectShapeGraphicalElements();
 
         /// <summary>
         /// Gets or sets the raw byte data at Offset5, which represents GraphicElementsLists.

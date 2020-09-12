@@ -63,7 +63,7 @@ namespace ArgData.Tests.Internals
                 var shapeData = objects[2];
 
                 shapeData.ScaleValueOffset.Should().Be(4559);
-                shapeData.Offset2.Should().Be(4563);
+                shapeData.GraphicalElementsOffset.Should().Be(4563);
                 shapeData.PointDataOffset.Should().Be(4592);
                 shapeData.VectorDataOffset.Should().Be(4656);
                 shapeData.Offset5.Should().Be(4682);
@@ -87,9 +87,10 @@ namespace ArgData.Tests.Internals
                 shapeData.ScaleValues[0].Should().Be(3840);
                 shapeData.ScaleValues[1].Should().Be(6144);
 
-                shapeData.OffsetData2.Length.Should().Be(29);
-                shapeData.OffsetData2.Should().StartWith(new byte[] { 0x02, 0x00, 0x01, 0x06 });
-                shapeData.OffsetData2.Should().EndWith(new byte[] { 0x09, 0xF4, 0xFA, 0x00 });
+                shapeData.GraphicalElements.ToBytes().Length.Should().Be(29);
+                shapeData.GraphicalElements.HeaderValues.Count.Should().Be(4);
+                var lastPoly = shapeData.GraphicalElements.Elements.Last() as TrackObjectShapeGraphicalElementPolygon;
+                lastPoly.Color.Should().Be(12);
 
                 shapeData.RawPoints.Count.Should().Be(8);
                 shapeData.RawPoints[0].XCoord.Should().Be(0);
@@ -238,13 +239,13 @@ namespace ArgData.Tests.Internals
                 againShape.ScaleValues.Count.Should().Be(6);
 
                 var originalShape = track.ObjectShapes[22];
-                againShape.Offset2.Should().BeLessThan(originalShape.Offset2);
+                againShape.GraphicalElementsOffset.Should().BeLessThan(originalShape.GraphicalElementsOffset);
                 againShape.PointDataOffset.Should().NotBe(originalShape.PointDataOffset);
 
                 var nextShape = track.ObjectShapes[23];
                 var nextShapeAgain = readAgainTrack.ObjectShapes[23];
 
-                nextShape.Offset2.Should().NotBe(nextShapeAgain.Offset2);
+                nextShape.GraphicalElementsOffset.Should().NotBe(nextShapeAgain.GraphicalElementsOffset);
 
                 // file length should be smaller
                 var originalLength = new FileInfo(sourcePath).Length;
@@ -399,134 +400,6 @@ namespace ArgData.Tests.Internals
                 var objects = ObjectShapesReader.Read(reader, trackData.KnownOffsets.ObjectData);
 
                 objects[13].PointsAdditionalBytes.Length.Should().Be(6);
-            }
-        }
-
-        [Fact]
-        public void Removing_and_Adding_ScaleValue_Creates_Identical_Files()
-        {
-            using (var context = ExampleDataContext.GetTempFileName("TRACK.DAT"))
-            {
-                var targetPath = context.FilePath;
-                var sourcePath = ExampleDataHelper.GetExampleDataPath("F1CT04.DAT", TestDataFileType.Tracks);
-                File.Copy(sourcePath, targetPath);
-
-                // remove scale value
-                var track = new TrackReader().Read(targetPath);
-                var obj = track.ObjectShapes[7];
-
-                obj.ScaleValues.Count.Should().Be(7);
-                short value = obj.ScaleValues[3];
-
-                obj.ScaleValues.RemoveAt(3);
-
-                obj.ScaleValues.Count.Should().Be(6);
-
-                obj.ScaleValues.Insert(3, value);
-
-                new TrackWriter().Write(track, targetPath);
-
-                var originalBytes = File.ReadAllBytes(sourcePath);
-                var createdBytes = File.ReadAllBytes(targetPath);
-
-                originalBytes.Length.Should().Be(createdBytes.Length);
-
-                DiffByteArrays(originalBytes, createdBytes);
-            }
-        }
-
-        [Fact]
-        public void Removing_and_Adding_ScalePoint_Creates_Identical_Files()
-        {
-            using (var context = ExampleDataContext.GetTempFileName("TRACK.DAT"))
-            {
-                var targetPath = context.FilePath;
-                var sourcePath = ExampleDataHelper.GetExampleDataPath("F1CT04.DAT", TestDataFileType.Tracks);
-                File.Copy(sourcePath, targetPath);
-
-                // remove scale point
-                var track = new TrackReader().Read(targetPath);
-                var obj = track.ObjectShapes[7];
-
-                obj.Points.Count.Should().Be(24);
-
-                var refOrig = obj.Points[0] as TrackObjectShapeScalePoint;
-
-                obj.Points.RemoveAt(0);
-
-                var newPoint = new TrackObjectShapeScalePoint(obj)
-                {
-                    XScaleValueIndex = refOrig.XScaleValueIndex,
-                    XIsNegative = refOrig.XIsNegative,
-                    YScaleValueIndex = refOrig.YScaleValueIndex,
-                    YIsNegative = refOrig.YIsNegative,
-                    Z = refOrig.Z
-                };
-
-                obj.Points.Insert(0, newPoint);
-
-                var originalBytes = File.ReadAllBytes(sourcePath);
-                var createdBytes = File.ReadAllBytes(targetPath);
-
-                DiffByteArrays(originalBytes, createdBytes);
-            }
-        }
-
-        [Fact]
-        public void Removing_and_Adding_ReferencePoint_Creates_Identical_Files()
-        {
-            using (var context = ExampleDataContext.GetTempFileName("TRACK.DAT"))
-            {
-                var targetPath = context.FilePath;
-                var sourcePath = ExampleDataHelper.GetExampleDataPath("F1CT04.DAT", TestDataFileType.Tracks);
-                File.Copy(sourcePath, targetPath);
-
-                // remove reference point
-                var track = new TrackReader().Read(targetPath);
-                var obj = track.ObjectShapes[7];
-
-                obj.Points.Count.Should().Be(24);
-
-                var refOrig = obj.Points[11] as TrackObjectShapeReferencePoint;
-
-                obj.Points.RemoveAt(11);
-
-                var newPoint = new TrackObjectShapeReferencePoint(obj)
-                {
-                    PointIndex = refOrig.PointIndex,
-                    Z = refOrig.Z
-                };
-
-                obj.Points.Insert(11, newPoint);
-
-                var originalBytes = File.ReadAllBytes(sourcePath);
-                var createdBytes = File.ReadAllBytes(targetPath);
-
-                DiffByteArrays(originalBytes, createdBytes);
-            }
-        }
-
-        private void DiffByteArrays(byte[] original, byte[] updated)
-        {
-            original.Length.Should().Be(updated.Length);
-
-            for (int i = 0; i < original.Length; i++)
-            {
-                byte o = original[i];
-                byte n = updated[i];
-
-                o.Should().Be(n, $"because data at index {i} should match");
-            }
-        }
-
-        [Fact]
-        public void test()
-        {
-            for (int i = 1296; i <= 2300; i += 16)
-            {
-                int newI = i >> 4;
-
-                System.Diagnostics.Debug.WriteLine($"{i}  ==  {Convert.ToString(i, 2)},  {newI}");
             }
         }
     }

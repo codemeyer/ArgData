@@ -1,18 +1,23 @@
 # ArgData
 
-ArgData is a .NET library for working with [Microprose Formula One Grand Prix](https://en.wikipedia.org/wiki/Formula_One_Grand_Prix_(video_game)) (F1GP) data, such as car colors and driver performance. There is also support for working with various other game files, such as reading/writing name files and car setups.
+ArgData is a .NET library for working with
+[MicroProse Formula One Grand Prix](https://en.wikipedia.org/wiki/Formula_One_Grand_Prix_(video_game)) (F1GP) data,
+such as car colors and driver performance.
+There is also support for working with various other game files,
+such as reading/writing name files and car setups.
 
 This library currently supports the European and US (World Circuit) version 1.05 of the game.
 
-It is used in the new F1GP editor [ArgEditor](http://www.argtools.com/argeditor).
+It is used, among other things, in the F1GP editors [ArgEditor](https://www.argtools.com/argeditor/)
+and [ArgTrack](https://www.argtools.com/argtrack/).
 
 
-### API functionality and usage
+## API functionality and usage
 
 The ArgData API currently supports the following:
 
 * Updating car colors
-* Updating helmet colors (in-game, not menu)
+* Updating helmet colors (both in-game and menu)
 * Updating pit crew colors
 * Changing driver numbers/which drivers are enabled in-game
 * Changing computer car horsepower levels
@@ -34,13 +39,13 @@ The ArgData API currently supports the following:
 * Editing menu helmet images and (to a certain extent) other background images
 
 For an introduction to how to use the API, including simple examples and a full reference section,
-see the [API documentation](http://www.argtools.com/argdata).
+see the [API documentation](https://www.argtools.com/argdata).
 
 The API is continuously (albeit slowly) being improved and extended. To see what is in the pipeline,
 have a look at the [roadmap](ROADMAP.md).
 
 
-### Acknowledgements
+## Acknowledgements
 
 This simple piece of software stands on the shoulders of giants. Huge gratitude goes out to:
 
@@ -49,7 +54,7 @@ This simple piece of software stands on the shoulders of giants. Huge gratitude 
 * Barrie Millar - Chequered Flag and additional research material
 * Klaus Six - Chequered Flag and additional research material
 * Hrvoje Štimac - additional research material
-* Alejandro Caceres - object shape parsing and additional research material
+* Alejandro Cáceres - object shape parsing and additional research material
 * Trevor Kellaway - for an endless number of F1GP utilities, including GPEditor
 * Paul Hoad - for the C++ code for calculating F1GP file checksums he sent me in 1998, and for the GP2 Track Editor
 * Maxime Labelle - for "The Grand Prix 2 Track File Format (Beta 0.5)" web page

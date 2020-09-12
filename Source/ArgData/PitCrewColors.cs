@@ -45,7 +45,7 @@ namespace ArgData
             using (var reader = new BinaryReader(StreamProvider.Invoke(_exeFile.ExePath)))
             {
                 reader.BaseStream.Position = _exeFile.GetPitCrewColorsPosition(pitCrewIndex);
-                byte[] colors = reader.ReadBytes(GpExeFile.ColorsPerTeam);
+                byte[] colors = reader.ReadBytes(GpExeFile.ColorsPerPitCrew);
 
                 return new PitCrew(colors);
             }
@@ -65,7 +65,7 @@ namespace ArgData
 
                 for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
                 {
-                    byte[] colors = reader.ReadBytes(GpExeFile.ColorsPerTeam);
+                    byte[] colors = reader.ReadBytes(GpExeFile.ColorsPerPitCrew);
                     list[i].SetColors(colors);
                 }
 

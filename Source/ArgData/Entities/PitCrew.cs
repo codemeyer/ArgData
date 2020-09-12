@@ -23,7 +23,7 @@ namespace ArgData.Entities
         {
             if (pitCrewColorBytes.Length != GpExeFile.ColorsPerPitCrew)
             {
-                throw new ArgumentException($"PitCrew must be created with {GpExeFile.ColorsPerTeam} colors");
+                throw new ArgumentException($"PitCrew must be created with {GpExeFile.ColorsPerPitCrew} colors");
             }
 
             SetColors(pitCrewColorBytes);

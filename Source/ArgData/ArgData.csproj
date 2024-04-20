@@ -1,7 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45;net40</TargetFrameworks>
+    <TargetFrameworks>net40;net45;netstandard2.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>Fredrik Meyer</Authors>
     <Description>API for editing most things related to Formula 1 Grand Prix by Microprose</Description>
@@ -9,7 +14,7 @@
     <PackageProjectUrl>https://github.com/codemeyer/ArgData</PackageProjectUrl>
     <RepositoryUrl>https://github.com/codemeyer/ArgData</RepositoryUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
-    <Copyright>Copyright © 2014-2020 Fredrik Meyer</Copyright>
+    <Copyright>Copyright © 2014-2024 Fredrik Meyer</Copyright>
     <PackageTags>F1GP</PackageTags>
     <PackageIconUrl></PackageIconUrl>
     <VersionPrefix>0.22</VersionPrefix>
@@ -42,6 +47,10 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="ArgData.Tests" />
   </ItemGroup>
 
 </Project>

@@ -1,23 +1,20 @@
-using System.Collections.Generic;
+namespace ArgData.Entities;
 
-namespace ArgData.Entities
+/// <summary>
+/// Represents a driver in a saved game.
+/// </summary>
+public class SavedGameDriver : Driver
 {
     /// <summary>
-    /// Represents a driver in a saved game.
+    /// Initializes a new instance of a saved game driver.
     /// </summary>
-    public class SavedGameDriver : Driver
+    public SavedGameDriver()
     {
-        /// <summary>
-        /// Initializes a new instance of a saved game driver.
-        /// </summary>
-        public SavedGameDriver()
-        {
-            Results = new List<int>();
-        }
-
-        /// <summary>
-        /// Gets the results of the driver in the saved game.
-        /// </summary>
-        public IEnumerable<int> Results { get; internal set; }
+        Results = new List<int>();
     }
+
+    /// <summary>
+    /// Gets the results of the driver in the saved game.
+    /// </summary>
+    public IEnumerable<int> Results { get; internal set; }
 }

@@ -1,93 +1,91 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 
-namespace ArgData.Entities
+namespace ArgData.Entities;
+
+/// <summary>
+/// Represents a list of TrackCameraCommands.
+/// </summary>
+public class TrackCameraCommandList : IList<TrackCameraCommand>
 {
+    private readonly List<TrackCameraCommand> _internalList;
+
     /// <summary>
-    /// Represents a list of TrackCameraCommands.
+    /// Initializes a new instance of a TrackCameraCommandList.
     /// </summary>
-    public class TrackCameraCommandList : IList<TrackCameraCommand>
+    public TrackCameraCommandList()
     {
-        private readonly List<TrackCameraCommand> _internalList;
+        _internalList = new List<TrackCameraCommand>();
+    }
 
-        /// <summary>
-        /// Initializes a new instance of a TrackCameraCommandList.
-        /// </summary>
-        public TrackCameraCommandList()
-        {
-            _internalList = new List<TrackCameraCommand>();
-        }
+    /// <inheritdoc />
+    public IEnumerator<TrackCameraCommand> GetEnumerator()
+    {
+        return _internalList.GetEnumerator();
+    }
 
-        /// <inheritdoc />
-        public IEnumerator<TrackCameraCommand> GetEnumerator()
-        {
-            return _internalList.GetEnumerator();
-        }
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+    /// <inheritdoc />
+    public void Add(TrackCameraCommand item)
+    {
+        _internalList.Add(item);
+    }
 
-        /// <inheritdoc />
-        public void Add(TrackCameraCommand item)
-        {
-            _internalList.Add(item);
-        }
+    /// <inheritdoc />
+    public void Clear()
+    {
+        _internalList.Clear();
+    }
 
-        /// <inheritdoc />
-        public void Clear()
-        {
-            _internalList.Clear();
-        }
+    /// <inheritdoc />
+    public bool Contains(TrackCameraCommand item)
+    {
+        return _internalList.Contains(item);
+    }
 
-        /// <inheritdoc />
-        public bool Contains(TrackCameraCommand item)
-        {
-            return _internalList.Contains(item);
-        }
+    /// <inheritdoc />
+    public void CopyTo(TrackCameraCommand[] array, int arrayIndex)
+    {
+        _internalList.CopyTo(array, arrayIndex);
+    }
 
-        /// <inheritdoc />
-        public void CopyTo(TrackCameraCommand[] array, int arrayIndex)
-        {
-            _internalList.CopyTo(array, arrayIndex);
-        }
+    /// <inheritdoc />
+    public bool Remove(TrackCameraCommand item)
+    {
+        return _internalList.Remove(item);
+    }
 
-        /// <inheritdoc />
-        public bool Remove(TrackCameraCommand item)
-        {
-            return _internalList.Remove(item);
-        }
+    /// <inheritdoc />
+    public int Count => _internalList.Count;
 
-        /// <inheritdoc />
-        public int Count => _internalList.Count;
+    /// <inheritdoc />
+    public bool IsReadOnly => false;
 
-        /// <inheritdoc />
-        public bool IsReadOnly => false;
+    /// <inheritdoc />
+    public int IndexOf(TrackCameraCommand item)
+    {
+        return _internalList.IndexOf(item);
+    }
 
-        /// <inheritdoc />
-        public int IndexOf(TrackCameraCommand item)
-        {
-            return _internalList.IndexOf(item);
-        }
+    /// <inheritdoc />
+    public void Insert(int index, TrackCameraCommand item)
+    {
+        _internalList.Insert(index, item);
+    }
 
-        /// <inheritdoc />
-        public void Insert(int index, TrackCameraCommand item)
-        {
-            _internalList.Insert(index, item);
-        }
+    /// <inheritdoc />
+    public void RemoveAt(int index)
+    {
+        _internalList.RemoveAt(index);
+    }
 
-        /// <inheritdoc />
-        public void RemoveAt(int index)
-        {
-            _internalList.RemoveAt(index);
-        }
-
-        /// <inheritdoc />
-        public TrackCameraCommand this[int index]
-        {
-            get => _internalList[index];
-            set => _internalList[index] = value;
-        }
+    /// <inheritdoc />
+    public TrackCameraCommand this[int index]
+    {
+        get => _internalList[index];
+        set => _internalList[index] = value;
     }
 }

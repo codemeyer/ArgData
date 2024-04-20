@@ -1,40 +1,40 @@
 ﻿using ArgData.Entities;
 
-namespace ArgData.Tests.DefaultData
+namespace ArgData.Tests.DefaultData;
+
+public static class DefaultPitCrewColors
 {
-    public static class DefaultPitCrewColors
+    private static readonly PitCrewList PitCrewColors;
+
+    static DefaultPitCrewColors()
     {
-        private static readonly PitCrewList PitCrewColors;
-
-        static DefaultPitCrewColors()
-        {
-            PitCrewColors = new PitCrewList();
+        PitCrewColors = new PitCrewList {
             // McLaren
-            PitCrewColors[0] = new PitCrew(new byte[] { 0, 1, 202, 40, 58, 43, 46, 7, 8, 205, 10, 56, 12, 13, 14, 15 });
-            PitCrewColors[1] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
+            [0] = new([0, 1, 202, 40, 58, 43, 46, 7, 8, 205, 10, 56, 12, 13, 14, 15]),
+            [1] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
             // Williams
-            PitCrewColors[2] = new PitCrew(new byte[] { 0, 1, 202, 74, 132, 92, 56, 7, 8, 205, 10, 92, 12, 13, 14, 15 });
-            PitCrewColors[3] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[4] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[5] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[6] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[7] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[8] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[9] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[10] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[11] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[12] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
+            [2] = new([0, 1, 202, 74, 132, 92, 56, 7, 8, 205, 10, 92, 12, 13, 14, 15]),
+            [3] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [4] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [5] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [6] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [7] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [8] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [9] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [10] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [11] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [12] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
             // Ferrari
-            PitCrewColors[13] = new PitCrew(new byte[] { 0, 1, 202, 40, 70, 110, 46, 7, 8, 205, 10, 32, 12, 13, 14, 15 });
-            PitCrewColors[14] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[15] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[16] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-            PitCrewColors[17] = new PitCrew(new byte[] { 0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15 });
-        }
+            [13] = new([0, 1, 202, 40, 70, 110, 46, 7, 8, 205, 10, 32, 12, 13, 14, 15]),
+            [14] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [15] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [16] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15]),
+            [17] = new([0, 1, 202, 40, 74, 43, 46, 7, 8, 205, 10, 70, 12, 13, 14, 15])
+        };
+    }
 
-        public static PitCrew GetByIndex(int index)
-        {
-            return PitCrewColors[index];
-        }
+    public static PitCrew GetByIndex(int index)
+    {
+        return PitCrewColors[index];
     }
 }

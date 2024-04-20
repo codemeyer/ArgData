@@ -1,33 +1,32 @@
 ﻿using System.Collections.Concurrent;
 using System.IO;
 
-namespace ArgData.Tests
+namespace ArgData.Tests;
+
+public class TestableMediaContainerFileReader : MediaContainerFileReader
 {
-    public class TestableMediaContainerFileReader : MediaContainerFileReader
+    public TestableMediaContainerFileReader()
     {
-        public TestableMediaContainerFileReader()
-        {
-            StreamProvider = MemoryStreamProvider.Open;
-        }
+        StreamProvider = MemoryStreamProvider.Open;
     }
+}
 
-    public class TestableTrackReader : TrackReader
+public class TestableTrackReader : TrackReader
+{
+    public TestableTrackReader()
     {
-        public TestableTrackReader()
-        {
-            StreamProvider = MemoryStreamProvider.Open;
-        }
+        StreamProvider = MemoryStreamProvider.Open;
     }
+}
 
-    internal static class MemoryStreamProvider
+internal static class MemoryStreamProvider
+{
+    private static readonly ConcurrentDictionary<string, byte[]> FilesAndBytes = new();
+
+    public static Stream Open(string path)
     {
-        private static readonly ConcurrentDictionary<string, byte[]> FilesAndBytes = new ConcurrentDictionary<string, byte[]>();
+        var bytes = FilesAndBytes.GetOrAdd(path, File.ReadAllBytes(path));
 
-        public static Stream Open(string path)
-        {
-            var bytes = FilesAndBytes.GetOrAdd(path, File.ReadAllBytes(path));
-
-            return new MemoryStream(bytes);
-        }
+        return new MemoryStream(bytes);
     }
 }

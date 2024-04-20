@@ -4,267 +4,254 @@ using ArgData.Tests.DefaultData;
 using FluentAssertions;
 using Xunit;
 
-namespace ArgData.Tests
+namespace ArgData.Tests;
+
+public class CarColorFacts
 {
-    public class CarColorFacts
+    [Theory]
+    [InlineData(GpExeVersionInfo.European105)]
+    [InlineData(GpExeVersionInfo.European105Decompressed)]
+    [InlineData(GpExeVersionInfo.Us105)]
+    [InlineData(GpExeVersionInfo.Us105Decompressed)]
+    public void ReadCarColors_OriginalCarColors_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
     {
-        [Theory]
-        [InlineData(GpExeVersionInfo.European105)]
-        [InlineData(GpExeVersionInfo.European105Decompressed)]
-        [InlineData(GpExeVersionInfo.Us105)]
-        [InlineData(GpExeVersionInfo.Us105Decompressed)]
-        public void ReadCarColors_OriginalCarColors_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
+        string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
+        var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
+
+        var carColors = carColorReader.ReadCarColors();
+
+        for (int i = 0; i < 1; i++)
         {
-            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
+            carColors[i].Should().BeEquivalentTo(DefaultCarColors.GetByIndex(i));
+        }
+    }
 
-            var carColors = carColorReader.ReadCarColors();
+    [Theory]
+    [InlineData(GpExeVersionInfo.European105)]
+    [InlineData(GpExeVersionInfo.European105Decompressed)]
+    [InlineData(GpExeVersionInfo.Us105)]
+    [InlineData(GpExeVersionInfo.Us105Decompressed)]
+    public void ReadCarColors_SingleOriginalCarColor_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
+    {
+        var expectedCar = DefaultCarColors.GetByIndex(0);
+        string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
+        var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
 
-            for (int i = 0; i < 1; i++)
-            {
-                carColors[i].Should().BeEquivalentTo(DefaultCarColors.GetByIndex(i));
-            }
+        var car = carColorReader.ReadCarColors(0);
+
+        car.CockpitFront.Should().Be(expectedCar.CockpitFront);
+        car.CockpitSide.Should().Be(expectedCar.CockpitSide);
+        car.EngineCover.Should().Be(expectedCar.EngineCover);
+        car.EngineCoverRear.Should().Be(expectedCar.EngineCoverRear);
+        car.EngineCoverSide.Should().Be(expectedCar.EngineCoverSide);
+        car.FrontAndRearWing.Should().Be(expectedCar.FrontAndRearWing);
+        car.FrontWingEndplate.Should().Be(expectedCar.FrontWingEndplate);
+        car.NoseAngle.Should().Be(expectedCar.NoseAngle);
+        car.NoseSide.Should().Be(expectedCar.NoseSide);
+        car.NoseTop.Should().Be(expectedCar.NoseTop);
+        car.RearWingSide.Should().Be(expectedCar.RearWingSide);
+        car.Sidepod.Should().Be(expectedCar.Sidepod);
+        car.SidepodTop.Should().Be(expectedCar.SidepodTop);
+    }
+
+    [Theory]
+    [InlineData(GpExeVersionInfo.European105)]
+    [InlineData(GpExeVersionInfo.European105Decompressed)]
+    [InlineData(GpExeVersionInfo.Us105)]
+    [InlineData(GpExeVersionInfo.Us105Decompressed)]
+    public void WriteCarColors_KnownColors_ReadReturnsKnownColors(GpExeVersionInfo exeVersionInfo)
+    {
+        using var context = ExampleDataContext.ExeCopy(exeVersionInfo);
+        var carList = new CarList();
+        for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
+        {
+            byte b = Convert.ToByte(i + 1);
+            carList[i] = new Car([b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b]);
         }
 
-        [Theory]
-        [InlineData(GpExeVersionInfo.European105)]
-        [InlineData(GpExeVersionInfo.European105Decompressed)]
-        [InlineData(GpExeVersionInfo.Us105)]
-        [InlineData(GpExeVersionInfo.Us105Decompressed)]
-        public void ReadCarColors_SingleOriginalCarColor_ReturnsExpectedValues(GpExeVersionInfo exeVersionInfo)
+        var carColorWriter = CarColorWriter.For(context.ExeFile);
+
+        carColorWriter.WriteCarColors(carList);
+
+        var carColorReader = CarColorReader.For(context.ExeFile).ReadCarColors();
+
+        byte expectedColor = 1;
+        foreach (Car car in carColorReader)
         {
-            var expectedCar = DefaultCarColors.GetByIndex(0);
-            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
+            car.NoseTop.Should().Be(expectedColor);
 
-            var car = carColorReader.ReadCarColors(0);
-
-            car.CockpitFront.Should().Be(expectedCar.CockpitFront);
-            car.CockpitSide.Should().Be(expectedCar.CockpitSide);
-            car.EngineCover.Should().Be(expectedCar.EngineCover);
-            car.EngineCoverRear.Should().Be(expectedCar.EngineCoverRear);
-            car.EngineCoverSide.Should().Be(expectedCar.EngineCoverSide);
-            car.FrontAndRearWing.Should().Be(expectedCar.FrontAndRearWing);
-            car.FrontWingEndplate.Should().Be(expectedCar.FrontWingEndplate);
-            car.NoseAngle.Should().Be(expectedCar.NoseAngle);
-            car.NoseSide.Should().Be(expectedCar.NoseSide);
-            car.NoseTop.Should().Be(expectedCar.NoseTop);
-            car.RearWingSide.Should().Be(expectedCar.RearWingSide);
-            car.Sidepod.Should().Be(expectedCar.Sidepod);
-            car.SidepodTop.Should().Be(expectedCar.SidepodTop);
+            expectedColor++;
         }
+    }
 
-        [Theory]
-        [InlineData(GpExeVersionInfo.European105)]
-        [InlineData(GpExeVersionInfo.European105Decompressed)]
-        [InlineData(GpExeVersionInfo.Us105)]
-        [InlineData(GpExeVersionInfo.Us105Decompressed)]
-        public void WriteCarColors_KnownColors_ReadReturnsKnownColors(GpExeVersionInfo exeVersionInfo)
+    [Theory]
+    [InlineData(GpExeVersionInfo.European105)]
+    [InlineData(GpExeVersionInfo.European105Decompressed)]
+    [InlineData(GpExeVersionInfo.Us105)]
+    [InlineData(GpExeVersionInfo.Us105Decompressed)]
+    public void WriteCarColors_WriteSingleKnownCarColors_ReadSingleReturnsKnownColors(GpExeVersionInfo exeVersionInfo)
+    {
+        using var context = ExampleDataContext.ExeCopy(exeVersionInfo);
+        var carList = new CarList();
+        var car = new Car
         {
-            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
-            {
-                var carList = new CarList();
-                for (int i = 0; i < Constants.NumberOfSupportedTeams; i++)
-                {
-                    byte b = Convert.ToByte(i + 1);
-                    carList[i] = new Car(new[] { b, b, b, b, b, b, b, b, b, b, b, b, b, b, b, b });
-                }
+            CockpitFront = 1,
+            CockpitSide = 2,
+            EngineCover = 3,
+            EngineCoverRear = 4,
+            EngineCoverSide = 5,
+            FrontAndRearWing = 6,
+            FrontWingEndplate = 7,
+            NoseAngle = 8,
+            NoseSide = 9,
+            NoseTop = 10,
+            RearWingSide = 11,
+            Sidepod = 12,
+            SidepodTop = 13
+        };
+        carList[0] = car;
 
-                var carColorWriter = CarColorWriter.For(context.ExeFile);
+        var carColorWriter = CarColorWriter.For(context.ExeFile);
 
-                carColorWriter.WriteCarColors(carList);
+        carColorWriter.WriteCarColors(carList[0], 0);
 
-                var carColorReader = CarColorReader.For(context.ExeFile).ReadCarColors();
+        var carColorReader = CarColorReader.For(context.ExeFile).ReadCarColors();
+        var actualCar = carColorReader[0];
 
-                byte expectedColor = 1;
-                foreach (Car car in carColorReader)
-                {
-                    car.NoseTop.Should().Be(expectedColor);
+        actualCar.CockpitFront.Should().Be(1);
+        actualCar.CockpitSide.Should().Be(2);
+        actualCar.EngineCover.Should().Be(3);
+        actualCar.EngineCoverRear.Should().Be(4);
+        actualCar.EngineCoverSide.Should().Be(5);
+        actualCar.FrontAndRearWing.Should().Be(6);
+        actualCar.FrontWingEndplate.Should().Be(7);
+        actualCar.NoseAngle.Should().Be(8);
+        actualCar.NoseSide.Should().Be(9);
+        actualCar.NoseTop.Should().Be(10);
+        actualCar.RearWingSide.Should().Be(11);
+        actualCar.Sidepod.Should().Be(12);
+        actualCar.SidepodTop.Should().Be(13);
+    }
 
-                    expectedColor++;
-                }
-            }
-        }
+    [Theory]
+    [InlineData(GpExeVersionInfo.European105)]
+    [InlineData(GpExeVersionInfo.European105Decompressed)]
+    [InlineData(GpExeVersionInfo.Us105)]
+    [InlineData(GpExeVersionInfo.Us105Decompressed)]
+    public void ReadCarColors_IndexLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+    {
+        string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
+        var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
 
-        [Theory]
-        [InlineData(GpExeVersionInfo.European105)]
-        [InlineData(GpExeVersionInfo.European105Decompressed)]
-        [InlineData(GpExeVersionInfo.Us105)]
-        [InlineData(GpExeVersionInfo.Us105Decompressed)]
-        public void WriteCarColors_WriteSingleKnownCarColors_ReadSingleReturnsKnownColors(GpExeVersionInfo exeVersionInfo)
-        {
-            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
-            {
-                var carList = new CarList();
-                var car = new Car
-                {
-                    CockpitFront = 1,
-                    CockpitSide = 2,
-                    EngineCover = 3,
-                    EngineCoverRear = 4,
-                    EngineCoverSide = 5,
-                    FrontAndRearWing = 6,
-                    FrontWingEndplate = 7,
-                    NoseAngle = 8,
-                    NoseSide = 9,
-                    NoseTop = 10,
-                    RearWingSide = 11,
-                    Sidepod = 12,
-                    SidepodTop = 13
-                };
-                carList[0] = car;
+        Action action = () => carColorReader.ReadCarColors(-1);
 
-                var carColorWriter = CarColorWriter.For(context.ExeFile);
+        action.Should().Throw<ArgumentOutOfRangeException>();
+    }
 
-                carColorWriter.WriteCarColors(carList[0], 0);
+    [Theory]
+    [InlineData(GpExeVersionInfo.European105)]
+    [InlineData(GpExeVersionInfo.European105Decompressed)]
+    [InlineData(GpExeVersionInfo.Us105)]
+    [InlineData(GpExeVersionInfo.Us105Decompressed)]
+    public void ReadCarColors_IndexGreaterThan_17_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+    {
+        string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
+        var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
 
-                var carColorReader = CarColorReader.For(context.ExeFile).ReadCarColors();
-                var actualCar = carColorReader[0];
+        Action action = () => carColorReader.ReadCarColors(18);
 
-                actualCar.CockpitFront.Should().Be(1);
-                actualCar.CockpitSide.Should().Be(2);
-                actualCar.EngineCover.Should().Be(3);
-                actualCar.EngineCoverRear.Should().Be(4);
-                actualCar.EngineCoverSide.Should().Be(5);
-                actualCar.FrontAndRearWing.Should().Be(6);
-                actualCar.FrontWingEndplate.Should().Be(7);
-                actualCar.NoseAngle.Should().Be(8);
-                actualCar.NoseSide.Should().Be(9);
-                actualCar.NoseTop.Should().Be(10);
-                actualCar.RearWingSide.Should().Be(11);
-                actualCar.Sidepod.Should().Be(12);
-                actualCar.SidepodTop.Should().Be(13);
-            }
-        }
+        action.Should().Throw<ArgumentOutOfRangeException>();
+    }
 
-        [Theory]
-        [InlineData(GpExeVersionInfo.European105)]
-        [InlineData(GpExeVersionInfo.European105Decompressed)]
-        [InlineData(GpExeVersionInfo.Us105)]
-        [InlineData(GpExeVersionInfo.Us105Decompressed)]
-        public void ReadCarColors_IndexLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
-        {
-            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
+    [Theory]
+    [InlineData(GpExeVersionInfo.European105)]
+    [InlineData(GpExeVersionInfo.European105Decompressed)]
+    [InlineData(GpExeVersionInfo.Us105)]
+    [InlineData(GpExeVersionInfo.Us105Decompressed)]
+    public void WriteCarColors_IndexLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+    {
+        using var context = ExampleDataContext.ExeCopy(exeVersionInfo);
+        var carColorWriter = CarColorWriter.For(context.ExeFile);
 
-            Action action = () => carColorReader.ReadCarColors(-1);
+        Action action = () => carColorWriter.WriteCarColors(new Car(), -1);
 
-            action.Should().Throw<ArgumentOutOfRangeException>();
-        }
+        action.Should().Throw<ArgumentOutOfRangeException>();
+    }
 
-        [Theory]
-        [InlineData(GpExeVersionInfo.European105)]
-        [InlineData(GpExeVersionInfo.European105Decompressed)]
-        [InlineData(GpExeVersionInfo.Us105)]
-        [InlineData(GpExeVersionInfo.Us105Decompressed)]
-        public void ReadCarColors_IndexGreaterThan_17_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
-        {
-            string exampleDataPath = ExampleDataHelper.GpExePath(exeVersionInfo);
-            var carColorReader = CarColorReader.For(GpExeFile.At(exampleDataPath));
+    [Theory]
+    [InlineData(GpExeVersionInfo.European105)]
+    [InlineData(GpExeVersionInfo.European105Decompressed)]
+    [InlineData(GpExeVersionInfo.Us105)]
+    [InlineData(GpExeVersionInfo.Us105Decompressed)]
+    public void WriteCarColors_IndexGreaterThan_17_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
+    {
+        using var context = ExampleDataContext.ExeCopy(exeVersionInfo);
+        var carColorWriter = CarColorWriter.For(context.ExeFile);
 
-            Action action = () => carColorReader.ReadCarColors(18);
+        Action action = () => carColorWriter.WriteCarColors(new Car(), 18);
 
-            action.Should().Throw<ArgumentOutOfRangeException>();
-        }
+        action.Should().Throw<ArgumentOutOfRangeException>();
+    }
 
-        [Theory]
-        [InlineData(GpExeVersionInfo.European105)]
-        [InlineData(GpExeVersionInfo.European105Decompressed)]
-        [InlineData(GpExeVersionInfo.Us105)]
-        [InlineData(GpExeVersionInfo.Us105Decompressed)]
-        public void WriteCarColors_IndexLessThan_0_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
-        {
-            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
-            {
-                var carColorWriter = CarColorWriter.For(context.ExeFile);
+    [Theory]
+    [InlineData(GpExeVersionInfo.European105)]
+    [InlineData(GpExeVersionInfo.European105Decompressed)]
+    [InlineData(GpExeVersionInfo.Us105)]
+    [InlineData(GpExeVersionInfo.Us105Decompressed)]
+    public void WriteCarColors_SingleCarNull_ThrowsArgumentNullException(GpExeVersionInfo exeVersionInfo)
+    {
+        using var context = ExampleDataContext.ExeCopy(exeVersionInfo);
+        var carColorWriter = CarColorWriter.For(context.ExeFile);
 
-                Action action = () => carColorWriter.WriteCarColors(new Car(), -1);
+        Action action = () => carColorWriter.WriteCarColors(null!, 4);
 
-                action.Should().Throw<ArgumentOutOfRangeException>();
-            }
-        }
+        action.Should().Throw<ArgumentNullException>();
+    }
 
-        [Theory]
-        [InlineData(GpExeVersionInfo.European105)]
-        [InlineData(GpExeVersionInfo.European105Decompressed)]
-        [InlineData(GpExeVersionInfo.Us105)]
-        [InlineData(GpExeVersionInfo.Us105Decompressed)]
-        public void WriteCarColors_IndexGreaterThan_17_ThrowsArgumentOutOfRangeException(GpExeVersionInfo exeVersionInfo)
-        {
-            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
-            {
-                var carColorWriter = CarColorWriter.For(context.ExeFile);
+    [Theory]
+    [InlineData(GpExeVersionInfo.European105)]
+    [InlineData(GpExeVersionInfo.European105Decompressed)]
+    [InlineData(GpExeVersionInfo.Us105)]
+    [InlineData(GpExeVersionInfo.Us105Decompressed)]
+    public void WriteCarColors_CarListNull_ThrowsArgumentNullException(GpExeVersionInfo exeVersionInfo)
+    {
+        using var context = ExampleDataContext.ExeCopy(exeVersionInfo);
+        var carColorWriter = CarColorWriter.For(context.ExeFile);
 
-                Action action = () => carColorWriter.WriteCarColors(new Car(), 18);
+        Action action = () => carColorWriter.WriteCarColors(null!);
 
-                action.Should().Throw<ArgumentOutOfRangeException>();
-            }
-        }
+        action.Should().Throw<ArgumentNullException>();
+    }
 
-        [Theory]
-        [InlineData(GpExeVersionInfo.European105)]
-        [InlineData(GpExeVersionInfo.European105Decompressed)]
-        [InlineData(GpExeVersionInfo.Us105)]
-        [InlineData(GpExeVersionInfo.Us105Decompressed)]
-        public void WriteCarColors_SingleCarNull_ThrowsArgumentNullException(GpExeVersionInfo exeVersionInfo)
-        {
-            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
-            {
-                var carColorWriter = CarColorWriter.For(context.ExeFile);
+    [Fact]
+    public void CreateReaderFor_NullGpExe_ThrowsArgumentNullException()
+    {
+        Action action = () => CarColorReader.For(null!);
 
-                Action action = () => carColorWriter.WriteCarColors(null, 4);
+        action.Should().Throw<ArgumentNullException>();
+    }
 
-                action.Should().Throw<ArgumentNullException>();
-            }
-        }
+    [Fact]
+    public void CreateReader_NullGpExe_ThrowsArgumentNullException()
+    {
+        Action action = () => _ = new CarColorReader(null!);
 
-        [Theory]
-        [InlineData(GpExeVersionInfo.European105)]
-        [InlineData(GpExeVersionInfo.European105Decompressed)]
-        [InlineData(GpExeVersionInfo.Us105)]
-        [InlineData(GpExeVersionInfo.Us105Decompressed)]
-        public void WriteCarColors_CarListNull_ThrowsArgumentNullException(GpExeVersionInfo exeVersionInfo)
-        {
-            using (var context = ExampleDataContext.ExeCopy(exeVersionInfo))
-            {
-                var carColorWriter = CarColorWriter.For(context.ExeFile);
+        action.Should().Throw<ArgumentNullException>();
+    }
 
-                Action action = () => carColorWriter.WriteCarColors(null);
+    [Fact]
+    public void CreateWriterFor_NullGpExe_ThrowsArgumentNullException()
+    {
+        Action action = () => CarColorWriter.For(null!);
 
-                action.Should().Throw<ArgumentNullException>();
-            }
-        }
+        action.Should().Throw<ArgumentNullException>();
+    }
 
-        [Fact]
-        public void CreateReaderFor_NullGpExe_ThrowsArgumentNullException()
-        {
-            Action action = () => CarColorReader.For(null);
+    [Fact]
+    public void CreateWriter_NullGpExe_ThrowsArgumentNullException()
+    {
+        Action action = () => _ = new CarColorWriter(null!);
 
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void CreateReader_NullGpExe_ThrowsArgumentNullException()
-        {
-            Action action = () => new CarColorReader(null);
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void CreateWriterFor_NullGpExe_ThrowsArgumentNullException()
-        {
-            Action action = () => CarColorWriter.For(null);
-
-            action.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void CreateWriter_NullGpExe_ThrowsArgumentNullException()
-        {
-            Action action = () => new CarColorWriter(null);
-
-            action.Should().Throw<ArgumentNullException>();
-        }
+        action.Should().Throw<ArgumentNullException>();
     }
 }

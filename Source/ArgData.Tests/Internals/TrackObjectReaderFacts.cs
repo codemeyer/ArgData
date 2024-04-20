@@ -3,21 +3,18 @@ using ArgData.Internals;
 using FluentAssertions;
 using Xunit;
 
-namespace ArgData.Tests.Internals
+namespace ArgData.Tests.Internals;
+
+public class TrackObjectReaderFacts
 {
-    public class TrackObjectReaderFacts
+    [Fact]
+    public void PhoenixContains128Objects()
     {
-        [Fact]
-        public void PhoenixContains128Objects()
-        {
-            var trackData = TrackFactsHelper.GetTrackPhoenix();
+        var trackData = TrackFactsHelper.GetTrackPhoenix();
 
-            using (var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path)))
-            {
-                var objects = TrackObjectSettingsReader.Read(reader, trackData.KnownOffsets.ObjectData, trackData.KnownOffsets.TrackData);
+        using var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path));
+        var objects = TrackObjectSettingsReader.Read(reader, trackData.KnownOffsets.ObjectData, trackData.KnownOffsets.TrackData);
 
-                objects.Count.Should().Be(128);
-            }
-        }
+        objects.Count.Should().Be(128);
     }
 }

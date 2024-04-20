@@ -4,49 +4,42 @@ using ArgData.Internals;
 using FluentAssertions;
 using Xunit;
 
-namespace ArgData.Tests.Internals
+namespace ArgData.Tests.Internals;
+
+public class ComputerCarLineReaderFacts
 {
-    public class ComputerCarLineReaderFacts
+    [Fact]
+    public void Phoenix_Displacement_576()
     {
-        [Fact]
-        public void Phoenix_Displacement_576()
-        {
-            var trackData = TrackFactsHelper.GetTrackPhoenix();
+        var trackData = TrackFactsHelper.GetTrackPhoenix();
 
-            using (var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path)))
-            {
-                var result = ComputerCarLineReader.Read(reader, trackData.KnownComputerCarLineSectionDataStart);
+        using var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path));
+        var result = ComputerCarLineReader.Read(reader, trackData.KnownComputerCarLineSectionDataStart);
 
-                result.Displacement.Should().Be(576);
-            }
-        }
+        result.Displacement.Should().Be(576);
+    }
 
-        [Fact]
-        public void PhoenixComputerCarLinesHave40Segments()
-        {
-            var trackData = TrackFactsHelper.GetTrackPhoenix();
+    [Fact]
+    public void PhoenixComputerCarLinesHave40Segments()
+    {
+        var trackData = TrackFactsHelper.GetTrackPhoenix();
 
-            using (var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path)))
-            {
-                var result = ComputerCarLineReader.Read(reader, trackData.KnownComputerCarLineSectionDataStart);
+        using var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path));
+        var result = ComputerCarLineReader.Read(reader, trackData.KnownComputerCarLineSectionDataStart);
 
-                result.ComputerCarLineSegments.Count.Should().Be(40);
-                result.PositionAfterReading.Should().Be(trackData.KnownComputerCarSetupDataStart); // 16586
-            }
-        }
+        result.ComputerCarLineSegments.Count.Should().Be(40);
+        result.PositionAfterReading.Should().Be(trackData.KnownComputerCarSetupDataStart); // 16586
+    }
 
-        [Fact]
-        public void PhoenixComputerCarLinesHaveFirstSegmentWithLength48()
-        {
-            var trackData = TrackFactsHelper.GetTrackPhoenix();
+    [Fact]
+    public void PhoenixComputerCarLinesHaveFirstSegmentWithLength48()
+    {
+        var trackData = TrackFactsHelper.GetTrackPhoenix();
 
-            using (var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path)))
-            {
-                var result = ComputerCarLineReader.Read(reader, trackData.KnownComputerCarLineSectionDataStart);
+        using var reader = new BinaryReader(MemoryStreamProvider.Open(trackData.Path));
+        var result = ComputerCarLineReader.Read(reader, trackData.KnownComputerCarLineSectionDataStart);
 
-                var firstSegment = result.ComputerCarLineSegments.First();
-                firstSegment.Length.Should().Be(48);
-            }
-        }
+        var firstSegment = result.ComputerCarLineSegments.First();
+        firstSegment.Length.Should().Be(48);
     }
 }

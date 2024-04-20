@@ -1,60 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace ArgData.Internals;
 
-namespace ArgData.Internals
+internal class ByteList
 {
-    internal class ByteList
+    private readonly List<byte> _bytes = [];
+
+    public void AddInt32(int value)
     {
-        private readonly List<byte> _bytes;
+        _bytes.AddRange(BitConverter.GetBytes(value));
+    }
 
-        public ByteList()
+    public void AddInt16(short value)
+    {
+        _bytes.AddRange(BitConverter.GetBytes(value));
+    }
+
+    public void AddUInt16(ushort value)
+    {
+        _bytes.AddRange(BitConverter.GetBytes(value));
+    }
+
+    public void AddByte(byte value)
+    {
+        _bytes.Add(value);
+    }
+
+    public void AddByte(int value)
+    {
+        _bytes.Add((byte)value);
+    }
+
+    public void AddBytes(byte[] bytes)
+    {
+        _bytes.AddRange(bytes);
+    }
+
+    public void AddSBytes(sbyte[] bytes)
+    {
+        foreach (sbyte sb in bytes)
         {
-            _bytes = new List<byte>();
+            _bytes.Add((byte)sb);
         }
+    }
 
-        public void AddInt32(int value)
-        {
-            _bytes.AddRange(BitConverter.GetBytes(value));
-        }
+    public int Count => _bytes.Count;
 
-        public void AddInt16(short value)
-        {
-            _bytes.AddRange(BitConverter.GetBytes(value));
-        }
-
-        public void AddUInt16(ushort value)
-        {
-            _bytes.AddRange(BitConverter.GetBytes(value));
-        }
-
-        public void AddByte(byte value)
-        {
-            _bytes.Add(value);
-        }
-
-        public void AddByte(int value)
-        {
-            _bytes.Add((byte)value);
-        }
-
-        public void AddBytes(byte[] bytes)
-        {
-            _bytes.AddRange(bytes);
-        }
-
-        public void AddSBytes(sbyte[] bytes)
-        {
-            foreach (sbyte sb in bytes)
-            {
-                _bytes.Add((byte)sb);
-            }
-        }
-
-        public int Count => _bytes.Count;
-
-        public byte[] GetBytes()
-        {
-            return _bytes.ToArray();
-        }
+    public byte[] GetBytes()
+    {
+        return _bytes.ToArray();
     }
 }

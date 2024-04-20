@@ -1,14 +1,11 @@
-﻿using System.Collections.Generic;
+﻿namespace ArgData.Entities;
 
-namespace ArgData.Entities
+/// <summary>
+/// A list of SavedGameDrivers.
+/// </summary>
+public class SavedGameDriverList : ReadOnlyList<SavedGameDriver>
 {
-    /// <summary>
-    /// A list of SavedGameDrivers.
-    /// </summary>
-    public class SavedGameDriverList : ReadOnlyList<SavedGameDriver>
+    internal SavedGameDriverList(IList<SavedGameDriver> items) : base(items)
     {
-        internal SavedGameDriverList(IList<SavedGameDriver> items) : base(items)
-        {
-        }
     }
 }
